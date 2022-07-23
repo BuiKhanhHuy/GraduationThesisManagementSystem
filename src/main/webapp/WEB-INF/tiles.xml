@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache
+Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="baseLayout" template="/WEB-INF/decorators/user/base.jsp">
+        <put-attribute name="content" value=""/>
+    </definition>
+    <definition name="index" extends="baseLayout">
+        <put-attribute name="content" value="/WEB-INF/views/user/index.jsp"/>
+    </definition>
+
+    <definition name="adminBaseLayout" template="/WEB-INF/decorators/admin/base.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/commons/admin/header.jsp"/>
+        <put-attribute name="rightSidebar" value="/WEB-INF/commons/admin/right-sidebar.jsp"/>
+        <put-attribute name="leftSidebar" value="/WEB-INF/commons/admin/left-sidebar.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/commons/admin/footer.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+        </put-list-attribute>
+    </definition>
+    <definition name="adminIndex" extends="adminBaseLayout">
+        <put-attribute name="title" value="Trang quan tri"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/index.jsp"/>
+        <put-list-attribute name="stylesheets">
+            <add-attribute value=""/>
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/admin/src/plugins/apexcharts/apexcharts.min.js"/>
+            <add-attribute value="/admin/vendors/scripts/dashboard.js"/>
+        </put-list-attribute>
+    </definition>
+    <definition name="adminDepartmentList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Danh sách khoa"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/department/index.jsp"/>
+    </definition>
+    <definition name="adminMajorList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Danh sách ngành"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/major/index.jsp"/>
+    </definition>
+    <definition name="adminSchoolYearList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Danh sách niên khóa"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/schoolyear/index.jsp"/>
+    </definition>
+    <definition name="adminPositionList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Danh sách chức vụ"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/position/index.jsp"/>
+    </definition>
+    <definition name="adminLecturerList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Danh sách giảng viên"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/lecturer/index.jsp"/>
+    </definition>
+    <definition name="adminStudentList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Danh sách sinh viên"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/student/index.jsp"/>
+    </definition>
+    <definition name="adminTopicList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Danh sách đề tài"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/topic/index.jsp"/>
+    </definition>
+
+    <definition name="adminEvaluationMethodList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Danh sách phương pháp đánh giá"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/evaluationmethod/index.jsp"/>
+    </definition>
+    <definition name="adminScoreComponentList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Danh sách thành phần điểm"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/scorecomponent/index.jsp"/>
+    </definition>
+    <definition name="adminScoreColumnList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Danh sách cột điểm"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/scorecolumn/index.jsp"/>
+    </definition>
+
+    <definition name="adminRoleList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Danh sách quyền"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/role/index.jsp"/>
+    </definition>
+
+    <definition name="adminManageList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Danh sách quản lý"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/manage/index.jsp"/>
+    </definition>
+
+    <definition name="adminNotificationList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Thông báo"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/notification/index.jsp"/>
+    </definition>
+    <definition name="adminNewsList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Tin tức"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/news/index.jsp"/>
+    </definition>
+    <definition name="adminChat" extends="adminBaseLayout">
+        <put-attribute name="title" value="Chat"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/chat/index.jsp"/>
+    </definition>
+</tiles-definitions>
