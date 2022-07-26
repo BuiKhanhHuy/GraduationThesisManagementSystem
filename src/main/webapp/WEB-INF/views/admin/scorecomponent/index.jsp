@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="page-header">
@@ -49,22 +50,42 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row" class="text-center">1</th>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td class="col-2 text-center">
-                <button type="button" class="btn btn-sm bg-info text-white">
-                    <i class="icon-copy dw dw-eye"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-warning text-white">
-                    <i class="icon-copy dw dw-edit1"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-danger text-white">
-                    <i class="icon-copy dw dw-delete-3"></i>
-                </button>
-            </td>
-        </tr>
+        <c:if test="${scoreComponents.size() != 0}">
+            <c:forEach var="scoreComponent" items="${scoreComponents}">
+                <tr>
+                    <th scope="row" class="text-center">${scoreComponent.id}</th>
+                    <td>${scoreComponent.name}</td>
+                    <td>
+                        <c:if test="${scoreComponent.evaluationMethod != null}">
+                            ${scoreComponent.evaluationMethod.name}
+                        </c:if>
+                        <c:if test="${scoreComponent.evaluationMethod == null}">
+                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                        </c:if>
+                    </td>
+                    <td class="col-2 text-center">
+                        <button type="button" class="btn btn-sm bg-info text-white">
+                            <i class="icon-copy dw dw-eye"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm bg-warning text-white">
+                            <i class="icon-copy dw dw-edit1"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm bg-danger text-white">
+                            <i class="icon-copy dw dw-delete-3"></i>
+                        </button>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+        <c:if test="${scoreComponents.size() == 0}">
+            <tr>
+                <td colspan="4" class="text-black-50 text-center">
+                    <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
+                    <p class="text-center">Danh sách điểm thành phần trống</p>
+                </td>
+            </tr>
+        </c:if>
+
         </tbody>
     </table>
     <div class="blog-pagination pagination-sm mt-5 mb-2">

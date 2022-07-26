@@ -12,7 +12,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-23T23:55:52")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-26T07:48:57")
 @StaticMetamodel(Lecturer.class)
 public class Lecturer_ { 
 
@@ -20,15 +20,15 @@ public class Lecturer_ {
     public static volatile SingularAttribute<Lecturer, String> code;
     public static volatile SingularAttribute<Lecturer, String> address;
     public static volatile SingularAttribute<Lecturer, Integer> gender;
-    public static volatile SetAttribute<Lecturer, CounterArgument> counterArgumentSet;
-    public static volatile SingularAttribute<Lecturer, Department> departmentId;
     public static volatile SingularAttribute<Lecturer, String> fullName;
-    public static volatile SetAttribute<Lecturer, Guide> guideSet;
-    public static volatile SingularAttribute<Lecturer, User> userId;
-    public static volatile SingularAttribute<Lecturer, Position> positionId;
+    public static volatile SetAttribute<Lecturer, Guide> guides;
+    public static volatile SetAttribute<Lecturer, CouncilDetail> councilDetails;
     public static volatile SingularAttribute<Lecturer, String> phone;
-    public static volatile SetAttribute<Lecturer, CouncilDetail> councilDetailSet;
+    public static volatile SetAttribute<Lecturer, CounterArgument> counterArguments;
     public static volatile SingularAttribute<Lecturer, Integer> id;
+    public static volatile SingularAttribute<Lecturer, Position> position;
+    public static volatile SingularAttribute<Lecturer, Department> department;
+    public static volatile SingularAttribute<Lecturer, User> user;
     public static volatile SingularAttribute<Lecturer, String> email;
 
 }

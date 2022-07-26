@@ -14,28 +14,28 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-23T23:55:52")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-26T07:48:57")
 @StaticMetamodel(Thesis.class)
 public class Thesis_ { 
 
+    public static volatile SetAttribute<Thesis, Perform> performs;
     public static volatile SingularAttribute<Thesis, Date> thesisEndDate;
     public static volatile SingularAttribute<Thesis, String> code;
-    public static volatile SetAttribute<Thesis, CounterArgument> counterArgumentSet;
-    public static volatile SetAttribute<Thesis, Perform> performSet;
-    public static volatile SingularAttribute<Thesis, Department> departmentId;
+    public static volatile SetAttribute<Thesis, Score> scores;
     public static volatile SingularAttribute<Thesis, String> reportFile;
-    public static volatile SetAttribute<Thesis, Guide> guideSet;
     public static volatile SingularAttribute<Thesis, Date> complateDate;
-    public static volatile SingularAttribute<Thesis, SchoolYear> schoolYearId;
     public static volatile SingularAttribute<Thesis, Double> totalScore;
     public static volatile SingularAttribute<Thesis, Boolean> result;
-    public static volatile SingularAttribute<Thesis, Topic> topicId;
+    public static volatile SetAttribute<Thesis, Guide> guides;
     public static volatile SingularAttribute<Thesis, Date> thesisStartDate;
-    public static volatile SingularAttribute<Thesis, Council> councilId;
+    public static volatile SingularAttribute<Thesis, Council> council;
+    public static volatile SetAttribute<Thesis, CounterArgument> counterArguments;
+    public static volatile SingularAttribute<Thesis, SchoolYear> schoolYear;
+    public static volatile SingularAttribute<Thesis, Topic> topic;
     public static volatile SingularAttribute<Thesis, String> comment;
     public static volatile SingularAttribute<Thesis, Integer> id;
+    public static volatile SingularAttribute<Thesis, Department> department;
     public static volatile SingularAttribute<Thesis, Date> startDate;
     public static volatile SingularAttribute<Thesis, Integer> status;
-    public static volatile SetAttribute<Thesis, Score> scoreSet;
 
 }

@@ -8,14 +8,14 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-23T23:55:52")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-26T07:48:57")
 @StaticMetamodel(CouncilDetail.class)
 public class CouncilDetail_ { 
 
-    public static volatile SingularAttribute<CouncilDetail, Lecturer> lecturerId;
-    public static volatile SingularAttribute<CouncilDetail, Council> councilId;
+    public static volatile SetAttribute<CouncilDetail, Score> scores;
+    public static volatile SingularAttribute<CouncilDetail, Council> council;
+    public static volatile SingularAttribute<CouncilDetail, Lecturer> lecturer;
     public static volatile SingularAttribute<CouncilDetail, Integer> id;
     public static volatile SingularAttribute<CouncilDetail, String> position;
-    public static volatile SetAttribute<CouncilDetail, Score> scoreSet;
 
 }

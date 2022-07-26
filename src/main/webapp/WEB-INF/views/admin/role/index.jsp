@@ -1,30 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:url var="searchRole" value="/admin/roles/"/>
 
 <div class="page-header">
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <div class="title">
-                <h4>Lọc</h4>
+    <div>
+        <nav class="navbar navbar-expand-sm navbar-dark indigo">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="form-inline ml-auto" action="${searchRole}">
+                    <div class="md-form my-0">
+                        <input class="form-control" type="text" placeholder="Tìm kiếm ..." name="kw"
+                               aria-label="Search">
+                    </div>
+                    <input class="form-control ml-1 btn-warning btn" type="submit" value="Tìm kiếm"/>
+                </form>
+
             </div>
-            <nav aria-label="breadcrumb" role="navigation">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Form Basic</li>
-                </ol>
-            </nav>
-        </div>
-        <div class="col-md-6 col-sm-12 text-right">
-            <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    January 2018
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">Export List</a>
-                    <a class="dropdown-item" href="#">Policies</a>
-                    <a class="dropdown-item" href="#">View Assets</a>
-                </div>
-            </div>
-        </div>
+        </nav>
     </div>
 </div>
 <!-- table start -->
@@ -43,11 +35,23 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row" class="text-center">1</th>
-            <td>Otto</td>
-            <td>Otto</td>
-        </tr>
+        <c:if test="${roles.size() != 0}">
+            <c:forEach var="role" items="${roles}">
+                <tr>
+                    <th scope="row" class="text-center">${role.id}</th>
+                    <td class="text-danger font-weight-bold">${role.roleName}</td>
+                    <td>${role.description}</td>
+                </tr>
+            </c:forEach>
+        </c:if>
+        <c:if test="${roles.size() == 0}">
+            <tr>
+                <td colspan="3" class="text-black-50 text-center">
+                    <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
+                    <p class="text-center">Danh sách quyền trống</p>
+                </td>
+            </tr>
+        </c:if>
         </tbody>
     </table>
 </div>

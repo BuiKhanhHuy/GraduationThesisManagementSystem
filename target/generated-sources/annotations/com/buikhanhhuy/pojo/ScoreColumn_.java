@@ -7,14 +7,14 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-23T23:55:52")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-26T07:48:57")
 @StaticMetamodel(ScoreColumn.class)
 public class ScoreColumn_ { 
 
-    public static volatile SetAttribute<ScoreColumn, ScoreDetail> scoreDetailSet;
     public static volatile SingularAttribute<ScoreColumn, String> name;
+    public static volatile SetAttribute<ScoreColumn, ScoreDetail> scoreDetails;
     public static volatile SingularAttribute<ScoreColumn, Double> weight;
-    public static volatile SingularAttribute<ScoreColumn, ScoreComponent> scoreComponentId;
     public static volatile SingularAttribute<ScoreColumn, Integer> id;
+    public static volatile SingularAttribute<ScoreColumn, ScoreComponent> scoreComponent;
 
 }

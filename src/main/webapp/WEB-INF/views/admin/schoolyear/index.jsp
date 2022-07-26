@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div class="page-header">
     <div class="row">
@@ -43,30 +45,43 @@
         <thead>
         <tr>
             <th scope="col" class="text-center">ID</th>
-            <th scope="col">Niên khóa</th>
+            <th scope="col" class="text-center">Niên khóa</th>
             <th scope="col" class="col-2 text-center">Ngày bắt đầu</th>
             <th scope="col" class="col-2 text-center">Ngày kết thúc</th>
             <th scope="col" class="col-2 text-center">Hành động</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row" class="text-center">1</th>
-            <td>Mark</td>
-            <td class="col-2 text-center">Otto</td>
-            <td class="col-2 text-center">@mdo</td>
-            <td class="col-2 text-center">
-                <button type="button" class="btn btn-sm bg-info text-white">
-                    <i class="icon-copy dw dw-eye"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-warning text-white">
-                    <i class="icon-copy dw dw-edit1"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-danger text-white">
-                    <i class="icon-copy dw dw-delete-3"></i>
-                </button>
-            </td>
-        </tr>
+        <c:if test="${schoolYears.size() != 0}">
+            <c:forEach var="schoolYear" items="${schoolYears}">
+                <tr>
+                    <th scope="row" class="text-center">${schoolYear.id}</th>
+                    <td class="text-center">${schoolYear.name}</td>
+                    <td class="col-2 text-center">
+                        <fmt:formatDate pattern="dd/MM/yyyy" value="${schoolYear.startDate}" />
+                    </td>
+                    <td class="col-2 text-center">
+                        <fmt:formatDate pattern="dd/MM/yyyy" value="${schoolYear.endDate}" />
+                    </td>
+                    <td class="col-2 text-center">
+                        <button type="button" class="btn btn-sm bg-warning text-white">
+                            <i class="icon-copy dw dw-edit1"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm bg-danger text-white">
+                            <i class="icon-copy dw dw-delete-3"></i>
+                        </button>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+        <c:if test="${schoolYears.size() == 0}">
+            <tr>
+                <td colspan="5" class="text-black-50 text-center">
+                    <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
+                    <p class="text-center">Danh sách niên khóa trống</p>
+                </td>
+            </tr>
+        </c:if>
         </tbody>
     </table>
     <div class="blog-pagination pagination-sm mt-5 mb-2">

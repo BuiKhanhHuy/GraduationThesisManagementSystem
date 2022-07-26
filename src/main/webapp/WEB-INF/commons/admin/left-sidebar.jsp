@@ -13,6 +13,7 @@
 <c:url var="evaluationMethod" value="/admin/evaluations-method/"/>
 <c:url var="scoreComponent" value="/admin/score-components/"/>
 <c:url var="scoreColumn" value="/admin/score-columns/"/>
+<c:url var="thesis" value="/admin/theses/"/>
 
 <c:url var="role" value="/admin/roles/"/>
 
@@ -21,11 +22,14 @@
 <c:url var="notification" value="/admin/notifications/"/>
 <c:url var="chat" value="/admin/chats/"/>
 
+<c:url var="logout" value="/logout/"/>
+
 <div class="left-side-bar">
     <div class="brand-logo">
         <a href="index.html">
-            <img src="<c:url value="/admin/vendors/images/deskapp-logo.svg"/> " alt="" class="dark-logo">
-            <img src="<c:url value="/admin/vendors/images/deskapp-logo-white.svg"/> " alt="" class="light-logo">
+            <img src="https://res.cloudinary.com/dtnpj540t/image/upload/v1658598874/asqtbyhdunc0eawri28d.png" alt="" width="70" class="dark-logo">
+            <img src="https://res.cloudinary.com/dtnpj540t/image/upload/v1658598874/u1yilp4dhzrcfps6m0en.png" alt="" width="70" class="light-logo">
+            <span style="margin-left: 10px;">HCMCOU</span>
         </a>
         <div class="dropdown-divider my-0 border-1 border-dark"></div>
         <div class="close-sidebar" data-toggle="left-sidebar-close">
@@ -71,7 +75,7 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="${topic}">Đề tài</a></li>
-                        <li><a href="ui-cards.html">Khóa luận</a></li>
+                        <li><a href="${thesis}">Khóa luận</a></li>
                     </ul>
                 </li>
                 <li>
@@ -79,15 +83,10 @@
                         <span class="micon fa fa-users"></span><span class="mtext">Hội đồng</span>
                     </a>
                 </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon fa fa-edit"></span><span class="mtext">Quản lý đánh giá</span>
+                <li>
+                    <a href="${evaluationMethod}" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-edit"></span><span class="mtext">Phương pháp đánh giá</span>
                     </a>
-                    <ul class="submenu">
-                        <li><a href="${evaluationMethod}">Phương pháp đánh giá</a></li>
-                        <li><a href="${scoreComponent}">Thành phần điểm</a></li>
-                        <li><a href="${scoreColumn}">Cột điểm</a></li>
-                    </ul>
                 </li>
                 <li>
                     <a href="${notification}" class="dropdown-toggle no-arrow">
@@ -120,6 +119,14 @@
                 <li>
                     <a href="${chat}" class="dropdown-toggle no-arrow">
                         <span class="micon dw dw-chat3"></span><span class="mtext">Trò chuyện</span>
+                    </a>
+                </li>
+                <li>
+                    <div class="dropdown-divider"></div>
+                </li>
+                <li class="text-center" style="margin-bottom: 70px;">
+                    <a href="${logout}" class=" btn btn-danger">
+                        <span class="micon dw dw-logout mr-2"></span>Đăng xuất
                     </a>
                 </li>
             </ul>

@@ -3,30 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div class="page-header">
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <div class="title">
-                <h4>Lọc</h4>
-            </div>
-            <nav aria-label="breadcrumb" role="navigation">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Form Basic</li>
-                </ol>
-            </nav>
-        </div>
-        <div class="col-md-6 col-sm-12 text-right">
-            <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    January 2018
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">Export List</a>
-                    <a class="dropdown-item" href="#">Policies</a>
-                    <a class="dropdown-item" href="#">View Assets</a>
-                </div>
-            </div>
-        </div>
+    <div>
+
     </div>
 </div>
 <!-- table start -->
@@ -53,38 +31,54 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row" class="text-center">
-                <img src="<c:url value="/admin/vendors/images/chat-img2.jpg"/> " width="70" alt="">
-            </th>
-            <td class="text-center">admin</td>
-            <td>
-                <ul style="list-style-type: circle; list-style-position: inside; ">
-                    <li>Bùi Khánh Huy</li>
-                    <li>khuy220@gmail.com</li>
-                    <li>0888425094</li>
-                    <li>27/02/2001</li>
-                    <li>Nam</li>
-                    <li>1242 QL1A, Tân Tạo A, Bình Tân, TP. HCM</li>
-                </ul>
-            </td>
-            <td class="text-center">
-                <i class="fa fa-circle text-success" data-toggle="tooltip" data-placement="bottom"
-                   title="Hoạt động"></i>
-            </td>
-            <td class="text-light-purple font-weight-bold">ADMIN</td>
-            <td class="col-2 text-center">
-                <button type="button" class="btn btn-sm bg-info text-white">
-                    <i class="icon-copy dw dw-eye"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-warning text-white">
-                    <i class="icon-copy dw dw-edit1"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-danger text-white">
-                    <i class="icon-copy dw dw-delete-3"></i>
-                </button>
-            </td>
-        </tr>
+        <c:if test="${manages.size() != 0}">
+            <c:forEach var="manage" items="${manages}">
+                <tr>
+                    <th scope="row" class="text-center">
+                        <img src="${manage.user.avatar}" style="border-radius: 50%;" height="70" width="70" alt="">
+                    </th>
+                    <td class="text-center">${manage.user.username}</td>
+                    <td>
+                        <ul style="list-style-type: circle; list-style-position: inside; ">
+                            <li>${manage.fullName}</li>
+                            <li>${manage.email}</li>
+                            <li>${manage.phone}</li>
+                        </ul>
+                    </td>
+                    <td class="text-center">
+                        <c:if test="${manage.user.active == true}">
+                            <i class="fa fa-circle text-success" data-toggle="tooltip" data-placement="bottom"
+                               title="Hoạt động"></i>
+                        </c:if>
+                        <c:if test="${manage.user.active != true}">
+                            <i class="fa fa-circle text-danger" data-toggle="tooltip" data-placement="bottom"
+                               title="Hoạt động"></i>
+                        </c:if>
+                    </td>
+                    <td class="text-light-purple font-weight-bold">${manage.user.role.roleName}</td>
+                    <td class="col-2 text-center">
+                        <button type="button" class="btn btn-sm bg-warning text-white"
+                                data-toggle="tooltip"
+                                data-placement="bottom" title="Chỉnh sửa">
+                            <i class="icon-copy dw dw-edit1"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm bg-danger text-white"
+                                data-toggle="tooltip"
+                                data-placement="bottom" title="Xóa">
+                            <i class="icon-copy dw dw-delete-3"></i>
+                        </button>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+        <c:if test="${manages.size() == 0}">
+            <tr>
+                <td colspan="6" class="text-black-50 text-center">
+                    <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
+                    <p class="text-center">Danh sách quản lý trống</p>
+                </td>
+            </tr>
+        </c:if>
         </tbody>
     </table>
     <div class="blog-pagination pagination-sm mt-5 mb-2">

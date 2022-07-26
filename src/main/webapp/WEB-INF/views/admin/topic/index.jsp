@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="page-header">
@@ -50,23 +51,39 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row" class="text-center">1</th>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td class="col-2 text-center">
-                <button type="button" class="btn btn-sm bg-info text-white">
-                    <i class="icon-copy dw dw-eye"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-warning text-white">
-                    <i class="icon-copy dw dw-edit1"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-danger text-white">
-                    <i class="icon-copy dw dw-delete-3"></i>
-                </button>
-            </td>
-        </tr>
+        <c:if test="${topics.size() != 0}">
+            <c:forEach var="topic" items="${topics}">
+                <tr>
+                    <th scope="row" class="text-center">${topic.id}</th>
+                    <td>${topic.name}</td>
+                    <td>${topic.description}</td>
+                    <td>
+                        <c:if test="${topic.department != null}">
+                            ${topic.department.name}
+                        </c:if>
+                        <c:if test="${topic.department == null}">
+                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                        </c:if>
+                    </td>
+                    <td class="col-2 text-center">
+                        <button type="button" class="btn btn-sm bg-warning text-white">
+                            <i class="icon-copy dw dw-edit1"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm bg-danger text-white">
+                            <i class="icon-copy dw dw-delete-3"></i>
+                        </button>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+        <c:if test="${topics.size() == 0}">
+            <tr>
+                <td colspan="5" class="text-black-50 text-center">
+                    <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
+                    <p class="text-center">Danh sách đề tài trống</p>
+                </td>
+            </tr>
+        </c:if>
         </tbody>
     </table>
     <div class="blog-pagination pagination-sm mt-5 mb-2">

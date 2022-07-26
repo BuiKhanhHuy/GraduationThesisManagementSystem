@@ -5,7 +5,7 @@
 package com.buikhanhhuy.pojo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,8 +17,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -47,23 +45,22 @@ public class Department implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
+    @NotNull(message ="{department.add.code.notNullMessage}")
+    @Size(min = 1, max = 10, message = "{department.add.code.sizeMessage}")
     @Column(name = "code")
     private String code;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotNull(message = "{department.add.name.notNullMessage}")
+    @Size(min = 1, max = 100, message = "{department.add.name.sizeMessage}")
     @Column(name = "name")
     private String name;
-    @Size(max = 255)
+    @Size(max = 255, message = "{department.add.description.maxMessage}")
     @Column(name = "description")
     private String description;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{department.add.founding.notNullMessage}")
     @Column(name = "founding")
-    @Temporal(TemporalType.DATE)
-    private Date founding;
+    private LocalDate founding;
     @OneToMany(mappedBy = "department")
     private Set<Lecturer> lecturers;
     @OneToMany(mappedBy = "department")
@@ -80,7 +77,7 @@ public class Department implements Serializable {
         this.id = id;
     }
 
-    public Department(Integer id, String code, String name, Date founding) {
+    public Department(Integer id, String code, String name, LocalDate founding) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -119,11 +116,11 @@ public class Department implements Serializable {
         this.description = description;
     }
 
-    public Date getFounding() {
+    public LocalDate getFounding() {
         return founding;
     }
 
-    public void setFounding(Date founding) {
+    public void setFounding(LocalDate founding) {
         this.founding = founding;
     }
 

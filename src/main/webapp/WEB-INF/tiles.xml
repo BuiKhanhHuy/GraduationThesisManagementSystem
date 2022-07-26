@@ -34,14 +34,23 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
             <add-attribute value="/admin/vendors/scripts/dashboard.js"/>
         </put-list-attribute>
     </definition>
+    <!--    department-->
     <definition name="adminDepartmentList" extends="adminBaseLayout">
         <put-attribute name="title" value="Danh sách khoa"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/department/index.jsp"/>
     </definition>
+
+    <definition name="adminAddDepartment" extends="adminBaseLayout">
+        <put-attribute name="title" value="Thêm khoa"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/department/form/create.jsp"/>
+    </definition>
+    <!--    department-->
+    <!--    major-->
     <definition name="adminMajorList" extends="adminBaseLayout">
         <put-attribute name="title" value="Danh sách ngành"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/major/index.jsp"/>
     </definition>
+    <!--    major-->
     <definition name="adminSchoolYearList" extends="adminBaseLayout">
         <put-attribute name="title" value="Danh sách niên khóa"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/schoolyear/index.jsp"/>
@@ -74,6 +83,11 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="adminScoreColumnList" extends="adminBaseLayout">
         <put-attribute name="title" value="Danh sách cột điểm"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/scorecolumn/index.jsp"/>
+    </definition>
+
+    <definition name="adminThesisList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Khóa luận"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/thesis/index.jsp"/>
     </definition>
 
     <definition name="adminRoleList" extends="adminBaseLayout">

@@ -1,4 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<c:url var="addDepartment" value="/admin/departments/add/"/>
 
 <div class="page-header">
     <div class="row">
@@ -34,9 +37,9 @@
             <h4 class="text-blue h4">Danh sách khoa</h4>
         </div>
         <div class="pull-right">
-            <button type="button" class="btn btn-primary btn-md"><i class="micon icon-copy dw dw-add"></i>
+            <a href="${addDepartment}" class="btn btn-primary btn-md"><i class="micon icon-copy dw dw-add"></i>
                 Thêm khoa
-            </button>
+            </a>
         </div>
     </div>
     <table class="table table-bordered">
@@ -51,24 +54,35 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row" class="text-center">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td class="text-center col-2">@mdo</td>
-            <td>@mdo</td>
-            <td class="col-2 text-center">
-                <button type="button" class="btn btn-sm bg-info text-white">
-                    <i class="icon-copy dw dw-eye"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-warning text-white">
-                    <i class="icon-copy dw dw-edit1"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-danger text-white">
-                    <i class="icon-copy dw dw-delete-3"></i>
-                </button>
-            </td>
-        </tr>
+        <c:if test="${departments.size() > 0}">
+            <c:forEach var="department" items="${departments}">
+                <tr>
+                    <td scope="row" class="text-center">${department.id}</td>
+                    <td>${department.code}</td>
+                    <td>${department.name}</td>
+                    <td class="text-center">${department.founding}</td>
+                    <td>
+                        ${department.description}
+                    </td>
+                    <td class="col-2 text-center">
+                        <button type="button" class="btn btn-sm bg-warning text-white">
+                            <i class="icon-copy dw dw-edit1"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm bg-danger text-white">
+                            <i class="icon-copy dw dw-delete-3"></i>
+                        </button>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+        <c:if test="${departments.size() == 0}">
+            <tr>
+                <td colspan="6" class="text-black-50 text-center">
+                    <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
+                    <p class="text-center">Danh sách khoa trống</p>
+                </td>
+            </tr>
+        </c:if>
         </tbody>
     </table>
     <div class="blog-pagination pagination-sm mt-5 mb-2">
@@ -85,4 +99,5 @@
         </div>
     </div>
 </div>
+
 <!-- table End -->

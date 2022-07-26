@@ -53,186 +53,75 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td class="text-center col-1">
-                <img src="<c:url value="/admin/vendors/images/chat-img2.jpg"/> " width="70" alt="">
-            </td>
-            <td class="text-center">1951050027</td>
-            <td>
-                <ul style="list-style-type: circle; list-style-position: inside; ">
-                    <li>Bùi Khánh Huy</li>
-                    <li>khuy220@gmail.com</li>
-                    <li>0888425094</li>
-                    <li>27/02/2001</li>
-                    <li>Nam</li>
-                    <li>1242 QL1A, Tân Tạo A, Bình Tân, TP. HCM</li>
-                </ul>
-            </td>
-            <td>2019-2023</td>
-            <td>Hệ thống thông tin quản lý</td>
-            <td class="text-center">
-                <i class="fa fa-circle text-success" data-toggle="tooltip" data-placement="bottom"
-                   title="Hoạt động"></i>
-            </td>
-            <td class="col-2 text-center">
-                <button type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Xem chi tiết">
-                    <i class="icon-copy dw dw-eye"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Chỉnh sửa">
-                    <i class="icon-copy dw dw-edit1"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Xóa">
-                    <i class="icon-copy dw dw-delete-3"></i>
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-center col-1">
-                <img src="<c:url value="/admin/vendors/images/chat-img2.jpg"/> " width="70" alt="">
-            </td>
-            <td class="text-center">1951050027</td>
-            <td>
-                <ul style="list-style-type: circle; list-style-position: inside; ">
-                    <li>Bùi Khánh Huy</li>
-                    <li>khuy220@gmail.com</li>
-                    <li>0888425094</li>
-                    <li>27/02/2001</li>
-                    <li>Nam</li>
-                    <li>1242 QL1A, Tân Tạo A, Bình Tân, TP. HCM</li>
-                </ul>
-            </td>
-            <td>2019-2023</td>
-            <td>Hệ thống thông tin quản lý</td>
-            <td class="text-center">
-                <i class="fa fa-circle text-success" data-toggle="tooltip" data-placement="bottom"
-                   title="Hoạt động"></i>
-            </td>
-            <td class="col-2 text-center">
-                <button type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Xem chi tiết">
-                    <i class="icon-copy dw dw-eye"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Chỉnh sửa">
-                    <i class="icon-copy dw dw-edit1"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Xóa">
-                    <i class="icon-copy dw dw-delete-3"></i>
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-center col-1">
-                <img src="<c:url value="/admin/vendors/images/chat-img2.jpg"/> " width="70" alt="">
-            </td>
-            <td class="text-center">1951050027</td>
-            <td>
-                <ul style="list-style-type: circle; list-style-position: inside; ">
-                    <li>Bùi Khánh Huy</li>
-                    <li>khuy220@gmail.com</li>
-                    <li>0888425094</li>
-                    <li>27/02/2001</li>
-                    <li>Nam</li>
-                    <li>1242 QL1A, Tân Tạo A, Bình Tân, TP. HCM</li>
-                </ul>
-            </td>
-            <td>2019-2023</td>
-            <td>Hệ thống thông tin quản lý</td>
-            <td class="text-center">
-                <i class="fa fa-circle text-success" data-toggle="tooltip" data-placement="bottom"
-                   title="Hoạt động"></i>
-            </td>
-            <td class="col-2 text-center">
-                <button type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Xem chi tiết">
-                    <i class="icon-copy dw dw-eye"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Chỉnh sửa">
-                    <i class="icon-copy dw dw-edit1"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Xóa">
-                    <i class="icon-copy dw dw-delete-3"></i>
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-center col-1">
-                <img src="<c:url value="/admin/vendors/images/chat-img2.jpg"/> " width="70" alt="">
-            </td>
-            <td class="text-center">1951050027</td>
-            <td>
-                <ul style="list-style-type: circle; list-style-position: inside; ">
-                    <li>Bùi Khánh Huy</li>
-                    <li>khuy220@gmail.com</li>
-                    <li>0888425094</li>
-                    <li>27/02/2001</li>
-                    <li>Nam</li>
-                    <li>1242 QL1A, Tân Tạo A, Bình Tân, TP. HCM</li>
-                </ul>
-            </td>
-            <td>2019-2023</td>
-            <td>Hệ thống thông tin quản lý</td>
-            <td class="text-center">
-                <i class="fa fa-circle text-success" data-toggle="tooltip" data-placement="bottom"
-                   title="Hoạt động"></i>
-            </td>
-            <td class="col-2 text-center">
-                <button type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Xem chi tiết">
-                    <i class="icon-copy dw dw-eye"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Chỉnh sửa">
-                    <i class="icon-copy dw dw-edit1"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Xóa">
-                    <i class="icon-copy dw dw-delete-3"></i>
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-center col-1">
-                <img src="<c:url value="/admin/vendors/images/chat-img2.jpg"/> " width="70" alt="">
-            </td>
-            <td class="text-center">1951050027</td>
-            <td>
-                <ul style="list-style-type: circle; list-style-position: inside; ">
-                    <li>Bùi Khánh Huy</li>
-                    <li>khuy220@gmail.com</li>
-                    <li>0888425094</li>
-                    <li>27/02/2001</li>
-                    <li>Nam</li>
-                    <li>1242 QL1A, Tân Tạo A, Bình Tân, TP. HCM</li>
-                </ul>
-            </td>
-            <td>2019-2023</td>
-            <td>Hệ thống thông tin quản lý</td>
-            <td class="text-center">
-                <i class="fa fa-circle text-success" data-toggle="tooltip" data-placement="bottom"
-                   title="Hoạt động"></i>
-            </td>
-            <td class="col-2 text-center">
-                <button type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Xem chi tiết">
-                    <i class="icon-copy dw dw-eye"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Chỉnh sửa">
-                    <i class="icon-copy dw dw-edit1"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
-                        data-placement="bottom" title="Xóa">
-                    <i class="icon-copy dw dw-delete-3"></i>
-                </button>
-            </td>
-        </tr>
+        <c:if test="${students.size() != 0}">
+            <c:forEach var="student" items="${students}">
+                <tr>
+                    <td class="text-center col-1">
+                        <img src="${student.user.avatar}" style="border-radius: 50%;" class="img-fluid" height="70"
+                             width="70" alt="">
+                    </td>
+                    <td class="text-center">${student.code}</td>
+                    <td>
+                        <ul style="list-style-type: circle; list-style-position: inside; ">
+                            <li>${student.fullName}</li>
+                            <li>${student.email}</li>
+                            <li>${student.phone}</li>
+                            <li>${student.birthday}</li>
+                            <li>
+                                <c:if test="${student.gender == 1}">
+                                    Nam
+                                </c:if>
+                                <c:if test="${student.gender == 2}">
+                                    Nữ
+                                </c:if>
+                                <c:if test="${student.gender == 3}">
+                                    Khác
+                                </c:if>
+                            </li>
+                            <li>${student.address}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <c:if test="${student.schoolYear != null}">
+                            ${student.schoolYear.name}
+                        </c:if>
+                        <c:if test="${student.schoolYear == null}">
+                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${student.major != null}">
+                            ${student.major.name}
+                        </c:if>
+                        <c:if test="${student.major == null}">
+                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                        </c:if>
+                    </td>
+                    <td class="text-center">
+                        <i class="fa fa-circle text-success" data-toggle="tooltip" data-placement="bottom"
+                           title="Hoạt động"></i>
+                    </td>
+                    <td class="col-2 text-center">
+                        <button type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
+                                data-placement="bottom" title="Chỉnh sửa">
+                            <i class="icon-copy dw dw-edit1"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
+                                data-placement="bottom" title="Xóa">
+                            <i class="icon-copy dw dw-delete-3"></i>
+                        </button>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+        <c:if test="${students.size() == 0}">
+            <tr>
+                <td colspan="7" class="text-black-50 text-center">
+                    <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
+                    <p class="text-center">Danh sách sinh viên trống</p>
+                </td>
+            </tr>
+        </c:if>
         </tbody>
     </table>
     <div class="blog-pagination pagination-sm mt-5 mb-2">
@@ -249,4 +138,5 @@
         </div>
     </div>
 </div>
+
 <!-- table End -->

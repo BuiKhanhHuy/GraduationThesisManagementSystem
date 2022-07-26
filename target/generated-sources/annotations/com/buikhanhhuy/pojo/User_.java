@@ -11,19 +11,19 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-23T23:55:51")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-26T07:48:57")
 @StaticMetamodel(User.class)
 public class User_ { 
 
+    public static volatile SetAttribute<User, News> news;
     public static volatile SingularAttribute<User, String> password;
+    public static volatile SingularAttribute<User, Role> role;
     public static volatile SingularAttribute<User, Student> student;
-    public static volatile SetAttribute<User, News> newsSet;
-    public static volatile SingularAttribute<User, Role> roleId;
-    public static volatile SetAttribute<User, NotificationUser> notificationUserSet;
     public static volatile SingularAttribute<User, Boolean> active;
     public static volatile SingularAttribute<User, Lecturer> lecturer;
     public static volatile SingularAttribute<User, Integer> id;
     public static volatile SingularAttribute<User, String> avatar;
+    public static volatile SetAttribute<User, NotificationUser> notificationUsers;
     public static volatile SingularAttribute<User, String> username;
     public static volatile SingularAttribute<User, Manage> manage;
 

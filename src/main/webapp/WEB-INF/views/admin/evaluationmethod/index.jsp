@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="page-header">
     <div class="row">
@@ -44,30 +45,74 @@
         <tr>
             <th scope="col" class="text-center">ID</th>
             <th scope="col">Tên phương pháp đánh giá</th>
+            <th scope="col" class="col-6">Nội dung đánh giá</th>
             <th scope="col" class="text-center">Hoạt động</th>
             <th scope="col" class="col-2 text-center">Hành động</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row" class="text-center">1</th>
-            <td>Phương pháp đánh giá 2019-2022</td>
-            <td class="text-center">
-                <i class="fa fa-circle text-success" data-toggle="tooltip" data-placement="bottom"
-                   title="Hoạt động"></i>
-            </td>
-            <td class="col-2 text-center">
-                <button type="button" class="btn btn-sm bg-info text-white">
-                    <i class="icon-copy dw dw-eye"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-warning text-white">
-                    <i class="icon-copy dw dw-edit1"></i>
-                </button>
-                <button type="button" class="btn btn-sm bg-danger text-white">
-                    <i class="icon-copy dw dw-delete-3"></i>
-                </button>
-            </td>
-        </tr>
+        <c:if test="${evaluationMethods.size() != 0}">
+            <c:forEach var="evaluationMethod" items="${evaluationMethods}">
+                <tr>
+                    <th scope="row" class="text-center">${evaluationMethod.id}</th>
+                    <td>${evaluationMethod.name}</td>
+                    <td>
+                        <c:if test="${evaluationMethod.scoreComponents != null}">
+                            <c:forEach var="scoreComponent" items="${evaluationMethod.scoreComponents}">
+                                <div class="m-0 p-0">
+                                    <p class="m-0 p-0 font-weight-bold">${scoreComponent.name}
+                                        <span class="ml-2 text-danger">(${scoreComponent.weight * 100} %)</span>
+                                    </p>
+                                    <div class="ml-5">
+                                        <ol style="list-style: -moz-ethiopic-numeric;">
+                                            <c:if test="${scoreComponent.scoreColumns != null}">
+                                                <c:forEach var="scoreColumn" items="${scoreComponent.scoreColumns}">
+                                                    <li>${scoreColumn.name}
+                                                        <span class="ml-2 font-weight-bold text-info">(${scoreColumn.weight * 100} %)</span>
+                                                    </li>
+                                                </c:forEach>
+                                            </c:if>
+                                            <c:if test="${scoreComponent.scoreColumns == null}">
+                                                <li><span class="text-black-50 text-center">Chưa cập nhật</span></li>
+                                            </c:if>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:if>
+                        <c:if test="${evaluationMethod.scoreComponents == null}">
+                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                        </c:if>
+                    </td>
+                    <td class="text-center">
+                        <c:if test="${evaluationMethod.active == true}">
+                            <i class="fa fa-circle text-success" data-toggle="tooltip" data-placement="bottom"
+                               title="Hoạt động"></i>
+                        </c:if>
+                        <c:if test="${evaluationMethod.active != true}">
+                            <i class="fa fa-circle text-danger" data-toggle="tooltip" data-placement="bottom"
+                               title="Hoạt động"></i>
+                        </c:if>
+                    </td>
+                    <td class="col-2 text-center">
+                        <button type="button" class="btn btn-sm bg-warning text-white">
+                            <i class="icon-copy dw dw-edit1"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm bg-danger text-white">
+                            <i class="icon-copy dw dw-delete-3"></i>
+                        </button>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+        <c:if test="${evaluationMethods.size() == 0}">
+            <tr>
+                <td colspan="4" class="text-black-50 text-center">
+                    <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
+                    <p class="text-center">Danh sách phương pháp đánh giá trống</p>
+                </td>
+            </tr>
+        </c:if>
         </tbody>
     </table>
     <div class="blog-pagination pagination-sm mt-5 mb-2">

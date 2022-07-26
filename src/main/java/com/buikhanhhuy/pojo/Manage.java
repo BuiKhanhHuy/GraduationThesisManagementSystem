@@ -5,34 +5,23 @@
 package com.buikhanhhuy.pojo;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author bkhuy
  */
 @Entity
 @Table(name = "manage")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Manage.findAll", query = "SELECT m FROM Manage m"),
-    @NamedQuery(name = "Manage.findById", query = "SELECT m FROM Manage m WHERE m.id = :id"),
-    @NamedQuery(name = "Manage.findByFullName", query = "SELECT m FROM Manage m WHERE m.fullName = :fullName"),
-    @NamedQuery(name = "Manage.findByEmail", query = "SELECT m FROM Manage m WHERE m.email = :email"),
-    @NamedQuery(name = "Manage.findByPhone", query = "SELECT m FROM Manage m WHERE m.phone = :phone")})
+        @NamedQuery(name = "Manage.findAll", query = "SELECT m FROM Manage m"),
+        @NamedQuery(name = "Manage.findById", query = "SELECT m FROM Manage m WHERE m.id = :id"),
+        @NamedQuery(name = "Manage.findByFullName", query = "SELECT m FROM Manage m WHERE m.fullName = :fullName"),
+        @NamedQuery(name = "Manage.findByEmail", query = "SELECT m FROM Manage m WHERE m.email = :email"),
+        @NamedQuery(name = "Manage.findByPhone", query = "SELECT m FROM Manage m WHERE m.phone = :phone")})
 public class Manage implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,7 +48,7 @@ public class Manage implements Serializable {
     @Column(name = "phone")
     private String phone;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private User user;
 
     public Manage() {
@@ -140,5 +129,5 @@ public class Manage implements Serializable {
     public String toString() {
         return "com.buikhanhhuy.pojo.Manage[ id=" + id + " ]";
     }
-    
+
 }
