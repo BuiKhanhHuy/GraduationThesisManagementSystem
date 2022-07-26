@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <c:url var="addDepartment" value="/admin/departments/add/"/>
+<c:url var="addDepartmentEndpoint" value="/api/departments/"/>
 
 <div class="page-header">
     <div class="row">
@@ -37,9 +38,10 @@
             <h4 class="text-blue h4">Danh sách khoa</h4>
         </div>
         <div class="pull-right">
-            <a href="${addDepartment}" class="btn btn-primary btn-md"><i class="micon icon-copy dw dw-add"></i>
+            <button data-toggle="modal" data-target="#bd-example-modal-lg" class="btn btn-primary btn-md"><i
+                    class="micon icon-copy dw dw-add"></i>
                 Thêm khoa
-            </a>
+            </button>
         </div>
     </div>
     <table class="table table-bordered">
@@ -62,7 +64,7 @@
                     <td>${department.name}</td>
                     <td class="text-center">${department.founding}</td>
                     <td>
-                        ${department.description}
+                            ${department.description}
                     </td>
                     <td class="col-2 text-center">
                         <button type="button" class="btn btn-sm bg-warning text-white">
@@ -99,5 +101,85 @@
         </div>
     </div>
 </div>
-
 <!-- table End -->
+
+<!-- Large modal -->
+<div class="col-md-4 col-sm-12 mb-30">
+    <div class="pd-20 card-box height-100-p">
+        <h5 class="h4">Large modal</h5>
+        <a href="#" class="btn-block" data-toggle="modal" data-target="#bd-example-modal-lg" type="button">
+            <img src="vendors/images/modal-img1.jpg" alt="modal">
+        </a>
+        <div class="modal fade bs-example-modal-lg" id="bd-example-modal-lg" tabindex="-1" role="dialog"
+             aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myLargeModalLabel">Thêm khoa</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-add-department">
+                            <div class="pd-10">
+                                <div class="form-group">
+                                    <label class="font-weight-bold">Mã khoa <span class="text-danger">(*)</span></label>
+                                    <input name="code" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-weight-bold">Tên khoa <span
+                                            class="text-danger">(*)</span></label>
+                                    <input name="name" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-weight-bold">Ngày thành lập <span class="text-danger">(*)</span></label>
+                                    <input name="founding" type="date" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-weight-bold">Mô tả</label>
+                                    <input name="description" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary"
+                                onclick="addDepartment('${addDepartmentEndpoint}')">Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const addDepartment = (endpoint) => {
+        let formData = $('#form-add-department').serializeArray()
+        let data = {}
+
+        $.each(formData, (i, v) => {
+            data["" + v.name + ""] = v.value;
+        })
+        $('input').next('span').remove();
+        fetch(endpoint.toString(), {
+            method: "POST",
+            body: JSON.stringify({
+                "code": "1111111111111111111111111",
+                "name": "hihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihi"
+            }), headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json()).then(data => {
+            if (data.validated) {
+                alert("Registration Successful");
+            } else {
+                $.each(data.errorMessages, function (key, value) {
+                    $('input[name=' + key + ']').after('<span class="text-danger">' + value + '</span>');
+                });
+        }
+        }).catch(err => {
+            Console.error(`Lỗi khi add department: ${err}`);
+        })
+    }
+</script>

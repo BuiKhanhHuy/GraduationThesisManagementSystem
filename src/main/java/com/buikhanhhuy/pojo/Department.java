@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -45,13 +46,15 @@ public class Department implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    @NotEmpty(message = "{department.add.code.notNullMessage}")
     @NotNull(message ="{department.add.code.notNullMessage}")
-    @Size(min = 1, max = 10, message = "{department.add.code.sizeMessage}")
+    @Size(max = 10, message = "{department.add.code.sizeMessage}")
     @Column(name = "code")
     private String code;
     @Basic(optional = false)
+    @NotEmpty(message = "{department.add.name.notNullMessage}")
     @NotNull(message = "{department.add.name.notNullMessage}")
-    @Size(min = 1, max = 100, message = "{department.add.name.sizeMessage}")
+    @Size(max = 100, message = "{department.add.name.sizeMessage}")
     @Column(name = "name")
     private String name;
     @Size(max = 255, message = "{department.add.description.maxMessage}")

@@ -4,23 +4,50 @@
 <c:url var="searchRole" value="/admin/roles/"/>
 
 <div class="page-header">
-    <div>
-        <nav class="navbar navbar-expand-sm navbar-dark indigo">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="form-inline ml-auto" action="${searchRole}">
-                    <div class="md-form my-0">
-                        <input class="form-control" type="text" placeholder="Tìm kiếm ..." name="kw"
-                               aria-label="Search">
-                    </div>
-                    <input class="form-control ml-1 btn-warning btn" type="submit" value="Tìm kiếm"/>
-                </form>
-
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="title">
+                <h4>pricing Table</h4>
             </div>
-        </nav>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">pricing Table</li>
+                </ol>
+            </nav>
+        </div>
     </div>
 </div>
+
 <!-- table start -->
 <div class="pd-20 card-box mb-30">
+    <form>
+        <div class="row" action="${searchRole}">
+            <div class="col-md-4 col-sm-12">
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Nhập tên quyền cần tìm..." name="kw"
+                           aria-label="Search">
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <div class="form-group">
+                    <select class="custom-select2 form-control" name="id" style="width: 100%; height: 38px;">
+                        <c:forEach var="role" items="${roles}">
+                            <option value="${role.id}">${role.roleName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <div>
+                    <button class="form-control ml-1 btn-warning btn" type="submit">
+                        <i class=" fa fa-search" aria-hidden="true"></i> Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <hr style="height:5px;" class="text-black-50">
     <div class="clearfix mb-20">
         <div class="pull-left">
             <h4 class="text-blue h4">Danh sách quyền</h4>
