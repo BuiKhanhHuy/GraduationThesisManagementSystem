@@ -17,4 +17,29 @@ public class NewsServiceImplement implements NewsService {
     public List<News> getNews() {
         return this.newsRepository.getNews();
     }
+
+    @Override
+    public News getNewsWithAuthorById(int newsId) {
+        return newsRepository.getNewsWithAuthorById(newsId);
+    }
+
+    @Override
+    public Object[] getNewsById(int newsId) {
+        return this.newsRepository.getNewsById(newsId);
+    }
+
+    @Override
+    public boolean addNews(News news) {
+        return this.newsRepository.addNews(news);
+    }
+
+    @Override
+    public boolean updateNews(int newsId, News news) {
+        return this.newsRepository.updateNews(newsId, news);
+    }
+
+    @Override
+    public boolean deleteNews(int newsId) {
+        return this.newsRepository.deleteNews(newsId);
+    }
 }

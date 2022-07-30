@@ -4,19 +4,12 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -63,14 +56,18 @@ public class Department implements Serializable {
     @Basic(optional = false)
     @NotNull(message = "{department.add.founding.notNullMessage}")
     @Column(name = "founding")
-    private LocalDate founding;
+    private Date founding;
     @OneToMany(mappedBy = "department")
+    @JsonIgnore
     private Set<Lecturer> lecturers;
     @OneToMany(mappedBy = "department")
+    @JsonIgnore
     private Set<Major> majors;
     @OneToMany(mappedBy = "department")
+    @JsonIgnore
     private Set<Thesis> theses;
     @OneToMany(mappedBy = "department")
+    @JsonIgnore
     private Set<Topic> topics;
 
     public Department() {
@@ -80,7 +77,7 @@ public class Department implements Serializable {
         this.id = id;
     }
 
-    public Department(Integer id, String code, String name, LocalDate founding) {
+    public Department(Integer id, String code, String name, Date founding) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -119,11 +116,11 @@ public class Department implements Serializable {
         this.description = description;
     }
 
-    public LocalDate getFounding() {
+    public Date getFounding() {
         return founding;
     }
 
-    public void setFounding(LocalDate founding) {
+    public void setFounding(Date founding) {
         this.founding = founding;
     }
 

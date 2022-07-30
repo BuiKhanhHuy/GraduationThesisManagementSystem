@@ -22,11 +22,73 @@ public class SchoolYearRepositoryImplement implements SchoolYearRepository {
     @Override
     public List<SchoolYear> getSchoolYears() {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<SchoolYear> query = builder.createQuery(SchoolYear.class);
         Root<SchoolYear> root = query.from(SchoolYear.class);
         query.select(root);
 
         return session.createQuery(query).getResultList();
+    }
+
+    @Override
+    public boolean addSchoolYear(SchoolYear schoolYear) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            session.save(schoolYear);
+            return true;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public SchoolYear getSchoolYearById(int schoolYearId) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<SchoolYear> query = builder.createQuery(SchoolYear.class);
+            Root<SchoolYear> root = query.from(SchoolYear.class);
+            query.select(root);
+            query.where(builder.equal(root.get("id").as(Integer.class), schoolYearId));
+
+            return session.createQuery(query).getSingleResult();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean updateSchoolYear(int schoolYearId, SchoolYear schoolYear) {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            SchoolYear objSchoolYear = session.get(SchoolYear.class, schoolYearId);
+            objSchoolYear.setName(schoolYear.getName());
+            objSchoolYear.setStartDate(schoolYear.getStartDate());
+            objSchoolYear.setEndDate(schoolYear.getEndDate());
+
+            session.update(objSchoolYear);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteSchoolYear(int schoolYearId) {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            SchoolYear schoolYear = session.get(SchoolYear.class, schoolYearId);
+            session.delete(schoolYear);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 }

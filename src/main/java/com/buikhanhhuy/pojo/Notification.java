@@ -4,19 +4,12 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Set;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -43,17 +36,22 @@ public class Notification implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotEmpty(message = "{notification.add.title.notNullMessage}")
+    @NotNull(message = "{notification.add.title.notNullMessage}")
+    @Size( max = 100, message = "{notification.add.title.sizeMessage}")
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotEmpty(message = "{notification.add.content.notNullMessage}")
+    @NotNull(message = "{notification.add.content.notNullMessage}")
+    @Size(max = 255, message = "{notification.add.content.sizeMessage}")
     @Column(name = "content")
     private String content;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "notification")
+    @JsonIgnore
     private Set<NotificationUser> notificationUsers;
+    @Transient
+    private Integer [] usersId;
 
     public Notification() {
     }
@@ -119,6 +117,14 @@ public class Notification implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public Integer[] getUsersId() {
+        return usersId;
+    }
+
+    public void setUsersId(Integer[] usersId) {
+        this.usersId = usersId;
     }
 
     @Override

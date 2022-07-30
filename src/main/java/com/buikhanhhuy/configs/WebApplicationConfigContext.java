@@ -1,7 +1,10 @@
 package com.buikhanhhuy.configs;
 
 import com.buikhanhhuy.converters.StringToLocalDateConverter;
-import com.buikhanhhuy.validators.DepartmentFoundingValidator;
+import com.buikhanhhuy.formatters.DepartmentFormatter;
+import com.buikhanhhuy.formatters.UserFormatter;
+import com.buikhanhhuy.validators.DepartmentValidator;
+import com.buikhanhhuy.validators.SchoolYearValidator;
 import com.buikhanhhuy.validators.WebAppValidator;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -16,8 +19,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -54,6 +56,8 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new StringToLocalDateConverter("yyyy-MM-dd"));
+        registry.addFormatter(new UserFormatter());
+        registry.addFormatter(new DepartmentFormatter());
     }
 
 
@@ -87,7 +91,18 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
     @Bean
     public WebAppValidator departmentValidator() {
         Set<Validator> springValidators = new HashSet<>();
-        springValidators.add(new DepartmentFoundingValidator());
+        springValidators.add(new DepartmentValidator());
+
+        WebAppValidator webAppValidator = new WebAppValidator();
+        webAppValidator.setValidators(springValidators);
+
+        return webAppValidator;
+    }
+
+    @Bean
+    public WebAppValidator schoolYearValidator(){
+        Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(new SchoolYearValidator());
 
         WebAppValidator webAppValidator = new WebAppValidator();
         webAppValidator.setValidators(springValidators);

@@ -4,6 +4,9 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -41,16 +45,19 @@ public class News implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotEmpty(message = "{news.add.title.notNullMessage}")
+    @NotNull(message = "{news.add.title.notNullMessage}")
+    @Size(max = 255, message = "{news.add.title.sizeMessage}")
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
-    @NotNull
+    @NotEmpty(message = "{news.add.content.notNullMessage}")
+    @NotNull(message = "{news.add.content.notNullMessage}")
     @Lob
-    @Size(min = 1, max = 2147483647)
+    @Size(max = 2147483647, message = "{news.add.content.sizeMessage}")
     @Column(name = "content")
     private String content;
+    @JsonIgnoreProperties({"password", "active", "role", "manage", "lecturer", "notificationUsers", "student", "news"})
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User user;

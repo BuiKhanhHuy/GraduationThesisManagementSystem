@@ -1,5 +1,6 @@
 package com.buikhanhhuy.controllers.admin;
 
+import com.buikhanhhuy.service.DepartmentService;
 import com.buikhanhhuy.service.MajorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "/admin")
 public class MajorController {
     @Autowired
+    private DepartmentService departmentService;
+    @Autowired
     private MajorService majorService;
 
     @GetMapping(path = "/majors")
     public String majorList(Model model) {
+        model.addAttribute("departmentOptions", this.departmentService.getDepartmentOptions());
+
         model.addAttribute("majors", this.majorService.getMajors());
 
         return "adminMajorList";

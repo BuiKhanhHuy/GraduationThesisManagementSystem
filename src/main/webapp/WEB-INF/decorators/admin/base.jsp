@@ -27,7 +27,9 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/admin/vendors/styles/icon-font.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/admin/vendors/styles/style.css"/> ">
 
-    <link rel="stylesheet" type="text/css" href="<c:url value="/admin/src/plugins/sweetalert2/sweetalert2.css"/> ">
+    <%--    sweetalert2--%>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" id="theme-styles">
 
     <c:forEach var="css" items="${stylesheets}">
         <link rel="stylesheet" type="text/css" href="${css}">
@@ -81,8 +83,8 @@
 <script src="<c:url value="/admin/vendors/scripts/process.js"/>"></script>
 <script src="<c:url value="/admin/vendors/scripts/layout-settings.js"/>"></script>
 
-<script src="<c:url value="/admin/src/plugins/sweetalert2/sweetalert2.all.js"/> "></script>
-<script src="<c:url value="/admin/src/plugins/sweetalert2/sweet-alert.init.js"/> "></script>
+<script src="<c:url value="/admin/src/plugins/toast/jquery.toast.js"/> "></script>
+<script src="<c:url value="/admin/src/scripts/sweet-alert2-custom.js"/> "></script>
 
 <c:forEach var="js" items="${javascripts}">
     <script src="<c:url value="${js}"/>"></script>

@@ -61,42 +61,42 @@
                         <ul>
                             <li>
                                 <a href="#">
-                                    <img src="vendors/images/img.jpg" alt="">
+                                    <img src="https://znews-stc.zdn.vn/static/topic/person/messi.jpg" alt="">
                                     <h3>John Doe</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="vendors/images/photo1.jpg" alt="">
+                                    <img src="https://znews-stc.zdn.vn/static/topic/person/messi.jpg" alt="">
                                     <h3>Lea R. Frith</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="vendors/images/photo2.jpg" alt="">
+                                    <img src="https://znews-stc.zdn.vn/static/topic/person/messi.jpg" alt="">
                                     <h3>Erik L. Richards</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="vendors/images/photo3.jpg" alt="">
+                                    <img src="https://znews-stc.zdn.vn/static/topic/person/messi.jpg" alt="">
                                     <h3>John Doe</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="vendors/images/photo4.jpg" alt="">
+                                    <img src="https://znews-stc.zdn.vn/static/topic/person/messi.jpg" alt="">
                                     <h3>Renee I. Hansen</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="vendors/images/img.jpg" alt="">
+                                    <img src="https://znews-stc.zdn.vn/static/topic/person/messi.jpg" alt="">
                                     <h3>Vicki M. Coleman</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
                                 </a>

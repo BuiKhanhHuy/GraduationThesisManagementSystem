@@ -20,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -48,22 +49,22 @@ public class User implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @NotEmpty(message = "{user.add.username.notNullMessage}")
+    @NotNull(message = "{user.add.username.notNullMessage}")
+    @Size(max = 45, message = "{user.add.username.sizeMessage}")
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotEmpty(message = "{user.add.password.notNullMessage}")
+    @NotNull(message = "{user.add.password.notNullMessage}")
+    @Size(max = 50, message = "{user.add.password.sizeMessage}")
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 350)
+    @Size(max = 350)
     @Column(name = "avatar")
     private String avatar;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "active")
     private boolean active;
     @OneToMany(mappedBy = "user")

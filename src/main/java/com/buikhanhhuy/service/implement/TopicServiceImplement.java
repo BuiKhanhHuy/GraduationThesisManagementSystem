@@ -17,4 +17,24 @@ public class TopicServiceImplement implements TopicService {
     public List<Topic> getTopics() {
         return this.topicRepository.getTopics();
     }
+
+    @Override
+    public boolean addTopic(Topic topic) {
+        return this.topicRepository.addTopic(topic);
+    }
+
+    @Override
+    public Topic getTopicById(int topicId) {
+        return this.topicRepository.getTopicById(topicId);
+    }
+
+    @Override
+    public boolean updateTopic(int topicId, Topic topic) {
+        return this.topicRepository.updateTopic(topicId, topic);
+    }
+
+    @Override
+    public boolean deleteTopic(int topicId) {
+        return this.topicRepository.deleteTopic(topicId);
+    }
 }

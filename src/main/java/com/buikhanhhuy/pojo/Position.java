@@ -4,6 +4,8 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -16,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,14 +45,16 @@ public class Position implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotEmpty(message = "{position.add.name.notNullMessage}")
+    @NotNull(message = "{position.add.name.notNullMessage}")
+    @Size(max = 100, message = "{position.add.name.maxMessage}")
     @Column(name = "name")
     private String name;
     @Size(max = 255)
     @Column(name = "description")
     private String description;
     @OneToMany(mappedBy = "position")
+    @JsonIgnore
     private Set<Lecturer> lecturers;
 
     public Position() {

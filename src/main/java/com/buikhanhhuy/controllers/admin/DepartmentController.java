@@ -46,10 +46,12 @@ public class DepartmentController {
     public String addDepartment(Model model, @ModelAttribute(value = "department") @Valid Department department, BindingResult result) {
         if (!result.hasErrors()) {
             if (this.departmentService.addDepartment(department)) {
+                model.addAttribute("message", "Thêm khoa thành công.");
                 return "redirect:/admin/departments";
             }
         }
 
+        model.addAttribute("message", "Thêm khoa thất bại!");
         return "adminAddDepartment";
     }
 

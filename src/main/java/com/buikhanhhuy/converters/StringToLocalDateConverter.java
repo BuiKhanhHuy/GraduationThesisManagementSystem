@@ -2,11 +2,11 @@ package com.buikhanhhuy.converters;
 
 import org.springframework.core.convert.converter.Converter;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class StringToLocalDateConverter implements Converter<String, LocalDate> {
+public class StringToLocalDateConverter implements Converter<String, Date> {
     private final String datePattern;
 
     public StringToLocalDateConverter(String datePattern) {
@@ -14,11 +14,14 @@ public class StringToLocalDateConverter implements Converter<String, LocalDate> 
     }
 
     @Override
-    public LocalDate convert(String s) {
-        try {
-            if (!s.isEmpty()) return LocalDate.parse(s, DateTimeFormatter.ofPattern(datePattern));
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("invalid date format. Please use this pattern\"" + datePattern + "\"");
+    public Date convert(String s) {
+        if (!s.isEmpty()) {
+            SimpleDateFormat f = new SimpleDateFormat(this.datePattern);
+            try {
+                return f.parse(s);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }
         return null;
     }

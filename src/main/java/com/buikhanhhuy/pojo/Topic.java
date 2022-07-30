@@ -4,6 +4,8 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -18,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -44,14 +47,16 @@ public class Topic implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotEmpty(message = "{topic.add.name.notNullMessage}")
+    @NotNull(message = "{topic.add.name.notNullMessage}")
+    @Size(max = 255, message = "{topic.add.name.sizeMessage}")
     @Column(name = "name")
     private String name;
-    @Size(max = 255)
+    @Size(max = 255, message = "{topic.add.description.maxMessage}")
     @Column(name = "description")
     private String description;
     @OneToMany(mappedBy = "topic")
+    @JsonIgnore
     private Set<Thesis> theses;
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     @ManyToOne

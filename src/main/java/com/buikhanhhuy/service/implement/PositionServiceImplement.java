@@ -17,4 +17,26 @@ public class PositionServiceImplement implements PositionService {
     public List<Position> getPositions() {
         return this.positionRepository.getPositions();
     }
+
+    @Override
+    public boolean addPosition(Position position) {
+        return this.positionRepository.addPosition(position);
+    }
+
+    @Override
+    public Position getPositionById(int positionId) {
+        return this.positionRepository.getPositionById(positionId);
+    }
+
+    @Override
+    public boolean updatePosition(int positionId, Position position) {
+        return this.positionRepository.updatePosition(positionId, position);
+    }
+
+    @Override
+    public boolean deletePosition(int positionId) {
+        return this.positionRepository.deletePosition(positionId);
+    }
+
+
 }

@@ -4,6 +4,8 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -19,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -46,25 +49,29 @@ public class SchoolYear implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotEmpty(message = "{schoolYear.add.name.notNullMessage}")
+    @NotNull(message = "{schoolYear.add.name.notNullMessage}")
+    @Size(max = 50, message = "{schoolYear.add.name.sizeMessage}")
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{schoolYear.add.startDate.notNullMessage}")
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{schoolYear.add.endDate.notNullMessage}")
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
     @OneToMany(mappedBy = "schoolYear")
+    @JsonIgnore
     private Set<Student> students;
     @OneToMany(mappedBy = "schoolYear")
+    @JsonIgnore
     private Set<Council> councils;
     @OneToMany(mappedBy = "schoolYear")
+    @JsonIgnore
     private Set<Thesis> theses;
 
     public SchoolYear() {

@@ -4,13 +4,13 @@ import com.buikhanhhuy.pojo.Lecturer;
 import com.buikhanhhuy.pojo.Major;
 import com.buikhanhhuy.pojo.Thesis;
 import com.buikhanhhuy.pojo.Topic;
-import java.time.LocalDate;
+import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-26T19:32:21")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-29T19:35:34")
 @StaticMetamodel(Department.class)
 public class Department_ { 
 
@@ -22,6 +22,6 @@ public class Department_ {
     public static volatile SetAttribute<Department, Lecturer> lecturers;
     public static volatile SingularAttribute<Department, Integer> id;
     public static volatile SetAttribute<Department, Thesis> theses;
-    public static volatile SingularAttribute<Department, LocalDate> founding;
+    public static volatile SingularAttribute<Department, Date> founding;
 
 }

@@ -4,6 +4,10 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -18,6 +22,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -45,21 +50,26 @@ public class Major implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
+    @NotEmpty(message = "{major.add.code.notNullMessage}")
+    @NotNull(message = "{major.add.code.notNullMessage}")
+    @Size(max = 10, message = "{major.add.code.sizeMessage}")
     @Column(name = "code")
     private String code;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotEmpty(message = "{major.add.name.notNullMessage}")
+    @NotNull(message = "{major.add.name.notNullMessage}")
+    @Size(max = 100, message = "{major.add.name.sizeMessage}")
     @Column(name = "name")
     private String name;
-    @Size(max = 255)
+    @Size(max = 255, message = "{major.add.description.maxMessage}")
     @Column(name = "description")
     private String description;
     @OneToMany(mappedBy = "major")
+    @JsonIgnore
     private Set<Student> students;
+
     @JoinColumn(name = "department_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"code", "description", "founding"})
     @ManyToOne
     private Department department;
 

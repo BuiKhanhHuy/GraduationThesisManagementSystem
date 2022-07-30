@@ -113,7 +113,7 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="${role}">Quyền</a></li>
-                        <li><a href="${manage}">Quản lý</a></li>
+                        <li><a href="${manage}">Quản trị viên</a></li>
                     </ul>
                 </li>
                 <li>
