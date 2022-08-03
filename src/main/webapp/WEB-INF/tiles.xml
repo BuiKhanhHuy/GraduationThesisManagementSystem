@@ -60,7 +60,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 
     <!--    school year-->
     <definition name="adminSchoolYearList" extends="adminBaseLayout">
-        <put-attribute name="title" value="Danh sách niên khóa"/>
+        <put-attribute name="title" value="Niên khóa"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/schoolyear.jsp"/>
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
@@ -72,7 +72,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 
     <!--    position-->
     <definition name="adminPositionList" extends="adminBaseLayout">
-        <put-attribute name="title" value="Danh sách chức vụ"/>
+        <put-attribute name="title" value="Chức vụ"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/position.jsp"/>
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
@@ -84,21 +84,31 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 
     <!--    lecturer-->
     <definition name="adminLecturerList" extends="adminBaseLayout">
-        <put-attribute name="title" value="Danh sách giảng viên"/>
+        <put-attribute name="title" value="Giảng viên"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/lecturer.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/admin/src/scripts/lecturer.js"/>
+        </put-list-attribute>
     </definition>
     <!--    lecturer-->
 
     <!--    student-->
     <definition name="adminStudentList" extends="adminBaseLayout">
-        <put-attribute name="title" value="Danh sách sinh viên"/>
+        <put-attribute name="title" value="Sinh viên"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/student.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/admin/src/scripts/student.js"/>
+        </put-list-attribute>
     </definition>
     <!--    student-->
 
     <!--    topic-->
     <definition name="adminTopicList" extends="adminBaseLayout">
-        <put-attribute name="title" value="Danh sách đề tài"/>
+        <put-attribute name="title" value="Đề tài"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/topic.jsp"/>
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
@@ -110,7 +120,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 
     <!--    evaluationmethod-->
     <definition name="adminEvaluationMethodList" extends="adminBaseLayout">
-        <put-attribute name="title" value="Danh sách phương pháp đánh giá"/>
+        <put-attribute name="title" value="Phương pháp đánh giá"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/evaluationmethod.jsp"/>
     </definition>
     <!--    evaluationmethod-->
@@ -124,14 +134,14 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 
     <!--    role-->
     <definition name="adminRoleList" extends="adminBaseLayout">
-        <put-attribute name="title" value="Danh sách quyền"/>
+        <put-attribute name="title" value="Quyền"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/role.jsp"/>
     </definition>
     <!--    role-->
 
     <!--    manage-->
     <definition name="adminManageList" extends="adminBaseLayout">
-        <put-attribute name="title" value="Danh sách quản lý"/>
+        <put-attribute name="title" value="Quản trị viên"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/manage.jsp"/>
         <put-list-attribute name="stylesheets">
         </put-list-attribute>

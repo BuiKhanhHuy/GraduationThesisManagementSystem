@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -31,6 +32,20 @@ public class RoleRepositoryImplement implements RoleRepository {
         if (kw != null && !kw.isEmpty()) {
             query.where(builder.like(root.<String>get("roleName"), String.format("%%%s%%", kw)));
         }
+
+        return session.createQuery(query).getResultList();
+    }
+
+    @Override
+    public List<Object[]> getRoleOptions(String[] exceptRole) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> query = builder.createQuery(Object[].class);
+        Root<Role> root = query.from(Role.class);
+        query.multiselect(root.get("id"), root.get("description"));
+
+        if (exceptRole.length != 0)
+            query.where(builder.not(root.get("roleName").as(String.class).in(exceptRole)));
 
         return session.createQuery(query).getResultList();
     }

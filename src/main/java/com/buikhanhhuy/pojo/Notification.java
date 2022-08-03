@@ -89,7 +89,6 @@ public class Notification implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
-
     @XmlTransient
     public Set<NotificationUser> getNotificationUsers() {
         return notificationUsers;

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ManageServiceImplement implements ManageService {
@@ -14,8 +15,13 @@ public class ManageServiceImplement implements ManageService {
     private ManageRepository manageRepository;
 
     @Override
-    public List<Manage> getManages() {
-        return this.manageRepository.getManages();
+    public List<Manage> getManages(Map<String, String> params) {
+        return this.manageRepository.getManages(params);
+    }
+
+    @Override
+    public long countManage(Map<String, String> params) {
+        return this.manageRepository.countManage(params);
     }
 
     @Override

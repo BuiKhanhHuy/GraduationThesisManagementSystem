@@ -9,13 +9,9 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import javax.persistence.Query;
+import javax.persistence.criteria.*;
+import java.util.*;
 
 @Repository
 @Transactional
@@ -33,21 +29,79 @@ public class UserRepositoryImplement implements UserRepository {
         List<Predicate> predicates = new ArrayList<>();
 
         if (params.containsKey("roleId") && !params.get("roleId").isEmpty()) {
-            if (Integer.parseInt(params.get("roleId")) == 4
-                    && params.containsKey("schoolYearId") && !params.get("schoolYearId").isEmpty()) {
+            Predicate predicate1 = builder.notEqual(root.get("role"), Integer.parseInt(params.get("roleId")));
+
+            if (Integer.parseInt(params.get("roleId")) == 4 && params.containsKey("schoolYearId") && !params.get("schoolYearId").isEmpty()) {
                 // LEFT JOIN
-                Root<Student> studentRoot = query.from(Student.class);
-                predicates.add(builder.equal(root.get("id").as(Integer.class),
-                        studentRoot.get("user")));
-                predicates.add(builder.notEqual(studentRoot.get("schoolYear"),
-                        Integer.parseInt(params.get("schoolYearId"))));
-            }else {
-                predicates.add(builder.notEqual(root.get("role"), Integer.parseInt(params.get("roleId"))));
+                Join<User, Student> studentRoot = root.join("student", JoinType.LEFT);
+
+                Predicate predicate2 = builder.notEqual(studentRoot.get("schoolYear"), Integer.parseInt(params.get("schoolYearId")));
+
+                predicates.add(builder.or(predicate1, predicate2));
+
+            } else {
+                predicates.add(predicate1);
             }
         }
 
         query.where(predicates.toArray(new Predicate[]{}));
 
         return session.createQuery(query).getResultList();
+    }
+
+    @Override
+    public Set<Integer> getUsers(Map<String, String> params, List<Integer> usersId) {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+
+        try {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Object[]> query = builder.createQuery(Object[].class);
+            Root<User> root = query.from(User.class);
+            query.multiselect(root.get("id"));
+            List<Predicate> predicates = new ArrayList<>();
+            Set<Integer> usersIdResult = new HashSet<>();
+
+            if (params.containsKey("roleId") && !params.get("roleId").isEmpty()) {
+                Predicate predicate1 = builder.equal(root.get("role"), Integer.parseInt(params.get("roleId")));
+
+                if (Integer.parseInt(params.get("roleId")) == 4 && params.containsKey("schoolYearId") && !params.get("schoolYearId").isEmpty()) {
+                    // LEFT JOIN
+                    Join<User, Student> studentRoot = root.join("student", JoinType.LEFT);
+
+                    Predicate predicate2 = builder.equal(studentRoot.get("schoolYear"), Integer.parseInt(params.get("schoolYearId")));
+
+                    predicates.add(predicate2);
+                } else {
+                    predicates.add(predicate1);
+                }
+            }
+
+            query.where(predicates.toArray(new Predicate[]{}));
+            Query q = session.createQuery(query);
+            List<Object> rs = q.getResultList();
+
+            for (Object o : rs) {
+                usersIdResult.add(Integer.parseInt(o.toString()));
+            }
+
+            return usersIdResult;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean addUser(User user) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        try {
+            user.setPassword(user.getPassword());
+            session.save(user);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 }

@@ -3,9 +3,11 @@ package com.buikhanhhuy.repository;
 import com.buikhanhhuy.pojo.Topic;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TopicRepository {
-    public List<Topic> getTopics();
+    public List<Topic> getTopics(Map<String, String> params);
+    public long countTopic(Map<String, String> params);
     public boolean addTopic(Topic topic);
     public Topic getTopicById(int topicId);
     public boolean updateTopic(int topicId, Topic topic);

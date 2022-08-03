@@ -35,7 +35,7 @@
             <h4 class="text-blue h4">Danh sách khóa luận</h4>
         </div>
         <div class="pull-right">
-            <button type="button" class="btn btn-primary btn-md"><i class="micon icon-copy dw dw-add"></i>
+            <button type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
                 Thêm khóa luận
             </button>
         </div>

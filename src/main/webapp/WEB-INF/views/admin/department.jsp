@@ -2,43 +2,54 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<c:url var="filterDeparment" value="/admin/departments/"/>
+<c:url var="home" value="/admin/"/>
+
 <div class="page-header">
     <div class="row">
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-12 col-sm-12">
             <div class="title">
-                <h4>Lọc</h4>
+                <h4>Khoa</h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Form Basic</li>
+                    <li class="breadcrumb-item"><a href="${home}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Khoa
+                    </li>
                 </ol>
             </nav>
-        </div>
-        <div class="col-md-6 col-sm-12 text-right">
-            <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    January 2018
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">Export List</a>
-                    <a class="dropdown-item" href="#">Policies</a>
-                    <a class="dropdown-item" href="#">View Assets</a>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 
 <!-- table start -->
 <div class="pd-20 card-box mb-30">
+    <form id="form-filter" action="${filterDeparment}">
+        <input name="page" id="page" hidden/>
+        <div class="row justify-content-end mt-2">
+            <div class="col-md-4 col-sm-12">
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Nhập mã khoa cần tìm..." name="kw"
+                           aria-label="Search">
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <div>
+                    <button class="form-control ml-1 btn-warning btn" type="submit">
+                        <i class=" fa fa-search" aria-hidden="true"></i> Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <hr style="height:5px;" class="text-black-50">
     <div class="clearfix mb-20">
         <div class="pull-left">
             <h4 class="text-blue h4">Danh sách khoa</h4>
         </div>
         <div class="pull-right">
             <button onclick="showAddDepartmentModal('<c:url value="/admin/api/departments"/>')"
-                    class="btn btn-primary btn-md"><i
+                    class="btn btn-success btn-md"><i
                     class="micon icon-copy dw dw-add"></i>
                 Thêm khoa
             </button>
@@ -100,19 +111,17 @@
         </c:if>
         </tbody>
     </table>
-    <div class="blog-pagination pagination-sm mt-5 mb-2">
-        <div class="btn-toolbar justify-content-center">
-            <div class="btn-group">
-                <a href="#" class="btn btn-outline-primary prev"><i class="fa fa-angle-double-left"></i></a>
-                <a href="#" class="btn btn-outline-primary">1</a>
-                <a href="#" class="btn btn-outline-primary">2</a>
-                <span class="btn btn-primary current">3</span>
-                <a href="#" class="btn btn-outline-primary">4</a>
-                <a href="#" class="btn btn-outline-primary">5</a>
-                <a href="#" class="btn btn-outline-primary next"><i class="fa fa-angle-double-right"></i></a>
+    <c:if test="${Math.ceil(totalResult / pageSize) > 1}">
+        <div class="blog-pagination pagination-md mt-5 mb-2">
+            <div class="btn-toolbar justify-content-center">
+                <div class="btn-group">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+                </div>
             </div>
         </div>
-    </div>
+    </c:if>
 </div>
 <!-- table End -->
 
@@ -190,3 +199,26 @@
     </div>
 </div>
 <%--VIEW modal--%>
+
+<script>
+    let currentPage = ${page};
+    let totalResult = ${totalResult};
+    let pageSize = ${pageSize};
+
+
+    $('#pagination').twbsPagination({
+        totalPages: Math.ceil(totalResult / pageSize),
+        visiblePages: 8,
+        first: '',
+        last: '',
+        prev: '&laquo;',
+        next: '&raquo;',
+        startPage: currentPage,
+        onPageClick: function (event, page) {
+            if (currentPage != page) {
+                $("#page").val(page)
+                $("#form-filter").submit();
+            }
+        }
+    });
+</script>

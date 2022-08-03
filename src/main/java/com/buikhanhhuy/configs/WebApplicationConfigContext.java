@@ -1,8 +1,7 @@
 package com.buikhanhhuy.configs;
 
 import com.buikhanhhuy.converters.StringToLocalDateConverter;
-import com.buikhanhhuy.formatters.DepartmentFormatter;
-import com.buikhanhhuy.formatters.UserFormatter;
+import com.buikhanhhuy.formatters.*;
 import com.buikhanhhuy.validators.DepartmentValidator;
 import com.buikhanhhuy.validators.SchoolYearValidator;
 import com.buikhanhhuy.validators.WebAppValidator;
@@ -58,6 +57,10 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
         registry.addConverter(new StringToLocalDateConverter("yyyy-MM-dd"));
         registry.addFormatter(new UserFormatter());
         registry.addFormatter(new DepartmentFormatter());
+        registry.addFormatter(new MajorFormatter());
+        registry.addFormatter(new SchoolYearFormatter());
+        registry.addFormatter(new PositionFormatter());
+        registry.addFormatter(new RoleFormatter());
     }
 
 

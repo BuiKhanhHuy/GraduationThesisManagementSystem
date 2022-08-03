@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DepartmentServiceImplement implements DepartmentService {
@@ -14,8 +15,13 @@ public class DepartmentServiceImplement implements DepartmentService {
     private DepartmentRepository departmentRepository;
 
     @Override
-    public List<Department> getDepartments() {
-        return this.departmentRepository.getDepartments();
+    public List<Department> getDepartments(Map<String, String> params) {
+        return this.departmentRepository.getDepartments(params);
+    }
+
+    @Override
+    public long countDepartment(Map<String, String> params) {
+        return this.departmentRepository.countDepartment(params);
     }
 
     @Override

@@ -4,26 +4,17 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -54,55 +45,66 @@ public class Lecturer implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
+    @NotEmpty(message = "{lecturer.add.code.notNullMessage}")
+    @NotNull(message = "{lecturer.add.code.notNullMessage}")
+    @Size(max = 10, message = "{lecturer.add.code.sizeMessage}")
     @Column(name = "code")
     private String code;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotEmpty(message = "{lecturer.add.fullName.notNullMessage}")
+    @NotNull(message = "{lecturer.add.fullName.notNullMessage}")
+    @Size(max = 100, message = "{lecturer.add.fullName.sizeMessage}")
     @Column(name = "full_name")
     private String fullName;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotEmpty(message = "{lecturer.add.email.notNullMessage}")
+    @NotNull(message = "{lecturer.add.email.notNullMessage}")
+    @Size(max = 100, message = "{lecturer.add.email.sizeMessage}")
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",  message="{lecturer.add.email.format}")
     @Column(name = "email")
     private String email;
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 15)
+    @NotEmpty(message = "{lecturer.add.phone.notNullMessage}")
+    @NotNull(message = "{lecturer.add.phone.notNullMessage}")
+    @Size(max = 15, message = "{lecturer.add.phone.sizeMessage}")
+    @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="{lecturer.add.phone.format}")
     @Column(name = "phone")
     private String phone;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{lecturer.add.birthday.notNullMessage}")
     @Column(name = "birthday")
-    @Temporal(TemporalType.DATE)
     private Date birthday;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{lecturer.add.gender.notNullMessage}")
     @Column(name = "gender")
     private int gender;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotEmpty(message = "{lecturer.add.address.notNullMessage}")
+    @NotNull(message = "{lecturer.add.address.notNullMessage}")
+    @Size(max = 255, message = "{lecturer.add.address.sizeMessage}")
     @Column(name = "address")
     private String address;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lecturer")
+    @JsonIgnore
     private Set<CounterArgument> counterArguments;
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnoreProperties({"code", "name", "description", "founding"})
     private Department department;
     @JoinColumn(name = "position_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnoreProperties({"name", "description"})
     private Position position;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"news", "student", "lecturer", "manage", "notificationUsers"})
+    @Valid
     private User user;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lecturer")
+    @JsonIgnore
     private Set<CouncilDetail> councilDetails;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lecturer")
+    @JsonIgnore
     private Set<Guide> guides;
 
     public Lecturer() {
@@ -262,5 +264,5 @@ public class Lecturer implements Serializable {
     public String toString() {
         return "com.buikhanhhuy.pojo.Lecturer[ id=" + id + " ]";
     }
-    
+
 }

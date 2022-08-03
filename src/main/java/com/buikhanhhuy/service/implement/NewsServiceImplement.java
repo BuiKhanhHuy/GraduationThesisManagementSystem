@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class NewsServiceImplement implements NewsService {
@@ -14,8 +15,13 @@ public class NewsServiceImplement implements NewsService {
     private NewsRepository newsRepository;
 
     @Override
-    public List<News> getNews() {
-        return this.newsRepository.getNews();
+    public List<News> getNews(Map<String, String> params) {
+        return this.newsRepository.getNews(params);
+    }
+
+    @Override
+    public long countNews(Map<String, String> params) {
+        return this.newsRepository.countNews(params);
     }
 
     @Override

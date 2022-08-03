@@ -3,9 +3,11 @@ package com.buikhanhhuy.repository;
 import com.buikhanhhuy.pojo.News;
 
 import java.util.List;
+import java.util.Map;
 
 public interface NewsRepository {
-    public List<News> getNews();
+    public List<News> getNews(Map<String, String> params);
+    public long countNews(Map<String, String> params);
     public News getNewsWithAuthorById(int newsId);
     public Object[] getNewsById(int newsId);
     public boolean addNews(News news);

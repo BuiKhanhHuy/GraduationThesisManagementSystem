@@ -19,6 +19,10 @@
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+    <%--    pagination--%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="<c:url value="/admin/src/plugins/pagination/jquery.twbsPagination.min.js"/> "></script>
+
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
           rel="stylesheet">
@@ -48,6 +52,8 @@
 
         gtag('config', 'UA-119386393-1');
     </script>
+
+
 </head>
 <body>
 <%--<div class="pre-loader">--%>
@@ -62,6 +68,7 @@
 <%--        </div>--%>
 <%--    </div>--%>
 <%--</div>--%>
+
 
 <tiles:insertAttribute name="header"/>
 
@@ -89,5 +96,6 @@
 <c:forEach var="js" items="${javascripts}">
     <script src="<c:url value="${js}"/>"></script>
 </c:forEach>
+
 </body>
 </html>

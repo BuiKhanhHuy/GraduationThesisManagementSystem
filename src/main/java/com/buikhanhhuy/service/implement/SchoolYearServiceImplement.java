@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SchoolYearServiceImplement implements SchoolYearService {
@@ -14,8 +15,18 @@ public class SchoolYearServiceImplement implements SchoolYearService {
     private SchoolYearRepository schoolYearRepository;
 
     @Override
-    public List<SchoolYear> getSchoolYears() {
-        return this.schoolYearRepository.getSchoolYears();
+    public List<SchoolYear> getSchoolYears(Map<String, String> params) {
+        return this.schoolYearRepository.getSchoolYears(params);
+    }
+
+    @Override
+    public List<Object[]> getSchoolYearOptions() {
+        return this.schoolYearRepository.getSchoolYearOptions();
+    }
+
+    @Override
+    public long countSchoolYear(Map<String, String> params) {
+        return this.schoolYearRepository.countSchoolYear(params);
     }
 
     @Override

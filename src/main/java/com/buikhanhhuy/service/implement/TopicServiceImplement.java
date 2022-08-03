@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TopicServiceImplement implements TopicService {
@@ -14,8 +15,13 @@ public class TopicServiceImplement implements TopicService {
     private TopicRepository topicRepository;
 
     @Override
-    public List<Topic> getTopics() {
-        return this.topicRepository.getTopics();
+    public List<Topic> getTopics(Map<String, String> params) {
+        return this.topicRepository.getTopics(params);
+    }
+
+    @Override
+    public long countTopic(Map<String, String> params) {
+        return this.topicRepository.countTopic(params);
     }
 
     @Override

@@ -4,6 +4,8 @@
  */
 package com.buikhanhhuy.pojo;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -19,15 +21,12 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author bkhuy
  */
 @Entity
 @Table(name = "notification_user")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "NotificationUser.findAll", query = "SELECT n FROM NotificationUser n"),
-    @NamedQuery(name = "NotificationUser.findById", query = "SELECT n FROM NotificationUser n WHERE n.id = :id")})
+@NamedQueries({@NamedQuery(name = "NotificationUser.findAll", query = "SELECT n FROM NotificationUser n"), @NamedQuery(name = "NotificationUser.findById", query = "SELECT n FROM NotificationUser n WHERE n.id = :id")})
 public class NotificationUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,12 +35,20 @@ public class NotificationUser implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
+    @Basic(optional = false)
+    @Column(name = "active")
+    private boolean active;
     @JoinColumn(name = "notification_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Notification notification;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User user;
+
+    {
+        this.active = true;
+    }
 
     public NotificationUser() {
     }
@@ -56,6 +63,14 @@ public class NotificationUser implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Notification getNotification() {
@@ -98,5 +113,5 @@ public class NotificationUser implements Serializable {
     public String toString() {
         return "com.buikhanhhuy.pojo.NotificationUser[ id=" + id + " ]";
     }
-    
+
 }

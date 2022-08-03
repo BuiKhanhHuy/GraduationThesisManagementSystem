@@ -1,9 +1,58 @@
+let titleElement = document.getElementById("title")
+let contentElement = document.getElementById("content")
+let roleElement = document.getElementById("role")
+let schoolYearElement = document.getElementById("schoolYear")
+let usersElement = document.getElementById("users")
+
 const showAddNotificationModal = (endpoint) => {
     document.getElementById("myModalAddAndEditNotification").innerText = "Thêm thông báo"
     $('#modal-add-edit-notification').modal()
-    // document.getElementById("btn-submit-form").onclick = () => saveChange(endpoint)
+    document.getElementById("btn-submit-form").onclick = () => saveChange(endpoint)
 
 }
+
+// role type change
+const objectChange = (endpoint) => {
+    if (roleElement.value === "") {
+        schoolYearElement.disabled = true;
+        usersElement.disabled = true;
+        schoolYearElement.value = ""
+    } else {
+        if (roleElement.value === "4") {
+            schoolYearElement.disabled = false;
+        } else {
+            schoolYearElement.disabled = true;
+            schoolYearElement.value = ""
+        }
+        usersElement.disabled = false;
+    }
+    loadUsers(endpoint);
+}
+
+// school year change
+const schoolYearChange = (endpoint) => {
+    loadUsers(endpoint);
+}
+
+// load user filter
+const loadUsers = (endpoint) => {
+    fetch(`${endpoint}?roleId=${roleElement.value}&schoolYearId=${schoolYearElement.value}`, {
+        method: "GET", headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(res => res.json()).then(data => {
+        let optionText = ""
+        data.forEach(d => {
+            optionText += `
+                <option value="${d[0]}">${d[1]}</option>
+            `
+        })
+        usersElement.innerHTML = optionText;
+    }).catch(err => {
+        console.error(err)
+    })
+}
+
 //
 // const showEditManageModal = (endpoint, manageId) => {
 //     loadManageById(endpoint, (data) => {
@@ -25,7 +74,6 @@ const showAddNotificationModal = (endpoint) => {
 
 // const showViewNewsModal = (endpoint) => {
 //     loadNewsById(endpoint, (data) => {
-//         console.log(data)
 //         for (let d in data) {
 //             if (d === "user") {
 //                 if(data[d] === null)
@@ -59,20 +107,22 @@ const showAddNotificationModal = (endpoint) => {
 // }
 
 const saveChange = (endpoint, notificationId = null) => {
-    let form = $("#form-add-edit-notification")
-    let formData = {}
+    let selectedUsersId = [...usersElement.options]
+        .filter(option => option.selected)
+        .map(option => parseInt(option.value));
+    let selectRoleTypeValue = roleElement.value;
+    let selectSchoolYearValue = schoolYearElement.value;
 
-    form.serializeArray().forEach(item => {
-        formData[item.name] = item.value
-    })
-    formData["active"] = document.getElementById("active").checked;
-
+    let formData = {
+        "title": titleElement.value, "content": contentElement.value, "usersId": selectedUsersId
+    }
     $('input').next('span').remove();
+    $('textarea').next('span').remove();
 
     if (notificationId === null) {
         // ADD
-        fetch(endpoint, {
-            method: "POST", body: JSON.stringify(), headers: {
+        fetch(`${endpoint}?roleId=${selectRoleTypeValue}&schoolYearId=${selectSchoolYearValue}`, {
+            method: "POST", body: JSON.stringify(formData), headers: {
                 "Content-Type": "application/json"
             }
         }).then(res => res.json()).then(data => {
@@ -81,10 +131,9 @@ const saveChange = (endpoint, notificationId = null) => {
                 $('#modal-add-edit-notification').hide();
                 successfulAlert("Gửi thông báo thành công", "Ok", () => location.reload());
             } else {
+                console.log(data)
                 // error
-                $.each(data, function (key, value) {
-                    $('input[name=' + key + ']').after('<span class="text-danger">' + value + '</span>');
-                });
+                showError(data)
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình thêm dữ liệu!", "Ok")
@@ -92,23 +141,17 @@ const saveChange = (endpoint, notificationId = null) => {
     } else {
         // // UPDATE
         fetch(endpoint, {
-            method: "PATCH", body: JSON.stringify({
-                "fullName": formData.fullName, "email": formData.email, "phone": formData.phone, "user": {
-                    "username": formData.username, "password": formData.password, "active": formData.active,
-                }
-            }), headers: {
+            method: "PATCH", body: JSON.stringify({}), headers: {
                 "Content-Type": "application/json"
             }
         }).then(res => res.json()).then(data => {
             if (Object.keys(data).length === 0) {
                 // successful
-                $('#modal-add-edit-manage').hide();
-                successfulAlert("Cập nhật quản trị viên thành công", "Ok", () => location.reload());
+                $('#modal-add-edit-notification').hide();
+                successfulAlert("Cập nhật thông thành công", "Ok", () => location.reload());
             } else {
                 // error
-                $.each(data, function (key, value) {
-                    $('input[name=' + key + ']').after('<span class="text-danger">' + value + '</span>');
-                });
+                showError(data)
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
@@ -134,69 +177,17 @@ const saveChange = (endpoint, notificationId = null) => {
 // event before hidden modal
 $('#modal-add-edit-notification').on('hidden.bs.modal', function (e) {
     $('input').next('span').remove();
+    $('textarea').next('span').remove();
     document.forms['form-add-edit-notification'].reset();
 })
 
-
-let roleElement = document.getElementById("role")
-let schoolYearElement = document.getElementById("schoolYear")
-let usersElement = document.getElementById("users")
-
-// object change
-const objectChange = (endpoint) => {
-    if (roleElement.value === "") {
-        schoolYearElement.disabled = true;
-        usersElement.disabled = true;
-        schoolYearElement.value = ""
-    } else {
-        if (roleElement.value === "4") {
-            schoolYearElement.disabled = false;
-        } else {
-            schoolYearElement.disabled = true;
-            schoolYearElement.value = ""
+// show error in form validation
+const showError = (data) => {
+    $.each(data, function (key, value) {
+        if (key === "title")
+            $('input[name=' + key + ']').after('<span class="text-danger">' + value + '</span>');
+        if (key === "content") {
+            $('textarea[name=' + key + ']').after('<span class="text-danger">' + value + '</span>');
         }
-        usersElement.disabled = false;
-    }
-    loadUsers(endpoint);
-}
-
-const schoolYearChange = (endpoint) => {
-    loadUsers(endpoint);
-}
-
-const loadUsers = (endpoint) => {
-    fetch(`${endpoint}?roleId=${roleElement.value}&schoolYearId=${schoolYearElement.value}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).then(res => res.json()).then(data => {
-        let optionText = ""
-        data.forEach(d => {
-            console.log(d[0] + d[1])
-            optionText += `
-                <option value="${d[0]}">${d[1]}</option>
-            `
-        })
-        usersElement.innerHTML = optionText;
-    }).catch(err => {
-        console.error(err)
-    })
-}
-
-const addNotification = () => {
-    // let selected = [];
-    // for (let option of document.getElementById('users').options) {
-    //     if (option.selected) {
-    //         selected.push(option.value);
-    //     }
-    // }
-    // let data = {
-    //     "title": "",
-    //     "content": "",
-    //     "role": roleElement.value,
-    //     "schoolYear": schoolYearElement.value,
-    //     "users": selected
-    // }
-    // console.log(data)
+    });
 }

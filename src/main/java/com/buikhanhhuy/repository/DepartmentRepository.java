@@ -3,9 +3,11 @@ package com.buikhanhhuy.repository;
 import com.buikhanhhuy.pojo.Department;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DepartmentRepository {
-    public List<Department> getDepartments ();
+    public List<Department> getDepartments (Map<String, String> params);
+    public long countDepartment(Map<String, String> params);
     public List<Object[]> getDepartmentOptions();
     public boolean addDepartment(Department department);
     public boolean checkCodeExists(String code);

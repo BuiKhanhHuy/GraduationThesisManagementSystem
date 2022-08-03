@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PositionServiceImplement implements PositionService {
@@ -14,8 +15,18 @@ public class PositionServiceImplement implements PositionService {
     private PositionRepository positionRepository;
 
     @Override
-    public List<Position> getPositions() {
-        return this.positionRepository.getPositions();
+    public List<Position> getPositions(Map<String, String> params) {
+        return this.positionRepository.getPositions(params);
+    }
+
+    @Override
+    public List<Object[]> getPositionOptions() {
+        return this.positionRepository.getPositionOptions();
+    }
+
+    @Override
+    public long countPosition(Map<String, String> params) {
+        return this.positionRepository.countPosition(params);
     }
 
     @Override

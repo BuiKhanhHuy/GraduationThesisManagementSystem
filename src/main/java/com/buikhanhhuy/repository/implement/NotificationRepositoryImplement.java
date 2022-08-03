@@ -1,33 +1,91 @@
 package com.buikhanhhuy.repository.implement;
 
+import com.buikhanhhuy.pojo.News;
 import com.buikhanhhuy.pojo.Notification;
-import com.buikhanhhuy.pojo.Position;
 import com.buikhanhhuy.repository.NotificationRepository;
+import com.buikhanhhuy.repository.NotificationUserRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 @Repository
 @Transactional
 public class NotificationRepositoryImplement implements NotificationRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
+    @Autowired
+    Environment environment;
+    @Autowired
+    private NotificationUserRepository notificationUserRepository;
 
     @Override
-    public List<Notification> getNotifications() {
+    public List<Notification> getNotifications(Map<String, String> params) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Notification> query = builder.createQuery(Notification.class);
         Root<Notification> root = query.from(Notification.class);
         query.select(root);
 
-        return session.createQuery(query).getResultList();
+        if (params.containsKey("kw") && !params.get("kw").isEmpty()) {
+            String kw = params.get("kw");
+            query.where(builder.like(root.get("title").as(String.class), String.format("%%%s%%", kw)));
+        }
+
+        int page = 1;
+        int pageSize = Integer.parseInt(Objects.requireNonNull(this.environment.getProperty("pageSize")));
+
+        if (params.containsKey("page") && !params.get("page").isEmpty()) page = Integer.parseInt(params.get("page"));
+
+        Query q = session.createQuery(query);
+
+        int startPage = (page - 1) * pageSize;
+        q.setFirstResult(startPage);
+        q.setMaxResults(pageSize);
+
+        return q.getResultList();
+    }
+
+    @Override
+    public long countNotification(Map<String, String> params) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> query = builder.createQuery(Object[].class);
+        Root<Notification> root = query.from(Notification.class);
+        query.multiselect(builder.count(root.get("id")));
+
+        if (params.containsKey("kw") && !params.get("kw").isEmpty()) {
+            String kw = params.get("kw");
+            query.where(builder.like(root.get("title").as(String.class), String.format("%%%s%%", kw)));
+        }
+
+        Query q = session.createQuery(query);
+        Object result = q.getSingleResult();
+
+        return (long) result;
+    }
+
+    @Override
+    public boolean addNotification(Notification notification, Set<Integer> usersId) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            session.save(notification);
+            this.notificationUserRepository.addNotificationUser(notification.getId(), usersId);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 }

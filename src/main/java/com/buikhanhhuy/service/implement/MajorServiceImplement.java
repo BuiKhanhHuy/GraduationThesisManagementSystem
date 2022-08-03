@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MajorServiceImplement implements MajorService {
@@ -15,8 +16,18 @@ public class MajorServiceImplement implements MajorService {
     private MajorRepository majorRepository;
 
     @Override
-    public List<Major> getMajors() {
-        return this.majorRepository.getMajors();
+    public List<Major> getMajors(Map<String, String> params) {
+        return this.majorRepository.getMajors(params);
+    }
+
+    @Override
+    public long countMajor(Map<String, String> params) {
+        return this.majorRepository.countMajor(params);
+    }
+
+    @Override
+    public List<Object[]> getMajorOptions() {
+        return this.majorRepository.getMajorOptions();
     }
 
     @Override

@@ -4,34 +4,118 @@ import com.buikhanhhuy.pojo.Manage;
 import com.buikhanhhuy.pojo.User;
 import com.buikhanhhuy.repository.ManageRepository;
 import com.buikhanhhuy.repository.RoleRepository;
+import com.buikhanhhuy.repository.UserRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Repository
 @Transactional
+@PropertySource("classpath:application.properties")
 public class ManageRepositoryImplement implements ManageRepository {
     @Autowired
+    private Environment environment;
+
+    @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
 
     @Override
-    public List<Manage> getManages() {
+    public List<Manage> getManages(Map<String, String> params) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Manage> query = builder.createQuery(Manage.class);
-        Root<Manage> root = query.from(Manage.class);
-        query.select(root);
+        Root<Manage> manageRoot = query.from(Manage.class);
+        Root<User> userRoot = query.from(User.class);
+        query.select(manageRoot);
 
-        return session.createQuery(query).getResultList();
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.equal(manageRoot.get("user"), userRoot.get("id")));
+
+        if (params.containsKey("kw") && !params.get("kw").isEmpty()) {
+            String kw = params.get("kw");
+
+            Predicate predicate1 = builder.like(manageRoot.get("fullName").as(String.class), String.format("%%%s%%", kw));
+            Predicate predicate2 = builder.like(manageRoot.get("email").as(String.class), String.format("%%%s%%", kw));
+            Predicate predicate3 = builder.like(manageRoot.get("phone").as(String.class), String.format("%%%s%%", kw));
+            Predicate predicate4 = builder.like(userRoot.get("username").as(String.class), String.format("%%%s%%", kw));
+
+            predicates.add(builder.or(predicate1, predicate2, predicate3, predicate4));
+        }
+
+        if (params.containsKey("active") && !params.get("active").isEmpty()) {
+            boolean active = Boolean.parseBoolean(params.get("active"));
+
+            predicates.add(builder.equal(userRoot.get("active").as(Boolean.class), active));
+        }
+
+        query.where(predicates.toArray(new Predicate[]{}));
+
+        Query q = session.createQuery(query);
+
+        int page = 1;
+        int pageSize = Integer.parseInt(Objects.requireNonNull(this.environment.getProperty("pageSize")));
+        if (params.containsKey("page") && !params.get("page").isEmpty()) page = Integer.parseInt(params.get("page"));
+
+        int startPage = (page - 1) * pageSize;
+        q.setMaxResults(pageSize);
+        q.setFirstResult(startPage);
+
+        return q.getResultList();
+    }
+
+    @Override
+    public long countManage(Map<String, String> params) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> query = builder.createQuery(Object[].class);
+        Root<Manage> manageRoot = query.from(Manage.class);
+        Root<User> userRoot = query.from(User.class);
+        query.multiselect(builder.count(manageRoot.get("id")));
+
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.equal(manageRoot.get("user"), userRoot.get("id")));
+
+        if (params.containsKey("kw") && !params.get("kw").isEmpty()) {
+            String kw = params.get("kw");
+
+            Predicate predicate1 = builder.like(manageRoot.get("fullName").as(String.class), String.format("%%%s%%", kw));
+            Predicate predicate2 = builder.like(manageRoot.get("email").as(String.class), String.format("%%%s%%", kw));
+            Predicate predicate3 = builder.like(manageRoot.get("phone").as(String.class), String.format("%%%s%%", kw));
+            Predicate predicate4 = builder.like(userRoot.get("username").as(String.class), String.format("%%%s%%", kw));
+
+            predicates.add(builder.or(predicate1, predicate2, predicate3, predicate4));
+        }
+
+        if (params.containsKey("active") && !params.get("active").isEmpty()) {
+            boolean active = Boolean.parseBoolean(params.get("active"));
+
+            predicates.add(builder.equal(userRoot.get("active").as(Boolean.class), active));
+        }
+
+        query.where(predicates.toArray(new Predicate[]{}));
+
+        Query q = session.createQuery(query);
+        Object result = q.getSingleResult();
+
+        return (long) result;
     }
 
     @Override
@@ -39,10 +123,11 @@ public class ManageRepositoryImplement implements ManageRepository {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         try {
             User user = manage.getUser();
-            user.setRole(this.roleRepository.getRoleByRoleName("ADMIN"));
-
-            session.save(user);
-            session.save(manage);
+            if (this.userRepository.addUser(user)) {
+                user.setRole(this.roleRepository.getRoleByRoleName("ADMIN"));
+                session.update(user);
+                session.save(manage);
+            }
             return true;
         } catch (Exception exception) {
             exception.printStackTrace();
