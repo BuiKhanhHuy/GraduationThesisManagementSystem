@@ -17,4 +17,21 @@ public class EvaluationMethodServiceImplement implements EvaluationMethodService
     public List<EvaluationMethod> getEvaluationMethods() {
         return this.evaluationMethodRepository.getEvaluationMethods();
     }
+
+    @Override
+    public boolean addEvaluationMethod(EvaluationMethod evaluationMethod) {
+        return this.evaluationMethodRepository.addEvaluationMethod(evaluationMethod);
+    }
+
+    @Override
+    public EvaluationMethod getEvaluationMethodById(int evaluationMethodId) {
+        return this.evaluationMethodRepository.getEvaluationMethodById(evaluationMethodId);
+    }
+
+    @Override
+    public boolean deleteEvaluationMethod(int evaluationMethodId) {
+        return this.evaluationMethodRepository.deleteEvaluationMethod(evaluationMethodId);
+    }
+
+
 }

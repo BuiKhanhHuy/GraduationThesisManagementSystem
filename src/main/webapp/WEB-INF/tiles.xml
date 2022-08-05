@@ -122,6 +122,11 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="adminEvaluationMethodList" extends="adminBaseLayout">
         <put-attribute name="title" value="Phương pháp đánh giá"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/evaluationmethod.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/admin/src/scripts/evaluationmethod.js"/>
+        </put-list-attribute>
     </definition>
     <!--    evaluationmethod-->
 

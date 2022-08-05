@@ -35,7 +35,7 @@ public class StudentRepositoryImplement implements StudentRepository {
     private RoleRepository roleRepository;
 
     @Override
-    public List<Student> getStudents( Map<String, String> params) {
+    public List<Student> getStudents(Map<String, String> params) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Student> query = builder.createQuery(Student.class);
@@ -86,6 +86,54 @@ public class StudentRepositoryImplement implements StudentRepository {
         q.setFirstResult(startPage);
 
         return q.getResultList();
+    }
+
+    @Override
+    public long countStudent(Map<String, String> params) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> query = builder.createQuery(Object[].class);
+        Root<Student> studentRoot = query.from(Student.class);
+        Root<User> userRoot = query.from(User.class);
+
+        query.multiselect(builder.count(studentRoot.get("id")));
+
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.equal(studentRoot.get("user"), userRoot.get("id")));
+
+        if (params.containsKey("kw") && !params.get("kw").isEmpty()) {
+            String kw = params.get("kw");
+
+            Predicate predicate1 = builder.like(studentRoot.get("code").as(String.class), String.format("%%%s%%", kw));
+            Predicate predicate2 = builder.like(studentRoot.get("fullName").as(String.class), String.format("%%%s%%", kw));
+            Predicate predicate3 = builder.like(studentRoot.get("email").as(String.class), String.format("%%%s%%", kw));
+            Predicate predicate4 = builder.like(studentRoot.get("phone").as(String.class), String.format("%%%s%%", kw));
+            Predicate predicate5 = builder.like(userRoot.get("username").as(String.class), String.format("%%%s%%", kw));
+
+            predicates.add(builder.or(predicate1, predicate2, predicate3, predicate4));
+        }
+
+        if (params.containsKey("schoolYearId") && !params.get("schoolYearId").isEmpty()) {
+            predicates.add(builder.equal(studentRoot.get("schoolYear"), Integer.parseInt(params.get("schoolYearId"))));
+        }
+
+        if (params.containsKey("majorId") && !params.get("majorId").isEmpty()) {
+            predicates.add(builder.equal(studentRoot.get("major"), Integer.parseInt(params.get("majorId"))));
+        }
+
+        if (params.containsKey("active") && !params.get("active").isEmpty()) {
+            boolean active = Boolean.parseBoolean(params.get("active"));
+
+            predicates.add(builder.equal(userRoot.get("active").as(Boolean.class), active));
+        }
+
+        query.where(predicates.toArray(new Predicate[]{}));
+
+        Query q = session.createQuery(query);
+
+        Object result = q.getSingleResult();
+
+        return (long) result;
     }
 
     @Override

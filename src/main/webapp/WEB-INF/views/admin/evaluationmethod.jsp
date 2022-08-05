@@ -1,33 +1,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:url var="filterEvaluationMethod" value=""/>
+
+<c:url var="home" value="/admin/"/>
+
 <div class="page-header">
     <div class="row">
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-12 col-sm-12">
             <div class="title">
-                <h4>Lọc</h4>
+                <h4>Phương pháp đánh giá</h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Form Basic</li>
+                    <li class="breadcrumb-item"><a href="${home}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Phương pháp đánh giá</li>
                 </ol>
             </nav>
         </div>
-        <div class="col-md-6 col-sm-12 text-right">
-            <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    January 2018
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">Export List</a>
-                    <a class="dropdown-item" href="#">Policies</a>
-                    <a class="dropdown-item" href="#">View Assets</a>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
+
 <!-- table start -->
 <div class="pd-20 card-box mb-30">
     <div class="clearfix mb-20">
@@ -35,7 +28,8 @@
             <h4 class="text-blue h4">Danh sách phương pháp đánh giá</h4>
         </div>
         <div class="pull-right">
-            <button type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
+            <button onclick="showAddEvaluationMethodModal('<c:url value="/admin/api/evaluations-method"/>')"
+                    type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
                 Thêm phương pháp đánh giá
             </button>
         </div>
@@ -60,9 +54,7 @@
                         <c:if test="${evaluationMethod.scoreComponents != null}">
                             <c:forEach var="scoreComponent" items="${evaluationMethod.scoreComponents}">
                                 <div class="m-0 p-0">
-                                    <p class="m-0 p-0 font-weight-bold">${scoreComponent.name}
-                                        <span class="ml-2 text-danger">(${scoreComponent.weight * 100} %)</span>
-                                    </p>
+                                    <p class="m-0 p-0 font-weight-bold">${scoreComponent.name}</p>
                                     <div class="ml-5">
                                         <ol style="list-style: -moz-ethiopic-numeric;">
                                             <c:if test="${scoreComponent.scoreColumns != null}">
@@ -91,16 +83,27 @@
                                title="Hoạt động"></i>
                         </c:if>
                         <c:if test="${evaluationMethod.active != true}">
-                            <i class="icon-copy fa fa-times-circle-o text-danger" aria-hidden="true" data-toggle="tooltip"
+                            <i class="icon-copy fa fa-times-circle-o text-danger" aria-hidden="true"
+                               data-toggle="tooltip"
                                data-placement="bottom"
                                title="Không hoạt động"></i>
                         </c:if>
                     </td>
                     <td class="col-2 text-center">
-                        <button type="button" class="btn btn-sm bg-warning text-white">
+                        <button onclick="showEditEvaluationMethodModal('<c:url
+                                value="/admin/api/evaluations-method/${evaluationMethod.id}"/>',
+                            ${evaluationMethod.id})"
+                                type="button" class="btn btn-sm bg-warning text-white"
+                                data-toggle="tooltip"
+                                data-placement="bottom" title="Cập nhật">
                             <i class="icon-copy dw dw-edit1"></i>
                         </button>
-                        <button type="button" class="btn btn-sm bg-danger text-white">
+                        <button onclick="deleteEvaluationMethodItem('<c:url
+                                value="/admin/api/evaluations-method/${evaluationMethod.id}"/>',
+                            ${evaluationMethod.id})"
+                                type="button" class="btn btn-sm bg-danger text-white"
+                                data-toggle="tooltip"
+                                data-placement="bottom" title="Xóa">
                             <i class="icon-copy dw dw-delete-3"></i>
                         </button>
                     </td>
@@ -132,3 +135,48 @@
     </div>
 </div>
 <!-- table End -->
+
+
+<!-- ADD and EDIT modal -->
+<div class="modal fade bs-example-modal-lg" id="modal-add-edit-evaluation-method" tabindex="-1" role="dialog"
+     aria-labelledby="myModalAddAndEditEvaluationMethod" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalAddAndEditEvaluationMethod"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+            </div>
+
+            <div class="modal-body">
+                <form id="form-add-edit-evaluation-method">
+                    <div class="pd-10">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Tên phương pháp đánh giá<span
+                                    class="text-danger">(*)</span></label>
+                            <input name="name" id="name" type="text" class="form-control">
+                            <hr/>
+                        </div>
+                        <div>
+                            <div class="task-list-form">
+                                <ul id="score-components">
+                                </ul>
+                            </div>
+                            <div class="add-more-task">
+                                <a href="javascript:;" onclick="addScoreComponent()"><i class="ion-plus-circled"></i>
+                                    Thêm điểm thành phần</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-success" id="btn-submit-form">
+                    <i class="micon fa fa-save"> </i> Lưu dữ liệu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ADD and EDIT modal -->

@@ -11,7 +11,7 @@
 			// verticaldownclass: 'fa fa-minus'
 		});
 		$("input[name='demo3']").TouchSpin();
-		$("input[name='demo1']").TouchSpin({
+		$("input[name='scoreComponents[0].scoreColumns[0].weight']").TouchSpin({
 			min: 0,
 			max: 100,
 			step: 0.1,

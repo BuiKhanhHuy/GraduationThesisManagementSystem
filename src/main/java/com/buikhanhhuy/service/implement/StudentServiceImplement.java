@@ -20,6 +20,11 @@ public class StudentServiceImplement implements StudentService {
     }
 
     @Override
+    public long countStudent(Map<String, String> params) {
+        return this.studentRepository.countStudent(params);
+    }
+
+    @Override
     public Student getStudentById(int studentId) {
         return this.studentRepository.getStudentById(studentId);
     }

@@ -4,20 +4,12 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
-import java.util.Set;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -44,18 +36,22 @@ public class ScoreColumn implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotEmpty(message = "{scoreColumn.add.name.notNullMessage}")
+    @NotNull(message = "{scoreColumn.add.name.notNullMessage}")
+    @Size(max = 100, message = "{scoreColumn.add.name.sizeMessage}")
     @Column(name = "name")
     private String name;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "weight")
+    @NotNull(message = "{scoreColumn.add.weight.notNullMessage}")
     private Double weight;
     @JoinColumn(name = "score_component_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JsonIgnore
     private ScoreComponent scoreComponent;
     @OneToMany(mappedBy = "scoreColumn")
-    private Set<ScoreDetail> scoreDetails;
+    @JsonIgnore
+    private List<ScoreDetail> scoreDetails;
 
     public ScoreColumn() {
     }
@@ -102,11 +98,11 @@ public class ScoreColumn implements Serializable {
     }
 
     @XmlTransient
-    public Set<ScoreDetail> getScoreDetails() {
+    public List<ScoreDetail> getScoreDetails() {
         return scoreDetails;
     }
 
-    public void setScoreDetails(Set<ScoreDetail> scoreDetailSet) {
+    public void setScoreDetails(List<ScoreDetail> scoreDetailSet) {
         this.scoreDetails = scoreDetailSet;
     }
 

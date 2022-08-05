@@ -5,8 +5,10 @@
 package com.buikhanhhuy.pojo;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,16 +35,21 @@ public class EvaluationMethod implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotEmpty(message = "{evaluationMethod.add.name.notNullMessage}")
+    @NotNull(message = "{evaluationMethod.add.name.notNullMessage}")
+    @Size(max = 100, message = "{evaluationMethod.add.name.sizeMessage}")
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "active")
     private boolean active;
     @OneToMany(mappedBy = "evaluationMethod", fetch = FetchType.EAGER)
-    private Set<ScoreComponent> scoreComponents;
+    @Valid
+    private List<ScoreComponent> scoreComponents;
+
+    {
+        this.active = false;
+    }
 
     public EvaluationMethod() {
     }
@@ -82,11 +89,11 @@ public class EvaluationMethod implements Serializable {
     }
 
     @XmlTransient
-    public Set<ScoreComponent> getScoreComponents() {
+    public List<ScoreComponent> getScoreComponents() {
         return scoreComponents;
     }
 
-    public void setScoreComponents(Set<ScoreComponent> scoreComponentSet) {
+    public void setScoreComponents(List<ScoreComponent> scoreComponentSet) {
         this.scoreComponents = scoreComponentSet;
     }
 

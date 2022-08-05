@@ -21,7 +21,6 @@
     </div>
 </div>
 
-
 <!-- table start -->
 <div class="pd-20 card-box mb-30">
     <form id="form-filter" action="${filterStudent}">
@@ -89,7 +88,7 @@
             </button>
         </div>
     </div>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-responsive">
         <thead>
         <tr>
             <th scope="col" class="text-center col-1">Hình ảnh</th>
@@ -335,7 +334,7 @@
         onPageClick: function (event, page) {
             if (currentPage != page) {
                 $("#page").val(page)
-                $("#form-filter").submit();
+            $("#form-filter").submit();
             }
         }
     });

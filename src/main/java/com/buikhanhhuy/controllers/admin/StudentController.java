@@ -1,6 +1,5 @@
 package com.buikhanhhuy.controllers.admin;
 
-import com.buikhanhhuy.pojo.SchoolYear;
 import com.buikhanhhuy.service.MajorService;
 import com.buikhanhhuy.service.SchoolYearService;
 import com.buikhanhhuy.service.StudentService;
@@ -30,7 +29,7 @@ public class StudentController {
 
         model.addAttribute("page", Integer.parseInt((params.get("page") != null && !params.get("page").isEmpty())
                 ? params.get("page") : "1"));
-        model.addAttribute("totalPage", 3);
+        model.addAttribute("totalPage", this.studentService.countStudent(params));
         model.addAttribute("students", this.studentService.getStudents(params));
 
         return "adminStudentList";
