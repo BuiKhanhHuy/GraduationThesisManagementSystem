@@ -57,42 +57,43 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="text-center">ID</th>
             <th scope="col" class="text-center">Niên khóa</th>
-            <th scope="col" class="col-2 text-center">Ngày bắt đầu</th>
-            <th scope="col" class="col-2 text-center">Ngày kết thúc</th>
-            <th scope="col" class="col-2 text-center">Hành động</th>
+            <th scope="col" class="text-center">Ngày bắt đầu</th>
+            <th scope="col" class="text-center">Ngày kết thúc</th>
+            <th scope="col" class="text-center">Hành động</th>
         </tr>
         </thead>
         <tbody>
         <c:if test="${schoolYears.size() != 0}">
             <c:forEach var="schoolYear" items="${schoolYears}">
                 <tr>
-                    <th scope="row" class="text-center">${schoolYear.id}</th>
                     <td class="text-center">${schoolYear.name}</td>
-                    <td class="col-2 text-center">
+                    <td class="text-center">
                         <fmt:formatDate pattern="yyyy/MM/dd" value="${schoolYear.startDate}"/>
                     </td>
-                    <td class="col-2 text-center">
+                    <td class="text-center">
                         <fmt:formatDate pattern="yyyy/MM/dd" value="${schoolYear.endDate}"/>
                     </td>
-                    <td class="col-2 text-center">
-                        <button type="button"
-                                onclick="showEditSchoolYear('<c:url value="/admin/api/school-years/${schoolYear.id}"/>',
-                                    ${schoolYear.id})"
-                                class="btn btn-sm bg-warning text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Cập nhật">
-                            <i class="icon-copy dw dw-edit1"></i>
-                        </button>
-                        <button type="button"
-                                onclick="deleteSchoolYearItem('<c:url
-                                        value="/admin/api/school-years/${schoolYear.id}"/>')"
-                                class="btn btn-sm bg-danger text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xóa">
-                            <i class="icon-copy dw dw-delete-3"></i>
-                        </button>
+                    <td class="text-center">
+                        <div class="btn-list">
+                            <button type="button"
+                                    onclick="showEditSchoolYear('<c:url
+                                            value="/admin/api/school-years/${schoolYear.id}"/>',
+                                        ${schoolYear.id})"
+                                    class="btn btn-sm bg-warning text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Cập nhật">
+                                <i class="icon-copy dw dw-edit1"></i>
+                            </button>
+                            <button type="button"
+                                    onclick="deleteSchoolYearItem('<c:url
+                                            value="/admin/api/school-years/${schoolYear.id}"/>')"
+                                    class="btn btn-sm bg-danger text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xóa">
+                                <i class="icon-copy dw dw-delete-3"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>

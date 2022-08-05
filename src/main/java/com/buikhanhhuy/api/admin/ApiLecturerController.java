@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,15 @@ import java.util.stream.Collectors;
 public class ApiLecturerController {
     @Autowired
     private LecturerService lecturerService;
+
+    @GetMapping(path = "/lecturer-options", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<Object[]>> loadLecturerOptions() {
+        try {
+            return new ResponseEntity<>(this.lecturerService.getLecturerOptions(), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @GetMapping(path = "/lecturers/{lecturerId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Lecturer> loadLecturer(@PathVariable(value = "lecturerId") int lecturerId) {

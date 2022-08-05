@@ -4,49 +4,23 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author bkhuy
  */
 @Entity
 @Table(name = "thesis")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Thesis.findAll", query = "SELECT t FROM Thesis t"),
-    @NamedQuery(name = "Thesis.findById", query = "SELECT t FROM Thesis t WHERE t.id = :id"),
-    @NamedQuery(name = "Thesis.findByCode", query = "SELECT t FROM Thesis t WHERE t.code = :code"),
-    @NamedQuery(name = "Thesis.findByStartDate", query = "SELECT t FROM Thesis t WHERE t.startDate = :startDate"),
-    @NamedQuery(name = "Thesis.findByComplateDate", query = "SELECT t FROM Thesis t WHERE t.complateDate = :complateDate"),
-    @NamedQuery(name = "Thesis.findByThesisStartDate", query = "SELECT t FROM Thesis t WHERE t.thesisStartDate = :thesisStartDate"),
-    @NamedQuery(name = "Thesis.findByThesisEndDate", query = "SELECT t FROM Thesis t WHERE t.thesisEndDate = :thesisEndDate"),
-    @NamedQuery(name = "Thesis.findByReportFile", query = "SELECT t FROM Thesis t WHERE t.reportFile = :reportFile"),
-    @NamedQuery(name = "Thesis.findByStatus", query = "SELECT t FROM Thesis t WHERE t.status = :status"),
-    @NamedQuery(name = "Thesis.findByTotalScore", query = "SELECT t FROM Thesis t WHERE t.totalScore = :totalScore"),
-    @NamedQuery(name = "Thesis.findByResult", query = "SELECT t FROM Thesis t WHERE t.result = :result")})
+@NamedQueries({@NamedQuery(name = "Thesis.findAll", query = "SELECT t FROM Thesis t"), @NamedQuery(name = "Thesis.findById", query = "SELECT t FROM Thesis t WHERE t.id = :id"), @NamedQuery(name = "Thesis.findByCode", query = "SELECT t FROM Thesis t WHERE t.code = :code"), @NamedQuery(name = "Thesis.findByStartDate", query = "SELECT t FROM Thesis t WHERE t.startDate = :startDate"), @NamedQuery(name = "Thesis.findByComplateDate", query = "SELECT t FROM Thesis t WHERE t.complateDate = :complateDate"), @NamedQuery(name = "Thesis.findByThesisStartDate", query = "SELECT t FROM Thesis t WHERE t.thesisStartDate = :thesisStartDate"), @NamedQuery(name = "Thesis.findByThesisEndDate", query = "SELECT t FROM Thesis t WHERE t.thesisEndDate = :thesisEndDate"), @NamedQuery(name = "Thesis.findByReportFile", query = "SELECT t FROM Thesis t WHERE t.reportFile = :reportFile"), @NamedQuery(name = "Thesis.findByStatus", query = "SELECT t FROM Thesis t WHERE t.status = :status"), @NamedQuery(name = "Thesis.findByTotalScore", query = "SELECT t FROM Thesis t WHERE t.totalScore = :totalScore"), @NamedQuery(name = "Thesis.findByResult", query = "SELECT t FROM Thesis t WHERE t.result = :result")})
 public class Thesis implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,55 +30,59 @@ public class Thesis implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    @NotEmpty(message = "{thesis.add.code.notNullMessage}")
+    @NotNull(message = "{thesis.add.code.notNullMessage}")
+    @Size(max = 20, message = "{thesis.add.code.sizeMessage}")
     @Column(name = "code")
     private String code;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{thesis.add.startDate.notNullMessage}")
     @Column(name = "start_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{thesis.add.endDate.notNullMessage}")
     @Column(name = "complate_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date complateDate;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{thesis.add.thesisStartDate.notNullMessage}")
     @Column(name = "thesis_start_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date thesisStartDate;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{thesis.add.thesisEndDate.notNullMessage}")
     @Column(name = "thesis_end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date thesisEndDate;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 300)
+    @Size(min = 1, max = 300, message = "{thesis.add.reportFile.notNullMessage}")
     @Column(name = "report_file")
     private String reportFile;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "status")
     private int status;
     @Lob
-    @Size(max = 2147483647)
+    @Size(max = 2147483647, message = "{thesis.add.comment.sizeMessage}")
     @Column(name = "comment")
     private String comment;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Min(value = 0, message = "{thesis.add.totalScore.sizeMessage}")
+    @Max(value = 10, message = "{thesis.add.totalScore.sizeMessage}")
     @Column(name = "total_score")
     private Double totalScore;
     @Column(name = "result")
     private Boolean result;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "thesis")
+    @JsonIgnore
     private Set<CounterArgument> counterArguments;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "thesis")
+    @JsonIgnore
     private Set<Perform> performs;
     @OneToMany(mappedBy = "thesis")
+    @JsonIgnore
     private Set<Score> scores;
     @JoinColumn(name = "council_id", referencedColumnName = "id")
+    @JsonIgnore
     @ManyToOne
     private Council council;
     @JoinColumn(name = "department_id", referencedColumnName = "id")
@@ -117,7 +95,19 @@ public class Thesis implements Serializable {
     @ManyToOne
     private Topic topic;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "thesis")
+    @JsonIgnore
     private Set<Guide> guides;
+
+    @Transient
+    @NotEmpty(message = "{thesis.add.instructorsId.sizeMessage}")
+    private Set<Integer> instructorsId;
+    @Transient
+    @NotEmpty(message = "{thesis.add.reviewLecturersId.sizeMessage}")
+    private Set<Integer> reviewLecturersId;
+    @Transient
+    @NotEmpty(message = "{thesis.add.performStudentsId.sizeMessage}")
+    private Set<Integer> performStudentsId;
+
 
     public Thesis() {
     }
@@ -293,6 +283,30 @@ public class Thesis implements Serializable {
         this.guides = guideSet;
     }
 
+    public Set<Integer> getInstructorsId() {
+        return instructorsId;
+    }
+
+    public void setInstructorsId(Set<Integer> instructorsId) {
+        this.instructorsId = instructorsId;
+    }
+
+    public Set<Integer> getReviewLecturersId() {
+        return reviewLecturersId;
+    }
+
+    public void setReviewLecturersId(Set<Integer> reviewLecturersId) {
+        this.reviewLecturersId = reviewLecturersId;
+    }
+
+    public Set<Integer> getPerformStudentsId() {
+        return performStudentsId;
+    }
+
+    public void setPerformStudentsId(Set<Integer> performStudentsId) {
+        this.performStudentsId = performStudentsId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -317,5 +331,5 @@ public class Thesis implements Serializable {
     public String toString() {
         return "com.buikhanhhuy.pojo.Thesis[ id=" + id + " ]";
     }
-    
+
 }

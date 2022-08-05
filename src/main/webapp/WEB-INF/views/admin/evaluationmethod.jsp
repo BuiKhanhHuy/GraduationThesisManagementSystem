@@ -1,8 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:url var="filterEvaluationMethod" value=""/>
-
+<c:url var="filterEvaluationMethod" value="/admin/evaluations-method"/>
 <c:url var="home" value="/admin/"/>
 
 <div class="page-header">
@@ -23,6 +22,9 @@
 
 <!-- table start -->
 <div class="pd-20 card-box mb-30">
+    <form id="form-filter" action="${filterEvaluationMethod}">
+        <input name="page" id="page" hidden/>
+    </form>
     <div class="clearfix mb-20">
         <div class="pull-left">
             <h4 class="text-blue h4">Danh sách phương pháp đánh giá</h4>
@@ -37,18 +39,16 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="text-center">ID</th>
             <th scope="col">Tên phương pháp đánh giá</th>
-            <th scope="col" class="col-6">Nội dung đánh giá</th>
+            <th scope="col">Nội dung đánh giá</th>
             <th scope="col" class="text-center">Hoạt động</th>
-            <th scope="col" class="col-2 text-center">Hành động</th>
+            <th scope="col" class="text-center">Hành động</th>
         </tr>
         </thead>
         <tbody>
         <c:if test="${evaluationMethods.size() != 0}">
             <c:forEach var="evaluationMethod" items="${evaluationMethods}">
                 <tr>
-                    <th scope="row" class="text-center">${evaluationMethod.id}</th>
                     <td>${evaluationMethod.name}</td>
                     <td>
                         <c:if test="${evaluationMethod.scoreComponents != null}">
@@ -60,7 +60,7 @@
                                             <c:if test="${scoreComponent.scoreColumns != null}">
                                                 <c:forEach var="scoreColumn" items="${scoreComponent.scoreColumns}">
                                                     <li>${scoreColumn.name}
-                                                        <span class="ml-2 font-weight-bold text-info">(${scoreColumn.weight * 100} %)</span>
+                                                        <span class="ml-2 font-weight-bold text-danger">(${scoreColumn.weight * 100} %)</span>
                                                     </li>
                                                 </c:forEach>
                                             </c:if>
@@ -89,23 +89,25 @@
                                title="Không hoạt động"></i>
                         </c:if>
                     </td>
-                    <td class="col-2 text-center">
-                        <button onclick="showEditEvaluationMethodModal('<c:url
-                                value="/admin/api/evaluations-method/${evaluationMethod.id}"/>',
-                            ${evaluationMethod.id})"
-                                type="button" class="btn btn-sm bg-warning text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Cập nhật">
-                            <i class="icon-copy dw dw-edit1"></i>
-                        </button>
-                        <button onclick="deleteEvaluationMethodItem('<c:url
-                                value="/admin/api/evaluations-method/${evaluationMethod.id}"/>',
-                            ${evaluationMethod.id})"
-                                type="button" class="btn btn-sm bg-danger text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xóa">
-                            <i class="icon-copy dw dw-delete-3"></i>
-                        </button>
+                    <td class="text-center">
+                        <div class="btn-list">
+                            <button onclick="showEditEvaluationMethodModal('<c:url
+                                    value="/admin/api/evaluations-method/${evaluationMethod.id}"/>',
+                                ${evaluationMethod.id})"
+                                    type="button" class="btn btn-sm bg-warning text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Cập nhật">
+                                <i class="icon-copy dw dw-edit1"></i>
+                            </button>
+                            <button onclick="deleteEvaluationMethodItem('<c:url
+                                    value="/admin/api/evaluations-method/${evaluationMethod.id}"/>',
+                                ${evaluationMethod.id})"
+                                    type="button" class="btn btn-sm bg-danger text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xóa">
+                                <i class="icon-copy dw dw-delete-3"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>
@@ -120,19 +122,17 @@
         </c:if>
         </tbody>
     </table>
-    <div class="blog-pagination pagination-sm mt-5 mb-2">
-        <div class="btn-toolbar justify-content-center">
-            <div class="btn-group">
-                <a href="#" class="btn btn-outline-primary prev"><i class="fa fa-angle-double-left"></i></a>
-                <a href="#" class="btn btn-outline-primary">1</a>
-                <a href="#" class="btn btn-outline-primary">2</a>
-                <span class="btn btn-primary current">3</span>
-                <a href="#" class="btn btn-outline-primary">4</a>
-                <a href="#" class="btn btn-outline-primary">5</a>
-                <a href="#" class="btn btn-outline-primary next"><i class="fa fa-angle-double-right"></i></a>
+    <c:if test="${Math.ceil(totalResult / pageSize) > 1}">
+        <div class="blog-pagination pagination-md mt-5 mb-2">
+            <div class="btn-toolbar justify-content-center">
+                <div class="btn-group">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+                </div>
             </div>
         </div>
-    </div>
+    </c:if>
 </div>
 <!-- table End -->
 
@@ -162,7 +162,7 @@
                                 <ul id="score-components">
                                 </ul>
                             </div>
-                            <div class="add-more-task">
+                            <div class="add-more-task" id="add-more-task">
                                 <a href="javascript:;" onclick="addScoreComponent()"><i class="ion-plus-circled"></i>
                                     Thêm điểm thành phần</a>
                             </div>
@@ -180,3 +180,26 @@
     </div>
 </div>
 <!-- ADD and EDIT modal -->
+
+<script>
+    let currentPage = ${page};
+    let totalResult = ${totalResult};
+    let pageSize = ${pageSize};
+
+
+    $('#pagination').twbsPagination({
+        totalPages: Math.ceil(totalResult / pageSize),
+        visiblePages: 8,
+        first: '',
+        last: '',
+        prev: '&laquo;',
+        next: '&raquo;',
+        startPage: currentPage,
+        onPageClick: function (event, page) {
+            if (currentPage != page) {
+                $("#page").val(page)
+                $("#form-filter").submit();
+            }
+        }
+    });
+</script>

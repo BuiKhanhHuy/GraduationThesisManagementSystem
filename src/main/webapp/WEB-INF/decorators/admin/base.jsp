@@ -35,6 +35,9 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" id="theme-styles">
 
+    <%--    toast--%>
+    <link rel="stylesheet" href="<c:url value="/admin/src/plugins/toast/jquery.toast.css"/>">
+
     <c:forEach var="css" items="${stylesheets}">
         <link rel="stylesheet" type="text/css" href="${css}">
     </c:forEach>

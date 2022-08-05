@@ -101,7 +101,7 @@
             </button>
         </div>
     </div>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-responsive">
         <thead>
         <tr>
             <th scope="col" class="text-center col-1">Hình ảnh</th>
@@ -110,8 +110,8 @@
             <th scope="col">Chức vụ</th>
             <th scope="col">Thuộc khoa</th>
             <th scope="col">Quyền</th>
-            <th scope="col" class="col-1 text-center">Trạng thái</th>
-            <th scope="col" class="col-2 text-center">Hành động</th>
+            <th scope="col" class="text-center">Trạng thái</th>
+            <th scope="col" class="text-center">Hành động</th>
         </tr>
         </thead>
         <tbody>
@@ -189,19 +189,21 @@
                                title="Không hoạt động"></i>
                         </c:if>
                     </td>
-                    <td class="col-2 text-center">
-                        <button onclick="showEditLectureModal('<c:url
-                                value="/admin/api/lecturers/${lecturer.id}"/>', ${lecturer.id})"
-                                type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                                data-placement="bottom" title="Chỉnh sửa">
-                            <i class="icon-copy dw dw-edit1"></i>
-                        </button>
-                        <button onclick="deleteLecturerItem('<c:url
-                                value="/admin/api/lecturers/${lecturer.id}"/>', ${lecturer.id})"
-                                type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
-                                data-placement="bottom" title="Xóa">
-                            <i class="icon-copy dw dw-delete-3"></i>
-                        </button>
+                    <td class="text-center">
+                        <div class="btn-list">
+                            <button onclick="showEditLectureModal('<c:url
+                                    value="/admin/api/lecturers/${lecturer.id}"/>', ${lecturer.id})"
+                                    type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
+                                    data-placement="bottom" title="Chỉnh sửa">
+                                <i class="icon-copy dw dw-edit1"></i>
+                            </button>
+                            <button onclick="deleteLecturerItem('<c:url
+                                    value="/admin/api/lecturers/${lecturer.id}"/>', ${lecturer.id})"
+                                    type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
+                                    data-placement="bottom" title="Xóa">
+                                <i class="icon-copy dw dw-delete-3"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>

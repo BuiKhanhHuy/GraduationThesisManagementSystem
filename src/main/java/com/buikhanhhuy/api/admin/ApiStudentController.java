@@ -1,6 +1,5 @@
 package com.buikhanhhuy.api.admin;
 
-import com.buikhanhhuy.pojo.Lecturer;
 import com.buikhanhhuy.pojo.Student;
 import com.buikhanhhuy.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -23,6 +23,15 @@ import java.util.stream.Collectors;
 public class ApiStudentController {
     @Autowired
     private StudentService studentService;
+
+    @GetMapping(path = "/student-options", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<Object[]>> loadStudentOptions() {
+        try {
+            return new ResponseEntity<>(this.studentService.getStudentOptions(), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @GetMapping(path = "/students/{studentId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Student> loadStudent(@PathVariable(value = "studentId") int studentId) {
@@ -43,10 +52,8 @@ public class ApiStudentController {
             errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             status = HttpStatus.BAD_REQUEST;
         } else {
-            if (this.studentService.addStudent(student))
-                status = HttpStatus.CREATED;
-            else
-                status = HttpStatus.INTERNAL_SERVER_ERROR;
+            if (this.studentService.addStudent(student)) status = HttpStatus.CREATED;
+            else status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
         return new ResponseEntity<>(errorMessages, status);
@@ -61,8 +68,7 @@ public class ApiStudentController {
             errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             status = HttpStatus.BAD_REQUEST;
         } else {
-            if (this.studentService.updateStudent(studentId, student))
-                status = HttpStatus.OK;
+            if (this.studentService.updateStudent(studentId, student)) status = HttpStatus.OK;
             else status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 

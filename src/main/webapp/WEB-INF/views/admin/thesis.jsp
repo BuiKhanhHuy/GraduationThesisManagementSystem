@@ -35,16 +35,16 @@
             <h4 class="text-blue h4">Danh sách khóa luận</h4>
         </div>
         <div class="pull-right">
-            <button type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
+            <button onclick="showAddThesisModal('<c:url value="/admin/api/theses"/>')"
+                    type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
                 Thêm khóa luận
             </button>
         </div>
     </div>
     <div class="table-responsive">
-        <table class="table table-bordered ">
+        <table class="table table-bordered">
             <thead>
             <tr>
-                <th scope="col" class="text-center col-1">ID</th>
                 <th scope="col" class="text-center">Mã khóa luận</th>
                 <th scope="col" class="text-center">Chủ đề</th>
                 <th scope="col" class="text-center">Khoa</th>
@@ -54,16 +54,13 @@
                 <th scope="col">Trạng thái</th>
                 <th scope="col">Tổng điểm</th>
                 <th scope="col" class="text-center">Kết quả</th>
-                <th scope="col" class="col-2 text-center">Hành động</th>
+                <th scope="col" class="text-center">Hành động</th>
             </tr>
             </thead>
             <tbody>
             <c:if test="${theses.size() != 0}">
                 <c:forEach var="thesis" items="${theses}">
                     <tr>
-                        <td class="text-center col-1">
-                                ${thesis.id}
-                        </td>
                         <td class="text-center">
                                 ${thesis.code}
                         </td>
@@ -119,19 +116,21 @@
                                 <span class="text-danger font-weight-bold">Trượt</span>
                             </c:if>
                         </td>
-                        <td class="col-2 text-center">
-                            <button type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
-                                    data-placement="bottom" title="Xem chi tiết">
-                                <i class="icon-copy dw dw-eye"></i>
-                            </button>
-                            <button type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                                    data-placement="bottom" title="Chỉnh sửa">
-                                <i class="icon-copy dw dw-edit1"></i>
-                            </button>
-                            <button type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
-                                    data-placement="bottom" title="Xóa">
-                                <i class="icon-copy dw dw-delete-3"></i>
-                            </button>
+                        <td class="text-center">
+                            <div class="btn-list">
+                                <button type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
+                                        data-placement="bottom" title="Xem chi tiết">
+                                    <i class="icon-copy dw dw-eye"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
+                                        data-placement="bottom" title="Chỉnh sửa">
+                                    <i class="icon-copy dw dw-edit1"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
+                                        data-placement="bottom" title="Xóa">
+                                    <i class="icon-copy dw dw-delete-3"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </c:forEach>
@@ -161,5 +160,137 @@
         </div>
     </div>
 </div>
-
 <!-- table End -->
+
+
+<!-- ADD and EDIT modal -->
+<div class="modal fade bs-example-modal-lg " id="modal-add-edit-thesis" tabindex="-1" role="dialog"
+     aria-labelledby="myModalAddAndEditThesis" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalAddAndEditThesis"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+            </div>
+
+            <div class="modal-body">
+                <form id="form-add-edit-thesis">
+                    <div class="pd-10">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Mã khóa luận<span
+                                    class="text-danger">(*)</span></label>
+                            <input name="code" id="code" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Chủ đề<span
+                                    class="text-danger">(*)</span></label>
+                            <div>
+                                <select class="custom-select form-control"
+                                        name="topic" id="topic" style="width: 100%; ">
+                                    <option value="1">Chủ đè 1</option>
+                                    <option value="2">Chủ đè 1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Ngày bắt đầu<span
+                                    class="text-danger">(*)</span></label>
+                            <input name="startDate" id="startDate" type="datetime-local" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Ngày hoàn thành<span
+                                    class="text-danger">(*)</span></label>
+                            <input name="complateDate" id="complateDate" type="datetime-local" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Ngày bắt đầu nộp khóa luận<span
+                                    class="text-danger">(*)</span></label>
+                            <input name="thesisStartDate" id="thesisStartDate" type="datetime-local"
+                                   class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Ngày hết hạn nộp khóa luận<span
+                                    class="text-danger">(*)</span></label>
+                            <input name="thesisEndDate" id="thesisEndDate" type="datetime-local" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Khoa<span
+                                    class="text-danger">(*)</span></label>
+                            <div>
+                                <select class="custom-select form-control"
+                                        name="department" id="department" style="width: 100%;">
+                                    <c:forEach var="departmentOption" items="${departmentOptions}">
+                                        <option value="${departmentOption[0]}">${departmentOption[1]}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Niên khóa<span
+                                    class="text-danger">(*)</span></label>
+                            <div>
+                                <select class="custom-select form-control"
+                                        name="schoolYear" id="schoolYear" style="width: 100%; ">
+                                    <c:forEach var="schoolYearOption" items="${schoolYearOptions}">
+                                        <option value="${schoolYearOption[0]}">${schoolYearOption[1]}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Sinh viên thực hiện<span
+                                    class="text-danger">(*)</span></label>
+                            <select name="performStudentsId" id="performStudentsId"
+                                    class="custom-select2 form-control" multiple="multiple" style="width: 100%;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Giảng viên hướng dẫn<span
+                                    class="text-danger">(*)</span></label>
+                            <select name="instructorsId" id="instructorsId"
+                                    class="custom-select2 form-control" multiple="multiple" style="width: 100%;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Giảng viên phản biện<span
+                                    class="text-danger">(*)</span></label>
+                            <select name="reviewLecturersId" id="reviewLecturersId"
+                                    class="custom-select2 form-control" multiple="multiple" style="width: 100%;">
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-success" id="btn-submit-form">
+                    <i class="micon fa fa-save"> </i> Lưu dữ liệu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ADD and EDIT modal -->
+
+<%--<script>--%>
+<%--    let currentPage = ${page};--%>
+<%--    let totalPage = ${totalPage};--%>
+<%--    let pageSize = ${pageSize};--%>
+
+<%--    $('#pagination').twbsPagination({--%>
+<%--        totalPages: Math.ceil(totalPage / pageSize),--%>
+<%--        visiblePages: 8,--%>
+<%--        first: '',--%>
+<%--        last: '',--%>
+<%--        prev: '&laquo;',--%>
+<%--        next: '&raquo;',--%>
+<%--        startPage: currentPage,--%>
+<%--        onPageClick: function (event, page) {--%>
+<%--            if (currentPage != page) {--%>
+<%--                $("#page").val(page)--%>
+<%--                $("#form-filter").submit();--%>
+<%--            }--%>
+<%--        }--%>
+<%--    });--%>
+<%--</script>--%>

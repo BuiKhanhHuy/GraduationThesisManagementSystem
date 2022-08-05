@@ -48,7 +48,6 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="text-center">ID</th>
             <th scope="col">Tên quyền</th>
             <th scope="col">Mô tả</th>
         </tr>
@@ -57,7 +56,6 @@
         <c:if test="${roles.size() != 0}">
             <c:forEach var="role" items="${roles}">
                 <tr>
-                    <th scope="row" class="text-center">${role.id}</th>
                     <td class="text-danger font-weight-bold">${role.roleName}</td>
                     <td>${role.description}</td>
                 </tr>

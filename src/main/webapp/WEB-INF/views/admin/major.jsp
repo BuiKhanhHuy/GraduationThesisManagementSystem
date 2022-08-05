@@ -56,18 +56,16 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="text-center">ID</th>
             <th scope="col">Mã ngành</th>
             <th scope="col">Tên ngành</th>
             <th scope="col">Thuộc khoa</th>
-            <th scope="col" class="col-2 text-center">Hành động</th>
+            <th scope="col" class="text-center">Hành động</th>
         </tr>
         </thead>
         <tbody>
         <c:if test="${majors.size() != 0}">
             <c:forEach var="major" items="${majors}">
                 <tr>
-                    <td class="text-center">${major.id}</td>
                     <td>${major.code}</td>
                     <td>${major.name}</td>
                     <td>
@@ -78,27 +76,29 @@
                             <span class="text-black-50 text-center">Chưa cập nhật</span>
                         </c:if>
                     </td>
-                    <td class="col-2 text-center">
-                        <button onclick="showViewMajorModal('
-                            <c:url value="/admin/api/majors/${major.id}"/> ')"
-                                type="button" class="btn btn-sm bg-info text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xem chi tiết">
-                            <i class="icon-copy dw dw-eye"></i>
-                        </button>
-                        <button onclick="showEditMajorModal('<c:url
-                                value="/admin/api/majors/${major.id}"/>', ${major.id})"
-                                type="button" class="btn btn-sm bg-warning text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Cập nhật">
-                            <i class="icon-copy dw dw-edit1"></i>
-                        </button>
-                        <button onclick="deleteMajorItem('<c:url value="/admin/api/majors/${major.id}"/>')"
-                                type="button" class="btn btn-sm bg-danger text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xóa">
-                            <i class="icon-copy dw dw-delete-3"></i>
-                        </button>
+                    <td class="text-center">
+                        <div class="btn-list ">
+                            <button onclick="showViewMajorModal('<c:url value="/admin/api/majors/${major.id}"/> ')"
+                                    type="button" class="btn btn-sm bg-info text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xem chi tiết">
+                                <i class="icon-copy dw dw-eye"></i>
+                            </button>
+                            <button onclick="showEditMajorModal('<c:url
+                                    value="/admin/api/majors/${major.id}"/>', ${major.id})"
+                                    type="button" class="btn btn-sm bg-warning text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Cập nhật">
+                                <i class="icon-copy dw dw-edit1"></i>
+                            </button>
+                            <button onclick="deleteMajorItem('<c:url value="/admin/api/majors/${major.id}"/>')"
+                                    type="button" class="btn btn-sm bg-danger text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xóa">
+                                <i class="icon-copy dw dw-delete-3"></i>
+                            </button>
+                        </div>
+
                     </td>
                 </tr>
             </c:forEach>

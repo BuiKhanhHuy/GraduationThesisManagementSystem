@@ -58,45 +58,45 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="text-center">ID</th>
             <th scope="col">Mã khoa</th>
             <th scope="col">Tên khoa</th>
             <th scope="col" class="text-center col-2">Ngày thành lập</th>
-            <th scope="col" class="col-2 text-center">Hành động</th>
+            <th scope="col" class="text-center">Hành động</th>
         </tr>
         </thead>
         <tbody>
         <c:if test="${departments.size() > 0}">
             <c:forEach var="department" items="${departments}">
                 <tr>
-                    <td scope="row" class="text-center">${department.id}</td>
                     <td>${department.code}</td>
                     <td>${department.name}</td>
                     <td class="text-center">
                         <fmt:formatDate pattern="yyyy/MM/dd" value="${department.founding}"/>
                     </td>
-                    <td class="col-2 text-center">
-                        <button onclick="showViewDepartmentModal('<c:url
-                                value="/admin/api/departments/${department.id}"/>')"
-                                type="button" class="btn btn-sm bg-info text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xem chi tiết">
-                            <i class="icon-copy dw dw-eye"></i>
-                        </button>
-                        <button onclick="showEditDepartmentModal('<c:url
-                                value="/admin/api/departments/${department.id}"/>', ${department.id})"
-                                type="button" class="btn btn-sm bg-warning text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Cập nhật">
-                            <i class="icon-copy dw dw-edit1"></i>
-                        </button>
-                        <button onclick="deleteDepartmentItem('<c:url
-                                value="/admin/api/departments/${department.id}"/>')"
-                                type="button" class="btn btn-sm bg-danger text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xóa">
-                            <i class="icon-copy dw dw-delete-3"></i>
-                        </button>
+                    <td class=" text-center">
+                        <div class="btn-list">
+                            <button onclick="showViewDepartmentModal('<c:url
+                                    value="/admin/api/departments/${department.id}"/>')"
+                                    type="button" class="btn btn-sm bg-info text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xem chi tiết">
+                                <i class="icon-copy dw dw-eye"></i>
+                            </button>
+                            <button onclick="showEditDepartmentModal('<c:url
+                                    value="/admin/api/departments/${department.id}"/>', ${department.id})"
+                                    type="button" class="btn btn-sm bg-warning text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Cập nhật">
+                                <i class="icon-copy dw dw-edit1"></i>
+                            </button>
+                            <button onclick="deleteDepartmentItem('<c:url
+                                    value="/admin/api/departments/${department.id}"/>')"
+                                    type="button" class="btn btn-sm bg-danger text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xóa">
+                                <i class="icon-copy dw dw-delete-3"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>

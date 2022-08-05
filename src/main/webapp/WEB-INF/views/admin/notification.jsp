@@ -57,34 +57,34 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="text-center">ID</th>
             <th scope="col" class="col-2">Tiêu đề</th>
             <th scope="col">Nội dung</th>
-            <th scope="col" class="col-2 text-center">Hành động</th>
+            <th scope="col" class="text-center">Hành động</th>
         </tr>
         </thead>
         <tbody>
         <c:if test="${notifications.size() != 0}">
             <c:forEach var="notification" items="${notifications}">
                 <tr>
-                    <th scope="row" class="text-center">${notification.id}</th>
                     <td>${notification.title}</td>
                     <td>
                             ${notification.content}
                     </td>
-                    <td class="col-2 text-center">
-                        <button
-                                type="button" class="btn btn-sm bg-warning text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Cập nhật">
-                            <i class="icon-copy dw dw-edit1"></i>
-                        </button>
-                        <button
-                                type="button" class="btn btn-sm bg-danger text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xóa">
-                            <i class="icon-copy dw dw-delete-3"></i>
-                        </button>
+                    <td class="text-center">
+                        <div class="btn-list">
+                            <button
+                                    type="button" class="btn btn-sm bg-warning text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Cập nhật">
+                                <i class="icon-copy dw dw-edit1"></i>
+                            </button>
+                            <button
+                                    type="button" class="btn btn-sm bg-danger text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xóa">
+                                <i class="icon-copy dw dw-delete-3"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>

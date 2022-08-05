@@ -75,9 +75,9 @@
             <th scope="col" class="text-center col-1">Hình ảnh</th>
             <th scope="col" class="text-center">Tên người dùng</th>
             <th scope="col" class="text-center">Thông tin</th>
-            <th scope="col" class="text-center col-1">Hoạt động</th>
-            <th scope="col" class="col-1">Quyền</th>
-            <th scope="col" class="col-2 text-center">Hành động</th>
+            <th scope="col" class="text-center">Hoạt động</th>
+            <th scope="col">Quyền</th>
+            <th scope="col" class="text-center">Hành động</th>
         </tr>
         </thead>
         <tbody>
@@ -114,20 +114,22 @@
                         </c:if>
                     </td>
                     <td class="text-light-purple font-weight-bold">${manage.user.role.roleName}</td>
-                    <td class="col-2 text-center">
-                        <button onclick="showEditManageModal('<c:url value="/admin/api/manages/${manage.id}"/>',
-                            ${manage.id})"
-                                type="button" class="btn btn-sm bg-warning text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Cập nhật">
-                            <i class="icon-copy dw dw-edit1"></i>
-                        </button>
-                        <button onclick="deleteManageItem('<c:url value="/admin/api/manages/${manage.id}"/>')"
-                                type="button" class="btn btn-sm bg-danger text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xóa">
-                            <i class="icon-copy dw dw-delete-3"></i>
-                        </button>
+                    <td class="text-center">
+                        <div class="btn-list">
+                            <button onclick="showEditManageModal('<c:url value="/admin/api/manages/${manage.id}"/>',
+                                ${manage.id})"
+                                    type="button" class="btn btn-sm bg-warning text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Cập nhật">
+                                <i class="icon-copy dw dw-edit1"></i>
+                            </button>
+                            <button onclick="deleteManageItem('<c:url value="/admin/api/manages/${manage.id}"/>')"
+                                    type="button" class="btn btn-sm bg-danger text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xóa">
+                                <i class="icon-copy dw dw-delete-3"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>

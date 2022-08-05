@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface LecturerService {
+    public List<Object[]> getLecturerOptions();
     public List<Lecturer> getLecturers(Map<String, String> params);
     public long countLecturer(Map<String, String> params);
     public Lecturer getLecturerById(int lecturerId);

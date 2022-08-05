@@ -1,7 +1,6 @@
 package com.buikhanhhuy.repository.implement;
 
 import com.buikhanhhuy.pojo.Lecturer;
-import com.buikhanhhuy.pojo.Manage;
 import com.buikhanhhuy.pojo.User;
 import com.buikhanhhuy.repository.LecturerRepository;
 import com.buikhanhhuy.repository.UserRepository;
@@ -31,6 +30,17 @@ public class LecturerRepositoryImplement implements LecturerRepository {
     private LocalSessionFactoryBean sessionFactoryBean;
     @Autowired
     private UserRepository userRepository;
+
+    @Override
+    public List<Object[]> getLecturerOptions() {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> query = builder.createQuery(Object[].class);
+        Root<Lecturer> root = query.from(Lecturer.class);
+        query.multiselect(root.get("id"), root.get("fullName"));
+
+        return session.createQuery(query).getResultList();
+    }
 
     @Override
     public List<Lecturer> getLecturers(Map<String, String> params) {

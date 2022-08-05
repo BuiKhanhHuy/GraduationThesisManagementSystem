@@ -96,8 +96,8 @@
             <th scope="col" class="text-center">Thông tin</th>
             <th scope="col">Niên khóa</th>
             <th scope="col">Thuộc ngành</th>
-            <th scope="col" class="col-1 text-center">Trạng thái</th>
-            <th scope="col" class="col-2 text-center">Hành động</th>
+            <th scope="col" class="text-center">Trạng thái</th>
+            <th scope="col" class="text-center">Hành động</th>
         </tr>
         </thead>
         <tbody>
@@ -164,19 +164,21 @@
                                title="Không hoạt động"></i>
                         </c:if>
                     </td>
-                    <td class="col-2 text-center">
-                        <button onclick="showEditStudentModal('<c:url
-                                value="/admin/api/students/${student.id}"/>', ${student.id} )"
-                                type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                                data-placement="bottom" title="Chỉnh sửa">
-                            <i class="icon-copy dw dw-edit1"></i>
-                        </button>
-                        <button onclick="deleteStudentItem('<c:url
-                                value="/admin/api/students/${student.id}"/>', ${student.id} )"
-                                type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
-                                data-placement="bottom" title="Xóa">
-                            <i class="icon-copy dw dw-delete-3"></i>
-                        </button>
+                    <td class="text-center">
+                        <div class="btn-list">
+                            <button onclick="showEditStudentModal('<c:url
+                                    value="/admin/api/students/${student.id}"/>', ${student.id} )"
+                                    type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
+                                    data-placement="bottom" title="Chỉnh sửa">
+                                <i class="icon-copy dw dw-edit1"></i>
+                            </button>
+                            <button onclick="deleteStudentItem('<c:url
+                                    value="/admin/api/students/${student.id}"/>', ${student.id} )"
+                                    type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
+                                    data-placement="bottom" title="Xóa">
+                                <i class="icon-copy dw dw-delete-3"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>
@@ -334,7 +336,7 @@
         onPageClick: function (event, page) {
             if (currentPage != page) {
                 $("#page").val(page)
-            $("#form-filter").submit();
+                $("#form-filter").submit();
             }
         }
     });

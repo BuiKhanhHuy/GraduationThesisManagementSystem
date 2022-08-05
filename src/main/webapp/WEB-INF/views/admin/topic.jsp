@@ -69,7 +69,6 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="text-center">ID</th>
             <th scope="col">Tên đề tài</th>
             <th scope="col">Mô tả</th>
             <th scope="col">Thuộc khoa</th>
@@ -80,7 +79,6 @@
         <c:if test="${topics.size() != 0}">
             <c:forEach var="topic" items="${topics}">
                 <tr>
-                    <th scope="row" class="text-center">${topic.id}</th>
                     <td>${topic.name}</td>
                     <td>${topic.description}</td>
                     <td>
@@ -92,19 +90,21 @@
                         </c:if>
                     </td>
                     <td class="col-2 text-center">
-                        <button onclick="showEditTopicModal('<c:url
-                                value="/admin/api/topics/${topic.id}"/>', ${topic.id})"
-                                type="button" class="btn btn-sm bg-warning text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xem chi tiết">
-                            <i class="icon-copy dw dw-edit1"></i>
-                        </button>
-                        <button onclick="deleteTopicItem('<c:url value="/admin/api/topics/${topic.id}"/>')"
-                                type="button" class="btn btn-sm bg-danger text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xóa">
-                            <i class="icon-copy dw dw-delete-3"></i>
-                        </button>
+                        <div class="btn-list">
+                            <button onclick="showEditTopicModal('<c:url
+                                    value="/admin/api/topics/${topic.id}"/>', ${topic.id})"
+                                    type="button" class="btn btn-sm bg-warning text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xem chi tiết">
+                                <i class="icon-copy dw dw-edit1"></i>
+                            </button>
+                            <button onclick="deleteTopicItem('<c:url value="/admin/api/topics/${topic.id}"/>')"
+                                    type="button" class="btn btn-sm bg-danger text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xóa">
+                                <i class="icon-copy dw dw-delete-3"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>
@@ -158,7 +158,7 @@
                                     class="text-danger">(*)</span></label>
                             <div>
                                 <select class="custom-select form-control"
-                                        name="department" id="department" style="width: 100%; height:38px;">
+                                        name="department" id="department" style="width: 100%;">
                                     <c:forEach var="departmentOption" items="${departmentOptions}">
                                         <option value="${departmentOption[0]}">${departmentOption[1]}</option>
                                     </c:forEach>

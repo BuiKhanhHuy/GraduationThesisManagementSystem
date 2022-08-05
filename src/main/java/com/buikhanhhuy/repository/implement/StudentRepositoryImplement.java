@@ -35,6 +35,17 @@ public class StudentRepositoryImplement implements StudentRepository {
     private RoleRepository roleRepository;
 
     @Override
+    public List<Object[]> getStudentOptions() {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> query = builder.createQuery(Object[].class);
+        Root<Student> root = query.from(Student.class);
+        query.multiselect(root.get("id"), root.get("fullName"));
+
+        return session.createQuery(query).getResultList();
+    }
+
+    @Override
     public List<Student> getStudents(Map<String, String> params) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();

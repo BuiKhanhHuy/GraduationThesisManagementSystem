@@ -15,6 +15,11 @@ public class StudentServiceImplement implements StudentService {
     private StudentRepository studentRepository;
 
     @Override
+    public List<Object[]> getStudentOptions() {
+        return this.studentRepository.getStudentOptions();
+    }
+
+    @Override
     public List<Student> getStudents(Map<String, String> params) {
         return this.studentRepository.getStudents(params);
     }

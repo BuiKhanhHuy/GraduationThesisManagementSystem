@@ -1,9 +1,10 @@
 var scoreComponentArray = [[1]]
+var isAdd = true
 
 // const score column
 const scoreColumnItem = (i, j) => {
     let removeColumnButton = ""
-    if (j !== 0) {
+    if (j !== 0 && isAdd === true) {
         removeColumnButton = `<button onclick="removeScoreColumn(${i}, ${j})"
                                                 type="button"
                                                 class="btn btn-sm bg-danger text-white">
@@ -20,7 +21,7 @@ const scoreColumnItem = (i, j) => {
                                     </td>
                                     <td>
                                         <input name="scoreComponents[${i}].scoreColumns[${j}].weight"
-                                                id=name="scoreComponents[${i}].scoreColumns[${j}].weight" 
+                                                id="scoreComponents[${i}].scoreColumns[${j}].weight" 
                                          type="number" min="0.1" max="1" step="0.05"
                                                class="form-control hihi">
                                     </td>
@@ -33,12 +34,21 @@ const scoreColumnItem = (i, j) => {
 // const score component
 const scoreComponentItem = (i, item = "") => {
     let removeComponentButton = ""
-    if (i !== 0) {
+    let addColumn = ""
+    if (i !== 0 && isAdd === true) {
         removeComponentButton = `<a href="javascript:;" onclick="removeScoreComponent(${i})"
                                     class="remove-task"  data-toggle="tooltip" data-placement="bottom" title="" 
                                     data-original-title="Remove Task">
                                     <i class="ion-minus-circled"></i>
                                 </a>`
+    }
+    if (isAdd === true) {
+        addColumn = `<button onclick="addScoreColumn(${i})"
+                                            type="button"
+                                            class="btn btn-sm bg-success text-white">
+                                            <i class="icon-copy fa fa-plus-circle"
+                                            aria-hidden="true"></i>
+                                    </button>`
     }
     return `<li  id="score-component-${i}">
                  ${removeComponentButton}
@@ -75,12 +85,7 @@ const scoreComponentItem = (i, item = "") => {
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-end">
-                                    <button onclick="addScoreColumn(${i})"
-                                            type="button"
-                                            class="btn btn-sm bg-success text-white">
-                                            <i class="icon-copy fa fa-plus-circle"
-                                            aria-hidden="true"></i>
-                                    </button>
+                                   ${addColumn}
                                 </div>
                             </div>
                         </div>
@@ -89,7 +94,7 @@ const scoreComponentItem = (i, item = "") => {
             </li>`
 }
 
-const loadForm = () => {
+const loadForm = (scoreComponentArray) => {
     let scoreComponentArea = ""
 
     for (let i = 0; i < scoreComponentArray.length; i++) {
@@ -102,6 +107,12 @@ const loadForm = () => {
     }
 
     document.getElementById("score-components").innerHTML = scoreComponentArea;
+    if (isAdd === true) {
+        document.getElementById("add-more-task").innerHTML = `<a href="javascript:;" onclick="addScoreComponent()">
+                     <i class="ion-plus-circled"></i>Thêm điểm thành phần</a>`
+    } else {
+        document.getElementById("add-more-task").innerHTML = ""
+    }
 }
 
 const addScoreComponent = () => {
@@ -139,11 +150,12 @@ const removeScoreColumn = (i, j) => {
 
 // load modal form
 document.addEventListener("DOMContentLoaded", () => {
-    loadForm();
+    loadForm(scoreComponentArray);
 });
 
 
 const showAddEvaluationMethodModal = (endpoint) => {
+    isAdd = true;
     document.getElementById("myModalAddAndEditEvaluationMethod").innerText = "Thêm phương pháp đánh giá"
 
     document.getElementById("btn-submit-form").onclick = () => saveChange(endpoint)
@@ -151,12 +163,34 @@ const showAddEvaluationMethodModal = (endpoint) => {
 }
 
 const showEditEvaluationMethodModal = (endpoint, evaluationMethodId) => {
+    isAdd = false;
+    scoreComponentArray = []
     loadEvaluationMethodById(endpoint, (data) => {
+        // reset score component array
+        for (let i = 0; i < data.scoreComponents.length; i++) {
+            let temp = [];
+            for (let j = 0; j < data.scoreComponents[i].scoreColumns.length; j++) {
+                temp.push(1)
+            }
+            scoreComponentArray.push(temp)
+        }
+        // load form
+        loadForm(scoreComponentArray)
+
+        // add data to form
+        document.getElementById("name").value = data.name
+        for (let i = 0; i < scoreComponentArray.length; i++) {
+            document.getElementById(`scoreComponents[${i}].name`).value = data.scoreComponents[i].name
+            for (let j = 0; j < scoreComponentArray[i].length; j++) {
+                document.getElementById(`scoreComponents[${i}].scoreColumns[${j}].name`).value = data.scoreComponents[i].scoreColumns[j].name
+                document.getElementById(`scoreComponents[${i}].scoreColumns[${j}].weight`).value = data.scoreComponents[i].scoreColumns[j].weight
+            }
+        }
+
         document.getElementById("myModalAddAndEditEvaluationMethod").innerText = "Cập nhật phương pháp đánh giá"
 
         document.getElementById("btn-submit-form").onclick = () => saveChange(endpoint, evaluationMethodId)
         $('#modal-add-edit-evaluation-method').modal()
-        console.log(data)
     })
 }
 
@@ -172,7 +206,7 @@ const loadEvaluationMethodById = (endpoint, callback) => {
     })
 }
 
-const saveChange = (endpoint, evaluationMethodId = null) => {
+const saveChange = (endpoint, evaluationMethodId = null, oldData = null) => {
     // get form
     let form = $("#form-add-edit-evaluation-method")
     let formDataDic = {}
@@ -191,8 +225,7 @@ const saveChange = (endpoint, evaluationMethodId = null) => {
         }
 
         scoreComponents.push({
-            "name": formDataDic[`scoreComponents[${i}].name`],
-            "scoreColumns": scoreColumns
+            "name": formDataDic[`scoreComponents[${i}].name`], "scoreColumns": scoreColumns
         })
     }
     formData["name"] = document.getElementById("name").value;
@@ -203,8 +236,7 @@ const saveChange = (endpoint, evaluationMethodId = null) => {
     if (evaluationMethodId === null) {
         // ADD
         fetch(endpoint, {
-            method: "POST", body: JSON.stringify(formData),
-            headers: {
+            method: "POST", body: JSON.stringify(formData), headers: {
                 "Content-Type": "application/json"
             }
         }).then(res => res.json()).then(data => {
@@ -215,7 +247,7 @@ const saveChange = (endpoint, evaluationMethodId = null) => {
             } else {
                 // error
                 if (data["errorTotalWeight"] !== undefined) {
-                    errorAlert("Đã có lỗi", "Tổng trọng số các cột điểm không được phép vượt quá 1.0 ~ 100%", "Ok")
+                    errorAlert("Đã có lỗi", data["errorTotalWeight"], "Ok")
                 } else {
                     $.each(data, function (key, value) {
                         document.getElementsByName(`${key}`)[0].insertAdjacentHTML('afterend', '<span class="text-danger font-weight-normal">' + value + '</span>');
@@ -227,45 +259,28 @@ const saveChange = (endpoint, evaluationMethodId = null) => {
         })
     } else {
         // UPDATE
-        // fetch(endpoint, {
-        //     method: "PATCH", body: JSON.stringify({
-        //         "code": formData.code,
-        //         "fullName": formData.fullName,
-        //         "email": formData.email,
-        //         "phone": formData.phone,
-        //         "birthday": formData.birthday,
-        //         "gender": formData.gender,
-        //         "address": formData.address,
-        //         "gpa": formData.gpa,
-        //         "schoolYear": formData.schoolYear,
-        //         "major": formData.major,
-        //         "user": {
-        //             "username": formData.code,
-        //             "password": formData.password,
-        //             "newPassword": formData.newPassword,
-        //             "active": formData.active,
-        //         }
-        //     }), headers: {
-        //         "Content-Type": "application/json"
-        //     }
-        // }).then(res => res.json()).then(data => {
-        //     if (Object.keys(data).length === 0) {
-        //         // successful
-        //         $('#modal-add-edit-student').hide();
-        //         successfulAlert("Cập nhật sinh viên thành công", "Ok", () => location.reload());
-        //     } else {
-        //         // error
-        //         $.each(data, function (key, value) {
-        //             if (key === "file") {
-        //                 console.log("tính sau")
-        //             } else if (key === "code" || key === "fullName" || key === "phone" || key === "email" || key === "birthday" || key === "address") {
-        //                 $('input[name=' + key + ']').after('<span class="text-danger">' + value + '</span>');
-        //             }
-        //         });
-        //     }
-        // }).catch(err => {
-        //     errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
-        // })
+        fetch(endpoint, {
+            method: "PATCH", body: JSON.stringify(formData), headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json()).then(data => {
+            if (Object.keys(data).length === 0) {
+                // successful
+                $('#modal-add-edit-evaluation-method').hide();
+                successfulAlert("Cập nhật phương pháp đánh giá thành công", "Ok", () => location.reload());
+            } else {
+                // error
+                if (data["errorTotalWeight"] !== undefined) {
+                    errorAlert("Đã có lỗi", data["errorTotalWeight"], "Ok")
+                } else {
+                    $.each(data, function (key, value) {
+                        document.getElementsByName(`${key}`)[0].insertAdjacentHTML('afterend', '<span class="text-danger font-weight-normal">' + value + '</span>');
+                    });
+                }
+            }
+        }).catch(err => {
+            errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
+        })
     }
 }
 
@@ -288,5 +303,9 @@ const deleteEvaluationMethodItem = (endpoint) => {
 $('#modal-add-edit-evaluation-method').on('hidden.bs.modal', function (e) {
     $('input').next('span').remove();
     document.forms['form-add-edit-evaluation-method'].reset();
+
+    isAdd = !isAdd
+    scoreComponentArray = [[1]]
+    loadForm(scoreComponentArray)
 })
 

@@ -17,4 +17,9 @@ public class ThesisServiceImplement implements ThesisService {
     public List<Thesis> getTheses() {
         return this.thesisRepository.getTheses();
     }
+
+    @Override
+    public boolean addThesis(Thesis thesis) {
+        return this.thesisRepository.addThesis(thesis);
+    }
 }

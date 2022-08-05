@@ -134,6 +134,11 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="adminThesisList" extends="adminBaseLayout">
         <put-attribute name="title" value="Khóa luận"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/thesis.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/admin/src/scripts/thesis.js"/>
+        </put-list-attribute>
     </definition>
     <!--    thesis-->
 

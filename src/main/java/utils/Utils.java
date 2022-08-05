@@ -4,8 +4,6 @@ import com.buikhanhhuy.pojo.EvaluationMethod;
 import com.buikhanhhuy.pojo.ScoreComponent;
 import com.buikhanhhuy.pojo.ScoreColumn;
 
-import java.util.Map;
-
 public class Utils {
     public static boolean checkTotalWeight(EvaluationMethod evaluationMethod) {
         double totalWeight = 0;
@@ -16,6 +14,6 @@ public class Utils {
             }
         }
 
-        return !(totalWeight > 1) && !(totalWeight < 0);
+        return totalWeight == 1;
     }
 }

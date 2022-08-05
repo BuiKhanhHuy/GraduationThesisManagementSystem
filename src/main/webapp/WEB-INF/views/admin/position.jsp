@@ -55,33 +55,33 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="text-center">ID</th>
             <th scope="col">Chức vụ</th>
             <th scope="col">Mô tả</th>
-            <th scope="col" class="col-2 text-center">Hành động</th>
+            <th scope="col" class="text-center">Hành động</th>
         </tr>
         </thead>
         <tbody>
         <c:if test="${positions.size() != 0}">
             <c:forEach var="position" items="${positions}">
                 <tr>
-                    <th scope="row" class="text-center">${position.id}</th>
                     <td>${position.name}</td>
                     <td>${position.description}</td>
-                    <td class="col-2 text-center">
-                        <button onclick="showEditPosition('<c:url
-                                value="/admin/api/positions/${position.id}"/>', ${position.id})"
-                                type="button" class="btn btn-sm bg-warning text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Cập nhật">
-                            <i class="icon-copy dw dw-edit1"></i>
-                        </button>
-                        <button onclick="deletePositionItem('<c:url value="/admin/api/positions/${position.id}"/>')"
-                                type="button" class="btn btn-sm bg-danger text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xóa">
-                            <i class="icon-copy dw dw-delete-3"></i>
-                        </button>
+                    <td class="text-center">
+                        <div class="btn-list">
+                            <button onclick="showEditPosition('<c:url
+                                    value="/admin/api/positions/${position.id}"/>', ${position.id})"
+                                    type="button" class="btn btn-sm bg-warning text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Cập nhật">
+                                <i class="icon-copy dw dw-edit1"></i>
+                            </button>
+                            <button onclick="deletePositionItem('<c:url value="/admin/api/positions/${position.id}"/>')"
+                                    type="button" class="btn btn-sm bg-danger text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xóa">
+                                <i class="icon-copy dw dw-delete-3"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>

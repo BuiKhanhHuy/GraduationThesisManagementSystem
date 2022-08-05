@@ -341,7 +341,7 @@ if ( typeof Object.create !== 'function' ) {
         heading: '',
         showHideTransition: 'fade',
         allowToastClose: true,
-        hideAfter: 3000,
+        hideAfter: 2000,
         loader: true,
         loaderBg: '#9EC600',
         stack: 5,

@@ -1,5 +1,6 @@
 package com.buikhanhhuy.api.admin;
 
+import com.buikhanhhuy.pojo.Department;
 import com.buikhanhhuy.pojo.EvaluationMethod;
 import com.buikhanhhuy.service.EvaluationMethodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +39,14 @@ public class ApiEvaluationMethodController {
     }
 
     @PostMapping(path = "/evaluations-method", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Map<String, String>> addEvaluationMethod(@Valid @RequestBody EvaluationMethod evaluationMethod, BindingResult result) {
+    public ResponseEntity<Map<String, String>> addEvaluationMethod(@Valid @RequestBody EvaluationMethod evaluationMethod,
+                                                                   BindingResult result) {
         Map<String, String> errorMessages = new HashMap<>();
         HttpStatus status = null;
 
         if (result.hasErrors()) {
-            errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+            errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField,
+                    FieldError::getDefaultMessage));
             status = HttpStatus.BAD_REQUEST;
         } else {
             if (Utils.checkTotalWeight(evaluationMethod)) {
@@ -52,7 +55,32 @@ public class ApiEvaluationMethodController {
 
             } else {
                 status = HttpStatus.BAD_REQUEST;
-                errorMessages.put("errorTotalWeight", "Tổng trọng số của các cột điểm không vượt quá 1");
+                errorMessages.put("errorTotalWeight", "Tổng trọng số của các cột điểm phải bằng 1 ~ 100%");
+            }
+        }
+
+        return new ResponseEntity<>(errorMessages, status);
+    }
+
+    @PatchMapping(path = "/evaluations-method/{evaluationMethodId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map<String, String>> updateEvaluationMethod(@PathVariable("evaluationMethodId") int evaluationMethodId,
+                                                                      @Valid @RequestBody EvaluationMethod evaluationMethod, BindingResult result) {
+        Map<String, String> errorMessages = new HashMap<>();
+        HttpStatus status = null;
+
+        if (result.hasErrors()) {
+            errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+            status = HttpStatus.BAD_REQUEST;
+        } else {
+            if (Utils.checkTotalWeight(evaluationMethod)) {
+                if (this.evaluationMethodService.updateEvaluationMethod(evaluationMethodId, evaluationMethod))
+                    status = HttpStatus.OK;
+                else
+                    status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+            } else {
+                status = HttpStatus.BAD_REQUEST;
+                errorMessages.put("errorTotalWeight", "Tổng trọng số của các cột điểm phải bằng 1 ~ 100%");
             }
         }
 

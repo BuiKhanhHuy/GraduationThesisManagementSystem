@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ThesisRepository {
     public List<Thesis> getTheses();
+    public boolean addThesis(Thesis thesis);
 }

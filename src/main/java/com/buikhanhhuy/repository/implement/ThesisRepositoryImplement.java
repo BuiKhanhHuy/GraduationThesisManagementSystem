@@ -31,4 +31,9 @@ public class ThesisRepositoryImplement implements ThesisRepository {
 
         return session.createQuery(query).getResultList();
     }
+
+    @Override
+    public boolean addThesis(Thesis thesis) {
+        return true;
+    }
 }

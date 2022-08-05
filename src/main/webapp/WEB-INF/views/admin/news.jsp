@@ -56,17 +56,15 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="text-center col-1">ID</th>
-            <th scope="col" class="col-2">Tiêu đề</th>
-            <th scope="col" class="text-center col-2">Người tạo</th>
-            <th scope="col" class="col-2 text-center">Hành động</th>
+            <th scope="col">Tiêu đề</th>
+            <th scope="col" class="text-center">Người tạo</th>
+            <th scope="col" class="text-center">Hành động</th>
         </tr>
         </thead>
         <tbody>
         <c:if test="${news.size() != 0}">
             <c:forEach var="n" items="${news}">
                 <tr>
-                    <th scope="row" class="text-center">${n.id}</th>
                     <td>${n.title}</td>
                     <td class="text-center font-weight-bold text-danger">
                         <c:if test="${n.user != null}">
@@ -76,25 +74,28 @@
                             <span class="text-black-50 text-center">Chưa cập nhật</span>
                         </c:if>
                     </td>
-                    <td class="col-2 text-center">
-                        <button onclick="showViewNewsModal('<c:url value="/admin/api/news/${n.id}"/>')"
-                                type="button" class="btn btn-sm bg-info text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xem chi tiết">
-                            <i class="icon-copy dw dw-eye"></i>
-                        </button>
-                        <button onclick="showEditNewsModal('<c:url value="/admin/api/news/${n.id}/single"/>', ${n.id})"
-                                type="button" class="btn btn-sm bg-warning text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Cập nhật">
-                            <i class="icon-copy dw dw-edit1"></i>
-                        </button>
-                        <button onclick="deleteNewsItem('<c:url value="/admin/api/news/${n.id}"/>')"
-                                type="button" class="btn btn-sm bg-danger text-white"
-                                data-toggle="tooltip"
-                                data-placement="bottom" title="Xóa">
-                            <i class="icon-copy dw dw-delete-3"></i>
-                        </button>
+                    <td class="text-center">
+                        <div class="btn-list">
+                            <button onclick="showViewNewsModal('<c:url value="/admin/api/news/${n.id}"/>')"
+                                    type="button" class="btn btn-sm bg-info text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xem chi tiết">
+                                <i class="icon-copy dw dw-eye"></i>
+                            </button>
+                            <button onclick="showEditNewsModal('<c:url
+                                    value="/admin/api/news/${n.id}/single"/>', ${n.id})"
+                                    type="button" class="btn btn-sm bg-warning text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Cập nhật">
+                                <i class="icon-copy dw dw-edit1"></i>
+                            </button>
+                            <button onclick="deleteNewsItem('<c:url value="/admin/api/news/${n.id}"/>')"
+                                    type="button" class="btn btn-sm bg-danger text-white"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Xóa">
+                                <i class="icon-copy dw dw-delete-3"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>

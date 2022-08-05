@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface StudentRepository {
+    public List<Object[]> getStudentOptions();
     public List<Student> getStudents (Map<String, String> params);
     public long countStudent(Map<String, String> params);
     public Student getStudentById(int studentId);

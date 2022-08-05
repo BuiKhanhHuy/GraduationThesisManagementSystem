@@ -15,6 +15,11 @@ public class LecturerServiceImplement implements LecturerService {
     private LecturerRepository lecturerRepository;
 
     @Override
+    public List<Object[]> getLecturerOptions() {
+        return this.lecturerRepository.getLecturerOptions();
+    }
+
+    @Override
     public List<Lecturer> getLecturers(Map<String, String> params) {
         return this.lecturerRepository.getLecturers(params);
     }
