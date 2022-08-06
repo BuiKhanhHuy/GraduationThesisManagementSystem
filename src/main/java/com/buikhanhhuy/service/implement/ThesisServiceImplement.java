@@ -22,4 +22,9 @@ public class ThesisServiceImplement implements ThesisService {
     public boolean addThesis(Thesis thesis) {
         return this.thesisRepository.addThesis(thesis);
     }
+
+    @Override
+    public Thesis getThesisById(int thesisId) {
+        return this.thesisRepository.getThesisById(thesisId);
+    }
 }

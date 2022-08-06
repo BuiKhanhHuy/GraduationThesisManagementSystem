@@ -1,18 +1,19 @@
 package com.buikhanhhuy.api.admin;
 
+import com.buikhanhhuy.pojo.Department;
 import com.buikhanhhuy.pojo.Thesis;
 import com.buikhanhhuy.service.ThesisService;
+import com.buikhanhhuy.validators.WebAppValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -25,6 +26,24 @@ import java.util.stream.Collectors;
 public class ApiThesisController {
     @Autowired
     private ThesisService thesisService;
+    @Autowired
+    @Qualifier("thesisValidator")
+    private WebAppValidator thesisValidator;
+
+    @InitBinder
+    public void InitBinder(WebDataBinder binder) {
+        binder.setValidator(thesisValidator);
+    }
+
+    @GetMapping(path = "/theses/{thesisId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Thesis> loadThesis(@PathVariable(value = "thesisId") int thesisId) {
+        try {
+            return new ResponseEntity<>(this.thesisService.getThesisById(thesisId), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @PostMapping(path = "/theses", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Map<String, String>> addThesis(@Valid @RequestBody Thesis thesis, BindingResult result) {
@@ -35,10 +54,8 @@ public class ApiThesisController {
             errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             status = HttpStatus.BAD_REQUEST;
         } else {
-            if (this.thesisService.addThesis(thesis))
-                status = HttpStatus.CREATED;
-            else
-                status = HttpStatus.INTERNAL_SERVER_ERROR;
+            if (this.thesisService.addThesis(thesis)) status = HttpStatus.CREATED;
+            else status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
         return new ResponseEntity<>(errorMessages, status);

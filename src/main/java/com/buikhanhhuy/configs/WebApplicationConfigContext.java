@@ -2,9 +2,7 @@ package com.buikhanhhuy.configs;
 
 import com.buikhanhhuy.converters.StringToLocalDateConverter;
 import com.buikhanhhuy.formatters.*;
-import com.buikhanhhuy.validators.DepartmentValidator;
-import com.buikhanhhuy.validators.SchoolYearValidator;
-import com.buikhanhhuy.validators.WebAppValidator;
+import com.buikhanhhuy.validators.*;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -61,6 +59,7 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
         registry.addFormatter(new SchoolYearFormatter());
         registry.addFormatter(new PositionFormatter());
         registry.addFormatter(new RoleFormatter());
+        registry.addFormatter(new LecturerFormatter());
     }
 
 
@@ -106,6 +105,19 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
     public WebAppValidator schoolYearValidator(){
         Set<Validator> springValidators = new HashSet<>();
         springValidators.add(new SchoolYearValidator());
+
+        WebAppValidator webAppValidator = new WebAppValidator();
+        webAppValidator.setValidators(springValidators);
+
+        return webAppValidator;
+    }
+
+    @Bean
+    public WebAppValidator thesisValidator(){
+        Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(new ThesisInstructorsValidator());
+        springValidators.add(new ThesisStudentPerformValidator());
+        springValidators.add(new ThesisReviewLecturerValidator());
 
         WebAppValidator webAppValidator = new WebAppValidator();
         webAppValidator.setValidators(springValidators);

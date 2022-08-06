@@ -18,7 +18,7 @@ const loadDataOptions = (callback) => {
             let lecturersHtml = ''
             data.forEach(d => lecturersHtml += `<option value=${d[0]}>${d[1]}</option>`)
             document.getElementById("instructorsId").innerHTML = lecturersHtml;
-            document.getElementById("reviewLecturersId").innerHTML = lecturersHtml;
+            document.getElementById("reviewLecturer").innerHTML = lecturersHtml;
 
             // callback
             callback();
@@ -40,35 +40,43 @@ const showAddThesisModal = (endpoint) => {
     })
 }
 
-// const showEditManageModal = (endpoint, manageId) => {
-//     loadManageById(endpoint, (data) => {
-//         document.getElementById("myModalAddAndEditManage").innerText = "Cập nhật quản trị viên"
-//         document.getElementById("btn-submit-form").onclick = () => saveChange(endpoint, manageId)
-//         $('#modal-add-edit-manage').modal()
-//
-//         let form = document.forms['form-add-edit-manage']
-//         form["fullName"].value = data.fullName;
-//         form["email"].value = data.email
-//         form["phone"].value = data.phone
-//         if (data.user !== null) {
-//             form["username"] = data.user.username
-//             form["password"] = data.user.password
-//             form["active"].checked = data.user.active
-//         }
-//     })
-// }
-// const loadManageById = (endpoint, callback) => {
-//     fetch(endpoint, {
-//         method: 'GET', headers: {
-//             "Content-Type": "application/json"
-//         }
-//     }).then(res => res.json()).then(data => {
-//         callback(data);
-//     })
-//         .catch(err => {
-//             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình tải dữ liệu!", "Ok")
-//         })
-// }
+const showEditThesisModal = (endpoint, thesisId) => {
+    loadThesisById(endpoint, (data) => {
+        console.log(data)
+        let form = document.forms['form-add-edit-thesis']
+        form["code"].value = data.code;
+        if (data.topic !== null) {
+            form["topic"].value = data.topic.id
+        }
+        form["startDate"].value = new Date(data.startDate).toISOString().slice(0, 10)
+        form["complateDate"].value = new Date(data.complateDate).toISOString().slice(0, 10)
+        form["thesisStartDate"].value = new Date(data.thesisStartDate).toISOString().slice(0, 10)
+        form["thesisEndDate"].value = new Date(data.thesisEndDate).toISOString().slice(0, 10)
+        if (data.department !== null) {
+            form["department"].value = data.department.id
+        }
+        if (data.schoolYear !== null) {
+            form["schoolYear"].value = data.schoolYear.id
+        }
+        $("#comment").data('wysihtml5').editor.setValue(data.comment);
+
+        document.getElementById("myModalAddAndEditThesis").innerText = "Cập nhật khóa luận"
+        document.getElementById("btn-submit-form").onclick = () => saveChange(endpoint, thesisId)
+        $('#modal-add-edit-thesis').modal()
+    })
+}
+const loadThesisById = (endpoint, callback) => {
+    fetch(endpoint, {
+        method: 'GET', headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(res => res.json()).then(data => {
+        callback(data);
+    })
+        .catch(err => {
+            errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình tải dữ liệu!", "Ok")
+        })
+}
 
 const saveChange = (endpoint, thesisId = null) => {
     let form = $("#form-add-edit-thesis")
@@ -77,10 +85,8 @@ const saveChange = (endpoint, thesisId = null) => {
     form.serializeArray().forEach(item => {
         formData[item.name] = item.value
     })
+    delete formData['_wysihtml5_mode'];
     formData["instructorsId"] = [...document.getElementById("instructorsId").options]
-        .filter(option => option.selected)
-        .map(option => parseInt(option.value));
-    formData["reviewLecturersId"] = [...document.getElementById("reviewLecturersId").options]
         .filter(option => option.selected)
         .map(option => parseInt(option.value));
     formData["performStudentsId"] = [...document.getElementById("performStudentsId").options]
@@ -102,8 +108,10 @@ const saveChange = (endpoint, thesisId = null) => {
                 "department": formData.department,
                 "schoolYear": formData.schoolYear,
                 "topic": formData.topic,
+                "comment": formData.comment,
+                "reportFile": "",
                 "instructorsId": formData.instructorsId,
-                "reviewLecturersId": formData.reviewLecturersId,
+                "reviewLecturer": formData.reviewLecturer,
                 "performStudentsId": formData.performStudentsId
             }), headers: {
                 "Content-Type": "application/json"

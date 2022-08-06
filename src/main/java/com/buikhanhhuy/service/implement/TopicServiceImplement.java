@@ -15,6 +15,11 @@ public class TopicServiceImplement implements TopicService {
     private TopicRepository topicRepository;
 
     @Override
+    public List<Object[]> getTopicOptions() {
+        return this.topicRepository.getTopicOptions();
+    }
+
+    @Override
     public List<Topic> getTopics(Map<String, String> params) {
         return this.topicRepository.getTopics(params);
     }

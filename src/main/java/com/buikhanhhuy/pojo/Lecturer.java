@@ -103,9 +103,9 @@ public class Lecturer implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lecturer")
     @JsonIgnore
     private Set<CouncilDetail> councilDetails;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lecturer")
+    @ManyToMany(mappedBy = "lecturers")
     @JsonIgnore
-    private Set<Guide> guides;
+    private Set<Thesis> theses;
 
     public Lecturer() {
     }
@@ -231,13 +231,12 @@ public class Lecturer implements Serializable {
         this.councilDetails = councilDetailSet;
     }
 
-    @XmlTransient
-    public Set<Guide> getGuides() {
-        return guides;
+    public Set<Thesis> getTheses() {
+        return theses;
     }
 
-    public void setGuides(Set<Guide> guideSet) {
-        this.guides = guideSet;
+    public void setTheses(Set<Thesis> theses) {
+        this.theses = theses;
     }
 
     @Override

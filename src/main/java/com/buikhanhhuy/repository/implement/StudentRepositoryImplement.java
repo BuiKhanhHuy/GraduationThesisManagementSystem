@@ -1,5 +1,6 @@
 package com.buikhanhhuy.repository.implement;
 
+import com.buikhanhhuy.constants.SystemConstant;
 import com.buikhanhhuy.pojo.Student;
 import com.buikhanhhuy.pojo.User;
 import com.buikhanhhuy.repository.RoleRepository;
@@ -7,7 +8,6 @@ import com.buikhanhhuy.repository.StudentRepository;
 import com.buikhanhhuy.repository.UserRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +20,10 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Repository
 @Transactional
 public class StudentRepositoryImplement implements StudentRepository {
-    @Autowired
-    private Environment environment;
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
     @Autowired
@@ -89,7 +86,7 @@ public class StudentRepositoryImplement implements StudentRepository {
         Query q = session.createQuery(query);
 
         int page = 1;
-        int pageSize = Integer.parseInt(Objects.requireNonNull(this.environment.getProperty("pageSize")));
+        int pageSize = SystemConstant.PAGE_SIZE;
         if (params.containsKey("page") && !params.get("page").isEmpty()) page = Integer.parseInt(params.get("page"));
 
         int startPage = (page - 1) * pageSize;

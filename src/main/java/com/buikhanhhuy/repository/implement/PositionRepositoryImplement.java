@@ -1,10 +1,10 @@
 package com.buikhanhhuy.repository.implement;
 
+import com.buikhanhhuy.constants.SystemConstant;
 import com.buikhanhhuy.pojo.Position;
 import com.buikhanhhuy.repository.PositionRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,13 +15,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Repository
 @Transactional
 public class PositionRepositoryImplement implements PositionRepository {
-    @Autowired
-    private Environment environment;
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
 
@@ -39,7 +36,7 @@ public class PositionRepositoryImplement implements PositionRepository {
         }
 
         int page = 1;
-        int pageSize = Integer.parseInt(Objects.requireNonNull(this.environment.getProperty("pageSize")));
+        int pageSize = SystemConstant.PAGE_SIZE;
 
         if (params.containsKey("page") && !params.get("page").isEmpty()) page = Integer.parseInt(params.get("page"));
 

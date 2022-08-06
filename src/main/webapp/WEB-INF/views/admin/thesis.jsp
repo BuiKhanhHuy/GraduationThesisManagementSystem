@@ -1,33 +1,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<c:url var="home" value="/admin/"/>
+
 <div class="page-header">
     <div class="row">
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-12 col-sm-12">
             <div class="title">
-                <h4>Lọc</h4>
+                <h4>Khóa luận</h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Form Basic</li>
+                    <li class="breadcrumb-item"><a href="${home}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Khóa luận
+                    </li>
                 </ol>
             </nav>
         </div>
-        <div class="col-md-6 col-sm-12 text-right">
-            <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    January 2018
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">Export List</a>
-                    <a class="dropdown-item" href="#">Policies</a>
-                    <a class="dropdown-item" href="#">View Assets</a>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
+
 <!-- table start -->
 <div class="pd-20 card-box mb-30">
     <div class="clearfix mb-20">
@@ -51,7 +43,7 @@
                 <th scope="col" class="text-center">Niên khóa</th>
                 <th scope="col" class="text-center">Ngày bắt đầu</th>
                 <th scope="col" class="text-center">Ngày kết thúc</th>
-                <th scope="col">Trạng thái</th>
+                <th scope="col">Trạng thái tập tin</th>
                 <th scope="col">Tổng điểm</th>
                 <th scope="col" class="text-center">Kết quả</th>
                 <th scope="col" class="text-center">Hành động</th>
@@ -95,25 +87,25 @@
                                 ${thesis.complateDate}
                         </td>
                         <td>
-                            <c:if test="${thesis.status == 1}">
-                                <span class="text-danger">Chưa nộp</span>
+                            <c:if test="${thesis.reportFile == null || thesis.reportFile.isEmpty()}">
+                                <span class="text-danger font-weight-bold">Chưa nộp</span>
                             </c:if>
-                            <c:if test="${thesis.status == 2}">
-                                <span class="text-success">Đã nộp</span>
-                            </c:if>
-                            <c:if test="${thesis.status == 3}">
-                                <span class="text-warning">Đã trả về chỉnh sửa</span>
+                            <c:if test="${thesis.reportFile != null && !thesis.reportFile.isEmpty()}">
+                                <span class="text-success font-weight-bold">Đã nộp</span>
                             </c:if>
                         </td>
                         <td>
                                 ${thesis.totalScore}
                         </td>
                         <td class="text-center">
-                            <c:if test="${thesis.result == true}">
-                                <span class="text-success font-weight-bold">Đạt</span>
+                            <c:if test="${thesis.result == 1}">
+                                <span class="text-warning font-weight-bold">Chưa có kết quả</span>
                             </c:if>
-                            <c:if test="${thesis.result != true}">
-                                <span class="text-danger font-weight-bold">Trượt</span>
+                            <c:if test="${thesis.result == 2}">
+                                <span class="text-danger font-weight-bold">Chưa đạt</span>
+                            </c:if>
+                            <c:if test="${thesis.result == 3}">
+                                <span class="text-success font-weight-bold">Đạt</span>
                             </c:if>
                         </td>
                         <td class="text-center">
@@ -122,8 +114,10 @@
                                         data-placement="bottom" title="Xem chi tiết">
                                     <i class="icon-copy dw dw-eye"></i>
                                 </button>
-                                <button type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                                        data-placement="bottom" title="Chỉnh sửa">
+                                <button onclick="showEditThesisModal('<c:url
+                                        value="/admin/api/theses/${thesis.id}"/>', ${thesis.id})"
+                                        type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
+                                        data-placement="bottom" title="Cập nhật">
                                     <i class="icon-copy dw dw-edit1"></i>
                                 </button>
                                 <button type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
@@ -186,33 +180,34 @@
                             <label class="font-weight-bold">Chủ đề<span
                                     class="text-danger">(*)</span></label>
                             <div>
-                                <select class="custom-select form-control"
+                                <select class="custom-select form-control w-100"
                                         name="topic" id="topic" style="width: 100%; ">
-                                    <option value="1">Chủ đè 1</option>
-                                    <option value="2">Chủ đè 1</option>
+                                    <c:forEach var="topicOption" items="${topicOptions}">
+                                        <option value="${topicOption[0]}">${topicOption[1]}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold">Ngày bắt đầu<span
                                     class="text-danger">(*)</span></label>
-                            <input name="startDate" id="startDate" type="datetime-local" class="form-control">
+                            <input name="startDate" id="startDate" type="date" class="form-control">
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold">Ngày hoàn thành<span
                                     class="text-danger">(*)</span></label>
-                            <input name="complateDate" id="complateDate" type="datetime-local" class="form-control">
+                            <input name="complateDate" id="complateDate" type="date" class="form-control">
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold">Ngày bắt đầu nộp khóa luận<span
                                     class="text-danger">(*)</span></label>
-                            <input name="thesisStartDate" id="thesisStartDate" type="datetime-local"
+                            <input name="thesisStartDate" id="thesisStartDate" type="date"
                                    class="form-control">
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold">Ngày hết hạn nộp khóa luận<span
                                     class="text-danger">(*)</span></label>
-                            <input name="thesisEndDate" id="thesisEndDate" type="datetime-local" class="form-control">
+                            <input name="thesisEndDate" id="thesisEndDate" type="date" class="form-control">
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold">Khoa<span
@@ -255,9 +250,22 @@
                         <div class="form-group">
                             <label class="font-weight-bold">Giảng viên phản biện<span
                                     class="text-danger">(*)</span></label>
-                            <select name="reviewLecturersId" id="reviewLecturersId"
-                                    class="custom-select2 form-control" multiple="multiple" style="width: 100%;">
+                            <select name="reviewLecturer" id="reviewLecturer"
+                                    class="custom-select2 form-control" style="width: 100%;">
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Nội dung đánh giá</label>
+                            <textarea name="comment" id="comment" class="textarea_editor form-control border-radius-0"
+                                      placeholder="Viết nội dung đánh giá tại đây..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Tập tin khóa luận</label>
+                            <div class="custom-file">
+                                <input type="file" name="file" id="file" class="custom-file-input">
+                                <label class="custom-file-label">Chọn tệp</label>
+                            </div>
+
                         </div>
                     </div>
                 </form>

@@ -3,6 +3,7 @@ package com.buikhanhhuy.validators;
 import com.buikhanhhuy.pojo.Department;
 import com.buikhanhhuy.pojo.EvaluationMethod;
 import com.buikhanhhuy.pojo.SchoolYear;
+import com.buikhanhhuy.pojo.Thesis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -21,7 +22,8 @@ public class WebAppValidator implements Validator {
     public boolean supports(Class<?> clazz) {
         return Department.class.isAssignableFrom(clazz)
                 || SchoolYear.class.isAssignableFrom(clazz)
-                || EvaluationMethod.class.isAssignableFrom(clazz);
+                || EvaluationMethod.class.isAssignableFrom(clazz)
+                || Thesis.class.isAssignableFrom(clazz);
     }
 
     @Override

@@ -10,22 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -34,23 +19,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author bkhuy
  */
 @Entity
 @Table(name = "student")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
-    @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id"),
-    @NamedQuery(name = "Student.findByCode", query = "SELECT s FROM Student s WHERE s.code = :code"),
-    @NamedQuery(name = "Student.findByFullName", query = "SELECT s FROM Student s WHERE s.fullName = :fullName"),
-    @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email"),
-    @NamedQuery(name = "Student.findByPhone", query = "SELECT s FROM Student s WHERE s.phone = :phone"),
-    @NamedQuery(name = "Student.findByBirthday", query = "SELECT s FROM Student s WHERE s.birthday = :birthday"),
-    @NamedQuery(name = "Student.findByGender", query = "SELECT s FROM Student s WHERE s.gender = :gender"),
-    @NamedQuery(name = "Student.findByAddress", query = "SELECT s FROM Student s WHERE s.address = :address"),
-    @NamedQuery(name = "Student.findByGpa", query = "SELECT s FROM Student s WHERE s.gpa = :gpa")})
+@NamedQueries({@NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"), @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id"), @NamedQuery(name = "Student.findByCode", query = "SELECT s FROM Student s WHERE s.code = :code"), @NamedQuery(name = "Student.findByFullName", query = "SELECT s FROM Student s WHERE s.fullName = :fullName"), @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email"), @NamedQuery(name = "Student.findByPhone", query = "SELECT s FROM Student s WHERE s.phone = :phone"), @NamedQuery(name = "Student.findByBirthday", query = "SELECT s FROM Student s WHERE s.birthday = :birthday"), @NamedQuery(name = "Student.findByGender", query = "SELECT s FROM Student s WHERE s.gender = :gender"), @NamedQuery(name = "Student.findByAddress", query = "SELECT s FROM Student s WHERE s.address = :address"), @NamedQuery(name = "Student.findByGpa", query = "SELECT s FROM Student s WHERE s.gpa = :gpa")})
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -75,14 +49,14 @@ public class Student implements Serializable {
     @NotEmpty(message = "{student.add.email.notNullMessage}")
     @NotNull(message = "{student.add.email.notNullMessage}")
     @Size(max = 100, message = "{student.add.email.sizeMessage}")
-    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",  message="{student.add.email.format}")
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "{student.add.email.format}")
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
     @NotEmpty(message = "{student.add.phone.notNullMessage}")
     @NotNull(message = "{student.add.phone.notNullMessage}")
     @Size(max = 15, message = "{student.add.phone.sizeMessage}")
-    @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="{student.add.phone.format}")
+    @Pattern(regexp = "^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message = "{student.add.phone.format}")
     @Column(name = "phone")
     private String phone;
     @Basic(optional = false)
@@ -116,9 +90,9 @@ public class Student implements Serializable {
     @OneToOne
     @JsonIgnoreProperties({"news", "student", "lecturer", "manage", "notificationUsers", "role"})
     private User user;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
+    @ManyToMany(mappedBy = "students")
     @JsonIgnore
-    private Set<Perform> performs;
+    private Set<Thesis> theses;
 
     public Student() {
     }
@@ -235,13 +209,12 @@ public class Student implements Serializable {
         this.user = userId;
     }
 
-    @XmlTransient
-    public Set<Perform> getPerforms() {
-        return performs;
+    public Set<Thesis> getTheses() {
+        return theses;
     }
 
-    public void setPerforms(Set<Perform> performSet) {
-        this.performs = performSet;
+    public void setTheses(Set<Thesis> theses) {
+        this.theses = theses;
     }
 
     @Override
@@ -268,5 +241,5 @@ public class Student implements Serializable {
     public String toString() {
         return "com.buikhanhhuy.pojo.Student[ id=" + id + " ]";
     }
-    
+
 }
