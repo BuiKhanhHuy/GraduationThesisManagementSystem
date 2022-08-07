@@ -1,6 +1,5 @@
 package com.buikhanhhuy.api.admin;
 
-import com.buikhanhhuy.pojo.Department;
 import com.buikhanhhuy.pojo.Thesis;
 import com.buikhanhhuy.service.ThesisService;
 import com.buikhanhhuy.validators.WebAppValidator;
@@ -56,6 +55,25 @@ public class ApiThesisController {
         } else {
             if (this.thesisService.addThesis(thesis)) status = HttpStatus.CREATED;
             else status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(errorMessages, status);
+    }
+
+    @PatchMapping(path = "/theses/{thesisId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map<String, String>> updateThesis(@PathVariable("thesisId") int thesisId, @Valid @RequestBody Thesis thesis, BindingResult result) {
+        Map<String, String> errorMessages = new HashMap<>();
+        HttpStatus status = null;
+
+        if (result.hasErrors()) {
+            errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+            status = HttpStatus.BAD_REQUEST;
+        } else {
+//            if (this.departmentService.updateDepartment(departmentId, department))
+//                status = HttpStatus.OK;
+//            else status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+            status = HttpStatus.OK;
         }
 
         return new ResponseEntity<>(errorMessages, status);

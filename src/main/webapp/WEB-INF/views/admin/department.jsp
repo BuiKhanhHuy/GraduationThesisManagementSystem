@@ -1,6 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:url var="filterDeparment" value="/admin/departments/"/>
 <c:url var="home" value="/admin/"/>
@@ -71,7 +71,7 @@
                     <td>${department.code}</td>
                     <td>${department.name}</td>
                     <td class="text-center">
-                        <fmt:formatDate pattern="yyyy/MM/dd" value="${department.founding}"/>
+                        <fmt:formatDate type="date" value="${department.founding}"/>
                     </td>
                     <td class=" text-center">
                         <div class="btn-list">

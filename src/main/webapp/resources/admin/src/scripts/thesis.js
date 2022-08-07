@@ -41,8 +41,8 @@ const showAddThesisModal = (endpoint) => {
 }
 
 const showEditThesisModal = (endpoint, thesisId) => {
-    loadThesisById(endpoint, (data) => {
-        console.log(data)
+    loadDataOptions(() => loadThesisById(endpoint, (data) => {
+        // get data
         let form = document.forms['form-add-edit-thesis']
         form["code"].value = data.code;
         if (data.topic !== null) {
@@ -60,10 +60,22 @@ const showEditThesisModal = (endpoint, thesisId) => {
         }
         $("#comment").data('wysihtml5').editor.setValue(data.comment);
 
+        let elementPerformStudents = document.getElementById("performStudentsId")
+        let values1 = data.students.map(value => value.id.toString())
+        for (let i = 0; i < elementPerformStudents.options.length; i++) {
+            elementPerformStudents.options[i].selected = values1.indexOf(elementPerformStudents.options[i].value) >= 0;
+        }
+
+        let elementInstructors = document.getElementById("instructorsId")
+        let values2 = data.lecturers.map(value => value.id.toString())
+        for (let i = 0; i < elementInstructors.options.length; i++) {
+            elementInstructors.options[i].selected = values2.indexOf(elementInstructors.options[i].value) >= 0;
+        }
+        // end get data
         document.getElementById("myModalAddAndEditThesis").innerText = "Cập nhật khóa luận"
         document.getElementById("btn-submit-form").onclick = () => saveChange(endpoint, thesisId)
         $('#modal-add-edit-thesis').modal()
-    })
+    }))
 }
 const loadThesisById = (endpoint, callback) => {
     fetch(endpoint, {
@@ -123,7 +135,6 @@ const saveChange = (endpoint, thesisId = null) => {
                 successfulAlert("Thêm khóa luận thành công", "Ok", () => location.reload());
             } else {
                 // error
-                console.warn(data)
                 $.each(data, function (key, value) {
                     if (['code', 'startDate', 'complateDate', 'thesisStartDate', 'thesisEndDate'].indexOf(key) > -1) {
                         $('input[name=' + key + ']').after('<span class="text-danger">' + value + '</span>');
@@ -137,37 +148,44 @@ const saveChange = (endpoint, thesisId = null) => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình thêm dữ liệu!", "Ok")
         })
     } else {
-        // // UPDATE
-        // fetch(endpoint, {
-        //     method: "PATCH", body: JSON.stringify({
-        //         "fullName": formData.fullName,
-        //         "email": formData.email,
-        //         "phone": formData.phone,
-        //         "user": {
-        //             "username": formData.username,
-        //             "password": formData.password,
-        //             "active": formData.active,
-        //         }
-        //     }), headers: {
-        //         "Content-Type": "application/json"
-        //     }
-        // }).then(res => res.json()).then(data => {
-        //     if (Object.keys(data).length === 0) {
-        //         // successful
-        //         $('#modal-add-edit-manage').hide();
-        //         successfulAlert("Cập nhật quản trị viên thành công", "Ok", () => location.reload());
-        //     } else {
-        //         // error
-        //         $.each(data, function (key, value) {
-        //             if (key === "file")
-        //                 console.log("tính sau")
-        //             else
-        //                 $('input[name=' + key + ']').after('<span class="text-danger">' + value + '</span>');
-        //         });
-        //     }
-        // }).catch(err => {
-        //     errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
-        // })
+        console.log(formData)
+        // UPDATE
+        fetch(endpoint, {
+            method: "PATCH", body: JSON.stringify({
+                "code": formData.code,
+                "startDate": formData.startDate,
+                "complateDate": formData.complateDate,
+                "thesisStartDate": formData.thesisStartDate,
+                "thesisEndDate": formData.thesisEndDate,
+                "department": formData.department,
+                "schoolYear": formData.schoolYear,
+                "topic": formData.topic,
+                "comment": formData.comment,
+                "reportFile": "",
+                "instructorsId": formData.instructorsId,
+                "reviewLecturer": formData.reviewLecturer,
+                "performStudentsId": formData.performStudentsId
+            }), headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json()).then(data => {
+            if (Object.keys(data).length === 0) {
+                // successful
+                $('#modal-add-edit-thesis').hide();
+                successfulAlert("Cập nhật khóa luận thành công", "Ok", () => location.reload());
+            } else {
+                // error
+                $.each(data, function (key, value) {
+                    if (['code', 'startDate', 'complateDate', 'thesisStartDate', 'thesisEndDate'].indexOf(key) > -1) {
+                        $('input[name=' + key + ']').after('<span class="text-danger">' + value + '</span>');
+                    } else {
+                        $('select[name=' + key + '] + span').after('<span class="text-danger">' + value + '</span>');
+                    }
+                });
+            }
+        }).catch(err => {
+            errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
+        })
     }
 }
 
@@ -188,6 +206,11 @@ const saveChange = (endpoint, thesisId = null) => {
 //
 // event before hidden modal
 $('#modal-add-edit-thesis').on('hidden.bs.modal', function (e) {
+    // delete all select in multiselect
+    let a = document.querySelectorAll("li.select2-selection__choice")
+    for (let i = 0; i < a.length; i++) {
+        a[i].style.display = 'none'
+    }
     $('input').next('span').remove();
     $('select + span').next('span').remove()
     document.forms['form-add-edit-thesis'].reset();

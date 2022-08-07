@@ -4,10 +4,7 @@
  */
 package com.buikhanhhuy.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -73,11 +70,11 @@ public class Thesis implements Serializable {
     private Integer result;
 
     @OneToMany(mappedBy = "thesis", fetch = FetchType.EAGER)
-    @JsonIgnore
+    @JsonIncludeProperties({"id"})
     private Set<CounterArgument> counterArguments;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "perform", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "student_id")})
-    @JsonIgnore
+    @JsonIncludeProperties({"id"})
     private Set<Student> students;
     @OneToMany(mappedBy = "thesis")
     @JsonIgnore
@@ -98,9 +95,9 @@ public class Thesis implements Serializable {
     @JsonIgnoreProperties({"description", "department"})
     @ManyToOne
     private Topic topic;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "guide", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "lecturer_id")})
-    @JsonIgnore
+    @JsonIncludeProperties({"id"})
     private Set<Lecturer> lecturers;
 
     @Transient

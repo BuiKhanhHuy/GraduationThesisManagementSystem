@@ -96,6 +96,8 @@
 <script src="<c:url value="/admin/src/plugins/toast/jquery.toast.js"/> "></script>
 <script src="<c:url value="/admin/src/scripts/sweet-alert2-custom.js"/> "></script>
 
+
+
 <c:forEach var="js" items="${javascripts}">
     <script src="<c:url value="${js}"/>"></script>
 </c:forEach>

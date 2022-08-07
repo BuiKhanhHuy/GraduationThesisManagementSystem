@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:url var="filterSchoolYear" value="/admin/school-years/"/>
 <c:url var="home" value="/admin/"/>
@@ -69,10 +69,10 @@
                 <tr>
                     <td class="text-center">${schoolYear.name}</td>
                     <td class="text-center">
-                        <fmt:formatDate pattern="yyyy/MM/dd" value="${schoolYear.startDate}"/>
+                        <fmt:formatDate type="date" value="${schoolYear.startDate}"/>
                     </td>
                     <td class="text-center">
-                        <fmt:formatDate pattern="yyyy/MM/dd" value="${schoolYear.endDate}"/>
+                        <fmt:formatDate type="date" value="${schoolYear.endDate}"/>
                     </td>
                     <td class="text-center">
                         <div class="btn-list">

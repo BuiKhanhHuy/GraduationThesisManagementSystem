@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:url value="/admin/src/images/avatar/avatar-default.jpg" var="avatarDefault"/>
 <c:url var="filterLecturer" value=""/>
@@ -136,7 +136,7 @@
                             <li>${lecturer.email}</li>
                             <li>${lecturer.phone}</li>
                             <li>
-                                <fmt:formatDate pattern="yyyy/MM/dd" value="${lecturer.birthday}"/>
+                                <fmt:formatDate type="date" value="${lecturer.birthday}"/>
                             </li>
                             <li>
                                 <c:if test="${lecturer.gender == 1}">

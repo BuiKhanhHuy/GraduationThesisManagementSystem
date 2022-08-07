@@ -1,5 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:url var="home" value="/admin/"/>
 
@@ -81,10 +82,10 @@
                             </c:if>
                         </td>
                         <td>
-                                ${thesis.startDate}
+                            <fmt:formatDate type="date" value="${thesis.startDate}"/>
                         </td>
                         <td>
-                                ${thesis.complateDate}
+                            <fmt:formatDate type="date" value="${thesis.complateDate}"/>
                         </td>
                         <td>
                             <c:if test="${thesis.reportFile == null || thesis.reportFile.isEmpty()}">
@@ -301,4 +302,3 @@
 <%--            }--%>
 <%--        }--%>
 <%--    });--%>
-<%--</script>--%>
