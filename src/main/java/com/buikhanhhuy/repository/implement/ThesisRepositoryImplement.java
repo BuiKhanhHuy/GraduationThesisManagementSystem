@@ -3,7 +3,6 @@ package com.buikhanhhuy.repository.implement;
 import com.buikhanhhuy.pojo.Lecturer;
 import com.buikhanhhuy.pojo.Student;
 import com.buikhanhhuy.pojo.Thesis;
-import com.buikhanhhuy.repository.CounterArgumentRepository;
 import com.buikhanhhuy.repository.ThesisRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,6 @@ import java.util.Set;
 public class ThesisRepositoryImplement implements ThesisRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
-    @Autowired
-    private CounterArgumentRepository counterArgumentRepository;
 
     @Override
     public List<Thesis> getTheses() {
@@ -55,7 +52,6 @@ public class ThesisRepositoryImplement implements ThesisRepository {
             thesis.setLecturers(lecturers);
             session.save(thesis);
 
-            this.counterArgumentRepository.addCounterArgument(thesis, thesis.getReviewLecturer());
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();

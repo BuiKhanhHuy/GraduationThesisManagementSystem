@@ -1,7 +1,6 @@
 package com.buikhanhhuy.pojo;
 
 import com.buikhanhhuy.pojo.CouncilDetail;
-import com.buikhanhhuy.pojo.CounterArgument;
 import com.buikhanhhuy.pojo.Department;
 import com.buikhanhhuy.pojo.Position;
 import com.buikhanhhuy.pojo.Thesis;
@@ -12,7 +11,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-06T19:55:49")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-08T02:24:59")
 @StaticMetamodel(Lecturer.class)
 public class Lecturer_ { 
 
@@ -24,7 +23,7 @@ public class Lecturer_ {
     public static volatile SetAttribute<Lecturer, Thesis> theses;
     public static volatile SetAttribute<Lecturer, CouncilDetail> councilDetails;
     public static volatile SingularAttribute<Lecturer, String> phone;
-    public static volatile SetAttribute<Lecturer, CounterArgument> counterArguments;
+    public static volatile SetAttribute<Lecturer, Thesis> reviewTheses;
     public static volatile SingularAttribute<Lecturer, Integer> id;
     public static volatile SingularAttribute<Lecturer, Position> position;
     public static volatile SingularAttribute<Lecturer, Department> department;

@@ -1,4 +1,7 @@
 package com.buikhanhhuy.service;
 
-public class EmailService {
+import java.util.Map;
+
+public interface EmailService {
+    public void sendMail(String subject, String [] to, Map<String, String> model, int type);
 }

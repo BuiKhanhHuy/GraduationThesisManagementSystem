@@ -84,9 +84,9 @@ public class Lecturer implements Serializable {
     @Size(max = 255, message = "{lecturer.add.address.sizeMessage}")
     @Column(name = "address")
     private String address;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lecturer")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "reviewLecturers")
     @JsonIgnore
-    private Set<CounterArgument> counterArguments;
+    private Set<Thesis> reviewTheses;
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     @ManyToOne
     @JsonIgnoreProperties({"code", "name", "description", "founding"})
@@ -189,13 +189,12 @@ public class Lecturer implements Serializable {
         this.address = address;
     }
 
-    @XmlTransient
-    public Set<CounterArgument> getCounterArguments() {
-        return counterArguments;
+    public Set<Thesis> getReviewTheses() {
+        return reviewTheses;
     }
 
-    public void setCounterArguments(Set<CounterArgument> counterArgumentSet) {
-        this.counterArguments = counterArgumentSet;
+    public void setReviewTheses(Set<Thesis> reviewTheses) {
+        this.reviewTheses = reviewTheses;
     }
 
     public Department getDepartment() {

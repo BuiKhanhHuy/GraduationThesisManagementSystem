@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "thesis")
 @XmlRootElement
-@NamedQueries({@NamedQuery(name = "Thesis.findAll", query = "SELECT t FROM Thesis t"), @NamedQuery(name = "Thesis.findById", query = "SELECT t FROM Thesis t WHERE t.id = :id"), @NamedQuery(name = "Thesis.findByCode", query = "SELECT t FROM Thesis t WHERE t.code = :code"), @NamedQuery(name = "Thesis.findByStartDate", query = "SELECT t FROM Thesis t WHERE t.startDate = :startDate"), @NamedQuery(name = "Thesis.findByComplateDate", query = "SELECT t FROM Thesis t WHERE t.complateDate = :complateDate"), @NamedQuery(name = "Thesis.findByThesisStartDate", query = "SELECT t FROM Thesis t WHERE t.thesisStartDate = :thesisStartDate"), @NamedQuery(name = "Thesis.findByThesisEndDate", query = "SELECT t FROM Thesis t WHERE t.thesisEndDate = :thesisEndDate"), @NamedQuery(name = "Thesis.findByReportFile", query = "SELECT t FROM Thesis t WHERE t.reportFile = :reportFile"),@NamedQuery(name = "Thesis.findByTotalScore", query = "SELECT t FROM Thesis t WHERE t.totalScore = :totalScore"), @NamedQuery(name = "Thesis.findByResult", query = "SELECT t FROM Thesis t WHERE t.result = :result")})
+@NamedQueries({@NamedQuery(name = "Thesis.findAll", query = "SELECT t FROM Thesis t"), @NamedQuery(name = "Thesis.findById", query = "SELECT t FROM Thesis t WHERE t.id = :id"), @NamedQuery(name = "Thesis.findByCode", query = "SELECT t FROM Thesis t WHERE t.code = :code"), @NamedQuery(name = "Thesis.findByStartDate", query = "SELECT t FROM Thesis t WHERE t.startDate = :startDate"), @NamedQuery(name = "Thesis.findByComplateDate", query = "SELECT t FROM Thesis t WHERE t.complateDate = :complateDate"), @NamedQuery(name = "Thesis.findByThesisStartDate", query = "SELECT t FROM Thesis t WHERE t.thesisStartDate = :thesisStartDate"), @NamedQuery(name = "Thesis.findByThesisEndDate", query = "SELECT t FROM Thesis t WHERE t.thesisEndDate = :thesisEndDate"), @NamedQuery(name = "Thesis.findByReportFile", query = "SELECT t FROM Thesis t WHERE t.reportFile = :reportFile"), @NamedQuery(name = "Thesis.findByTotalScore", query = "SELECT t FROM Thesis t WHERE t.totalScore = :totalScore"), @NamedQuery(name = "Thesis.findByResult", query = "SELECT t FROM Thesis t WHERE t.result = :result")})
 public class Thesis implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,10 +68,6 @@ public class Thesis implements Serializable {
     private Double totalScore;
     @Column(name = "result")
     private Integer result;
-
-    @OneToMany(mappedBy = "thesis", fetch = FetchType.EAGER)
-    @JsonIncludeProperties({"id"})
-    private Set<CounterArgument> counterArguments;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "perform", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "student_id")})
     @JsonIncludeProperties({"id"})
@@ -99,6 +95,11 @@ public class Thesis implements Serializable {
     @JoinTable(name = "guide", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "lecturer_id")})
     @JsonIncludeProperties({"id"})
     private Set<Lecturer> lecturers;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "counter_argument", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "lecturer_id")})
+    @JsonIncludeProperties({"id"})
+    private Set<Lecturer> reviewLecturers;
 
     @Transient
     @NotEmpty(message = "{thesis.add.instructorsId.sizeMessage}")
@@ -217,15 +218,6 @@ public class Thesis implements Serializable {
         this.result = result;
     }
 
-    @XmlTransient
-    public Set<CounterArgument> getCounterArguments() {
-        return counterArguments;
-    }
-
-    public void setCounterArguments(Set<CounterArgument> counterArgumentSet) {
-        this.counterArguments = counterArgumentSet;
-    }
-
     public Set<Student> getStudents() {
         return students;
     }
@@ -281,6 +273,14 @@ public class Thesis implements Serializable {
 
     public void setLecturers(Set<Lecturer> lecturers) {
         this.lecturers = lecturers;
+    }
+
+    public Set<Lecturer> getReviewLecturers() {
+        return reviewLecturers;
+    }
+
+    public void setReviewLecturers(Set<Lecturer> reviewLecturers) {
+        this.reviewLecturers = reviewLecturers;
     }
 
     public Set<Integer> getInstructorsId() {
