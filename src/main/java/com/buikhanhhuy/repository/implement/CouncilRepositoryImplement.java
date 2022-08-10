@@ -1,7 +1,9 @@
 package com.buikhanhhuy.repository.implement;
 
 import com.buikhanhhuy.pojo.Council;
-import com.buikhanhhuy.pojo.Department;
+import com.buikhanhhuy.pojo.CouncilDetail;
+import com.buikhanhhuy.pojo.Thesis;
+import com.buikhanhhuy.repository.CouncilDetailRepository;
 import com.buikhanhhuy.repository.CouncilRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ import java.util.Objects;
 public class CouncilRepositoryImplement implements CouncilRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
+    @Autowired
+    private CouncilDetailRepository councilDetailRepository;
+
     @Override
     public List<Council> getCouncils(Map<String, String> params) {
         Session session = Objects.requireNonNull(this.sessionFactoryBean.getObject()).getCurrentSession();
@@ -37,6 +42,40 @@ public class CouncilRepositoryImplement implements CouncilRepository {
 
     @Override
     public boolean addCouncil(Council council) {
+        Session session = Objects.requireNonNull(this.sessionFactoryBean.getObject()).getCurrentSession();
+        try {
+            session.save(council);
+
+            for (CouncilDetail councilDetail : council.getCouncilDetails()) {
+                councilDetail.setCouncil(council);
+
+               session.save(councilDetail);
+            }
+            for(Thesis thesis: council.getTheses()){
+               Thesis th = session.get(Thesis.class, thesis.getId());
+                th.setCouncil(council);
+
+                session.update(th);
+            }
+
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean deleteCouncil(int councilId) {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            Council council = session.get(Council.class, councilId);
+            session.delete(council);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         return false;
     }
 }

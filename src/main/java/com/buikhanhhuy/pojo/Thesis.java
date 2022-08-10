@@ -93,21 +93,13 @@ public class Thesis implements Serializable {
     @ManyToOne
     private Topic topic;
     @ManyToMany(fetch = FetchType.EAGER)
+    @NotEmpty(message = "{thesis.add.lecturers.notNullMessage}")
     @JoinTable(name = "guide", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "lecturer_id")})
-    @JsonIncludeProperties({"id"})
     private Set<Lecturer> lecturers;
     @ManyToMany(fetch = FetchType.EAGER)
+    @NotEmpty(message = "{thesis.add.students.notNullMessage}")
     @JoinTable(name = "perform", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "student_id")})
-    @JsonIncludeProperties({"id"})
     private Set<Student> students;
-    @Transient
-    @NotEmpty(message = "{thesis.add.instructorsId.sizeMessage}")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<Integer> instructorsId;
-    @Transient
-    @NotEmpty(message = "{thesis.add.performStudentsId.sizeMessage}")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<Integer> performStudentsId;
 
     @ManyToOne
     @JoinColumn(name = "review_lecturer_id", referencedColumnName = "id")
@@ -224,54 +216,44 @@ public class Thesis implements Serializable {
         this.result = result;
     }
 
-
-    public Set<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Set<Student> students) {
-        this.students = students;
-    }
-
-    @XmlTransient
     public Set<Score> getScores() {
         return scores;
     }
 
-    public void setScores(Set<Score> scoreSet) {
-        this.scores = scoreSet;
+    public void setScores(Set<Score> scores) {
+        this.scores = scores;
     }
 
     public Council getCouncil() {
         return council;
     }
 
-    public void setCouncil(Council councilId) {
-        this.council = councilId;
+    public void setCouncil(Council council) {
+        this.council = council;
     }
 
     public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(Department departmentId) {
-        this.department = departmentId;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public SchoolYear getSchoolYear() {
         return schoolYear;
     }
 
-    public void setSchoolYear(SchoolYear schoolYearId) {
-        this.schoolYear = schoolYearId;
+    public void setSchoolYear(SchoolYear schoolYear) {
+        this.schoolYear = schoolYear;
     }
 
     public Topic getTopic() {
         return topic;
     }
 
-    public void setTopic(Topic topicId) {
-        this.topic = topicId;
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 
     public Set<Lecturer> getLecturers() {
@@ -282,20 +264,12 @@ public class Thesis implements Serializable {
         this.lecturers = lecturers;
     }
 
-    public Set<Integer> getInstructorsId() {
-        return instructorsId;
+    public Set<Student> getStudents() {
+        return students;
     }
 
-    public void setInstructorsId(Set<Integer> instructorsId) {
-        this.instructorsId = instructorsId;
-    }
-
-    public Set<Integer> getPerformStudentsId() {
-        return performStudentsId;
-    }
-
-    public void setPerformStudentsId(Set<Integer> performStudentsId) {
-        this.performStudentsId = performStudentsId;
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 
     public Lecturer getReviewLecturer() {

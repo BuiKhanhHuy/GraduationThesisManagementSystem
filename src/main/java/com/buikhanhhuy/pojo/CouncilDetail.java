@@ -100,8 +100,8 @@ public class CouncilDetail implements Serializable {
         return council;
     }
 
-    public void setCouncil(Council councilId) {
-        this.council = councilId;
+    public void setCouncil(Council council) {
+        this.council = council;
     }
 
     public Lecturer getLecturer() {

@@ -27,7 +27,6 @@ public class ApiThesisController {
     @Autowired
     private ThesisService thesisService;
     @Autowired
-    @Qualifier("thesisValidator")
     private WebAppValidator thesisValidator;
 
     @InitBinder

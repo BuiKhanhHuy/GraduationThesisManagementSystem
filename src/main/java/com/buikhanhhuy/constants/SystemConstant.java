@@ -7,6 +7,9 @@ public class SystemConstant {
     // validator
     public static final int MAX_NUMBER_OF_TEACHER_INSTRUCTIONS = 2;
     public static final int MAXIMUM_NUMBER_OF_STUDENTS_PERFORMED = 2;
+    public static final int MIN_NUMBER_MEMBER_OF_COUNCIL = 3;
+    public static final int MAX_NUMBER_MEMBER_OF_COUNCIL = 5;
+    public static final int MAX_THESIS_OF_COUNCIL = 5;
 
     // mail
     public static final int REVIEW_LECTURER_EMAIL_TEMPLATE = 1;

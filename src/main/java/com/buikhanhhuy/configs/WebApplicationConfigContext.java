@@ -61,7 +61,10 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
         registry.addFormatter(new PositionFormatter());
         registry.addFormatter(new RoleFormatter());
         registry.addFormatter(new LecturerFormatter());
+        registry.addFormatter(new StudentFormatter());
         registry.addFormatter(new ThesisFormatter());
+        registry.addFormatter(new CouncilFormatter());
+        registry.addFormatter(new CouncilDetailFormatter());
     }
 
 
@@ -117,9 +120,22 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
     @Bean
     public WebAppValidator thesisValidator(){
         Set<Validator> springValidators = new HashSet<>();
-        springValidators.add(new ThesisInstructorsValidator());
-        springValidators.add(new ThesisStudentPerformValidator());
+        springValidators.add(new ThesisLecturersValidator());
+        springValidators.add(new ThesisStudentsValidator());
         springValidators.add(new ThesisReviewLecturerValidator());
+
+        WebAppValidator webAppValidator = new WebAppValidator();
+        webAppValidator.setValidators(springValidators);
+
+        return webAppValidator;
+    }
+
+    @Bean
+    public WebAppValidator councilValidator(){
+        Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(new CouncilThesisValidator());
+        springValidators.add(new CouncilMemberValidator());
+        springValidators.add(new CouncilMemberUnique());
 
         WebAppValidator webAppValidator = new WebAppValidator();
         webAppValidator.setValidators(springValidators);

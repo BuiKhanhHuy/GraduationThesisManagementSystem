@@ -77,8 +77,6 @@ const addMemberItem = () => {
     let itemNumberCurrent = memberArray.at(-1)
     let itemNumberNext = itemNumberCurrent + 1
 
-    console.log(memberArray.length)
-
     document.getElementById(`member-${itemNumberCurrent}`)
         .insertAdjacentHTML("afterend", memberItem(itemNumberNext))
 
@@ -149,6 +147,7 @@ const saveChange = (endpoint, councilId = null) => {
     $('input').next('span').remove();
     $('select + span').next('span').remove()
     $('textarea').next('span').remove()
+    document.getElementById(`councilDetails`).innerText = ''
 
     let formCouncilElement = document.getElementById("form-add-edit-council");
     let formData = {}
@@ -164,6 +163,7 @@ const saveChange = (endpoint, councilId = null) => {
             "lecturer": formCouncilElement[`lecturer-${member}`].value
         }
     })
+    console.warn(formData)
 
     if (councilId === null) {
         // ADD
@@ -187,7 +187,9 @@ const saveChange = (endpoint, councilId = null) => {
                             document.getElementsByName(`${key}`)[0].insertAdjacentHTML('afterend', '<span class="text-danger font-weight-normal">' + value + '</span>');
                         } else if (key === "theses") {
                             $('select[name=' + key + '] + span').after('<span class="text-danger">' + value + '</span>');
-                        } else {
+                        } else if(key === "councilDetails"){
+                            document.getElementById(`${key}`).innerText = value
+                        }else {
                             $('input[name=' + `position-${memberArray[parseInt(key.match(/\d/g).join(""))]}` + ']').after('<span class="text-danger font-weight-normal">' + value + '</span>');
                         }
                     });
@@ -219,26 +221,27 @@ const saveChange = (endpoint, councilId = null) => {
     }
 }
 
-// const deleteMajorItem = (endpoint) => {
-//     // DELETE
-//     confirmAlert("Bạn có chắc không?", "Bạn sẽ không thể khôi phục điều này!", "Có, xóa nó", "Không, hủy bỏ", () => {
-//         const response = fetch(endpoint, {
-//             method: "DELETE", headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         }).then(function (res) {
-//             if (res.status === 204) successfulAlert("Xóa ngành thành công", "Ok", () => location.reload());
-//         }).catch(err => {
-//             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình xóa dữ liệu!", "Ok")
-//         })
-//     })
-// }
+const deleteCouncilItem = (endpoint) => {
+    // DELETE
+    confirmAlert("Bạn có chắc không?", "Bạn sẽ không thể khôi phục điều này!", "Có, xóa nó", "Không, hủy bỏ", () => {
+        const response = fetch(endpoint, {
+            method: "DELETE", headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function (res) {
+            if (res.status === 204) successfulAlert("Xóa hội đồng thành công", "Ok", () => location.reload());
+        }).catch(err => {
+            errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình xóa dữ liệu!", "Ok")
+        })
+    })
+}
 
 // event before hidden modal
 $('#modal-add-edit-council').on('hidden.bs.modal', function (e) {
     $('input').next('span').remove();
     $('textarea').next('span').remove()
     $('select + span').next('span').remove()
+    document.getElementById(`councilDetails`).innerText = ''
     document.forms['form-add-edit-council'].reset();
 
     memberArray = [0]

@@ -135,17 +135,6 @@ public class ThesisRepositoryImplement implements ThesisRepository {
     public boolean addThesis(Thesis thesis) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         try {
-            Set<Student> students = new HashSet<>();
-            Set<Lecturer> lecturers = new HashSet<>();
-            for (int performStudentId : thesis.getPerformStudentsId()) {
-                students.add(session.get(Student.class, performStudentId));
-            }
-            for (int instructorId : thesis.getInstructorsId()) {
-                lecturers.add(session.get(Lecturer.class, instructorId));
-            }
-
-            thesis.setStudents(students);
-            thesis.setLecturers(lecturers);
             session.save(thesis);
 
             return true;

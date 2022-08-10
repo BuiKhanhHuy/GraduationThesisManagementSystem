@@ -1,6 +1,7 @@
 package com.buikhanhhuy.validators;
 
 import com.buikhanhhuy.pojo.SchoolYear;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

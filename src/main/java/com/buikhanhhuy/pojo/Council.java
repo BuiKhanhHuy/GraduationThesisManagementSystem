@@ -43,9 +43,9 @@ public class Council implements Serializable {
     @Size(max = 255, message = "{council.add.description.sizeMessage}")
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "council", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "council")
     @NotEmpty(message = "{council.add.councilDetails.notNullMessage}")
-    @JsonIncludeProperties({"position", "lecturer"})
+    @JsonIncludeProperties({"position", "lecturer", "council"})
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Valid
     private List<CouncilDetail> councilDetails;
@@ -53,9 +53,8 @@ public class Council implements Serializable {
     @ManyToOne
     @JsonIncludeProperties({"id", "name"})
     private SchoolYear schoolYear;
-    @OneToMany(mappedBy = "council", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "council")
     @NotEmpty(message = "{council.add.theses.notNullMessage}")
-
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Thesis> theses;
 
@@ -112,13 +111,12 @@ public class Council implements Serializable {
         this.schoolYear = schoolYearId;
     }
 
-    @XmlTransient
     public Set<Thesis> getTheses() {
         return theses;
     }
 
-    public void setTheses(Set<Thesis> thesisSet) {
-        this.theses = thesisSet;
+    public void setTheses(Set<Thesis> theses) {
+        this.theses = theses;
     }
 
     @Override

@@ -209,7 +209,7 @@
 <!-- table End -->
 
 <!-- ADD and EDIT modal -->
-<div class="modal fade bs-example-modal-lg " id="modal-add-edit-thesis" tabindex="-1" role="dialog"
+<div class="modal fade bs-example-modal-lg" data-focus="false" id="modal-add-edit-thesis" tabindex="-1" role="dialog"
      aria-labelledby="myModalAddAndEditThesis" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -287,14 +287,14 @@
                         <div class="form-group">
                             <label class="font-weight-bold">Sinh viên thực hiện<span
                                     class="text-danger">(*)</span></label>
-                            <select name="performStudentsId" id="performStudentsId"
+                            <select name="students" id="students"
                                     class="custom-select2 form-control" multiple="multiple" style="width: 100%;">
                             </select>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold">Giảng viên hướng dẫn<span
                                     class="text-danger">(*)</span></label>
-                            <select name="instructorsId" id="instructorsId"
+                            <select name="lecturers" id="lecturers"
                                     class="custom-select2 form-control" multiple="multiple" style="width: 100%;">
                             </select>
                         </div>
@@ -302,7 +302,7 @@
                             <label class="font-weight-bold">Giảng viên phản biện<span
                                     class="text-danger">(*)</span></label>
                             <select name="reviewLecturer" id="reviewLecturer"
-                                    class="custom-select2 form-control" style="width: 100%;">
+                                    class="custom-select form-control" style="width: 100%;">
                             </select>
                         </div>
                         <div class="form-group">

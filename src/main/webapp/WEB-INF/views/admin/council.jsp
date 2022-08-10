@@ -123,6 +123,11 @@
                     </td>
                     <td class="text-center">
                         <div class="btn-list">
+                            <button type="button" class="btn btn-sm bg-success text-white" data-toggle="tooltip"
+                                    data-placement="bottom" title="Khóa hội đồng">
+                                <i class="icon-copy fa fa-unlock" aria-hidden="true"></i>
+                            </button>
+                            <span class="text-black-50">|</span>
                             <button type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
                                     data-placement="bottom" title="Xem chi tiết">
                                 <i class="icon-copy dw dw-eye"></i>
@@ -133,7 +138,7 @@
                                     data-placement="bottom" title="Cập nhật">
                                 <i class="icon-copy dw dw-edit1"></i>
                             </button>
-                            <button onclick="deleteThesisItem('<c:url
+                            <button onclick="deleteCouncilItem('<c:url
                                     value="/admin/api/councils/${council.id}"/>')"
                                     type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
                                     data-placement="bottom" title="Xóa">
@@ -167,7 +172,7 @@
 <!-- table End -->
 
 <!-- ADD and EDIT modal -->
-<div class="modal fade bs-example-modal-lg " id="modal-add-edit-council" tabindex="-1" role="dialog"
+<div class="modal fade bs-example-modal-lg" data-focus="false" id="modal-add-edit-council" tabindex="-1" role="dialog"
      aria-labelledby="myModalAddAndEditCouncil" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -206,9 +211,6 @@
                                     class="text-danger">(*)</span></label>
                             <select name="theses" id="theses"
                                     class="custom-select2 form-control" multiple="multiple" style="width: 100%;">
-                                <option value="1">KL1</option>
-                                <option value="2">KL2</option>
-                                <option value="3">KL3</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -234,6 +236,7 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <p id="councilDetails" class="text-danger mt-0" ></p>
                         </div>
                     </div>
                 </form>

@@ -7,9 +7,9 @@ const loadDataOptions = (callback) => {
                 "Content-Type": "application/json"
             }
         }).then(res => res.json()).then(data => {
-            let performStudentsHtml = ''
-            data.forEach(d => performStudentsHtml += `<option value=${d[0]}>${d[1]}</option>`)
-            document.getElementById("performStudentsId").innerHTML = performStudentsHtml;
+            let studentsHtml = ''
+            data.forEach(d => studentsHtml += `<option value=${d[0]}>${d[1]}</option>`)
+            document.getElementById("students").innerHTML = studentsHtml;
         }).then(() => fetch("/GraduationThesisManagementSystem/admin/api/lecturer-options", {
             method: "GET", headers: {
                 "Content-Type": "application/json"
@@ -17,7 +17,7 @@ const loadDataOptions = (callback) => {
         }).then(res => res.json()).then(data => {
             let lecturersHtml = ''
             data.forEach(d => lecturersHtml += `<option value=${d[0]}>${d[1]}</option>`)
-            document.getElementById("instructorsId").innerHTML = lecturersHtml;
+            document.getElementById("lecturers").innerHTML = lecturersHtml;
             document.getElementById("reviewLecturer").innerHTML = lecturersHtml;
 
             // callback
@@ -63,16 +63,16 @@ const showEditThesisModal = (endpoint, thesisId) => {
         }
         $("#comment").data('wysihtml5').editor.setValue(data.comment);
 
-        let elementPerformStudents = document.getElementById("performStudentsId")
+        let studentsElement = document.getElementById("students")
         let values1 = data.students.map(value => value.id.toString())
-        for (let i = 0; i < elementPerformStudents.options.length; i++) {
-            elementPerformStudents.options[i].selected = values1.indexOf(elementPerformStudents.options[i].value) >= 0;
+        for (let i = 0; i < studentsElement.options.length; i++) {
+            studentsElement.options[i].selected = values1.indexOf(studentsElement.options[i].value) >= 0;
         }
 
-        let elementInstructors = document.getElementById("instructorsId")
+        let lecturersElement = document.getElementById("lecturers")
         let values2 = data.lecturers.map(value => value.id.toString())
-        for (let i = 0; i < elementInstructors.options.length; i++) {
-            elementInstructors.options[i].selected = values2.indexOf(elementInstructors.options[i].value) >= 0;
+        for (let i = 0; i < lecturersElement.options.length; i++) {
+            lecturersElement.options[i].selected = values2.indexOf(lecturersElement.options[i].value) >= 0;
         }
         // end get data
         document.getElementById("myModalAddAndEditThesis").innerText = "Cập nhật khóa luận"
@@ -101,10 +101,10 @@ const saveChange = (endpoint, thesisId = null) => {
         formData[item.name] = item.value
     })
     delete formData['_wysihtml5_mode'];
-    formData["instructorsId"] = [...document.getElementById("instructorsId").options]
+    formData["lecturers"] = [...document.getElementById("lecturers").options]
         .filter(option => option.selected)
         .map(option => parseInt(option.value));
-    formData["performStudentsId"] = [...document.getElementById("performStudentsId").options]
+    formData["students"] = [...document.getElementById("students").options]
         .filter(option => option.selected)
         .map(option => parseInt(option.value));
 
@@ -125,9 +125,9 @@ const saveChange = (endpoint, thesisId = null) => {
                 "topic": formData.topic,
                 "comment": formData.comment,
                 "reportFile": "",
-                "instructorsId": formData.instructorsId,
+                "lecturers": formData.lecturers,
                 "reviewLecturer": formData.reviewLecturer,
-                "performStudentsId": formData.performStudentsId
+                "students": formData.students
             }), headers: {
                 "Content-Type": "application/json"
             }
@@ -137,6 +137,7 @@ const saveChange = (endpoint, thesisId = null) => {
                 $('#modal-add-edit-thesis').hide();
                 successfulAlert("Thêm khóa luận thành công", "Ok", () => location.reload());
             } else {
+                console.log(data)
                 // error
                 $.each(data, function (key, value) {
                     if (['code', 'startDate', 'complateDate', 'thesisStartDate', 'thesisEndDate'].indexOf(key) > -1) {
@@ -165,9 +166,9 @@ const saveChange = (endpoint, thesisId = null) => {
                 "topic": formData.topic,
                 "comment": formData.comment,
                 "reportFile": "",
-                "instructorsId": formData.instructorsId,
+                "lecturers": formData.lecturers,
                 "reviewLecturer": formData.reviewLecturer,
-                "performStudentsId": formData.performStudentsId
+                "students": formData.students
             }), headers: {
                 "Content-Type": "application/json"
             }

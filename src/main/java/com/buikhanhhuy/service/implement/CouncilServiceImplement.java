@@ -23,4 +23,9 @@ public class CouncilServiceImplement implements CouncilService {
     public boolean addCouncil(Council council) {
         return this.councilRepository.addCouncil(council);
     }
+
+    @Override
+    public boolean deleteCouncil(int councilId) {
+        return this.councilRepository.deleteCouncil(councilId);
+    }
 }

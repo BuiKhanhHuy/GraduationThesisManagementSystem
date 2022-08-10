@@ -4,6 +4,8 @@ import com.buikhanhhuy.pojo.Thesis;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.util.Objects;
+
 public class ThesisReviewLecturerValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
@@ -14,8 +16,9 @@ public class ThesisReviewLecturerValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Thesis thesis = (Thesis) target;
 
-        if (thesis.getInstructorsId().contains(thesis.getReviewLecturer().getId())) {
-            errors.rejectValue("reviewLecturer", "thesis.add.reviewLecturer.uniqueWithInstructors", "Giảng viên phản biện phải khác giảng viên hướng dẫn");
-        }
+       if(thesis.getLecturers().contains(thesis.getReviewLecturer())){
+           errors.rejectValue("reviewLecturer",
+                   "thesis.add.reviewLecturer.uniqueWithLecturers", "Giảng viên phản biện phải khác giảng viên hướng dẫn");
+       }
     }
 }
