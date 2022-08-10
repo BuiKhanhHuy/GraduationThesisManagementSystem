@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,15 @@ public class ApiThesisController {
     @InitBinder
     public void InitBinder(WebDataBinder binder) {
         binder.setValidator(thesisValidator);
+    }
+
+    @GetMapping(path = "/thesis-options", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<Object[]>> loadThesisOptions() {
+        try {
+            return new ResponseEntity<>(this.thesisService.getThesisOptions(), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping(path = "/theses/{thesisId}", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -77,5 +87,11 @@ public class ApiThesisController {
         }
 
         return new ResponseEntity<>(errorMessages, status);
+    }
+
+    @DeleteMapping(path = "/theses/{thesisId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteThesis(@PathVariable("thesisId") int thesisId) {
+        this.thesisService.deleteThesis(thesisId);
     }
 }

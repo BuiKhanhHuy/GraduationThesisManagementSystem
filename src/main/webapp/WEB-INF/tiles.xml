@@ -4,13 +4,28 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
+    <!--    USER-->
     <definition name="baseLayout" template="/WEB-INF/decorators/user/base.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/commons/user/header.jsp"/>
         <put-attribute name="content" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/commons/user/footer.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+        </put-list-attribute>
     </definition>
     <definition name="index" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ"/>
         <put-attribute name="content" value="/WEB-INF/views/user/index.jsp"/>
     </definition>
-
+    <definition name="login" extends="baseLayout">
+        <put-attribute name="title" value="Đăng nhập"/>
+        <put-attribute name="header" value=""/>
+        <put-attribute name="content" value="/WEB-INF/views/auth/login.jsp"/>
+        <put-attribute name="footer" value=""/>
+    </definition>
+    <!--    ADMIN-->
     <definition name="adminBaseLayout" template="/WEB-INF/decorators/admin/base.jsp">
         <put-attribute name="title" value=""/>
         <put-attribute name="header" value="/WEB-INF/commons/admin/header.jsp"/>
@@ -141,6 +156,18 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         </put-list-attribute>
     </definition>
     <!--    thesis-->
+
+    <!--    council -->
+    <definition name="adminCouncilList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Hội đồng"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/council.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/admin/src/scripts/council.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    council-->
 
     <!--    role-->
     <definition name="adminRoleList" extends="adminBaseLayout">

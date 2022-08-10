@@ -58,6 +58,10 @@ public class Thesis implements Serializable {
     @Basic(optional = false)
     @Column(name = "report_file")
     private String reportFile;
+    @Basic(optional = false)
+    @Column(name = "source_code")
+    private String sourceCode;
+
     @Lob
     @Size(max = 2147483647, message = "{thesis.add.comment.sizeMessage}")
     @Column(name = "comment")
@@ -68,10 +72,7 @@ public class Thesis implements Serializable {
     private Double totalScore;
     @Column(name = "result")
     private Integer result;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "perform", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "student_id")})
-    @JsonIncludeProperties({"id"})
-    private Set<Student> students;
+
     @OneToMany(mappedBy = "thesis")
     @JsonIgnore
     private Set<Score> scores;
@@ -95,12 +96,10 @@ public class Thesis implements Serializable {
     @JoinTable(name = "guide", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "lecturer_id")})
     @JsonIncludeProperties({"id"})
     private Set<Lecturer> lecturers;
-
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "counter_argument", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "lecturer_id")})
+    @JoinTable(name = "perform", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "student_id")})
     @JsonIncludeProperties({"id"})
-    private Set<Lecturer> reviewLecturers;
-
+    private Set<Student> students;
     @Transient
     @NotEmpty(message = "{thesis.add.instructorsId.sizeMessage}")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -109,11 +108,11 @@ public class Thesis implements Serializable {
     @NotEmpty(message = "{thesis.add.performStudentsId.sizeMessage}")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Integer> performStudentsId;
-    @Transient
-    @NotNull(message = "{thesis.add.reviewLecturer.notNullMessage}")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Lecturer reviewLecturer;
 
+    @ManyToOne
+    @JoinColumn(name = "review_lecturer_id", referencedColumnName = "id")
+    @JsonIncludeProperties({"id"})
+    private Lecturer reviewLecturer;
 
     public Thesis() {
     }
@@ -193,6 +192,13 @@ public class Thesis implements Serializable {
         this.reportFile = reportFile;
     }
 
+    public String getSourceCode() {
+        return sourceCode;
+    }
+
+    public void setSourceCode(String sourceCode) {
+        this.sourceCode = sourceCode;
+    }
 
     public String getComment() {
         return comment;
@@ -217,6 +223,7 @@ public class Thesis implements Serializable {
     public void setResult(Integer result) {
         this.result = result;
     }
+
 
     public Set<Student> getStudents() {
         return students;
@@ -275,28 +282,12 @@ public class Thesis implements Serializable {
         this.lecturers = lecturers;
     }
 
-    public Set<Lecturer> getReviewLecturers() {
-        return reviewLecturers;
-    }
-
-    public void setReviewLecturers(Set<Lecturer> reviewLecturers) {
-        this.reviewLecturers = reviewLecturers;
-    }
-
     public Set<Integer> getInstructorsId() {
         return instructorsId;
     }
 
     public void setInstructorsId(Set<Integer> instructorsId) {
         this.instructorsId = instructorsId;
-    }
-
-    public Lecturer getReviewLecturer() {
-        return reviewLecturer;
-    }
-
-    public void setReviewLecturer(Lecturer reviewLecturer) {
-        this.reviewLecturer = reviewLecturer;
     }
 
     public Set<Integer> getPerformStudentsId() {
@@ -307,6 +298,13 @@ public class Thesis implements Serializable {
         this.performStudentsId = performStudentsId;
     }
 
+    public Lecturer getReviewLecturer() {
+        return reviewLecturer;
+    }
+
+    public void setReviewLecturer(Lecturer reviewLecturer) {
+        this.reviewLecturer = reviewLecturer;
+    }
 
     @Override
     public int hashCode() {

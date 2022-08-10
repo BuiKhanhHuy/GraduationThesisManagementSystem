@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,9 +32,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "council_detail")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CouncilDetail.findAll", query = "SELECT c FROM CouncilDetail c"),
-    @NamedQuery(name = "CouncilDetail.findById", query = "SELECT c FROM CouncilDetail c WHERE c.id = :id"),
-    @NamedQuery(name = "CouncilDetail.findByPosition", query = "SELECT c FROM CouncilDetail c WHERE c.position = :position")})
+        @NamedQuery(name = "CouncilDetail.findAll", query = "SELECT c FROM CouncilDetail c"),
+        @NamedQuery(name = "CouncilDetail.findById", query = "SELECT c FROM CouncilDetail c WHERE c.id = :id"),
+        @NamedQuery(name = "CouncilDetail.findByPosition", query = "SELECT c FROM CouncilDetail c WHERE c.position = :position")})
 public class CouncilDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,8 +44,9 @@ public class CouncilDetail implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @NotNull(message = "{councilDetail.add.position.notNullMessage}")
+    @NotEmpty(message = "{councilDetail.add.position.notNullMessage}")
+    @Size(max = 45, message = "{councilDetail.add.position.sizeMessage}")
     @Column(name = "position")
     private String position;
     @OneToMany(mappedBy = "councilDetail")
@@ -53,6 +55,7 @@ public class CouncilDetail implements Serializable {
     @ManyToOne(optional = false)
     private Council council;
     @JoinColumn(name = "lecturer_id", referencedColumnName = "id")
+    @NotNull(message = "{councilDetail.add.lecturer.notNullMessage}")
     @ManyToOne(optional = false)
     private Lecturer lecturer;
 
@@ -133,5 +136,5 @@ public class CouncilDetail implements Serializable {
     public String toString() {
         return "com.buikhanhhuy.pojo.CouncilDetail[ id=" + id + " ]";
     }
-    
+
 }

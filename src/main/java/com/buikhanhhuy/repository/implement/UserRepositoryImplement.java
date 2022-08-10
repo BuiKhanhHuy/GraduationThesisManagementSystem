@@ -104,4 +104,16 @@ public class UserRepositoryImplement implements UserRepository {
         }
         return false;
     }
+
+    @Override
+    public User getUserByUserName(String username) {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root);
+        query.where(builder.equal(root.get("username").as(String.class), username.trim()));
+
+        return session.createQuery(query).getSingleResult();
+    }
 }

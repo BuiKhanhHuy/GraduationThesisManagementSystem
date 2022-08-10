@@ -9,6 +9,6 @@ import java.util.Set;
 public interface UserRepository {
     public List<Object[]> getUsers(Map<String, String> params);
     public Set<Integer> getUsers(Map<String, String> params, List<Integer> usersId);
-
     public boolean addUser(User user);
+    public User getUserByUserName(String username);
 }

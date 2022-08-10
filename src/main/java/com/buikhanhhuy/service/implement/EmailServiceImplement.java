@@ -2,7 +2,6 @@ package com.buikhanhhuy.service.implement;
 
 import com.buikhanhhuy.constants.SystemConstant;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -32,7 +31,7 @@ public class EmailServiceImplement implements EmailService {
     private Environment environment;
 
     @Override
-    public void sendMail(String subject, String[] to, Map<String, String> model, int type) {
+    public void sendMail(String subject, String[] to, Map<String, Object> model, int type) {
         MimeMessagePreparator preparator = getMessagePreparator(subject, to, model, type);
 
         try {
@@ -43,7 +42,7 @@ public class EmailServiceImplement implements EmailService {
         }
     }
 
-    private MimeMessagePreparator getMessagePreparator(String subject, String[] to, Map<String, String> model, int type) {
+    private MimeMessagePreparator getMessagePreparator(String subject, String[] to, Map<String, Object> model, int type) {
 
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
 
@@ -70,7 +69,7 @@ public class EmailServiceImplement implements EmailService {
         return preparator;
     }
 
-    public String geFreeMarkerTemplateContent(Map<String, String> model, int type) {
+    public String geFreeMarkerTemplateContent(Map<String, Object> model, int type) {
         StringBuffer content = new StringBuffer();
         try {
             switch (type) {

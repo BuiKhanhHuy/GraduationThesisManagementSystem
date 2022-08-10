@@ -4,15 +4,16 @@ import com.buikhanhhuy.pojo.CouncilDetail;
 import com.buikhanhhuy.pojo.SchoolYear;
 import com.buikhanhhuy.pojo.Thesis;
 import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-08T02:24:59")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-10T16:04:12")
 @StaticMetamodel(Council.class)
 public class Council_ { 
 
-    public static volatile SetAttribute<Council, CouncilDetail> councilDetails;
+    public static volatile ListAttribute<Council, CouncilDetail> councilDetails;
     public static volatile SingularAttribute<Council, String> name;
     public static volatile SingularAttribute<Council, String> description;
     public static volatile SingularAttribute<Council, SchoolYear> schoolYear;

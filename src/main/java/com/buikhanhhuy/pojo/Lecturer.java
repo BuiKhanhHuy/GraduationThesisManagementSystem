@@ -84,7 +84,7 @@ public class Lecturer implements Serializable {
     @Size(max = 255, message = "{lecturer.add.address.sizeMessage}")
     @Column(name = "address")
     private String address;
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "reviewLecturers")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reviewLecturer")
     @JsonIgnore
     private Set<Thesis> reviewTheses;
     @JoinColumn(name = "department_id", referencedColumnName = "id")
@@ -189,14 +189,6 @@ public class Lecturer implements Serializable {
         this.address = address;
     }
 
-    public Set<Thesis> getReviewTheses() {
-        return reviewTheses;
-    }
-
-    public void setReviewTheses(Set<Thesis> reviewTheses) {
-        this.reviewTheses = reviewTheses;
-    }
-
     public Department getDepartment() {
         return department;
     }
@@ -236,6 +228,14 @@ public class Lecturer implements Serializable {
 
     public void setTheses(Set<Thesis> theses) {
         this.theses = theses;
+    }
+
+    public Set<Thesis> getReviewTheses() {
+        return reviewTheses;
+    }
+
+    public void setReviewTheses(Set<Thesis> reviewTheses) {
+        this.reviewTheses = reviewTheses;
     }
 
     @Override

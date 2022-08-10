@@ -11,4 +11,10 @@ public class SystemConstant {
     // mail
     public static final int REVIEW_LECTURER_EMAIL_TEMPLATE = 1;
     public static final int THESIS_RESULT_EMAIL_TEMPLATE = 2;
+
+    // role name
+    public static final String ROLE_ADMIN = "ADMIN";
+    public static final String ROLE_MINISTRY = "MINISTRY";
+    public static final String ROLE_LECTURER = "LECTURER";
+    public static final String ROLE_STUDENT = "STUDENT";
 }

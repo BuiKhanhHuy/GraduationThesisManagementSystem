@@ -1,15 +1,21 @@
 package com.buikhanhhuy.service.implement;
 
+import com.buikhanhhuy.pojo.User;
 import com.buikhanhhuy.repository.UserRepository;
 import com.buikhanhhuy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@Service
+@Service("userDetailsService")
 public class UserServiceImplement implements UserService {
     @Autowired
     private UserRepository userRepository;
@@ -22,5 +28,25 @@ public class UserServiceImplement implements UserService {
     @Override
     public Set<Integer> getUsers(Map<String, String> params, List<Integer> usersId) {
         return this.userRepository.getUsers(params, usersId);
+    }
+
+    @Override
+    public User getUserByUserName(String username) {
+        return this.userRepository.getUserByUserName(username);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = this.userRepository.getUserByUserName(username);
+
+        if(user == null){
+            throw  new UsernameNotFoundException("Username does not exist!!!");
+        }
+
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().getRoleName()));
+
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+                user.getPassword(), authorities);
     }
 }

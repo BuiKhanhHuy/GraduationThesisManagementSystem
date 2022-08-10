@@ -58,6 +58,9 @@ const showEditThesisModal = (endpoint, thesisId) => {
         if (data.schoolYear !== null) {
             form["schoolYear"].value = data.schoolYear.id
         }
+        if (data.reviewLecturer !== null) {
+            form["reviewLecturer"].value = data.reviewLecturer.id
+        }
         $("#comment").data('wysihtml5').editor.setValue(data.comment);
 
         let elementPerformStudents = document.getElementById("performStudentsId")
@@ -189,21 +192,21 @@ const saveChange = (endpoint, thesisId = null) => {
     }
 }
 
-// const deleteManageItem = (endpoint) => {
-//     // DELETE
-//     confirmAlert("Bạn có chắc không?", "Bạn sẽ không thể khôi phục điều này!", "Có, xóa nó", "Không, hủy bỏ", () => {
-//         fetch(endpoint, {
-//             method: "DELETE", headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         }).then(function (res) {
-//             if (res.status === 204) successfulAlert("Xóa quản trị viên thành công", "Ok", () => location.reload());
-//         }).catch(err => {
-//             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình xóa dữ liệu!", "Ok")
-//         })
-//     })
-// }
-//
+const deleteThesisItem = (endpoint) => {
+    // DELETE
+    confirmAlert("Bạn có chắc không?", "Bạn sẽ không thể khôi phục điều này!", "Có, xóa nó", "Không, hủy bỏ", () => {
+        fetch(endpoint, {
+            method: "DELETE", headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function (res) {
+            if (res.status === 204) successfulAlert("Xóa khóa luận thành công", "Ok", () => location.reload());
+        }).catch(err => {
+            errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình xóa dữ liệu!", "Ok")
+        })
+    })
+}
+
 // event before hidden modal
 $('#modal-add-edit-thesis').on('hidden.bs.modal', function (e) {
     // delete all select in multiselect

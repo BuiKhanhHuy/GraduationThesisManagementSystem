@@ -55,7 +55,7 @@ public class EmailConfig {
     public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration()
     {
         FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
-        bean.setDefaultEncoding("UTF-8");
+        bean.setDefaultEncoding("utf-8");
         bean.setTemplateLoaderPaths("classpath:/mailtemplate/");
         return bean;
     }

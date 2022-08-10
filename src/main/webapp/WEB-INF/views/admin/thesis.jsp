@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<c:url var="filterThesis" value=""/>
 <c:url var="home" value="/admin/"/>
 
 <div class="page-header">
@@ -21,8 +22,62 @@
     </div>
 </div>
 
+
 <!-- table start -->
 <div class="pd-20 card-box mb-30">
+    <form id="form-filter" action="${filterManage}">
+        <input name="page" id="page" hidden/>
+        <div class="row justify-content-end mt-2">
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Mã khóa luận, chủ đề..."
+                           name="kw"
+                           aria-label="Search">
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <div class="form-group">
+                    <select class="custom-select2 form-control" name="schoolYearId" id="schoolYearId"
+                            style="width: 100%">
+                        <option value="${""}">Tất cả niên khóa</option>
+                        <c:forEach var="schoolYearOption" items="${schoolYearOptions}">
+                            <option value="${schoolYearOption[0]}">${schoolYearOption[1]}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <div class="form-group">
+                    <select class="custom-select2 form-control" name="departmentId" id="departmentId"
+                            style="width: 100%">
+                        <option value="${""}">Tất cả khoa</option>
+                        <c:forEach var="departmentOption" items="${departmentOptions}">
+                            <option value="${departmentOption[0]}">${departmentOption[1]}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <div class="form-group">
+                    <select class="custom-select2 form-control" name="result" id="result"
+                            style="width: 100%">
+                        <option value="">Tất cả kết quả</option>
+                        <option value="1">Chưa có kết quả</option>
+                        <option value="2">Chưa đạt</option>
+                        <option value="3">Đạt</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <div>
+                    <button class="btn-warning btn form-control" type="submit">
+                        <i class=" fa fa-search" aria-hidden="true"></i> Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <hr style="height:5px;" class="text-black-50">
     <div class="clearfix mb-20">
         <div class="pull-left">
             <h4 class="text-blue h4">Danh sách khóa luận</h4>
@@ -34,129 +89,124 @@
             </button>
         </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th scope="col" class="text-center">Mã khóa luận</th>
-                <th scope="col" class="text-center">Chủ đề</th>
-                <th scope="col" class="text-center">Khoa</th>
-                <th scope="col" class="text-center">Niên khóa</th>
-                <th scope="col" class="text-center">Ngày bắt đầu</th>
-                <th scope="col" class="text-center">Ngày kết thúc</th>
-                <th scope="col">Trạng thái tập tin</th>
-                <th scope="col">Tổng điểm</th>
-                <th scope="col" class="text-center">Kết quả</th>
-                <th scope="col" class="text-center">Hành động</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:if test="${theses.size() != 0}">
-                <c:forEach var="thesis" items="${theses}">
-                    <tr>
-                        <td class="text-center">
-                                ${thesis.code}
-                        </td>
-                        <td>
-                            <c:if test="${thesis.topic != null}">
-                                ${thesis.topic.name}
-                            </c:if>
-                            <c:if test="${thesis.topic == null}">
-                                <span class="text-black-50 text-center">Chưa cập nhật</span>
-                            </c:if>
-                        </td>
-                        <td>
-                            <c:if test="${thesis.department != null}">
-                                ${thesis.department.name}
-                            </c:if>
-                            <c:if test="${thesis.department == null}">
-                                <span class="text-black-50 text-center">Chưa cập nhật</span>
-                            </c:if>
-                        </td>
-                        <td>
-                            <c:if test="${thesis.schoolYear != null}">
-                                ${thesis.schoolYear.name}
-                            </c:if>
-                            <c:if test="${thesis.schoolYear == null}">
-                                <span class="text-black-50 text-center">Chưa cập nhật</span>
-                            </c:if>
-                        </td>
-                        <td>
-                            <fmt:formatDate type="date" value="${thesis.startDate}"/>
-                        </td>
-                        <td>
-                            <fmt:formatDate type="date" value="${thesis.complateDate}"/>
-                        </td>
-                        <td>
-                            <c:if test="${thesis.reportFile == null || thesis.reportFile.isEmpty()}">
-                                <span class="text-danger font-weight-bold">Chưa nộp</span>
-                            </c:if>
-                            <c:if test="${thesis.reportFile != null && !thesis.reportFile.isEmpty()}">
-                                <span class="text-success font-weight-bold">Đã nộp</span>
-                            </c:if>
-                        </td>
-                        <td>
-                                ${thesis.totalScore}
-                        </td>
-                        <td class="text-center">
-                            <c:if test="${thesis.result == 1}">
-                                <span class="text-warning font-weight-bold">Chưa có kết quả</span>
-                            </c:if>
-                            <c:if test="${thesis.result == 2}">
-                                <span class="text-danger font-weight-bold">Chưa đạt</span>
-                            </c:if>
-                            <c:if test="${thesis.result == 3}">
-                                <span class="text-success font-weight-bold">Đạt</span>
-                            </c:if>
-                        </td>
-                        <td class="text-center">
-                            <div class="btn-list">
-                                <button type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
-                                        data-placement="bottom" title="Xem chi tiết">
-                                    <i class="icon-copy dw dw-eye"></i>
-                                </button>
-                                <button onclick="showEditThesisModal('<c:url
-                                        value="/admin/api/theses/${thesis.id}"/>', ${thesis.id})"
-                                        type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                                        data-placement="bottom" title="Cập nhật">
-                                    <i class="icon-copy dw dw-edit1"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
-                                        data-placement="bottom" title="Xóa">
-                                    <i class="icon-copy dw dw-delete-3"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </c:if>
-            <c:if test="${theses.size() == 0}">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col" class="text-center">Mã khóa luận</th>
+            <th scope="col" class="text-center">Chủ đề</th>
+            <th scope="col" class="text-center">Khoa</th>
+            <th scope="col" class="text-center">Niên khóa</th>
+            <th scope="col" class="text-center">Ngày bắt đầu</th>
+            <th scope="col" class="text-center">Ngày kết thúc</th>
+            <th scope="col">Trạng thái tập tin</th>
+            <th scope="col">Tổng điểm</th>
+            <th scope="col" class="text-center">Kết quả</th>
+            <th scope="col" class="text-center">Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:if test="${theses.size() != 0}">
+            <c:forEach var="thesis" items="${theses}">
                 <tr>
-                    <td colspan="11" class="text-black-50 text-center">
-                        <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png" alt="empty"/>
-                        <p class="text-center">Danh sách khóa luận trống</p>
+                    <td class="text-center">
+                            ${thesis.code}
+                    </td>
+                    <td>
+                        <c:if test="${thesis.topic != null}">
+                            ${thesis.topic.name}
+                        </c:if>
+                        <c:if test="${thesis.topic == null}">
+                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${thesis.department != null}">
+                            ${thesis.department.name}
+                        </c:if>
+                        <c:if test="${thesis.department == null}">
+                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${thesis.schoolYear != null}">
+                            ${thesis.schoolYear.name}
+                        </c:if>
+                        <c:if test="${thesis.schoolYear == null}">
+                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                        </c:if>
+                    </td>
+                    <td>
+                        <fmt:formatDate type="date" value="${thesis.startDate}"/>
+                    </td>
+                    <td>
+                        <fmt:formatDate type="date" value="${thesis.complateDate}"/>
+                    </td>
+                    <td>
+                        <c:if test="${thesis.reportFile == null || thesis.reportFile.isEmpty()}">
+                            <span class="text-danger font-weight-bold">Chưa nộp</span>
+                        </c:if>
+                        <c:if test="${thesis.reportFile != null && !thesis.reportFile.isEmpty()}">
+                            <span class="text-success font-weight-bold">Đã nộp</span>
+                        </c:if>
+                    </td>
+                    <td>
+                            ${thesis.totalScore}
+                    </td>
+                    <td class="text-center">
+                        <c:if test="${thesis.result == 1}">
+                            <span class="text-warning font-weight-bold">Chưa có kết quả</span>
+                        </c:if>
+                        <c:if test="${thesis.result == 2}">
+                            <span class="text-danger font-weight-bold">Chưa đạt</span>
+                        </c:if>
+                        <c:if test="${thesis.result == 3}">
+                            <span class="text-success font-weight-bold">Đạt</span>
+                        </c:if>
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-list">
+                            <button type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
+                                    data-placement="bottom" title="Xem chi tiết">
+                                <i class="icon-copy dw dw-eye"></i>
+                            </button>
+                            <button onclick="showEditThesisModal('<c:url
+                                    value="/admin/api/theses/${thesis.id}"/>', ${thesis.id})"
+                                    type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
+                                    data-placement="bottom" title="Cập nhật">
+                                <i class="icon-copy dw dw-edit1"></i>
+                            </button>
+                            <button onclick="deleteThesisItem('<c:url
+                                    value="/admin/api/theses/${thesis.id}"/>')"
+                                    type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
+                                    data-placement="bottom" title="Xóa">
+                                <i class="icon-copy dw dw-delete-3"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
-            </c:if>
-            </tbody>
-        </table>
-    </div>
-    <div class="blog-pagination pagination-sm mt-5 mb-2">
+            </c:forEach>
+        </c:if>
+        <c:if test="${theses.size() == 0}">
+            <tr>
+                <td colspan="11" class="text-black-50 text-center">
+                    <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png" alt="empty"/>
+                    <p class="text-center">Danh sách khóa luận trống</p>
+                </td>
+            </tr>
+        </c:if>
+        </tbody>
+    </table>
+    <div class="blog-pagination pagination-md mt-5 mb-2">
         <div class="btn-toolbar justify-content-center">
             <div class="btn-group">
-                <a href="#" class="btn btn-outline-primary prev"><i class="fa fa-angle-double-left"></i></a>
-                <a href="#" class="btn btn-outline-primary">1</a>
-                <a href="#" class="btn btn-outline-primary">2</a>
-                <span class="btn btn-primary current">3</span>
-                <a href="#" class="btn btn-outline-primary">4</a>
-                <a href="#" class="btn btn-outline-primary">5</a>
-                <a href="#" class="btn btn-outline-primary next"><i class="fa fa-angle-double-right"></i></a>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination" id="pagination"></ul>
+                </nav>
             </div>
         </div>
     </div>
 </div>
 <!-- table End -->
-
 
 <!-- ADD and EDIT modal -->
 <div class="modal fade bs-example-modal-lg " id="modal-add-edit-thesis" tabindex="-1" role="dialog"
@@ -282,23 +332,24 @@
 </div>
 <!-- ADD and EDIT modal -->
 
-<%--<script>--%>
-<%--    let currentPage = ${page};--%>
-<%--    let totalPage = ${totalPage};--%>
-<%--    let pageSize = ${pageSize};--%>
+<script>
+    let currentPage = ${page};
+    let totalPage = ${totalPage};
+    let pageSize = ${pageSize};
 
-<%--    $('#pagination').twbsPagination({--%>
-<%--        totalPages: Math.ceil(totalPage / pageSize),--%>
-<%--        visiblePages: 8,--%>
-<%--        first: '',--%>
-<%--        last: '',--%>
-<%--        prev: '&laquo;',--%>
-<%--        next: '&raquo;',--%>
-<%--        startPage: currentPage,--%>
-<%--        onPageClick: function (event, page) {--%>
-<%--            if (currentPage != page) {--%>
-<%--                $("#page").val(page)--%>
-<%--                $("#form-filter").submit();--%>
-<%--            }--%>
-<%--        }--%>
-<%--    });--%>
+    $('#pagination').twbsPagination({
+        totalPages: Math.ceil(totalPage / pageSize),
+        visiblePages: 8,
+        first: '',
+        last: '',
+        prev: '&laquo;',
+        next: '&raquo;',
+        startPage: currentPage,
+        onPageClick: function (event, page) {
+            if (currentPage != page) {
+                $("#page").val(page)
+                $("#form-filter").submit();
+            }
+        }
+    });
+</script>

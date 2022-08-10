@@ -36,6 +36,7 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/admin/**").addResourceLocations("/resources/admin/");
         registry.addResourceHandler("/user/**").addResourceLocations("/resources/user/");
+        registry.addResourceHandler("/common/**").addResourceLocations("/resources/common/");
     }
 
     @Override
@@ -60,6 +61,7 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
         registry.addFormatter(new PositionFormatter());
         registry.addFormatter(new RoleFormatter());
         registry.addFormatter(new LecturerFormatter());
+        registry.addFormatter(new ThesisFormatter());
     }
 
 

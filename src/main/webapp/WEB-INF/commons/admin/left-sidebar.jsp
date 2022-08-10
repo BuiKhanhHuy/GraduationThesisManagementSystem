@@ -1,5 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:url var="adminIndex" value="/admin/"/>
 <c:url var="deparment" value="/admin/departments/"/>
@@ -14,6 +14,7 @@
 <c:url var="scoreComponent" value="/admin/score-components/"/>
 <c:url var="scoreColumn" value="/admin/score-columns/"/>
 <c:url var="thesis" value="/admin/theses/"/>
+<c:url var="council" value="/admin/councils/"/>
 
 <c:url var="role" value="/admin/roles/"/>
 
@@ -22,14 +23,15 @@
 <c:url var="notification" value="/admin/notifications/"/>
 <c:url var="chat" value="/admin/chats/"/>
 
-<c:url var="logout" value="/logout/"/>
+<c:url var="logout" value="/logout"/>
 
 <div class="left-side-bar">
     <div class="brand-logo">
-        <a href="index.html">
-            <img src="https://res.cloudinary.com/dtnpj540t/image/upload/v1658598874/asqtbyhdunc0eawri28d.png" alt="" width="70" class="dark-logo">
-            <img src="https://res.cloudinary.com/dtnpj540t/image/upload/v1658598874/u1yilp4dhzrcfps6m0en.png" alt="" width="70" class="light-logo">
-            <span style="margin-left: 10px;">HCMCOU</span>
+        <a href="index.html" style="padding:0px;">
+            <img src="<c:url value="/common/images/logo/logo-text-blue.png"/>"
+                 alt="" class="dark-logo" style="max-width: 275px;">
+            <img src="<c:url value="/common/images/logo/logo-text-white.png"/>"
+                 alt="" class="light-logo" style="max-width: 275px;">
         </a>
         <div class="dropdown-divider my-0 border-1 border-dark"></div>
         <div class="close-sidebar" data-toggle="left-sidebar-close">
@@ -79,7 +81,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="calendar.html" class="dropdown-toggle no-arrow">
+                    <a href="${council}" class="dropdown-toggle no-arrow">
                         <span class="micon fa fa-users"></span><span class="mtext">Hội đồng</span>
                     </a>
                 </li>
