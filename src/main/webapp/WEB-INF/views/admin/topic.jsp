@@ -136,12 +136,12 @@
 
 <!-- ADD and EDIT modal -->
 <div class="modal fade bs-example-modal-lg " id="modal-add-edit-topic" tabindex="-1" role="dialog"
-     aria-labelledby="myModalAddAndEditTopic" aria-hidden="true">
+     aria-labelledby="myModalAddAndEditTopic" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalAddAndEditTopic"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close close-custom" data-dismiss="modal" aria-hidden="true">×</button>
 
             </div>
 
@@ -173,7 +173,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">Thoát</button>
                 <button type="button" class="btn btn-success" id="btn-submit-form">
                     <i class="micon fa fa-save"> </i> Lưu dữ liệu
                 </button>

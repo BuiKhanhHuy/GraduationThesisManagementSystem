@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -15,17 +14,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author bkhuy
  */
 @Entity
 @Table(name = "council")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Council.findAll", query = "SELECT c FROM Council c"),
-    @NamedQuery(name = "Council.findById", query = "SELECT c FROM Council c WHERE c.id = :id"),
-    @NamedQuery(name = "Council.findByName", query = "SELECT c FROM Council c WHERE c.name = :name"),
-    @NamedQuery(name = "Council.findByDescription", query = "SELECT c FROM Council c WHERE c.description = :description")})
+@NamedQueries({@NamedQuery(name = "Council.findAll", query = "SELECT c FROM Council c"), @NamedQuery(name = "Council.findById", query = "SELECT c FROM Council c WHERE c.id = :id"), @NamedQuery(name = "Council.findByName", query = "SELECT c FROM Council c WHERE c.name = :name"), @NamedQuery(name = "Council.findByDescription", query = "SELECT c FROM Council c WHERE c.description = :description")})
 public class Council implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,6 +37,9 @@ public class Council implements Serializable {
     @Size(max = 255, message = "{council.add.description.sizeMessage}")
     @Column(name = "description")
     private String description;
+
+    @Column(name = "is_block")
+    private Boolean block;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "council")
     @NotEmpty(message = "{council.add.councilDetails.notNullMessage}")
     @JsonIncludeProperties({"position", "lecturer", "council"})
@@ -53,10 +50,15 @@ public class Council implements Serializable {
     @ManyToOne
     @JsonIncludeProperties({"id", "name"})
     private SchoolYear schoolYear;
-    @OneToMany(mappedBy = "council")
+    @OneToMany(mappedBy = "council", fetch = FetchType.EAGER)
     @NotEmpty(message = "{council.add.theses.notNullMessage}")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<Thesis> theses;
+    @JsonIncludeProperties({"id", "code", "topic"})
+    private List<Thesis> theses;
+
+
+    {
+        this.block = true;
+    }
 
     public Council() {
     }
@@ -94,6 +96,14 @@ public class Council implements Serializable {
         this.description = description;
     }
 
+    public Boolean getBlock() {
+        return block;
+    }
+
+    public void setBlock(Boolean block) {
+        this.block = block;
+    }
+
     @XmlTransient
     public List<CouncilDetail> getCouncilDetails() {
         return councilDetails;
@@ -111,11 +121,11 @@ public class Council implements Serializable {
         this.schoolYear = schoolYearId;
     }
 
-    public Set<Thesis> getTheses() {
+    public List<Thesis> getTheses() {
         return theses;
     }
 
-    public void setTheses(Set<Thesis> theses) {
+    public void setTheses(List<Thesis> theses) {
         this.theses = theses;
     }
 
@@ -143,5 +153,5 @@ public class Council implements Serializable {
     public String toString() {
         return "com.buikhanhhuy.pojo.Council[ id=" + id + " ]";
     }
-    
+
 }

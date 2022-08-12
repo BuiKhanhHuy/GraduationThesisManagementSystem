@@ -111,6 +111,7 @@ const saveChange = (endpoint, thesisId = null) => {
     $('input').next('span').remove();
     $('select + span').next('span').remove()
 
+    onSaveDataLoading();
     if (thesisId === null) {
         // ADD
         fetch(endpoint, {
@@ -150,7 +151,7 @@ const saveChange = (endpoint, thesisId = null) => {
         }).catch(err => {
             console.error(err)
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình thêm dữ liệu!", "Ok")
-        })
+        }).finally(offSaveDataLoading)
     } else {
         console.log(formData)
         // UPDATE
@@ -189,7 +190,7 @@ const saveChange = (endpoint, thesisId = null) => {
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
-        })
+        }).finally(offSaveDataLoading)
     }
 }
 

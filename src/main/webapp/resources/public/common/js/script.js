@@ -1,3 +1,13 @@
+// overlay loading
+const showLoading = () => {
+    $.showLoading({name: 'circle-turn',allowHide: false});
+}
+
+const hideLoading = () => {
+    $.hideLoading({name: 'circle-turn',allowHide: false});
+}
+
+// sweet alert 2
 const successfulAlert = (title, confirmButtonText, callback) => {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -41,4 +51,7 @@ const confirmAlert = (title, text, confirmButtonText, cancelButtonText, callback
             callback();
     })
 }
+
+
+
 

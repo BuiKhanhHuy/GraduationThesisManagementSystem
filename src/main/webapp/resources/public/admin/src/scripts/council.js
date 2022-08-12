@@ -1,6 +1,7 @@
 var memberArray = [0]
 var lecturersHtml = ''
 var isLoadDataOptions = true;
+var council;
 
 const loadDataOptions = (callback) => {
     if (isLoadDataOptions) {
@@ -61,10 +62,19 @@ const memberItem = (i) => {
 
 const loadMemberForm = (memberArray) => {
     let memberAreaElement = document.getElementById("member-area");
+    let actionHtml = `<tr>
+                        <td colspan="3">
+                            <div class="add-more-task" id="add-more-task">
+                                <a href="javascript:;" onclick="addMemberItem()"><i
+                                        class="ion-plus-circled"></i>
+                                    Thêm thành viên</a>
+                            </div>
+                        </td>
+                    </tr>`
     let memberHtml = ''
     memberArray.forEach(value => memberHtml += memberItem(value))
 
-    memberAreaElement.innerHTML = memberHtml + memberAreaElement.innerHTML;
+    memberAreaElement.innerHTML = memberHtml + actionHtml;
 }
 
 // load member form
@@ -91,11 +101,13 @@ const removeMemberItem = (i) => {
 }
 
 
-const showAddCouncilModal = (endpoint) => {
+const showAddCouncilModal = (appContext) => {
+    let endPoint = `${appContext}admin/api/councils`
+
     loadDataOptions(() => {
         document.getElementById("myModalAddAndEditCouncil").innerText = "Thành lập hội đồng"
         $('#modal-add-edit-council').modal()
-        document.getElementById("btn-submit-form").onclick = () => saveChange(endpoint)
+        document.getElementById("btn-submit-form").onclick = () => saveChange(endPoint)
     })
 }
 //
@@ -116,32 +128,53 @@ const showAddCouncilModal = (endpoint) => {
 //
 //     })
 // }
-//
-// const showViewMajorModal = (endpoint) => {
-//     loadMajorById(endpoint, (data) => {
-//
-//         for (let d in data) {
-//             if (d === "department") {
-//                 data[d] === null ? document.getElementById(`data-department-name`).innerText = 'Chưa cập nhật' : document.getElementById(`data-department-name`).innerText = data[d].name
-//             } else {
-//                 data[d].toString() === "" ? document.getElementById(`data-${d}`).innerText = 'Chưa cập nhật' : document.getElementById(`data-${d}`).innerText = data[d]
-//             }
-//         }
-//         $('#modal-view-major').modal()
-//     })
-// }
-//
-// const loadMajorById = (endpoint, callback) => {
-//     fetch(endpoint, {
-//         method: 'GET', headers: {
-//             "Content-Type": "application/json"
-//         }
-//     }).then(res => res.json()).then(data => {
-//         callback(data);
-//     }).catch(err => {
-//         errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình tải dữ liệu!", "Ok")
-//     })
-// }
+
+const showViewCouncilModal = (appContext, councilId) => {
+    loadCouncilById(appContext, councilId, (council, councilsDetail) => {
+        let innerHtmlTheses = ''
+        let innerHtmlLecturers = ''
+
+        council.theses.map(thesis => innerHtmlTheses += `<tr>
+                                    <td>${thesis.code}</td>
+                                    <td>${thesis.topic !== null ? thesis.topic.name : 'Chưa cập nhật'}</td>
+                                </tr>`)
+
+        councilsDetail.map(councilDetail => innerHtmlLecturers += `<tr>
+                                    <td>${councilDetail.position}</td>
+                                    <td>${councilDetail.lecturer !== null ? councilDetail.lecturer.fullName : 'Chưa cập nhật'}</td>
+                                </tr>`)
+        document.getElementById("data-name").innerText = council.name
+        document.getElementById("data-description").innerText = council.description
+        council.schoolYear === null ? document.getElementById(`data-schoolYear`).innerText = 'Chưa cập nhật' : document.getElementById(`data-schoolYear`).innerText = council.schoolYear.name
+        council.block === true ? document.getElementById("data-block").innerHTML = ` <div class="text-warning">
+                                <i class="icon-copy fa fa-unlock" aria-hidden="true"></i> Đang khóa
+                             </div>` : document.getElementById("data-block").innerHTML = ` <div class="text-success">
+                                <i class="icon-copy fa fa-unlock" aria-hidden="true"></i> Đang mở
+                             </div>`
+        document.getElementById("data-theses").innerHTML = innerHtmlTheses;
+        document.getElementById("data-lecturers").innerHTML = innerHtmlLecturers;
+
+        $('#modal-view-council').modal()
+    })
+}
+
+const loadCouncilById = (appContext, councilId, callback) => {
+    let councilEndPoint = `${appContext}admin/api/councils/${councilId}`
+
+    fetch(councilEndPoint, {
+        method: 'GET', headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(res => res.json()).then(data => {
+        council = data;
+
+        return fetch(`${appContext}admin/api/councilsDetail/?councilId=${data.id}`)
+    }).then(res => res.json()).then(data => {
+        callback(council, data)
+    }).catch(err => {
+        errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình tải dữ liệu!", "Ok")
+    })
+}
 
 const saveChange = (endpoint, councilId = null) => {
     $('input').next('span').remove();
@@ -181,15 +214,14 @@ const saveChange = (endpoint, councilId = null) => {
                 if (data["otherErrors"] !== undefined) {
                     errorAlert("Đã có lỗi khác rồi", data["errorTotalWeight"], "Ok")
                 } else {
-                    console.log(data)
                     $.each(data, function (key, value) {
                         if (key === "name" || key === "description" || key === "schoolYear") {
                             document.getElementsByName(`${key}`)[0].insertAdjacentHTML('afterend', '<span class="text-danger font-weight-normal">' + value + '</span>');
                         } else if (key === "theses") {
                             $('select[name=' + key + '] + span').after('<span class="text-danger">' + value + '</span>');
-                        } else if(key === "councilDetails"){
+                        } else if (key === "councilDetails") {
                             document.getElementById(`${key}`).innerText = value
-                        }else {
+                        } else {
                             $('input[name=' + `position-${memberArray[parseInt(key.match(/\d/g).join(""))]}` + ']').after('<span class="text-danger font-weight-normal">' + value + '</span>');
                         }
                     });
@@ -221,7 +253,8 @@ const saveChange = (endpoint, councilId = null) => {
     }
 }
 
-const deleteCouncilItem = (endpoint) => {
+const deleteCouncilItem = (appContext, councilId) => {
+    let endpoint = `${appContext}admin/api/councils/${councilId}`
     // DELETE
     confirmAlert("Bạn có chắc không?", "Bạn sẽ không thể khôi phục điều này!", "Có, xóa nó", "Không, hủy bỏ", () => {
         const response = fetch(endpoint, {

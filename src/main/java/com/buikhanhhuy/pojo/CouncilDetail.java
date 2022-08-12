@@ -4,6 +4,9 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -50,13 +53,16 @@ public class CouncilDetail implements Serializable {
     @Column(name = "position")
     private String position;
     @OneToMany(mappedBy = "councilDetail")
+    @JsonIgnore
     private Set<Score> scores;
     @JoinColumn(name = "council_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIncludeProperties({"id", "name"})
     private Council council;
     @JoinColumn(name = "lecturer_id", referencedColumnName = "id")
     @NotNull(message = "{councilDetail.add.lecturer.notNullMessage}")
     @ManyToOne(optional = false)
+    @JsonIncludeProperties({"id", "fullName"})
     private Lecturer lecturer;
 
     public CouncilDetail() {

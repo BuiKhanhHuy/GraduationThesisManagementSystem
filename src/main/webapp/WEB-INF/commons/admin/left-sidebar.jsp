@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:url var="adminIndex" value="/admin/"/>
 <c:url var="deparment" value="/admin/departments/"/>
@@ -15,6 +16,7 @@
 <c:url var="scoreColumn" value="/admin/score-columns/"/>
 <c:url var="thesis" value="/admin/theses/"/>
 <c:url var="council" value="/admin/councils/"/>
+<c:url var="councilDetail" value="/admin/councils-detail"/>
 
 <c:url var="role" value="/admin/roles/"/>
 
@@ -27,10 +29,10 @@
 
 <div class="left-side-bar">
     <div class="brand-logo">
-        <a href="index.html" style="padding:0px;">
-            <img src="<c:url value="/common/images/logo/logo-text-blue.png"/>"
+        <a href="${adminIndex}" style="padding:0px;">
+            <img src="<c:url value="/public/common/images/logo/logo-text-blue.png"/>"
                  alt="" class="dark-logo" style="max-width: 275px;">
-            <img src="<c:url value="/common/images/logo/logo-text-white.png"/>"
+            <img src="<c:url value="/public/common/images/logo/logo-text-white.png"/>"
                  alt="" class="light-logo" style="max-width: 275px;">
         </a>
         <div class="dropdown-divider my-0 border-1 border-dark"></div>
@@ -47,77 +49,88 @@
                         <span class="micon fa fa-dashboard"></span><span class="mtext">Bảng điều khiển</span>
                     </a>
                 </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon fa fa-sitemap"></span><span class="mtext">Quản lý đào tạo</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="${deparment}">Khoa</a></li>
-                        <li><a href="${major}">Ngành</a></li>
-                        <li><a href="${schoolYear}">Niên khóa</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon fa fa-user-o"></span><span class="mtext">Quản lý giảng viên</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="${position}">Chức vụ</a></li>
-                        <li><a href="${lecturer}">Giảng viên</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="${student}" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-user"></span><span class="mtext">Sinh viên</span>
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon fa fa-file-word-o"></span><span class="mtext">Quản lý khóa luận</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="${topic}">Đề tài</a></li>
-                        <li><a href="${thesis}">Khóa luận</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="${council}" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-users"></span><span class="mtext">Hội đồng</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="${evaluationMethod}" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-edit"></span><span class="mtext">Phương pháp đánh giá</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="${notification}" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-bell-o"></span><span class="mtext">Quản lý thông báo</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="${news}" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-newspaper-o"></span><span class="mtext">Quản lý bảng tin</span>
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon fa fa-pie-chart"></span><span class="mtext">Thống kê</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="highchart.html">Thống kê điểm khóa luận</a></li>
-                        <li><a href="knob-chart.html">Thống kê tần suất khóa luận</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon fa fa-gears"></span><span class="mtext">Quản lý hệ thống</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="${role}">Quyền</a></li>
-                        <li><a href="${manage}">Quản trị viên</a></li>
-                    </ul>
-                </li>
+                <sec:authorize access="hasAnyAuthority('LECTURER')">
+                    <li>
+                        <a href="${councilDetail}" class="dropdown-toggle no-arrow">
+                            <span class="micon fa fa-users"></span><span class="mtext">Hội đồng</span>
+                        </a>
+                    </li>
+                </sec:authorize>
+                <sec:authorize access="hasAnyAuthority('ADMIN', 'MINISTRY')">
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon fa fa-sitemap"></span><span class="mtext">Quản lý đào tạo</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="${deparment}">Khoa</a></li>
+                            <li><a href="${major}">Ngành</a></li>
+                            <li><a href="${schoolYear}">Niên khóa</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon fa fa-user-o"></span><span class="mtext">Quản lý giảng viên</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="${position}">Chức vụ</a></li>
+                            <li><a href="${lecturer}">Giảng viên</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="${student}" class="dropdown-toggle no-arrow">
+                            <span class="micon fa fa-user"></span><span class="mtext">Sinh viên</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon fa fa-file-word-o"></span><span class="mtext">Quản lý khóa luận</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="${topic}">Đề tài</a></li>
+                            <li><a href="${thesis}">Khóa luận</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="${council}" class="dropdown-toggle no-arrow">
+                            <span class="micon fa fa-users"></span><span class="mtext">Hội đồng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="${evaluationMethod}" class="dropdown-toggle no-arrow">
+                            <span class="micon fa fa-edit"></span><span class="mtext">Phương pháp đánh giá</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="${notification}" class="dropdown-toggle no-arrow">
+                            <span class="micon fa fa-bell-o"></span><span class="mtext">Quản lý thông báo</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="${news}" class="dropdown-toggle no-arrow">
+                            <span class="micon fa fa-newspaper-o"></span><span class="mtext">Quản lý bảng tin</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon fa fa-pie-chart"></span><span class="mtext">Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="highchart.html">Thống kê điểm khóa luận</a></li>
+                            <li><a href="knob-chart.html">Thống kê tần suất khóa luận</a></li>
+                        </ul>
+                    </li>
+                    <sec:authorize access="hasAuthority('ADMIN')">
+                        <li class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle">
+                                <span class="micon fa fa-gears"></span><span class="mtext">Quản lý hệ thống</span>
+                            </a>
+                            <ul class="submenu">
+                                <li><a href="${role}">Quyền</a></li>
+                                <li><a href="${manage}">Quản trị viên</a></li>
+                            </ul>
+                        </li>
+                    </sec:authorize>
+                </sec:authorize>
                 <li>
                     <a href="${chat}" class="dropdown-toggle no-arrow">
                         <span class="micon dw dw-chat3"></span><span class="mtext">Trò chuyện</span>

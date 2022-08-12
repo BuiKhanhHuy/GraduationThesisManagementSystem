@@ -9,7 +9,7 @@
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg">
                         <a class="navbar-brand logo" href="index.html">
-                            <img class="logo1" src="<c:url value="/common/images/logo/logo-text-blue.png"/> " alt="Logo" style="width: 320px;"/>
+                            <img class="logo1" src="<c:url value="/public/common/images/logo/logo-text-blue.png"/> " alt="Logo" style="width: 320px;"/>
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

@@ -22,12 +22,12 @@
           rel="stylesheet">
 
     <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="<c:url value="/user/css/bootstrap.min.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/user/css/LineIcons.2.0.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/user/css/animate.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/user/css/tiny-slider.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/user/css/glightbox.min.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/user/css/main.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/public/user/css/bootstrap.min.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/public/user/css/LineIcons.2.0.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/public/user/css/animate.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/public/user/css/tiny-slider.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/public/user/css/glightbox.min.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/public/user/css/main.css"/>"/>
 
     <c:forEach var="css" items="${stylesheets}">
         <link rel="stylesheet" type="text/css" href="${css}">
@@ -43,11 +43,11 @@
 <tiles:insertAttribute name="footer"/>
 
 <!-- ========================= JS here ========================= -->
-<script src="<c:url value="/user/js/bootstrap.min.js"/>"></script>
-<script src="<c:url value="/user/js/wow.min.js"/>"></script>
-<script src="<c:url value="/user/js/tiny-slider.js"/>"></script>
-<script src="<c:url value="/user/js/glightbox.min.js"/>"></script>
-<script src="<c:url value="/user/js/main.js"/>"></script>
+<script src="<c:url value="/public/user/js/bootstrap.min.js"/>"></script>
+<script src="<c:url value="/public/user/js/wow.min.js"/>"></script>
+<script src="<c:url value="/public/user/js/tiny-slider.js"/>"></script>
+<script src="<c:url value="/public/user/js/glightbox.min.js"/>"></script>
+<script src="<c:url value="/public/user/js/main.js"/>"></script>
 <script type="text/javascript">
     //====== Clients Logo Slider
     tns({

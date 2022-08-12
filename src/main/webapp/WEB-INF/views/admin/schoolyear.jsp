@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:url var="filterSchoolYear" value="/admin/school-years/"/>
 <c:url var="home" value="/admin/"/>
@@ -46,13 +47,15 @@
         <div class="pull-left">
             <h4 class="text-blue h4">Danh sách niên khóa</h4>
         </div>
-        <div class="pull-right">
-            <button type="button" class="btn btn-success btn-md"
-                    onclick="showAddSchoolYear('<c:url value="/admin/api/school-years"/>')"
-            ><i class="micon icon-copy dw dw-add"></i>
-                Thêm niên khóa
-            </button>
-        </div>
+        <sec:authorize access="hasAuthority('ADMIN')">
+            <div class="pull-right">
+                <button type="button" class="btn btn-success btn-md"
+                        onclick="showAddSchoolYear('<c:url value="/admin/api/school-years"/>')"
+                ><i class="micon icon-copy dw dw-add"></i>
+                    Thêm niên khóa
+                </button>
+            </div>
+        </sec:authorize>
     </div>
     <table class="table table-bordered">
         <thead>
@@ -60,7 +63,9 @@
             <th scope="col" class="text-center">Niên khóa</th>
             <th scope="col" class="text-center">Ngày bắt đầu</th>
             <th scope="col" class="text-center">Ngày kết thúc</th>
-            <th scope="col" class="text-center">Hành động</th>
+            <sec:authorize access="hasAuthority('ADMIN')">
+                <th scope="col" class="text-center">Hành động</th>
+            </sec:authorize>
         </tr>
         </thead>
         <tbody>
@@ -74,27 +79,29 @@
                     <td class="text-center">
                         <fmt:formatDate type="date" value="${schoolYear.endDate}"/>
                     </td>
-                    <td class="text-center">
-                        <div class="btn-list">
-                            <button type="button"
-                                    onclick="showEditSchoolYear('<c:url
-                                            value="/admin/api/school-years/${schoolYear.id}"/>',
-                                        ${schoolYear.id})"
-                                    class="btn btn-sm bg-warning text-white"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom" title="Cập nhật">
-                                <i class="icon-copy dw dw-edit1"></i>
-                            </button>
-                            <button type="button"
-                                    onclick="deleteSchoolYearItem('<c:url
-                                            value="/admin/api/school-years/${schoolYear.id}"/>')"
-                                    class="btn btn-sm bg-danger text-white"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom" title="Xóa">
-                                <i class="icon-copy dw dw-delete-3"></i>
-                            </button>
-                        </div>
-                    </td>
+                    <sec:authorize access="hasAuthority('ADMIN')">
+                        <td class="text-center">
+                            <div class="btn-list">
+                                <button type="button"
+                                        onclick="showEditSchoolYear('<c:url
+                                                value="/admin/api/school-years/${schoolYear.id}"/>',
+                                            ${schoolYear.id})"
+                                        class="btn btn-sm bg-warning text-white"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom" title="Cập nhật">
+                                    <i class="icon-copy dw dw-edit1"></i>
+                                </button>
+                                <button type="button"
+                                        onclick="deleteSchoolYearItem('<c:url
+                                                value="/admin/api/school-years/${schoolYear.id}"/>')"
+                                        class="btn btn-sm bg-danger text-white"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom" title="Xóa">
+                                    <i class="icon-copy dw dw-delete-3"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </sec:authorize>
                 </tr>
             </c:forEach>
         </c:if>
@@ -124,12 +131,12 @@
 
 <!-- ADD and EDIT modal -->
 <div class="modal fade bs-example-modal-lg " id="modal-add-edit-school-year" tabindex="-1" role="dialog"
-     aria-labelledby="myModalAddAndEditSchoolYear" aria-hidden="true">
+     aria-labelledby="myModalAddAndEditSchoolYear" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalAddAndEditSchoolYear"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close close-custom" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
                 <form id="form-add-edit-school-year">
@@ -153,7 +160,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">Thoát</button>
                 <button type="button" class="btn btn-success" id="btn-submit-form">
                     <i class="micon fa fa-save"> </i> Lưu dữ liệu
                 </button>

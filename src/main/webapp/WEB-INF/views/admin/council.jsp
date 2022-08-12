@@ -4,6 +4,7 @@
 
 <c:url var="filterCouncil" value=""/>
 <c:url var="home" value="/admin/"/>
+<c:url var="appContext" value="/"/>
 
 <div class="page-header">
     <div class="row">
@@ -30,7 +31,7 @@
         <div class="row justify-content-end mt-2">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Mã khóa luận, chủ đề..."
+                    <input class="form-control" type="text" placeholder="Tên hội đồng"
                            name="kw"
                            aria-label="Search">
                 </div>
@@ -48,23 +49,11 @@
             </div>
             <div class="col-md-3 col-sm-12">
                 <div class="form-group">
-                    <select class="custom-select2 form-control" name="departmentId" id="departmentId"
+                    <select class="custom-select2 form-control" name="block" id="block"
                             style="width: 100%">
-                        <option value="${""}">Tất cả khoa</option>
-                        <c:forEach var="departmentOption" items="${departmentOptions}">
-                            <option value="${departmentOption[0]}">${departmentOption[1]}</option>
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-12">
-                <div class="form-group">
-                    <select class="custom-select2 form-control" name="result" id="result"
-                            style="width: 100%">
-                        <option value="">Tất cả kết quả</option>
-                        <option value="1">Chưa có kết quả</option>
-                        <option value="2">Chưa đạt</option>
-                        <option value="3">Đạt</option>
+                        <option value="${""}">Tất cả trạng thái</option>
+                        <option value="true">Đang khóa</option>
+                        <option value="false">Đang mở</option>
                     </select>
                 </div>
             </div>
@@ -83,7 +72,7 @@
             <h4 class="text-blue h4">Danh sách hội đồng</h4>
         </div>
         <div class="pull-right">
-            <button onclick="showAddCouncilModal('<c:url value="/admin/api/councils"/>')"
+            <button onclick="showAddCouncilModal('${appContext}')"
                     type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
                 Thành lập hội đồng
             </button>
@@ -123,12 +112,8 @@
                     </td>
                     <td class="text-center">
                         <div class="btn-list">
-                            <button type="button" class="btn btn-sm bg-success text-white" data-toggle="tooltip"
-                                    data-placement="bottom" title="Khóa hội đồng">
-                                <i class="icon-copy fa fa-unlock" aria-hidden="true"></i>
-                            </button>
-                            <span class="text-black-50">|</span>
-                            <button type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
+                            <button onclick="showViewCouncilModal('${appContext}', ${council.id})"
+                                    type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
                                     data-placement="bottom" title="Xem chi tiết">
                                 <i class="icon-copy dw dw-eye"></i>
                             </button>
@@ -138,8 +123,7 @@
                                     data-placement="bottom" title="Cập nhật">
                                 <i class="icon-copy dw dw-edit1"></i>
                             </button>
-                            <button onclick="deleteCouncilItem('<c:url
-                                    value="/admin/api/councils/${council.id}"/>')"
+                            <button onclick="deleteCouncilItem('${appContext}', ${council.id})"
                                     type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
                                     data-placement="bottom" title="Xóa">
                                 <i class="icon-copy dw dw-delete-3"></i>
@@ -159,27 +143,28 @@
         </c:if>
         </tbody>
     </table>
-    <div class="blog-pagination pagination-md mt-5 mb-2">
-        <div class="btn-toolbar justify-content-center">
-            <div class="btn-group">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination" id="pagination"></ul>
-                </nav>
+    <c:if test="${Math.ceil(totalPage / pageSize) > 1}">
+        <div class="blog-pagination pagination-md mt-5 mb-2">
+            <div class="btn-toolbar justify-content-center">
+                <div class="btn-group">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+                </div>
             </div>
         </div>
-    </div>
+    </c:if>
 </div>
 <!-- table End -->
 
 <!-- ADD and EDIT modal -->
 <div class="modal fade bs-example-modal-lg" data-focus="false" id="modal-add-edit-council" tabindex="-1" role="dialog"
-     aria-labelledby="myModalAddAndEditCouncil" aria-hidden="true">
+     aria-labelledby="myModalAddAndEditCouncil" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalAddAndEditCouncil"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-
+                <button type="button" class="close close-custom" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
 
             <div class="modal-body">
@@ -225,24 +210,15 @@
                                 </tr>
                                 </thead>
                                 <tbody id="member-area">
-                                <tr>
-                                    <td colspan="3">
-                                        <div class="add-more-task" id="add-more-task">
-                                            <a href="javascript:;" onclick="addMemberItem()"><i
-                                                    class="ion-plus-circled"></i>
-                                                Thêm thành viên</a>
-                                        </div>
-                                    </td>
-                                </tr>
                                 </tbody>
                             </table>
-                            <p id="councilDetails" class="text-danger mt-0" ></p>
+                            <p id="councilDetails" class="text-danger mt-0"></p>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">Thoát</button>
                 <button type="button" class="btn btn-success" id="btn-submit-form">
                     <i class="micon fa fa-save"> </i> Lưu dữ liệu
                 </button>
@@ -252,24 +228,80 @@
 </div>
 <!-- ADD and EDIT modal -->
 
-<%--<script>--%>
-<%--  let currentPage = ${page};--%>
-<%--  let totalPage = ${totalPage};--%>
-<%--  let pageSize = ${pageSize};--%>
+<%--VIEW modal--%>
+<div class="modal fade bs-example-modal-lg " id="modal-view-council" tabindex="-1" role="dialog"
+     aria-labelledby="myModalViewCouncil" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalViewCouncil">Chi tiết hội đồng</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="pd-10">
+                    <h6 class="mb-10 text-danger">Tên hội đồng</h6>
+                    <div id="data-name" class="ml-1 mb-3"></div>
+                    <h6 class="mb-10 text-danger">Mô tả</h6>
+                    <div id="data-description" class="ml-1 mb-3"></div>
+                    <h6 class="mb-10 text-danger">Niên khóa</h6>
+                    <div id="data-schoolYear" class="ml-1 mb-3"></div>
+                    <h6 class="mb-10 text-danger">Khóa luận bảo vệ</h6>
+                    <div class="ml-1 mb-3">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col">Mã khóa luận</th>
+                                <th scope="col">Chủ đề</th>
+                            </tr>
+                            </thead>
+                            <tbody id="data-theses">
+                            </tbody>
+                        </table>
+                    </div>
+                    <h6 class="mb-10 text-danger">Thành viên hội đồng</h6>
+                    <div class="ml-1 mb-3">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col">Chức vụ</th>
+                                <th scope="col">Tên thành viên</th>
+                            </tr>
+                            </thead>
+                            <tbody id="data-lecturers">
+                            </tbody>
+                        </table>
+                    </div>
+                    <h6 class="mb-10 text-danger">Trạng thái hội đồng</h6>
+                    <div class="ml-1" id="data-block">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%--VIEW modal--%>
 
-<%--  $('#pagination').twbsPagination({--%>
-<%--    totalPages: Math.ceil(totalPage / pageSize),--%>
-<%--    visiblePages: 8,--%>
-<%--    first: '',--%>
-<%--    last: '',--%>
-<%--    prev: '&laquo;',--%>
-<%--    next: '&raquo;',--%>
-<%--    startPage: currentPage,--%>
-<%--    onPageClick: function (event, page) {--%>
-<%--      if (currentPage != page) {--%>
-<%--        $("#page").val(page)--%>
-<%--        $("#form-filter").submit();--%>
-<%--      }--%>
-<%--    }--%>
-<%--  });--%>
-<%--</script>--%>
+<script>
+    let currentPage = ${page};
+    let totalPage = ${totalPage};
+    let pageSize = ${pageSize};
+
+    $('#pagination').twbsPagination({
+        totalPages: Math.ceil(totalPage / pageSize),
+        visiblePages: 8,
+        first: '',
+        last: '',
+        prev: '&laquo;',
+        next: '&raquo;',
+        startPage: currentPage,
+        onPageClick: function (event, page) {
+            if (currentPage !== page) {
+                $("#page").val(page)
+                $("#form-filter").submit();
+            }
+        }
+    });
+</script>

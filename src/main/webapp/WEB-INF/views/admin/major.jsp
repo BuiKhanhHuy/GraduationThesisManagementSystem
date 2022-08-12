@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <c:url var="filterMajor" value="/admin/majors/"/>
@@ -45,13 +46,15 @@
         <div class="pull-left">
             <h4 class="text-blue h4">Danh sách ngành</h4>
         </div>
-        <div class="pull-right">
-            <button
-                    onclick="showAddMajorModal('<c:url value="/admin/api/majors"/>')"
-                    type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
-                Thêm ngành
-            </button>
-        </div>
+        <sec:authorize access="hasAuthority('ADMIN')">
+            <div class="pull-right">
+                <button
+                        onclick="showAddMajorModal('<c:url value="/admin/api/majors"/>')"
+                        type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
+                    Thêm ngành
+                </button>
+            </div>
+        </sec:authorize>
     </div>
     <table class="table table-bordered">
         <thead>
@@ -78,25 +81,28 @@
                     </td>
                     <td class="text-center">
                         <div class="btn-list ">
-                            <button onclick="showViewMajorModal('<c:url value="/admin/api/majors/${major.id}"/> ')"
+                            <button
+                                    onclick="showViewMajorModal('<c:url value="/admin/api/majors/${major.id}"/> ')"
                                     type="button" class="btn btn-sm bg-info text-white"
                                     data-toggle="tooltip"
                                     data-placement="bottom" title="Xem chi tiết">
                                 <i class="icon-copy dw dw-eye"></i>
                             </button>
-                            <button onclick="showEditMajorModal('<c:url
-                                    value="/admin/api/majors/${major.id}"/>', ${major.id})"
-                                    type="button" class="btn btn-sm bg-warning text-white"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom" title="Cập nhật">
-                                <i class="icon-copy dw dw-edit1"></i>
-                            </button>
-                            <button onclick="deleteMajorItem('<c:url value="/admin/api/majors/${major.id}"/>')"
-                                    type="button" class="btn btn-sm bg-danger text-white"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom" title="Xóa">
-                                <i class="icon-copy dw dw-delete-3"></i>
-                            </button>
+                            <sec:authorize access="hasAuthority('ADMIN')">
+                                <button onclick="showEditMajorModal('<c:url
+                                        value="/admin/api/majors/${major.id}"/>', ${major.id})"
+                                        type="button" class="btn btn-sm bg-warning text-white"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom" title="Cập nhật">
+                                    <i class="icon-copy dw dw-edit1"></i>
+                                </button>
+                                <button onclick="deleteMajorItem('<c:url value="/admin/api/majors/${major.id}"/>')"
+                                        type="button" class="btn btn-sm bg-danger text-white"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom" title="Xóa">
+                                    <i class="icon-copy dw dw-delete-3"></i>
+                                </button>
+                            </sec:authorize>
                         </div>
 
                     </td>
@@ -129,15 +135,13 @@
 
 <!-- ADD and EDIT modal -->
 <div class="modal fade bs-example-modal-lg " id="modal-add-edit-major" tabindex="-1" role="dialog"
-     aria-labelledby="myModalAddAndEditMajor" aria-hidden="true">
+     aria-labelledby="myModalAddAndEditMajor" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalAddAndEditMajor"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-
+                <button type="button" class="close close-custom" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-
             <div class="modal-body">
                 <form id="form-add-edit-major">
                     <div class="pd-10">
@@ -170,7 +174,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">Thoát</button>
                 <button type="button" class="btn btn-success" id="btn-submit-form">
                     <i class="micon fa fa-save"> </i> Lưu dữ liệu
                 </button>

@@ -127,13 +127,13 @@
 
 <%--VIEW modal--%>
 <div class="modal fade bs-example-modal-lg " id="modal-view-news" tabindex="-1" role="dialog"
-     aria-labelledby="myModalViewNews" aria-hidden="true">
+     aria-labelledby="myModalViewNews" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalViewNews">#<span id="data-id"></span> <span id="data-title"></span>
                 </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close close-custom" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
                 <div class="pd-10">
@@ -153,7 +153,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">Thoát</button>
             </div>
         </div>
     </div>

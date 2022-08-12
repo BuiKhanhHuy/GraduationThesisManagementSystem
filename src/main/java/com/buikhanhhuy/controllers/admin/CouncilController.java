@@ -23,6 +23,9 @@ public class CouncilController {
     public String councilList(Model model, @RequestParam(required = false) Map<String, String> params){
         model.addAttribute("schoolYearOptions", this.schoolYearService.getSchoolYearOptions());
 
+        model.addAttribute("page", Integer.parseInt((params.get("page") != null && !params.get("page").isEmpty())
+                ? params.get("page") : "1"));
+        model.addAttribute("totalPage", this.councilService.countCouncil(params));
         model.addAttribute("councils", this.councilService.getCouncils(params));
 
         return "adminCouncilList";

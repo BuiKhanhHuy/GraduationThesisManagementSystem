@@ -25,6 +25,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content" value="/WEB-INF/views/auth/login.jsp"/>
         <put-attribute name="footer" value=""/>
     </definition>
+
     <!--    ADMIN-->
     <definition name="adminBaseLayout" template="/WEB-INF/decorators/admin/base.jsp">
         <put-attribute name="title" value=""/>
@@ -45,8 +46,8 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
             <add-attribute value=""/>
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/plugins/apexcharts/apexcharts.min.js"/>
-            <add-attribute value="/admin/vendors/scripts/dashboard.js"/>
+            <add-attribute value="/public/admin/src/plugins/apexcharts/apexcharts.min.js"/>
+            <add-attribute value="/public/admin/vendors/scripts/dashboard.js"/>
         </put-list-attribute>
     </definition>
     <!--    department-->
@@ -56,7 +57,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/department.js"/>
+            <add-attribute value="/public/admin/src/scripts/department.js"/>
         </put-list-attribute>
     </definition>
     <!--    department-->
@@ -68,7 +69,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/major.js"/>
+            <add-attribute value="/public/admin/src/scripts/major.js"/>
         </put-list-attribute>
     </definition>
     <!--    major-->
@@ -80,7 +81,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/school-year.js"/>
+            <add-attribute value="/public/admin/src/scripts/school-year.js"/>
         </put-list-attribute>
     </definition>
     <!--    school year-->
@@ -92,7 +93,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/position.js"/>
+            <add-attribute value="/public/admin/src/scripts/position.js"/>
         </put-list-attribute>
     </definition>
     <!--    position-->
@@ -104,7 +105,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/lecturer.js"/>
+            <add-attribute value="/public/admin/src/scripts/lecturer.js"/>
         </put-list-attribute>
     </definition>
     <!--    lecturer-->
@@ -116,7 +117,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/student.js"/>
+            <add-attribute value="/public/admin/src/scripts/student.js"/>
         </put-list-attribute>
     </definition>
     <!--    student-->
@@ -128,7 +129,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/topic.js"/>
+            <add-attribute value="/public/admin/src/scripts/topic.js"/>
         </put-list-attribute>
     </definition>
     <!--    topic-->
@@ -140,7 +141,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/evaluationmethod.js"/>
+            <add-attribute value="/public/admin/src/scripts/evaluationmethod.js"/>
         </put-list-attribute>
     </definition>
     <!--    evaluationmethod-->
@@ -152,7 +153,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/thesis.js"/>
+            <add-attribute value="/public/admin/src/scripts/thesis.js"/>
         </put-list-attribute>
     </definition>
     <!--    thesis-->
@@ -164,10 +165,34 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/council.js"/>
+            <add-attribute value="/public/admin/src/scripts/council.js"/>
         </put-list-attribute>
     </definition>
     <!--    council-->
+
+    <!--    council detail -->
+    <definition name="adminCouncilDetailList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Hội đồng"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/council-detail.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+<!--            <add-attribute value="/public/admin/src/scripts/council-detail.js"/>-->
+        </put-list-attribute>
+    </definition>
+    <!--    council detail-->
+
+    <!--    council detail detail-->
+    <definition name="adminCouncilDetailDetail" extends="adminBaseLayout">
+        <put-attribute name="title" value="Đánh giá khóa luận"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/council-detail-detail.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <!--<add-attribute value="/public/admin/src/scripts/council-detail.js"/>-->
+        </put-list-attribute>
+    </definition>
+    <!--    council detail detail-->
 
     <!--    role-->
     <definition name="adminRoleList" extends="adminBaseLayout">
@@ -183,7 +208,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/manage.js"/>
+            <add-attribute value="/public/admin/src/scripts/manage.js"/>
         </put-list-attribute>
     </definition>
     <!--    manage-->
@@ -195,7 +220,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/notification.js"/>
+            <add-attribute value="/public/admin/src/scripts/notification.js"/>
         </put-list-attribute>
     </definition>
     <!--    notification-->
@@ -207,7 +232,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <add-attribute value="/admin/src/scripts/news.js"/>
+            <add-attribute value="/public/admin/src/scripts/news.js"/>
         </put-list-attribute>
     </definition>
     <!--    news-->

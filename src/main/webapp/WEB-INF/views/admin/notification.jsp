@@ -116,12 +116,12 @@
 
 <!-- ADD and EDIT modal -->
 <div class="modal fade bs-example-modal-lg " id="modal-add-edit-notification" tabindex="-1" role="dialog"
-     aria-labelledby="myModalAddAndEditNotification" aria-hidden="true">
+     aria-labelledby="myModalAddAndEditNotification" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalAddAndEditNotification"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close close-custom" data-dismiss="modal" aria-hidden="true">×</button>
 
             </div>
 
@@ -174,7 +174,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">Thoát</button>
                 <button onclick="addNotification()"
                         type="button" class="btn btn-success" id="btn-submit-form">
                     <i class="icon-copy fa fa-send" aria-hidden="true"></i> Gửi đi

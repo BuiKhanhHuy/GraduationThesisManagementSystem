@@ -55,6 +55,7 @@ const saveChange = (endpoint, departmentId = null) => {
     form.serializeArray().forEach(item => formData[item.name] = item.value)
     $('input').next('span').remove();
 
+    onSaveDataLoading();
     if (departmentId === null) {
         // ADD
         fetch(endpoint, {
@@ -97,6 +98,7 @@ const saveChange = (endpoint, departmentId = null) => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
         })
     }
+    offSaveDataLoading()
 }
 
 const deleteDepartmentItem = (endpoint) => {

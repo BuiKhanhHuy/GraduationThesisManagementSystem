@@ -1,11 +1,12 @@
 package com.buikhanhhuy.configs;
 
-import com.buikhanhhuy.constants.SystemConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableWebSecurity
 @EnableTransactionManagement
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan(basePackages = {"com.buikhanhhuy.repository", "com.buikhanhhuy.service"})
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
@@ -43,15 +45,27 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().successHandler(this.authenticationSuccessHandler).failureUrl("/login?error");
         http.logout().logoutSuccessHandler(this.logoutSuccessHandler);
 
-        http.exceptionHandling().accessDeniedPage("/login?accessDenied");
-        http.authorizeRequests().antMatchers("/admin/**", "/user/**", "/common/**")
-                .permitAll().antMatchers("/admin/**")
-                .access(String.format("hasAnyAuthority('%s', '%s', '%s')",
-                        SystemConstant.ROLE_ADMIN,
-                        SystemConstant.ROLE_MINISTRY,
-                        SystemConstant.ROLE_LECTURER))
-                .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").permitAll();
+        http.exceptionHandling().accessDeniedPage("/login/?accessDenied");
+
+        http.authorizeRequests().antMatchers("/public/**").permitAll()
+                .antMatchers("/admin/")
+                .hasAnyAuthority("ADMIN" ,"MINISTRY", "LECTURER")
+                .antMatchers("/admin/**/councils-detail/**")
+                .hasAuthority("LECTURER")
+                .antMatchers(HttpMethod.GET, "/admin/api/departments/**", "/admin/api/majors/**")
+                .hasAnyAuthority("ADMIN", "MINISTRY")
+                .antMatchers("/admin/roles/",
+                        "/admin/manages/",
+                        "/admin/api/roles/**",
+                        "/admin/api/manages/**",
+                        "/admin/api/departments/**",
+                        "/admin/api/majors/**",
+                        "/admin/api/school-years/**",
+                        "/admin/api/positions/**")
+                .hasAnyAuthority("ADMIN")
+                .antMatchers("/admin/**")
+                .hasAnyAuthority("ADMIN", "MINISTRY")
+                .anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll();
 
         http.csrf().disable();
     }

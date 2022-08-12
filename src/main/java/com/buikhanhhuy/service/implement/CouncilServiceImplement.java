@@ -20,6 +20,16 @@ public class CouncilServiceImplement implements CouncilService {
     }
 
     @Override
+    public Council getCouncilById(int councilId) {
+        return this.councilRepository.getCouncilById(councilId);
+    }
+
+    @Override
+    public long countCouncil(Map<String, String> params) {
+        return this.councilRepository.countCouncil(params);
+    }
+
+    @Override
     public boolean addCouncil(Council council) {
         return this.councilRepository.addCouncil(council);
     }
