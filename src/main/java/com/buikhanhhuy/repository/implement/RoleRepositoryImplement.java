@@ -28,6 +28,7 @@ public class RoleRepositoryImplement implements RoleRepository {
         Root<Role> root = query.from(Role.class);
 
         query.select(root);
+        query.orderBy(builder.desc(root.get("id")));
 
         if (kw != null && !kw.isEmpty()) {
             query.where(builder.like(root.<String>get("roleName"), String.format("%%%s%%", kw)));

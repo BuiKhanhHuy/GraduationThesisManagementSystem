@@ -4,7 +4,6 @@ import com.buikhanhhuy.constants.SystemConstant;
 import com.buikhanhhuy.pojo.Council;
 import com.buikhanhhuy.pojo.CouncilDetail;
 import com.buikhanhhuy.pojo.Thesis;
-import com.buikhanhhuy.repository.CouncilDetailRepository;
 import com.buikhanhhuy.repository.CouncilRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +56,7 @@ public class CouncilRepositoryImplement implements CouncilRepository {
         }
 
         query.where(predicates.toArray(new Predicate[]{}));
+        query.orderBy(builder.desc(root.get("id")));
 
         int page = 1;
         int pageSize = SystemConstant.PAGE_SIZE;
@@ -120,7 +120,7 @@ public class CouncilRepositoryImplement implements CouncilRepository {
         query.where(predicates.toArray(new Predicate[]{}));
 
         Query q = session.createQuery(query);
-        Object result =  q.getSingleResult();
+        Object result = q.getSingleResult();
 
         return (long) result;
     }
@@ -163,4 +163,5 @@ public class CouncilRepositoryImplement implements CouncilRepository {
         }
         return false;
     }
+
 }

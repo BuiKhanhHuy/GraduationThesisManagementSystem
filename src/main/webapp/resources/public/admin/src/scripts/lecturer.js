@@ -113,6 +113,7 @@ const saveChange = (endpoint, lecturerId = null) => {
                 });
             }
         }).catch(err => {
+            console.error(err)
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình thêm dữ liệu!", "Ok")
         })
     } else {
@@ -171,6 +172,7 @@ const saveChange = (endpoint, lecturerId = null) => {
                 });
             }
         }).catch(err => {
+            console.error(err)
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
         })
     }

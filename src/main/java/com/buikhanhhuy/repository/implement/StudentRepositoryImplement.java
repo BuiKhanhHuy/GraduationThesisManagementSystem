@@ -82,6 +82,7 @@ public class StudentRepositoryImplement implements StudentRepository {
         }
 
         query.where(predicates.toArray(new Predicate[]{}));
+        query.orderBy(builder.desc(studentRoot.get("id")));
 
         Query q = session.createQuery(query);
 

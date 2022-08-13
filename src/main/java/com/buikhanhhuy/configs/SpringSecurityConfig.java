@@ -47,25 +47,25 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.exceptionHandling().accessDeniedPage("/login/?accessDenied");
 
-        http.authorizeRequests().antMatchers("/public/**").permitAll()
-                .antMatchers("/admin/")
-                .hasAnyAuthority("ADMIN" ,"MINISTRY", "LECTURER")
-                .antMatchers("/admin/**/councils-detail/**")
-                .hasAuthority("LECTURER")
-                .antMatchers(HttpMethod.GET, "/admin/api/departments/**", "/admin/api/majors/**")
-                .hasAnyAuthority("ADMIN", "MINISTRY")
-                .antMatchers("/admin/roles/",
-                        "/admin/manages/",
-                        "/admin/api/roles/**",
-                        "/admin/api/manages/**",
-                        "/admin/api/departments/**",
-                        "/admin/api/majors/**",
-                        "/admin/api/school-years/**",
-                        "/admin/api/positions/**")
-                .hasAnyAuthority("ADMIN")
-                .antMatchers("/admin/**")
-                .hasAnyAuthority("ADMIN", "MINISTRY")
-                .anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll();
+//        http.authorizeRequests().antMatchers("/public/**").permitAll()
+//                .antMatchers("/admin/")
+//                .hasAnyAuthority("ADMIN" ,"MINISTRY", "LECTURER")
+//                .antMatchers("/admin/**/councils-detail/**")
+//                .hasAuthority("LECTURER")
+//                .antMatchers(HttpMethod.GET, "/admin/api/departments/**", "/admin/api/majors/**")
+//                .hasAnyAuthority("ADMIN", "MINISTRY")
+//                .antMatchers("/admin/roles/",
+//                        "/admin/manages/",
+//                        "/admin/api/roles/**",
+//                        "/admin/api/manages/**",
+//                        "/admin/api/departments/**",
+//                        "/admin/api/majors/**",
+//                        "/admin/api/school-years/**",
+//                        "/admin/api/positions/**")
+//                .hasAnyAuthority("ADMIN")
+//                .antMatchers("/admin/**")
+//                .hasAnyAuthority("ADMIN", "MINISTRY", "LECTURER")
+//                .anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll();
 
         http.csrf().disable();
     }

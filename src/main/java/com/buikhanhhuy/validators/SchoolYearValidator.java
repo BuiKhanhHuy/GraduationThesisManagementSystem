@@ -14,5 +14,11 @@ public class SchoolYearValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         SchoolYear schoolYear = (SchoolYear) target;
+
+        if(schoolYear.getEndDate().compareTo(schoolYear.getStartDate()) < 0){
+            errors.rejectValue("endDate",
+                    "schoolYear.add.endDate.afterStartDateMessage",
+                    "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+        }
     }
 }

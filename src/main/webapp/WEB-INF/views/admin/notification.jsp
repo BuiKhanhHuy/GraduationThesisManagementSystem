@@ -73,12 +73,6 @@
                     <td class="text-center">
                         <div class="btn-list">
                             <button
-                                    type="button" class="btn btn-sm bg-warning text-white"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom" title="Cập nhật">
-                                <i class="icon-copy dw dw-edit1"></i>
-                            </button>
-                            <button
                                     type="button" class="btn btn-sm bg-danger text-white"
                                     data-toggle="tooltip"
                                     data-placement="bottom" title="Xóa">

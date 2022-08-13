@@ -77,6 +77,7 @@
             <th scope="col" class="text-center">Tên hội đồng</th>
             <th scope="col" class="text-center">Niên khóa</th>
             <th scope="col" class="text-center">Chức vụ trong hội đồng</th>
+            <th scope="col" class="text-center">Trạng thái</th>
             <th scope="col" class="text-center">Hành động</th>
         </tr>
         </thead>
@@ -88,10 +89,10 @@
                             ${council[2]}
                     </td>
                     <td>
-                        <c:if test="${council[3] != null}">
-                            ${council[3]}
+                        <c:if test="${council[4] != null}">
+                            ${council[4]}
                         </c:if>
-                        <c:if test="${council[3] == null}">
+                        <c:if test="${council[4] == null}">
                             <span class="text-black-50 text-center">Chưa cập nhật</span>
                         </c:if>
                     </td>
@@ -103,11 +104,27 @@
                             <span class="text-black-50 text-center">Chưa cập nhật</span>
                         </c:if>
                     </td>
+                    <td colspan="text-center">
+                        <c:if test="${council[3] != true}">
+                            <div class="text-center text-success">
+                                <i class="icon-copy fa fa-unlock font-20" aria-hidden="true"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom" title="Hội đồng đang được mở"></i>
+                            </div>
+                        </c:if>
+                        <c:if test="${council[3] == true}">
+                            <div class="text-center text-danger">
+                                <i class="icon-copy fa fa-lock font-20" aria-hidden="true"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom" title="Hội đồng đang bị khóa"></i>
+                            </div>
+                        </c:if>
+                    </td>
                     <td class="text-center">
                         <div class="btn-list">
                             <a href="<c:url value="/admin/councils-detail/${council[0]}"/>"
                                type="button" class="btn btn-sm bg-success text-white">
-                               Chấm điểm khóa luận
+                                Chấm điểm khóa luận
                             </a>
                         </div>
                     </td>
@@ -138,24 +155,24 @@
 </div>
 <!-- table End -->
 
-<%--<script>--%>
-<%--    let currentPage = ${page};--%>
-<%--    let totalPage = ${totalPage};--%>
-<%--    let pageSize = ${pageSize};--%>
+<script>
+    let currentPage = ${page};
+    let totalPage = ${totalPage};
+    let pageSize = ${pageSize};
 
-<%--    $('#pagination').twbsPagination({--%>
-<%--        totalPages: Math.ceil(totalPage / pageSize),--%>
-<%--        visiblePages: 8,--%>
-<%--        first: '',--%>
-<%--        last: '',--%>
-<%--        prev: '&laquo;',--%>
-<%--        next: '&raquo;',--%>
-<%--        startPage: currentPage,--%>
-<%--        onPageClick: function (event, page) {--%>
-<%--            if (currentPage !== page) {--%>
-<%--                $("#page").val(page)--%>
-<%--                $("#form-filter").submit();--%>
-<%--            }--%>
-<%--        }--%>
-<%--    });--%>
-<%--</script>--%>
+    $('#pagination').twbsPagination({
+        totalPages: Math.ceil(totalPage / pageSize),
+        visiblePages: 8,
+        first: '',
+        last: '',
+        prev: '&laquo;',
+        next: '&raquo;',
+        startPage: currentPage,
+        onPageClick: function (event, page) {
+            if (currentPage !== page) {
+                $("#page").val(page)
+                $("#form-filter").submit();
+            }
+        }
+    });
+</script>

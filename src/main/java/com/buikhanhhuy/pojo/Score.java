@@ -4,20 +4,12 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import java.io.Serializable;
-import java.util.Set;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.List;
+import javax.persistence.*;
+import javax.validation.Valid;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -41,12 +33,15 @@ public class Score implements Serializable {
     private Integer id;
     @JoinColumn(name = "council_detail_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIncludeProperties({"id"})
     private CouncilDetail councilDetail;
     @JoinColumn(name = "thesis_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIncludeProperties({"id"})
     private Thesis thesis;
-    @OneToMany(mappedBy = "score")
-    private Set<ScoreDetail> scoreDetails;
+    @OneToMany(mappedBy = "score", fetch = FetchType.EAGER)
+    @Valid
+    private List<ScoreDetail> scoreDetails;
 
     public Score() {
     }
@@ -80,11 +75,11 @@ public class Score implements Serializable {
     }
 
     @XmlTransient
-    public Set<ScoreDetail> getScoreDetails() {
+    public List<ScoreDetail> getScoreDetails() {
         return scoreDetails;
     }
 
-    public void setScoreDetails(Set<ScoreDetail> scoreDetailSet) {
+    public void setScoreDetails(List<ScoreDetail> scoreDetailSet) {
         this.scoreDetails = scoreDetailSet;
     }
 

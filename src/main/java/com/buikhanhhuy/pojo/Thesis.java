@@ -92,7 +92,7 @@ public class Thesis implements Serializable {
     @JsonIgnoreProperties({"description", "department"})
     @ManyToOne
     private Topic topic;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @NotEmpty(message = "{thesis.add.lecturers.notNullMessage}")
     @JoinTable(name = "guide", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "lecturer_id")})
     private Set<Lecturer> lecturers;
@@ -105,6 +105,9 @@ public class Thesis implements Serializable {
     @JoinColumn(name = "review_lecturer_id", referencedColumnName = "id")
     @JsonIncludeProperties({"id"})
     private Lecturer reviewLecturer;
+
+    @Transient
+    private Boolean scored;
 
     public Thesis() {
     }
@@ -278,6 +281,14 @@ public class Thesis implements Serializable {
 
     public void setReviewLecturer(Lecturer reviewLecturer) {
         this.reviewLecturer = reviewLecturer;
+    }
+
+    public Boolean getScored() {
+        return scored;
+    }
+
+    public void setScored(Boolean scored) {
+        this.scored = scored;
     }
 
     @Override

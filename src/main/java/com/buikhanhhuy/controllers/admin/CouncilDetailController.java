@@ -24,9 +24,9 @@ public class CouncilDetailController {
     public String councilDetailList(Model model, @RequestParam(required = false) Map<String, String> params) {
         model.addAttribute("schoolYearOptions", this.schoolYearService.getSchoolYearOptions());
 
-//        model.addAttribute("page", Integer.parseInt((params.get("page") != null && !params.get("page").isEmpty())
-//                ? params.get("page") : "1"));
-//        model.addAttribute("totalPage", this.councilService.countCouncil(params));
+        model.addAttribute("page", Integer.parseInt((params.get("page") != null && !params.get("page").isEmpty())
+                ? params.get("page") : "1"));
+        model.addAttribute("totalPage", this.councilDetailService.countCouncilDetail(1, params));
         model.addAttribute("councilsDetail", this.councilDetailService.getCouncilsDetail(1, params));
 
         return "adminCouncilDetailList";
@@ -34,6 +34,7 @@ public class CouncilDetailController {
 
     @GetMapping(path = "/councils-detail/{councilDetailId}")
     public String councilDetailDetail(Model model, @PathVariable(value = "councilDetailId") int councilDetailId) {
+
         model.addAttribute("councilDetailDetail", this.councilDetailService.getCouncilDetailById(councilDetailId));
 
         return "adminCouncilDetailDetail";

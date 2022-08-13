@@ -73,6 +73,7 @@ public class ThesisRepositoryImplement implements ThesisRepository {
         }
 
         query.where(predicates.toArray(new Predicate[]{}));
+        query.orderBy(builder.desc(root.get("id")));
 
         Query q = session.createQuery(query);
 

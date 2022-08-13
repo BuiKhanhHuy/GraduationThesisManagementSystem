@@ -38,4 +38,5 @@ public class CouncilServiceImplement implements CouncilService {
     public boolean deleteCouncil(int councilId) {
         return this.councilRepository.deleteCouncil(councilId);
     }
+
 }

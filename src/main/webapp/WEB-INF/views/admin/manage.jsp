@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<c:url value="/admin/src/images/avatar/avatar-default.jpg" var="avatarDefault"/>
+<c:url value="/public/admin/src/images/avatar/avatar-default.jpg" var="avatarDefault"/>
 <c:url var="filterManage" value=""/>
 <c:url var="home" value="/admin/"/>
 

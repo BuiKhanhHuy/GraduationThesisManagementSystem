@@ -5,6 +5,7 @@
 package com.buikhanhhuy.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import java.io.Serializable;
 import java.util.List;
@@ -47,7 +48,7 @@ public class ScoreColumn implements Serializable {
     private Double weight;
     @JoinColumn(name = "score_component_id", referencedColumnName = "id")
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JsonIgnore
+    @JsonIncludeProperties({"id", "name"})
     private ScoreComponent scoreComponent;
     @OneToMany(mappedBy = "scoreColumn")
     @JsonIgnore

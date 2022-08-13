@@ -38,6 +38,7 @@ public class NotificationRepositoryImplement implements NotificationRepository {
             String kw = params.get("kw");
             query.where(builder.like(root.get("title").as(String.class), String.format("%%%s%%", kw)));
         }
+        query.orderBy(builder.desc(root.get("id")));
 
         int page = 1;
         int pageSize = SystemConstant.PAGE_SIZE;

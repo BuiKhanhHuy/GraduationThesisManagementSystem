@@ -56,6 +56,7 @@ public class TopicRepositoryImplement implements TopicRepository {
         }
 
         query.where(predicates.toArray(new Predicate[]{}));
+        query.orderBy(builder.desc(root.get("id")));
 
         int page = 1;
         int pageSize = SystemConstant.PAGE_SIZE;

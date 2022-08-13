@@ -28,6 +28,7 @@ public class EvaluationMethodRepositoryImplement implements EvaluationMethodRepo
         CriteriaQuery<EvaluationMethod> query = builder.createQuery(EvaluationMethod.class);
         Root<EvaluationMethod> root = query.from(EvaluationMethod.class);
         query.select(root);
+        query.orderBy(builder.desc(root.get("id")));
 
         return session.createQuery(query).getResultList();
     }
@@ -62,6 +63,7 @@ public class EvaluationMethodRepositoryImplement implements EvaluationMethodRepo
         }
         return null;
     }
+
 
     @Override
     public boolean addEvaluationMethod(EvaluationMethod evaluationMethod) {

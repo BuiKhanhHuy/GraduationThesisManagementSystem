@@ -4,6 +4,8 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,7 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -38,11 +40,14 @@ public class ScoreDetail implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{score.add.scoreNum.notNullMessage}")
+    @DecimalMin(value = "0", message = "{score.add.scoreNum.sizeMessage}")
+    @DecimalMax(value = "10", message = "{score.add.scoreNum.sizeMessage}")
     @Column(name = "score")
-    private double scoreNum;
+    private Double scoreNum;
     @JoinColumn(name = "score_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Score score;
     @JoinColumn(name = "score_column_id", referencedColumnName = "id")
     @ManyToOne
@@ -68,11 +73,11 @@ public class ScoreDetail implements Serializable {
         this.id = id;
     }
 
-    public double getScoreNum() {
+    public Double getScoreNum() {
         return scoreNum;
     }
 
-    public void setScoreNum(double score) {
+    public void setScoreNum(Double score) {
         this.scoreNum = score;
     }
 

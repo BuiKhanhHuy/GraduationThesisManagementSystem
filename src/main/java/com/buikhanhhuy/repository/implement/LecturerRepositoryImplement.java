@@ -83,6 +83,7 @@ public class LecturerRepositoryImplement implements LecturerRepository {
         }
 
         query.where(predicates.toArray(new Predicate[]{}));
+        query.orderBy(builder.desc(lecturerRoot.get("id")));
 
         Query q = session.createQuery(query);
 

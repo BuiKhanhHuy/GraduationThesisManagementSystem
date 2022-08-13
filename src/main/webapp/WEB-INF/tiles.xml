@@ -177,7 +177,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-<!--            <add-attribute value="/public/admin/src/scripts/council-detail.js"/>-->
+            <!--            <add-attribute value="/public/admin/src/scripts/council-detail.js"/>-->
         </put-list-attribute>
     </definition>
     <!--    council detail-->
@@ -189,7 +189,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
-            <!--<add-attribute value="/public/admin/src/scripts/council-detail.js"/>-->
+            <add-attribute value="/public/admin/src/scripts/council-detail-detail.js"/>
         </put-list-attribute>
     </definition>
     <!--    council detail detail-->

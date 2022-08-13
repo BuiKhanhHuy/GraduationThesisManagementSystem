@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -53,7 +54,7 @@ public class Council implements Serializable {
     @OneToMany(mappedBy = "council", fetch = FetchType.EAGER)
     @NotEmpty(message = "{council.add.theses.notNullMessage}")
     @JsonIncludeProperties({"id", "code", "topic"})
-    private List<Thesis> theses;
+    private Set<Thesis> theses;
 
 
     {
@@ -121,11 +122,11 @@ public class Council implements Serializable {
         this.schoolYear = schoolYearId;
     }
 
-    public List<Thesis> getTheses() {
+    public Set<Thesis> getTheses() {
         return theses;
     }
 
-    public void setTheses(List<Thesis> theses) {
+    public void setTheses(Set<Thesis> theses) {
         this.theses = theses;
     }
 

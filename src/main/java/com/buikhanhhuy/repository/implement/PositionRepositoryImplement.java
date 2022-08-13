@@ -34,6 +34,7 @@ public class PositionRepositoryImplement implements PositionRepository {
             String kw = params.get("kw");
             query.where(builder.like(root.get("name").as(String.class), String.format("%%%s%%", kw)));
         }
+        query.orderBy(builder.desc(root.get("id")));
 
         int page = 1;
         int pageSize = SystemConstant.PAGE_SIZE;

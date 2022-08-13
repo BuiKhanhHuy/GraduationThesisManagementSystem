@@ -63,6 +63,7 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
         registry.addFormatter(new ThesisFormatter());
         registry.addFormatter(new CouncilFormatter());
         registry.addFormatter(new CouncilDetailFormatter());
+        registry.addFormatter(new ScoreColumnFormatter());
     }
 
 

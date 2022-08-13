@@ -136,6 +136,7 @@ const saveChange = (endpoint, notificationId = null) => {
                 showError(data)
             }
         }).catch(err => {
+            console.error(err)
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình thêm dữ liệu!", "Ok")
         })
     } else {
