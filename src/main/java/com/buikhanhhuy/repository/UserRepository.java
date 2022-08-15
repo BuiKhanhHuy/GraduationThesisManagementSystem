@@ -11,4 +11,5 @@ public interface UserRepository {
     public Set<Integer> getUsers(Map<String, String> params, List<Integer> usersId);
     public boolean addUser(User user);
     public User getUserByUserName(String username);
+    public void changePassword(int userId, String newPassword);
 }

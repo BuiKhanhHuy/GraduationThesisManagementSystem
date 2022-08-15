@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="<c:url value="/public/admin/src/plugins/toast/jquery.toast.css"/>">
 
     <%--    overlay loading--%>
-    <link href="<c:url value="/public/common/plugins/overlayloading/loading.min.css"/> " rel="stylesheet">
+    <link href="<c:url value="/public/common/css/overlay/overlay-style.css"/> " rel="stylesheet">
 
     <c:forEach var="css" items="${stylesheets}">
         <link rel="stylesheet" type="text/css" href="${css}">
@@ -62,6 +62,7 @@
 
 </head>
 <body>
+<div id="cover-spin"></div>
 <%--<div class="pre-loader">--%>
 <%--    <div class="pre-loader-box">--%>
 <%--        <div class="loader-logo"><img src="vendors/images/deskapp-logo.svg" alt=""></div>--%>
@@ -99,7 +100,6 @@
 <script src="<c:url value="/public/admin/vendors/scripts/layout-settings.js"/>"></script>
 
 <%--overlay loading--%>
-<script src="<c:url value="/public/common/plugins/overlayloading/jquery.loading.min.js"/>"></script>
 <script src="<c:url value="/public/common/js/script.js"/> "/>
 
 <script src="<c:url value="/public/admin/src/plugins/toast/jquery.toast.js"/> "></script>

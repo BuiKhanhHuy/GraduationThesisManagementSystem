@@ -1,34 +1,32 @@
-const showAddLecturerModal = (endpoint) => {
+const fileUploader = document.getElementById('file');
+var file = null;
+
+fileUploader.addEventListener('change', (event) => {
+    file = event.target.files[0];
+
+    let fileOutput = document.getElementById('file-output');
+
+    fileOutput.src = URL.createObjectURL(file);
+    fileOutput.onload = function () {
+        URL.revokeObjectURL(fileOutput.src)
+    }
+});
+
+const showAddLecturerModal = (appContext) => {
     document.getElementById("myModalAddAndEditLecturer").innerText = "Thêm giảng viên"
 
-    // remove new password area
-    let newPasswordArea = document.getElementById("new-password-area")
-    if (newPasswordArea.innerHTML !== '') {
-        newPasswordArea.innerHTML = ""
-    }
-
-    document.getElementById("btn-submit-form").onclick = () => saveChange(endpoint)
+    document.getElementById("btn-submit-form").onclick = () => saveChange(appContext)
     $('#modal-add-edit-lecturer').modal()
 
 }
 
-const showEditLectureModal = (endpoint, lecturerId) => {
+const showEditLectureModal = (appContext, lecturerId) => {
+    let endpoint = `${appContext}admin/api/lecturers/${lecturerId}`
+
     loadLecturerById(endpoint, (data) => {
         document.getElementById("myModalAddAndEditLecturer").innerText = "Cập nhật giảng viên"
 
-        // add input new password
-        let newPasswordArea = document.getElementById("new-password-area")
-        if (newPasswordArea.innerHTML === '') {
-            newPasswordArea.innerHTML = `
-                            <div class="form-group">
-                                <label class="font-weight-bold">Mật khẩu mới</label>
-                                <input name="newPassword" id="newPassword" type="password" class="form-control">
-                                <small class="form-text text-muted">Nhập vô ô nhập liệu nếu muốn thay đổi mật khẩu</small>
-                            </div>
-                            <input name="password" id="password" type="password" hidden>`
-        }
-
-        document.getElementById("btn-submit-form").onclick = () => saveChange(endpoint, lecturerId)
+        document.getElementById("btn-submit-form").onclick = () => saveChange(appContext, lecturerId)
         $('#modal-add-edit-lecturer').modal()
 
         let form = document.forms['form-add-edit-lecturer']
@@ -46,8 +44,7 @@ const showEditLectureModal = (endpoint, lecturerId) => {
             form["department"].value = data.department.id
         }
         if (data.user !== null) {
-            form["password"].value = data.user.password
-            form["active"].checked = data.user.active
+            form["is-active"].checked = data.user.active
             if (data.user.role != null) form["role"].value = data.user.role.id
         }
     })
@@ -59,44 +56,47 @@ const loadLecturerById = (endpoint, callback) => {
             "Content-Type": "application/json"
         }
     }).then(res => res.json()).then(data => {
+        console.log(data)
         callback(data);
     }).catch(err => {
+        console.error(err)
         errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình tải dữ liệu!", "Ok")
     })
 }
 
-const saveChange = (endpoint, lecturerId = null) => {
+const saveChange = (appContext, lecturerId = null) => {
     let form = $("#form-add-edit-lecturer")
     let formData = {}
+    let formDataSubmit = new FormData();
+    formDataSubmit.append("avatarFile", file);
 
     form.serializeArray().forEach(item => {
         formData[item.name] = item.value
     })
-    formData["active"] = document.getElementById("active").checked;
+    formData["active"] = document.getElementById("is-active").checked;
     $('input').next('span').remove();
 
+    showLoading()
     if (lecturerId === null) {
         // ADD
-        fetch(endpoint, {
-            method: "POST", body: JSON.stringify({
-                "code": formData.code,
-                "fullName": formData.fullName,
-                "email": formData.email,
-                "phone": formData.phone,
-                "birthday": formData.birthday,
-                "gender": formData.gender,
-                "address": formData.address,
-                "department": formData.department,
-                "position": formData.position,
-                "user": {
-                    "username": formData.code,
-                    "password": formData.code,
-                    "active": formData.active,
-                    "role": formData.role
-                }
-            }), headers: {
-                "Content-Type": "application/json"
+        formDataSubmit.append("lecturer", new Blob([JSON.stringify({
+            "code": formData.code,
+            "fullName": formData.fullName,
+            "email": formData.email,
+            "phone": formData.phone,
+            "birthday": formData.birthday,
+            "gender": formData.gender,
+            "address": formData.address,
+            "department": formData.department,
+            "position": formData.position,
+            "user": {
+                "username": formData.code, "password": formData.code, "active": formData.active, "role": formData.role
             }
+        })], {
+            type: "application/json"
+        }))
+        fetch(`${appContext}admin/api/lecturers`, {
+            method: "POST", body: formDataSubmit
         }).then(res => res.json()).then(data => {
             if (Object.keys(data).length === 0) {
                 // successful
@@ -115,47 +115,27 @@ const saveChange = (endpoint, lecturerId = null) => {
         }).catch(err => {
             console.error(err)
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình thêm dữ liệu!", "Ok")
-        })
+        }).finally(hideLoading)
     } else {
-        // // UPDATE
-        console.log({
-            "code": formData.code,
-            "fullName": formData.fullName,
-            "email": formData.email,
-            "phone": formData.phone,
-            "birthday": formData.birthday,
-            "gender": formData.gender,
-            "address": formData.address,
-            "department": formData.department,
-            "position": formData.position,
-            "user": {
-                "username": formData.code,
-                "newPassword": formData.newPassword,
-                "active": formData.active,
-                "role": formData.role
+        // UPDATE
+        formDataSubmit.append("lecturer", new Blob([JSON.stringify({
+            code: formData.code,
+            fullName: formData.fullName,
+            email: formData.email,
+            phone: formData.phone,
+            birthday: formData.birthday,
+            gender: formData.gender,
+            address: formData.address,
+            department: formData.department,
+            position: formData.position,
+            user: {
+                username: formData.code, password: " ", active: formData.active, role: formData.role
             }
-        })
-        fetch(endpoint, {
-            method: "PATCH", body: JSON.stringify({
-                "code": formData.code,
-                "fullName": formData.fullName,
-                "email": formData.email,
-                "phone": formData.phone,
-                "birthday": formData.birthday,
-                "gender": formData.gender,
-                "address": formData.address,
-                "department": formData.department,
-                "position": formData.position,
-                "user": {
-                    "username": formData.code,
-                    "newPassword": formData.newPassword,
-                    "password": formData.password,
-                    "active": formData.active,
-                    "role": formData.role
-                }
-            }), headers: {
-                "Content-Type": "application/json"
-            }
+        })], {
+            type: "application/json"
+        }))
+        fetch(`${appContext}admin/api/lecturers/${lecturerId}`, {
+            method: "POST", body: formDataSubmit
         }).then(res => res.json()).then(data => {
             if (Object.keys(data).length === 0) {
                 // successful
@@ -174,14 +154,16 @@ const saveChange = (endpoint, lecturerId = null) => {
         }).catch(err => {
             console.error(err)
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
-        })
+        }).finally(hideLoading)
     }
 }
 
-const deleteLecturerItem = (endpoint) => {
+const deleteLecturerItem = (appContext, lecturerId) => {
     // DELETE
     confirmAlert("Bạn có chắc không?", "Bạn sẽ không thể khôi phục điều này!", "Có, xóa nó", "Không, hủy bỏ", () => {
-        fetch(endpoint, {
+        showLoading();
+
+        fetch(`${appContext}admin/api/lecturers/${lecturerId}`, {
             method: "DELETE", headers: {
                 'Content-Type': 'application/json'
             }
@@ -189,7 +171,7 @@ const deleteLecturerItem = (endpoint) => {
             if (res.status === 204) successfulAlert("Xóa giảng viên thành công", "Ok", () => location.reload());
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình xóa dữ liệu!", "Ok")
-        })
+        }).finally(hideLoading)
     })
 }
 
@@ -198,3 +180,49 @@ $('#modal-add-edit-lecturer').on('hidden.bs.modal', function (e) {
     $('input').next('span').remove();
     document.forms['form-add-edit-lecturer'].reset();
 })
+
+// change password
+const changePassword = (appContext, userId) => {
+    Swal.fire({
+        title: 'Đổi mật khẩu',
+        input: 'password',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Đổi mật khẩu',
+        confirmButtonColor: "#218838",
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        cancelButtonText: 'Hủy',
+        preConfirm: (password) => {
+            if (!password) {
+                Swal.showValidationMessage('Mật khẩu không được để trống')
+            } else {
+                if (password.toString().length > 50) {
+                    Swal.showValidationMessage('Mật khẩu không vượt quá 50 ký tự')
+                } else {
+                    return fetch(`${appContext}admin/api/users/${userId}`, {
+                        method: "PATCH", body: password, headers: {
+                            "Content-Type": "application/json"
+                        }
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            errorAlert("Đã có lỗi", "Đổi mật khẩu không thành công!", "Ok")
+                        })
+                }
+            }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+            successfulAlert("Đổi mật khẩu thành công", "Ok", null);
+        }
+    })
+}

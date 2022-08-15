@@ -3,6 +3,8 @@ package com.buikhanhhuy.configs;
 import com.buikhanhhuy.converters.StringToLocalDateConverter;
 import com.buikhanhhuy.formatters.*;
 import com.buikhanhhuy.validators.*;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,6 +14,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
@@ -140,5 +143,17 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
         webAppValidator.setValidators(springValidators);
 
         return webAppValidator;
+    }
+
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("UTF-8");
+        return resolver;
+    }
+
+    @Bean
+    public Cloudinary cloudinary() {
+        return new Cloudinary(ObjectUtils.asMap("cloud_name", "dtnpj540t", "api_key", "371357798369383", "api_secret", "9zy7ehlUetIxxl7ibee4y3tmdL4", "secure", true));
     }
 }

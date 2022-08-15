@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -34,8 +35,11 @@ public class ApiManageController {
         }
     }
 
-    @PostMapping(path = "/manages", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Map<String, String>> addManage(@Valid @RequestBody Manage manage, BindingResult result) {
+    @PostMapping(path = "/manages",
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map<String, String>> addManage(@RequestPart(value = "avatarFile", required = false) MultipartFile file,
+                                                         @RequestPart("manage") @Valid Manage manage, BindingResult result) {
         Map<String, String> errorMessages = new HashMap<>();
         HttpStatus status = null;
 
@@ -43,15 +47,20 @@ public class ApiManageController {
             errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             status = HttpStatus.BAD_REQUEST;
         } else {
-            if (this.manageService.addManage(manage)) status = HttpStatus.CREATED;
+            if (this.manageService.addManage(manage, file)) status = HttpStatus.CREATED;
             else status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
         return new ResponseEntity<>(errorMessages, status);
     }
 
-    @PatchMapping(path = "/manages/{manageId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Map<String, String>> updateManage(@PathVariable("manageId") int manageId, @Valid @RequestBody Manage manage, BindingResult result) {
+    @PostMapping(path = "/manages/{manageId}",
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map<String, String>> updateManage(@PathVariable("manageId") int manageId,
+                                                            @RequestPart(value = "avatarFile", required = false) MultipartFile file,
+                                                            @Valid @RequestPart("manage") Manage manage,
+                                                            BindingResult result) {
         Map<String, String> errorMessages = new HashMap<>();
         HttpStatus status = null;
 
@@ -59,7 +68,7 @@ public class ApiManageController {
             errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             status = HttpStatus.BAD_REQUEST;
         } else {
-            if (this.manageService.updateManage(manageId, manage)) status = HttpStatus.OK;
+            if (this.manageService.updateManage(manageId, manage, file)) status = HttpStatus.OK;
             else status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 

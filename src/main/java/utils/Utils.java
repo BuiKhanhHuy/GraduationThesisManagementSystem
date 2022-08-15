@@ -5,6 +5,7 @@ import com.buikhanhhuy.pojo.ScoreComponent;
 import com.buikhanhhuy.pojo.ScoreColumn;
 
 public class Utils {
+
     public static boolean checkTotalWeight(EvaluationMethod evaluationMethod) {
         double totalWeight = 0;
 
@@ -16,4 +17,5 @@ public class Utils {
 
         return totalWeight == 1;
     }
+
 }

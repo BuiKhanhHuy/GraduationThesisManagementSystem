@@ -1,10 +1,11 @@
 // overlay loading
 const showLoading = () => {
-    $.showLoading({name: 'circle-turn',allowHide: false});
+   $('#cover-spin').show(0)
+
 }
 
 const hideLoading = () => {
-    $.hideLoading({name: 'circle-turn',allowHide: false});
+    $('#cover-spin').hide(0)
 }
 
 // sweet alert 2
@@ -46,12 +47,29 @@ const confirmAlert = (title, text, confirmButtonText, cancelButtonText, callback
         confirmButtonText: confirmButtonText,
         cancelButtonText: cancelButtonText,
         reverseButtons: true,
-    }).then(function (result){
-        if(result.isConfirmed)
-            callback();
+    }).then(function (result) {
+        if (result.isConfirmed) callback();
     })
 }
 
+const turnOffNotification = (appContext, notificationUserId) => {
+    fetch(`${appContext}admin/api/notifications-user/${notificationUserId}`, {
+        method: "PATCH", headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(res => {
+        if (res.ok) {
+            let notificationUserArea = document.getElementById("notification-user-area");
 
+            notificationUserArea.removeChild(document.getElementById(`notification-user-${notificationUserId}`))
+
+            if (document.getElementsByClassName("notification-user").length === 0) {
+                notificationUserArea.innerHTML = `<li class="text-center text-secondary">Không có thông báo.</li>`
+            }
+        }
+    }).catch(err => {
+        console.error(err)
+    })
+}
 
 

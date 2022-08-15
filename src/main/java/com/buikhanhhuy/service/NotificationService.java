@@ -9,4 +9,5 @@ public interface NotificationService {
     public List<Notification> getNotifications(Map<String, String> params);
     public long countNotification(Map<String, String> params);
     public boolean addNotification(Notification notification, Map<String, String> params);
+    public boolean deleteNotification(int notificationId);
 }

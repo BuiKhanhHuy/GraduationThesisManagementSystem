@@ -10,4 +10,5 @@ public interface NotificationRepository {
     public List<Notification> getNotifications (Map<String, String> params);
     public long countNotification(Map<String, String> params);
     public boolean addNotification(Notification notification, Set<Integer> usersId);
+    public boolean deleteNotification(int notificationId);
 }

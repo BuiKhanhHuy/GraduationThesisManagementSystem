@@ -60,6 +60,7 @@ const saveChange = (endpoint, newsId = null) => {
     $('input').next('span').remove();
     document.getElementById("error-content").innerText = ""
 
+    showLoading()
     if (newsId === null) {
         // ADD
         fetch(endpoint, {
@@ -83,7 +84,7 @@ const saveChange = (endpoint, newsId = null) => {
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình thêm dữ liệu!", "Ok")
-        })
+        }).finally(hideLoading)
     } else {
         // UPDATE
         fetch(endpoint, {
@@ -106,13 +107,15 @@ const saveChange = (endpoint, newsId = null) => {
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
-        })
+        }).finally(hideLoading)
     }
 }
 
 const deleteNewsItem = (endpoint) => {
     // DELETE
     confirmAlert("Bạn có chắc không?", "Bạn sẽ không thể khôi phục điều này!", "Có, xóa nó", "Không, hủy bỏ", () => {
+       showLoading()
+
         fetch(endpoint, {
             method: "DELETE", headers: {
                 'Content-Type': 'application/json'
@@ -121,7 +124,7 @@ const deleteNewsItem = (endpoint) => {
             if (res.status === 204) successfulAlert("Xóa bản tin thành công", "Ok", () => location.reload());
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình xóa dữ liệu!", "Ok")
-        })
+        }).finally(hideLoading)
     })
 }
 

@@ -36,6 +36,11 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
+    public void changePassword(int userId, String newPassword) {
+        this.userRepository.changePassword(userId, newPassword);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userRepository.getUserByUserName(username);
 

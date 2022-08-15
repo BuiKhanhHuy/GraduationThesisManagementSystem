@@ -56,6 +56,7 @@ const saveChange = (endpoint, majorId = null) => {
     form.serializeArray().forEach(item => formData[item.name] = item.value)
     $('input').next('span').remove();
 
+    showLoading();
     if (majorId === null) {
         // ADD
         fetch(endpoint, {
@@ -75,7 +76,7 @@ const saveChange = (endpoint, majorId = null) => {
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình thêm dữ liệu!", "Ok")
-        })
+        }).finally(hideLoading)
     } else {
         // UPDATE
         fetch(endpoint, {
@@ -95,14 +96,15 @@ const saveChange = (endpoint, majorId = null) => {
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
-        })
+        }).finally(hideLoading)
     }
 }
 
 const deleteMajorItem = (endpoint) => {
     // DELETE
     confirmAlert("Bạn có chắc không?", "Bạn sẽ không thể khôi phục điều này!", "Có, xóa nó", "Không, hủy bỏ", () => {
-        const response = fetch(endpoint, {
+        showLoading();
+        fetch(endpoint, {
             method: "DELETE", headers: {
                 'Content-Type': 'application/json'
             }
@@ -110,7 +112,7 @@ const deleteMajorItem = (endpoint) => {
             if (res.status === 204) successfulAlert("Xóa ngành thành công", "Ok", () => location.reload());
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình xóa dữ liệu!", "Ok")
-        })
+        }).finally(hideLoading)
     })
 }
 

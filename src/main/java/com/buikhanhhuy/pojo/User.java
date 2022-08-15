@@ -5,6 +5,7 @@
 package com.buikhanhhuy.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -45,18 +46,22 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotEmpty(message = "{user.add.password.notNullMessage}")
     @NotNull(message = "{user.add.password.notNullMessage}")
-    @Size(max = 50, message = "{user.add.password.sizeMessage}")
+    @Size(max = 255, message = "{user.add.password.sizeMessage}")
     @Column(name = "password")
     private String password;
     @Transient
     private String newPassword;
     @Basic(optional = false)
     @Size(max = 350)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "avatar")
     private String avatar;
+
+    @Transient
+    private MultipartFile avatarFile;
     @Basic(optional = false)
     @Column(name = "active")
-    private boolean active;
+    private Boolean active;
     @OneToMany(mappedBy = "user")
     private Set<News> news;
     @OneToOne(mappedBy = "user")
@@ -126,11 +131,11 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
-    public boolean getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
@@ -165,6 +170,14 @@ public class User implements Serializable {
 
     public void setManage(Manage manage) {
         this.manage = manage;
+    }
+
+    public MultipartFile getAvatarFile() {
+        return avatarFile;
+    }
+
+    public void setAvatarFile(MultipartFile avatarFile) {
+        this.avatarFile = avatarFile;
     }
 
     @XmlTransient

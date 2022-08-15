@@ -6,6 +6,7 @@ import com.buikhanhhuy.repository.UserRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,8 @@ import java.util.*;
 public class UserRepositoryImplement implements UserRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<Object[]> getUsers(Map<String, String> params) {
@@ -115,5 +118,18 @@ public class UserRepositoryImplement implements UserRepository {
         query.where(builder.equal(root.get("username").as(String.class), username.trim()));
 
         return session.createQuery(query).getSingleResult();
+    }
+
+    @Override
+    public void changePassword(int userId, String newPassword) {
+        if(newPassword != null && !newPassword.isEmpty()){
+            Session session = sessionFactoryBean.getObject().getCurrentSession();
+
+            User user = session.get(User.class, userId);
+
+            user.setPassword(this.passwordEncoder.encode(newPassword));
+
+            session.update(user);
+        }
     }
 }

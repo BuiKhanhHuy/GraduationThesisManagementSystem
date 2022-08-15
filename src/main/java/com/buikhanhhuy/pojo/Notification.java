@@ -36,14 +36,14 @@ public class Notification implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotEmpty(message = "{notification.add.title.notNullMessage}")
     @NotNull(message = "{notification.add.title.notNullMessage}")
-    @Size( max = 100, message = "{notification.add.title.sizeMessage}")
+    @NotEmpty(message = "{notification.add.title.notNullMessage}")
+    @Size(max = 100, message = "{notification.add.title.sizeMessage}")
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
-    @NotEmpty(message = "{notification.add.content.notNullMessage}")
     @NotNull(message = "{notification.add.content.notNullMessage}")
+    @NotEmpty(message = "{notification.add.content.notNullMessage}")
     @Size(max = 255, message = "{notification.add.content.sizeMessage}")
     @Column(name = "content")
     private String content;

@@ -84,3 +84,52 @@
         </div>
     </div>
 </div>
+
+<div>
+ <form id="myform">
+     <input type="file" name="file" id="file" value="Chọn file"/>
+     <img id="output" alt="image" width="100" height="100"/>
+     <button onclick="upload()">Upload</button>
+ </form>
+</div>
+
+<script>
+    const fileUploader = document.getElementById('file');
+    var file = null;
+
+    fileUploader.addEventListener('change', (event) => {
+        file = event.target.files[0];
+        console.log(file)
+
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(file);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    });
+
+    const upload = () => {
+        var formData = new FormData();
+        formData.append("file", file);
+        formData.append('user', new Blob([JSON.stringify({
+            "username": "root",
+            "password": "root"
+        })], {
+            type: "application/json"
+        }));
+
+        fetch("/GraduationThesisManagementSystem/api/upload-file", {
+            method: 'POST',
+            body: formData,
+
+        }).then(res => {
+            if (res.ok) {
+                alert("thanh cong")
+            } else {
+                Promise.reject("Lỗi")
+            }
+        }).catch(err => {
+            errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình tải dữ liệu!", "Ok")
+        })
+    }
+</script>

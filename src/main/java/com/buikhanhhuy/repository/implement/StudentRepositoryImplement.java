@@ -198,7 +198,8 @@ public class StudentRepositoryImplement implements StudentRepository {
             User objUser = session.get(User.class, objStudent.getUser().getId());
             objUser.setUsername(student.getUser().getUsername());
             objUser.setPassword(student.getUser().getPassword());
-            // objUser.setAvatar(manage.getUser().getAvatar());
+            if (student.getUser().getAvatar() != null)
+                objUser.setAvatar(student.getUser().getAvatar());
             objUser.setActive(student.getUser().getActive());
 
             session.update(objUser);

@@ -4,6 +4,7 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.io.Serializable;
@@ -44,6 +45,7 @@ public class NotificationUser implements Serializable {
     private Notification notification;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private User user;
 
     {

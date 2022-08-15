@@ -169,8 +169,7 @@ public class LecturerRepositoryImplement implements LecturerRepository {
     public boolean addLecturer(Lecturer lecturer) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         try {
-            if (this.userRepository.addUser(lecturer.getUser()))
-                session.save(lecturer);
+            if (this.userRepository.addUser(lecturer.getUser())) session.save(lecturer);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -196,8 +195,8 @@ public class LecturerRepositoryImplement implements LecturerRepository {
 
             User objUser = session.get(User.class, objLecturer.getUser().getId());
             objUser.setUsername(lecturer.getUser().getUsername());
-            objUser.setPassword(lecturer.getUser().getPassword());
-            // objUser.setAvatar(manage.getUser().getAvatar());
+            if (lecturer.getUser().getAvatar() != null)
+                objUser.setAvatar(lecturer.getUser().getAvatar());
             objUser.setActive(lecturer.getUser().getActive());
             objUser.setRole(lecturer.getUser().getRole());
 

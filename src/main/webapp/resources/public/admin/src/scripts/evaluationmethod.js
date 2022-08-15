@@ -233,6 +233,7 @@ const saveChange = (endpoint, evaluationMethodId = null, oldData = null) => {
 
     $('input').next('span').remove();
 
+    showLoading()
     if (evaluationMethodId === null) {
         // ADD
         fetch(endpoint, {
@@ -256,7 +257,7 @@ const saveChange = (endpoint, evaluationMethodId = null, oldData = null) => {
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình thêm dữ liệu!", "Ok")
-        })
+        }).finally(hideLoading)
     } else {
         // UPDATE
         fetch(endpoint, {
@@ -280,13 +281,15 @@ const saveChange = (endpoint, evaluationMethodId = null, oldData = null) => {
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
-        })
+        }).finally(hideLoading)
     }
 }
 
 const deleteEvaluationMethodItem = (endpoint) => {
     // DELETE
     confirmAlert("Bạn có chắc không?", "Bạn sẽ không thể khôi phục điều này!", "Có, xóa nó", "Không, hủy bỏ", () => {
+        showLoading()
+
         fetch(endpoint, {
             method: "DELETE", headers: {
                 'Content-Type': 'application/json'
@@ -295,7 +298,7 @@ const deleteEvaluationMethodItem = (endpoint) => {
             if (res.status === 204) successfulAlert("Xóa phương pháp đánh giá thành công", "Ok", () => location.reload());
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình xóa dữ liệu!", "Ok")
-        })
+        }).finally(hideLoading)
     })
 }
 

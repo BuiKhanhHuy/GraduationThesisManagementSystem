@@ -2,9 +2,11 @@ package com.buikhanhhuy.service.implement;
 
 import com.buikhanhhuy.pojo.Student;
 import com.buikhanhhuy.repository.StudentRepository;
+import com.buikhanhhuy.service.CloudinaryService;
 import com.buikhanhhuy.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,8 @@ import java.util.Map;
 public class StudentServiceImplement implements StudentService {
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @Override
     public List<Object[]> getStudentOptions() {
@@ -35,12 +39,22 @@ public class StudentServiceImplement implements StudentService {
     }
 
     @Override
-    public boolean addStudent(Student student) {
+    public boolean addStudent(Student student, MultipartFile file) {
+        if(file != null){
+            String avatarStr = this.cloudinaryService.uploadAvatar(file);
+            student.getUser().setAvatar(avatarStr);
+        }
+
         return this.studentRepository.addStudent(student);
     }
 
     @Override
-    public boolean updateStudent(int studentId, Student student) {
+    public boolean updateStudent(int studentId, Student student, MultipartFile file) {
+        if(file != null){
+            String avatarStr = this.cloudinaryService.uploadAvatar(file);
+            student.getUser().setAvatar(avatarStr);
+        }
+
         return this.studentRepository.updateStudent(studentId, student);
     }
 

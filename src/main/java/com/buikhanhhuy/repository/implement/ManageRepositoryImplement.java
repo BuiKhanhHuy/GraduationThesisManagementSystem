@@ -158,8 +158,8 @@ public class ManageRepositoryImplement implements ManageRepository {
 
             User objUser = session.get(User.class, objManage.getUser().getId());
             objUser.setUsername(manage.getUser().getUsername());
-            objUser.setPassword(manage.getUser().getPassword());
-//          objUser.setAvatar(manage.getUser().getAvatar());
+            if (manage.getUser().getAvatar() != null)
+                objUser.setAvatar(manage.getUser().getAvatar());
             objUser.setActive(manage.getUser().getActive());
 
             session.update(objUser);

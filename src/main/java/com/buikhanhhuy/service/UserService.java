@@ -12,4 +12,5 @@ public interface UserService extends UserDetailsService {
     public List<Object[]> getUsers(Map<String, String> params);
     public Set<Integer> getUsers(Map<String, String> params, List<Integer> usersId);
     public User getUserByUserName(String username);
+    public void changePassword(int userId, String newPassword);
 }

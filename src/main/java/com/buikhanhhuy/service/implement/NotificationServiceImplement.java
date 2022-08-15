@@ -7,7 +7,6 @@ import com.buikhanhhuy.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +33,11 @@ public class NotificationServiceImplement implements NotificationService {
     public boolean addNotification(Notification notification,
                                    Map<String, String> params) {
         Set<Integer> usersId = userRepository.getUsers(params, Arrays.asList(notification.getUsersId()));
-        this.notificationRepository.addNotification(notification, usersId);
-        return false;
+        return this.notificationRepository.addNotification(notification, usersId);
+    }
+
+    @Override
+    public boolean deleteNotification(int notificationId) {
+        return this.notificationRepository.deleteNotification(notificationId);
     }
 }

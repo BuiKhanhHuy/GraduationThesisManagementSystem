@@ -2,9 +2,11 @@ package com.buikhanhhuy.service.implement;
 
 import com.buikhanhhuy.pojo.Manage;
 import com.buikhanhhuy.repository.ManageRepository;
+import com.buikhanhhuy.service.CloudinaryService;
 import com.buikhanhhuy.service.ManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,8 @@ import java.util.Map;
 public class ManageServiceImplement implements ManageService {
     @Autowired
     private ManageRepository manageRepository;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @Override
     public List<Manage> getManages(Map<String, String> params) {
@@ -25,7 +29,11 @@ public class ManageServiceImplement implements ManageService {
     }
 
     @Override
-    public boolean addManage(Manage manage) {
+    public boolean addManage(Manage manage, MultipartFile file) {
+        if(file != null){
+            String avatarStr = this.cloudinaryService.uploadAvatar(file);
+            manage.getUser().setAvatar(avatarStr);
+        }
         return manageRepository.addManage(manage);
     }
 
@@ -35,7 +43,11 @@ public class ManageServiceImplement implements ManageService {
     }
 
     @Override
-    public boolean updateManage(int manageId, Manage manage) {
+    public boolean updateManage(int manageId, Manage manage, MultipartFile file) {
+        if(file != null){
+            String avatarStr = this.cloudinaryService.uploadAvatar(file);
+            manage.getUser().setAvatar(avatarStr);
+        }
         return this.manageRepository.updateManage(manageId, manage);
     }
 

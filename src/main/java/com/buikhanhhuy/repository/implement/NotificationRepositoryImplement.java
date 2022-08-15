@@ -85,4 +85,17 @@ public class NotificationRepositoryImplement implements NotificationRepository {
         }
         return false;
     }
+
+    @Override
+    public boolean deleteNotification(int notificationId) {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            Notification objNotification = session.get(Notification.class, notificationId);
+            session.delete(objNotification);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 }

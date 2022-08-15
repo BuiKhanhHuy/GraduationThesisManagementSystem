@@ -111,7 +111,7 @@ const saveChange = (endpoint, thesisId = null) => {
     $('input').next('span').remove();
     $('select + span').next('span').remove()
 
-    onSaveDataLoading();
+    showLoading()
     if (thesisId === null) {
         // ADD
         fetch(endpoint, {
@@ -151,7 +151,7 @@ const saveChange = (endpoint, thesisId = null) => {
         }).catch(err => {
             console.error(err)
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình thêm dữ liệu!", "Ok")
-        }).finally(offSaveDataLoading)
+        }).finally(hideLoading)
     } else {
         console.log(formData)
         // UPDATE
@@ -190,13 +190,15 @@ const saveChange = (endpoint, thesisId = null) => {
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
-        }).finally(offSaveDataLoading)
+        }).finally(hideLoading)
     }
 }
 
 const deleteThesisItem = (endpoint) => {
     // DELETE
     confirmAlert("Bạn có chắc không?", "Bạn sẽ không thể khôi phục điều này!", "Có, xóa nó", "Không, hủy bỏ", () => {
+        showLoading()
+
         fetch(endpoint, {
             method: "DELETE", headers: {
                 'Content-Type': 'application/json'
@@ -205,7 +207,7 @@ const deleteThesisItem = (endpoint) => {
             if (res.status === 204) successfulAlert("Xóa khóa luận thành công", "Ok", () => location.reload());
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình xóa dữ liệu!", "Ok")
-        })
+        }).finally(hideLoading)
     })
 }
 

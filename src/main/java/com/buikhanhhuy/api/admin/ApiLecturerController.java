@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -43,8 +44,9 @@ public class ApiLecturerController {
         }
     }
 
-    @PostMapping(path = "/lecturers", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Map<String, String>> addLecturer(@Valid @RequestBody Lecturer lecturer, BindingResult result) {
+    @PostMapping(path = "/lecturers", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map<String, String>> addLecturer(@RequestPart(value = "avatarFile", required = false) MultipartFile file,
+                                                           @RequestPart("lecturer") @Valid Lecturer lecturer, BindingResult result) {
         Map<String, String> errorMessages = new HashMap<>();
         HttpStatus status = null;
 
@@ -52,17 +54,15 @@ public class ApiLecturerController {
             errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             status = HttpStatus.BAD_REQUEST;
         } else {
-            if (this.lecturerService.addLecturer(lecturer))
-                status = HttpStatus.CREATED;
-            else
-                status = HttpStatus.INTERNAL_SERVER_ERROR;
+            if (this.lecturerService.addLecturer(lecturer, file)) status = HttpStatus.CREATED;
+            else status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
         return new ResponseEntity<>(errorMessages, status);
     }
 
-    @PatchMapping(path = "/lecturers/{lecturerId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Map<String, String>> updateLecturer(@PathVariable("lecturerId") int lecturerId, @Valid @RequestBody Lecturer lecturer, BindingResult result) {
+    @PostMapping(path = "/lecturers/{lecturerId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map<String, String>> updateLecturer(@PathVariable("lecturerId") int lecturerId, @RequestPart(value = "avatarFile", required = false) MultipartFile file, @RequestPart("lecturer") @Valid Lecturer lecturer, BindingResult result) {
         Map<String, String> errorMessages = new HashMap<>();
         HttpStatus status = null;
 
@@ -70,8 +70,7 @@ public class ApiLecturerController {
             errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             status = HttpStatus.BAD_REQUEST;
         } else {
-            if (this.lecturerService.updateLecturer(lecturerId, lecturer))
-                status = HttpStatus.OK;
+            if (this.lecturerService.updateLecturer(lecturerId, lecturer, file)) status = HttpStatus.OK;
             else status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 

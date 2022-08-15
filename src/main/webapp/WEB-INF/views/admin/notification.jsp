@@ -72,7 +72,7 @@
                     </td>
                     <td class="text-center">
                         <div class="btn-list">
-                            <button
+                            <button onclick="deleteNotificationItem('<c:url value="/admin/api/notifications/${notification.id}"/>')"
                                     type="button" class="btn btn-sm bg-danger text-white"
                                     data-toggle="tooltip"
                                     data-placement="bottom" title="Xóa">

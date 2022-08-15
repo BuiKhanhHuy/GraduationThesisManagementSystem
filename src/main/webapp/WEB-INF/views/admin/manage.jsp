@@ -6,6 +6,7 @@
 <c:url value="/public/admin/src/images/avatar/avatar-default.jpg" var="avatarDefault"/>
 <c:url var="filterManage" value=""/>
 <c:url var="home" value="/admin/"/>
+<c:url var="appContext" value="/"/>
 
 <div class="page-header">
     <div class="row">
@@ -65,7 +66,7 @@
         </div>
         <sec:authorize access="hasAuthority('ADMIN')">
             <div class="pull-right">
-                <button onclick="showAddManageModal('<c:url value="/admin/api/manages"/>')"
+                <button onclick="showAddManageModal('${appContext}')"
                         type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
                     Thêm quản trị viên
                 </button>
@@ -101,6 +102,11 @@
                             <li>${manage.fullName}</li>
                             <li>${manage.email}</li>
                             <li>${manage.phone}</li>
+                            <a onclick="changePassword('${appContext}', ${manage.user.id})"
+                               href="javascript:;"
+                               class="ml-2 text-blue">
+                                <i class="icon-copy fa fa-key" aria-hidden="true"></i>
+                                Đổi mật khẩu</a>
                         </ul>
                     </td>
                     <td class="text-center">
@@ -120,14 +126,14 @@
                     <sec:authorize access="hasAuthority('ADMIN')">
                         <td class="text-center">
                             <div class="btn-list">
-                                <button onclick="showEditManageModal('<c:url value="/admin/api/manages/${manage.id}"/>',
+                                <button onclick="showEditManageModal('${appContext}',
                                     ${manage.id})"
                                         type="button" class="btn btn-sm bg-warning text-white"
                                         data-toggle="tooltip"
                                         data-placement="bottom" title="Cập nhật">
                                     <i class="icon-copy dw dw-edit1"></i>
                                 </button>
-                                <button onclick="deleteManageItem('<c:url value="/admin/api/manages/${manage.id}"/>')"
+                                <button onclick="deleteManageItem('${appContext}', ${manage.id})"
                                         type="button" class="btn btn-sm bg-danger text-white"
                                         data-toggle="tooltip"
                                         data-placement="bottom" title="Xóa">
@@ -174,23 +180,25 @@
             <div class="modal-body">
                 <form id="form-add-edit-manage">
                     <div class="pd-10">
-                        <div class="form-group">
-                            <label class="font-weight-bold">Ảnh đại diện<span
-                                    class="text-danger">(*)</span></label>
-                            <div class="custom-file">
-                                <input type="file" name="avatar" id="avatar" class="custom-file-input">
-                                <label class="custom-file-label">Chọn ảnh</label>
-                            </div>
+                        <div class="profile-photo text-center" style="width: 120px; height: 120px">
+                            <img style="width: 120px; height: 120px"
+                                 id="file-output"
+                                 src="<c:url value="/public/admin/vendors/images/photo1.jpg"/> "
+                                 alt=""
+                                 class="avatar-photo img-fluid">
+                        </div>
+                        <div class="text-center">
+                            <label class="btn btn-outline-info btn-sm">
+                                <i class="fa fa-upload"></i> Chọn ảnh <input type="file" id="file" name="file" accept="image/*" hidden>
+                            </label>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold">Tên người dùng<span
                                     class="text-danger">(*)</span></label>
-                            <input name="username" id="username" type="text" class="form-control">
+                            <input name="username" id="username" type="text" class="form-control" autocomplete="off">
                         </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold">Mật khẩu<span
-                                    class="text-danger">(*)</span></label>
-                            <input name="password" id="password" type="password" class="form-control">
+                        <div class="form-group" id="password-area">
+
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold">Họ và tên<span
@@ -209,8 +217,8 @@
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox mb-5">
-                                <input type="checkbox" class="custom-control-input" name="active" id="id-active">
-                                <label class="custom-control-label" for="id-active">Hoạt động</label>
+                                <input type="checkbox" class="custom-control-input" name="is-active" id="is-active">
+                                <label class="custom-control-label" for="is-active">Hoạt động</label>
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 package com.buikhanhhuy.repository.implement;
 
+import com.buikhanhhuy.pojo.Major;
 import com.buikhanhhuy.pojo.Notification;
 import com.buikhanhhuy.pojo.NotificationUser;
 import com.buikhanhhuy.pojo.User;
@@ -10,6 +11,9 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Set;
 
@@ -39,4 +43,37 @@ public class NotificationUserRepositoryImplement implements NotificationUserRepo
 
         return false;
     }
+
+    @Override
+    public List<NotificationUser> getNotificationUser(int userId) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<NotificationUser> query = builder.createQuery(NotificationUser.class);
+            Root<NotificationUser> root = query.from(NotificationUser.class);
+            query.select(root);
+            query.where(builder.equal(root.get("user"), userId),
+                    builder.equal(root.get("active"), true));
+
+            return session.createQuery(query).getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void turnOffNotification(int notificationUserId) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        try{
+            NotificationUser notificationUser = session.get(NotificationUser.class, notificationUserId);
+            notificationUser.setActive(false);
+
+            session.update(notificationUser);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+
 }

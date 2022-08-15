@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:url value="/public/admin/src/images/avatar/avatar-default.jpg" var="avatarDefault"/>
 <c:url var="filterStudent" value=""/>
 <c:url var="home" value="/admin/"/>
+<c:url var="appContext" value="/"/>
 
 <div class="page-header">
     <div class="row">
@@ -83,7 +84,7 @@
             <h4 class="text-blue h4">Danh sách sinh viên</h4>
         </div>
         <div class="pull-right">
-            <button onclick="showAddStudentModal('<c:url value="/admin/api/students"/>')"
+            <button onclick="showAddStudentModal('${appContext}')"
                     type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
                 Thêm sinh viên
             </button>
@@ -121,7 +122,7 @@
                             <li>${student.fullName}</li>
                             <li>${student.email}</li>
                             <li>${student.phone}</li>
-                            <li> <fmt:formatDate type="date" value="${student.birthday}"/></li>
+                            <li><fmt:formatDate type="date" value="${student.birthday}"/></li>
                             <li>
                                 <c:if test="${student.gender == 1}">
                                     Nam
@@ -135,6 +136,11 @@
                             </li>
                             <li>${student.address}</li>
                         </ul>
+                        <a onclick="changePassword('${appContext}', ${student.user.id})"
+                           href="javascript:;"
+                           class="ml-2 text-blue">
+                            <i class="icon-copy fa fa-key" aria-hidden="true"></i>
+                            Đổi mật khẩu</a>
                     </td>
                     <td>
                         <c:if test="${student.schoolYear != null}">
@@ -167,14 +173,12 @@
                     </td>
                     <td class="text-center">
                         <div class="btn-list">
-                            <button onclick="showEditStudentModal('<c:url
-                                    value="/admin/api/students/${student.id}"/>', ${student.id} )"
+                            <button onclick="showEditStudentModal('${appContext}', ${student.id} )"
                                     type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
                                     data-placement="bottom" title="Chỉnh sửa">
                                 <i class="icon-copy dw dw-edit1"></i>
                             </button>
-                            <button onclick="deleteStudentItem('<c:url
-                                    value="/admin/api/students/${student.id}"/>', ${student.id} )"
+                            <button onclick="deleteStudentItem('${appContext}', ${student.id} )"
                                     type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
                                     data-placement="bottom" title="Xóa">
                                 <i class="icon-copy dw dw-delete-3"></i>
@@ -220,13 +224,17 @@
             <div class="modal-body">
                 <form id="form-add-edit-student">
                     <div class="pd-10">
-                        <div class="form-group">
-                            <label class="font-weight-bold">Ảnh đại diện<span
-                                    class="text-danger">(*)</span></label>
-                            <div class="custom-file">
-                                <input type="file" name="avatar" id="avatar" class="custom-file-input">
-                                <label class="custom-file-label">Chọn ảnh</label>
-                            </div>
+                        <div class="profile-photo text-center" style="width: 120px; height: 120px">
+                            <img style="width: 120px; height: 120px"
+                                 id="file-output"
+                                 src="<c:url value="/public/admin/vendors/images/photo1.jpg"/> "
+                                 alt=""
+                                 class="avatar-photo img-fluid">
+                        </div>
+                        <div class="text-center">
+                            <label class="btn btn-outline-info btn-sm">
+                                <i class="fa fa-upload"></i> Chọn ảnh <input type="file" id="file" name="file" accept="image/*" hidden>
+                            </label>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold">Mã sinh viên<span
@@ -302,8 +310,8 @@
                         <div id="new-password-area"></div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox mb-5">
-                                <input type="checkbox" class="custom-control-input" id="active" name="active">
-                                <label class="custom-control-label" for="active">Hoạt động</label>
+                                <input type="checkbox" class="custom-control-input" id="is-active" name="is-active">
+                                <label class="custom-control-label" for="is-active">Hoạt động</label>
                             </div>
                         </div>
                     </div>

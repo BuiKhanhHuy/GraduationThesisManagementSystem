@@ -1,12 +1,10 @@
-package com.buikhanhhuy.repository;
+package com.buikhanhhuy.service;
 
 import com.buikhanhhuy.pojo.NotificationUser;
 
 import java.util.List;
-import java.util.Set;
 
-public interface NotificationUserRepository {
-    public boolean addNotificationUser(int notificationId, Set<Integer> usersId);
+public interface NotificationUserService {
     public List<NotificationUser> getNotificationUser(int userId);
     public void turnOffNotification(int notificationUserId);
 }

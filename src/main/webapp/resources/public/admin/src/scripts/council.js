@@ -198,6 +198,7 @@ const saveChange = (endpoint, councilId = null) => {
     })
     console.warn(formData)
 
+    showLoading()
     if (councilId === null) {
         // ADD
         fetch(endpoint, {
@@ -229,7 +230,7 @@ const saveChange = (endpoint, councilId = null) => {
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình thêm dữ liệu!", "Ok")
-        })
+        }).finally(hideLoading)
     } else {
         // UPDATE
         // fetch(endpoint, {
@@ -249,7 +250,7 @@ const saveChange = (endpoint, councilId = null) => {
         //     }
         // }).catch(err => {
         //     errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình cập nhật!", "Ok")
-        // })
+        // }).finally(hideLoading)
     }
 }
 
@@ -257,7 +258,9 @@ const deleteCouncilItem = (appContext, councilId) => {
     let endpoint = `${appContext}admin/api/councils/${councilId}`
     // DELETE
     confirmAlert("Bạn có chắc không?", "Bạn sẽ không thể khôi phục điều này!", "Có, xóa nó", "Không, hủy bỏ", () => {
-        const response = fetch(endpoint, {
+        showLoading()
+
+        fetch(endpoint, {
             method: "DELETE", headers: {
                 'Content-Type': 'application/json'
             }
@@ -265,7 +268,7 @@ const deleteCouncilItem = (appContext, councilId) => {
             if (res.status === 204) successfulAlert("Xóa hội đồng thành công", "Ok", () => location.reload());
         }).catch(err => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình xóa dữ liệu!", "Ok")
-        })
+        }).finally(hideLoading)
     })
 }
 

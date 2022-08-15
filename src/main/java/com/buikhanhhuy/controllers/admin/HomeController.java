@@ -1,8 +1,12 @@
 package com.buikhanhhuy.controllers.admin;
 
 import com.buikhanhhuy.constants.SystemConstant;
+import com.buikhanhhuy.pojo.Notification;
+import com.buikhanhhuy.pojo.NotificationUser;
 import com.buikhanhhuy.pojo.Thesis;
+import com.buikhanhhuy.pojo.User;
 import com.buikhanhhuy.service.EmailService;
+import com.buikhanhhuy.service.NotificationUserService;
 import com.buikhanhhuy.service.ThesisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller(value = "AdminHomeController")
@@ -27,12 +32,21 @@ public class HomeController {
     private EmailService emailService;
     @Autowired
     private ThesisService thesisService;
+    @Autowired
+    private NotificationUserService notificationUserService;
 
 
     @ModelAttribute
     public void commonAttribute(Model model, HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if(currentUser != null){
+            model.addAttribute("notificationUsers", this.notificationUserService.getNotificationUser(currentUser.getId()));
+        }
+        else {
+            model.addAttribute("notificationUsers", null);
+        }
         model.addAttribute("pageSize", SystemConstant.PAGE_SIZE);
-        model.addAttribute("currentUser", session.getAttribute("currentUser"));
+        model.addAttribute("currentUser", currentUser);
     }
 
     @GetMapping(path = "/")

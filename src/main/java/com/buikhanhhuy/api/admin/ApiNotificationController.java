@@ -42,4 +42,10 @@ public class ApiNotificationController {
 
         return new ResponseEntity<>(errorMessages, status);
     }
+
+    @DeleteMapping(path = "/notifications/{notificationId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteNotification(@PathVariable("notificationId") int notificationId) {
+        this.notificationService.deleteNotification(notificationId);
+    }
 }

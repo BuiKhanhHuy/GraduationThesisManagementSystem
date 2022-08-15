@@ -5,6 +5,7 @@
 <c:url value="/public/admin/src/images/avatar/avatar-default.jpg" var="avatarDefault"/>
 <c:url var="filterLecturer" value=""/>
 <c:url var="home" value="/admin/"/>
+<c:url var="appContext" value="/"/>
 
 <div class="page-header">
     <div class="row">
@@ -95,7 +96,7 @@
             <h4 class="text-blue h4">Danh sách giảng viên</h4>
         </div>
         <div class="pull-right">
-            <button onclick="showAddLecturerModal('<c:url value="/admin/api/lecturers"/>')"
+            <button onclick="showAddLecturerModal('${appContext}')"
                     type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
                 Thêm giảng viên
             </button>
@@ -150,6 +151,11 @@
                                 </c:if>
                             </li>
                             <li>${lecturer.address}</li>
+                            <a onclick="changePassword('${appContext}', ${lecturer.user.id})"
+                               href="javascript:;"
+                               class="ml-2 text-blue">
+                                <i class="icon-copy fa fa-key" aria-hidden="true"></i>
+                                Đổi mật khẩu</a>
                         </ul>
                     </td>
                     <td>
@@ -191,14 +197,12 @@
                     </td>
                     <td class="text-center">
                         <div class="btn-list">
-                            <button onclick="showEditLectureModal('<c:url
-                                    value="/admin/api/lecturers/${lecturer.id}"/>', ${lecturer.id})"
+                            <button onclick="showEditLectureModal('${appContext}', ${lecturer.id})"
                                     type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
                                     data-placement="bottom" title="Chỉnh sửa">
                                 <i class="icon-copy dw dw-edit1"></i>
                             </button>
-                            <button onclick="deleteLecturerItem('<c:url
-                                    value="/admin/api/lecturers/${lecturer.id}"/>', ${lecturer.id})"
+                            <button onclick="deleteLecturerItem('${appContext}', ${lecturer.id})"
                                     type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
                                     data-placement="bottom" title="Xóa">
                                 <i class="icon-copy dw dw-delete-3"></i>
@@ -244,13 +248,17 @@
             <div class="modal-body">
                 <form id="form-add-edit-lecturer">
                     <div class="pd-10">
-                        <div class="form-group">
-                            <label class="font-weight-bold">Ảnh đại diện<span
-                                    class="text-danger">(*)</span></label>
-                            <div class="custom-file">
-                                <input type="file" name="avatar" id="avatar" class="custom-file-input">
-                                <label class="custom-file-label">Chọn ảnh</label>
-                            </div>
+                        <div class="profile-photo text-center" style="width: 120px; height: 120px">
+                            <img style="width: 120px; height: 120px"
+                                 id="file-output"
+                                 src="<c:url value="/public/admin/vendors/images/photo1.jpg"/> "
+                                 alt=""
+                                 class="avatar-photo img-fluid">
+                        </div>
+                        <div class="text-center">
+                            <label class="btn btn-outline-info btn-sm">
+                                <i class="fa fa-upload"></i> Chọn ảnh <input type="file" id="file" name="file" accept="image/*" hidden>
+                            </label>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold">Mã giảng viên<span
@@ -333,8 +341,8 @@
                         <div id="new-password-area"></div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox mb-5">
-                                <input type="checkbox" class="custom-control-input" id="active" name="active">
-                                <label class="custom-control-label" for="active">Hoạt động</label>
+                                <input type="checkbox" class="custom-control-input" id="is-active" name="is-active">
+                                <label class="custom-control-label" for="is-active">Hoạt động</label>
                             </div>
                         </div>
                     </div>

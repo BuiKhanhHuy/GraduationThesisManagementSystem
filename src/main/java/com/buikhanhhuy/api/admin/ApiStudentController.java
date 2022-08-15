@@ -10,8 +10,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +45,12 @@ public class ApiStudentController {
         }
     }
 
-    @PostMapping(path = "/students", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Map<String, String>> addStudent(@Valid @RequestBody Student student, BindingResult result) {
+    @PostMapping(path = "/students",
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map<String, String>> addStudent(@RequestPart(value = "avatarFile", required = false) MultipartFile file,
+                                                          @RequestPart("student") @Valid  Student student,
+                                                          BindingResult result) throws IOException {
         Map<String, String> errorMessages = new HashMap<>();
         HttpStatus status = null;
 
@@ -52,15 +58,21 @@ public class ApiStudentController {
             errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             status = HttpStatus.BAD_REQUEST;
         } else {
-            if (this.studentService.addStudent(student)) status = HttpStatus.CREATED;
+            if (this.studentService.addStudent(student, file))
+                status = HttpStatus.CREATED;
             else status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
         return new ResponseEntity<>(errorMessages, status);
     }
 
-    @PatchMapping(path = "/students/{studentId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Map<String, String>> updateStudent(@PathVariable("studentId") int studentId, @Valid @RequestBody Student student, BindingResult result) {
+    @PostMapping(path = "/students/{studentId}",
+            consumes =  {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map<String, String>> updateStudent(@PathVariable("studentId") int studentId,
+                                                             @RequestPart(value = "avatarFile", required = false) MultipartFile file,
+                                                             @RequestPart("student") @Valid  Student student,
+                                                             BindingResult result) throws IOException {
         Map<String, String> errorMessages = new HashMap<>();
         HttpStatus status = null;
 
@@ -68,7 +80,7 @@ public class ApiStudentController {
             errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             status = HttpStatus.BAD_REQUEST;
         } else {
-            if (this.studentService.updateStudent(studentId, student)) status = HttpStatus.OK;
+            if (this.studentService.updateStudent(studentId, student, file)) status = HttpStatus.OK;
             else status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
