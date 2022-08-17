@@ -1,5 +1,6 @@
 package com.buikhanhhuy.controllers.admin;
 
+import com.buikhanhhuy.pojo.User;
 import com.buikhanhhuy.service.CouncilDetailService;
 import com.buikhanhhuy.service.SchoolYearService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller(value = "AdminCouncilDetailController")
@@ -21,13 +23,18 @@ public class CouncilDetailController {
     private CouncilDetailService councilDetailService;
 
     @GetMapping(path = "/councils-detail")
-    public String councilDetailList(Model model, @RequestParam(required = false) Map<String, String> params) {
-        model.addAttribute("schoolYearOptions", this.schoolYearService.getSchoolYearOptions());
+    public String councilDetailList(Model model, HttpSession session, @RequestParam(required = false) Map<String, String> params) {
+        User user = (User) session.getAttribute("currentUser");
 
-        model.addAttribute("page", Integer.parseInt((params.get("page") != null && !params.get("page").isEmpty())
-                ? params.get("page") : "1"));
-        model.addAttribute("totalPage", this.councilDetailService.countCouncilDetail(1, params));
-        model.addAttribute("councilsDetail", this.councilDetailService.getCouncilsDetail(1, params));
+        if (user != null && user.getLecturer() != null) {
+            int lecturerId = user.getLecturer().getId();
+
+            model.addAttribute("schoolYearOptions", this.schoolYearService.getSchoolYearOptions());
+
+            model.addAttribute("page", Integer.parseInt((params.get("page") != null && !params.get("page").isEmpty()) ? params.get("page") : "1"));
+            model.addAttribute("totalPage", this.councilDetailService.countCouncilDetail(lecturerId, params));
+            model.addAttribute("councilsDetail", this.councilDetailService.getCouncilsDetail(lecturerId, params));
+        }
 
         return "adminCouncilDetailList";
     }

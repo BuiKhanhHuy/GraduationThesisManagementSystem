@@ -52,6 +52,26 @@ const confirmAlert = (title, text, confirmButtonText, cancelButtonText, callback
     })
 }
 
+const viewAlert = (title, cancelButtonText, htmlBody) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            cancelButton: 'btn btn-success'
+        }, buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+        title: title,
+        html: htmlBody,
+        focusConfirm: false,
+        showConfirmButton: false,
+        showCloseButton: true,
+        showCancelButton: true,
+        cancelButtonText: cancelButtonText,
+        reverseButtons: true,
+        width: '800px'
+    })
+}
+
 const turnOffNotification = (appContext, notificationUserId) => {
     fetch(`${appContext}admin/api/notifications-user/${notificationUserId}`, {
         method: "PATCH", headers: {

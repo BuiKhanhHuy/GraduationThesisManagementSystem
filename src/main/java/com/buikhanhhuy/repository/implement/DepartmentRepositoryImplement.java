@@ -15,6 +15,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Repository
 @Transactional
@@ -84,7 +85,7 @@ public class DepartmentRepositoryImplement implements DepartmentRepository {
 
     @Override
     public boolean addDepartment(Department department) {
-        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        Session session = Objects.requireNonNull(this.sessionFactoryBean.getObject()).getCurrentSession();
         try {
             session.save(department);
             return true;

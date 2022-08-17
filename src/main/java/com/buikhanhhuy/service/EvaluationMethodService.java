@@ -10,6 +10,7 @@ public interface EvaluationMethodService {
     public long countEvaluationMethod(Map<String, String> params);
     public boolean addEvaluationMethod(EvaluationMethod evaluationMethod);
     public EvaluationMethod getEvaluationMethodById(int evaluationMethodId);
+    public EvaluationMethod getEvaluationMethodActive();
     public boolean updateEvaluationMethod(int evaluationMethodId, EvaluationMethod evaluationMethod);
     public boolean deleteEvaluationMethod(int evaluationMethodId);
 }

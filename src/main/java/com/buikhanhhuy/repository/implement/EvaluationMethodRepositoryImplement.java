@@ -64,6 +64,23 @@ public class EvaluationMethodRepositoryImplement implements EvaluationMethodRepo
         return null;
     }
 
+    @Override
+    public EvaluationMethod getEvaluationMethodActive() {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<EvaluationMethod> query = builder.createQuery(EvaluationMethod.class);
+            Root<EvaluationMethod> root = query.from(EvaluationMethod.class);
+            query.select(root);
+            query.where(builder.equal(root.get("active"), true));
+
+            return session.createQuery(query).getSingleResult();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
 
     @Override
     public boolean addEvaluationMethod(EvaluationMethod evaluationMethod) {

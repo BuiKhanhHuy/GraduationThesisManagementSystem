@@ -38,6 +38,18 @@ public class ApiEvaluationMethodController {
         }
     }
 
+    @GetMapping(path = "/evaluations-method-active", produces = {MediaType.APPLICATION_JSON_VALUE})
+
+    public ResponseEntity<EvaluationMethod> loadEvaluationMethod() {
+        try {
+            EvaluationMethod evaluationMethod = this.evaluationMethodService.getEvaluationMethodActive();
+            return new ResponseEntity<>(evaluationMethod, HttpStatus.OK);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping(path = "/evaluations-method", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Map<String, String>> addEvaluationMethod(@Valid @RequestBody EvaluationMethod evaluationMethod,
                                                                    BindingResult result) {

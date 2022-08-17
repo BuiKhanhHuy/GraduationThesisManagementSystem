@@ -55,6 +55,8 @@ public class NotificationUserRepositoryImplement implements NotificationUserRepo
             query.where(builder.equal(root.get("user"), userId),
                     builder.equal(root.get("active"), true));
 
+            query.orderBy(builder.desc(root.get("id")));
+
             return session.createQuery(query).getResultList();
         } catch (Exception ex) {
             ex.printStackTrace();

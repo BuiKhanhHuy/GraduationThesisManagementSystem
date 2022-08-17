@@ -132,16 +132,23 @@
                                                 </c:if>
                                             </div>
                                         </div>
-                                        <div class="cta mb-10">
+                                        <div class="cta mb-10 text-center">
                                             <c:if test="${councilDetailDetail.council.block == true}">
                                                 <button disabled
-                                                        type="button" class="btn btn-warning btn-rounded btn-md"><i
+                                                        type="button" class="btn btn-warning btn-rounded btn-md mx-auto"><i
                                                         class="icon-copy fa fa-edit" aria-hidden="true"></i> Chấm điểm
                                                 </button>
+                                                <c:if test="${thesis.scored == true}">
+                                                    <div class="mt-2">
+                                                        <a onclick="viewScoredDetail('${appContext}', ${thesis.id}, ${councilDetailDetail.id})"
+                                                                href="javascript:;"
+                                                           class="font-weight-bold text-light-purple"><i class="icon-copy fa fa-sort-numeric-asc" aria-hidden="true"></i> Xem điểm đã chấm</a>
+                                                    </div>
+                                                </c:if>
                                             </c:if>
                                             <c:if test="${councilDetailDetail.council.block != true}">
                                                 <button onclick="mark('${appContext}', ${thesis.id}, ${councilDetailDetail.id})"
-                                                        type="button" class="btn btn-warning btn-rounded btn-md"><i
+                                                        type="button" class="btn btn-warning btn-rounded btn-md mx-auto"><i
                                                         class="icon-copy fa fa-edit" aria-hidden="true"></i> Chấm điểm
                                                 </button>
                                             </c:if>

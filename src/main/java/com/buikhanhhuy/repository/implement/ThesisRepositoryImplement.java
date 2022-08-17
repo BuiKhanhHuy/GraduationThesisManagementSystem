@@ -8,12 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import utils.Utils;
 
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.*;
 
 @Repository
@@ -173,6 +171,60 @@ public class ThesisRepositoryImplement implements ThesisRepository {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return false;
+    }
+
+    @Override
+    public Double scoreOfAThesisInCouncil(int councilId, int thesisId) {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+
+        try {
+            String stringQuery = "SELECT SUM(scoD.scoreNum * scoC.weight) " +
+                    "FROM CouncilDetail cd LEFT JOIN cd.scores sco " +
+                    "LEFT JOIN sco.scoreDetails scoD " +
+                    "LEFT JOIN scoD.scoreColumn scoC " +
+                    "WHERE sco.thesis.id =: thesisID AND cd.council.id =: councilId " +
+                    "GROUP BY sco.councilDetail.id";
+
+            Query query = session.createQuery(stringQuery);
+            query.setParameter("thesisID", thesisId);
+            query.setParameter("councilId", councilId);
+
+            List resultList = query.getResultList();
+
+            double totalScore = 0.0;
+            for (Object score : query.getResultList()) {
+                if (score != null) {
+                    totalScore += (Double) score;
+                }
+            }
+
+            if (resultList.size() > 0) return totalScore / resultList.size();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return 0.0;
+    }
+
+    @Override
+    public boolean thesisResult(int councilId) {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            for (Thesis thesis : session.get(Council.class, councilId).getTheses()) {
+                double scoreResult = this.scoreOfAThesisInCouncil(councilId, thesis.getId());
+
+                thesis.setTotalScore(scoreResult);
+                thesis.setResult(Utils.checkThesisResult(scoreResult));
+
+                session.update(thesis);
+            }
+
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
         return false;
     }
 }

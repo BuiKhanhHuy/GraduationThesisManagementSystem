@@ -2,6 +2,49 @@ const typeMark = {
     Add: 0, Update: 1
 }
 
+// load html form view
+const loadFormView = (scoreComponents) => {
+    let tableHtml = ''
+    let markFormInnerHtml = '';
+
+    scoreComponents.map((scoreComponent, index) => {
+        markFormInnerHtml += `<tr>
+                                <td colSpan="2" class="font-weight-bold text-left">
+                                    ${index + 1}. ${scoreComponent.name}
+                                <td/>
+                            </tr>`
+
+        scoreComponent.detailedScoreByComponentData.map(scoreDetail => {
+            markFormInnerHtml += `<tr>
+                                    <td class="text-left">
+                                        ${scoreDetail.scoreColumn.name}
+                                    </td>
+                                    <td>
+                                        ${scoreDetail.scoreColumn.weight * 100}%
+                                    </td>
+                                    <td class="font-weight-bold">
+                                        ${scoreDetail.scoreNum}
+                                    </td>
+                                </tr>`
+        })
+    })
+
+    tableHtml = `<table class="table table-bordered table-sm">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="text-center">Nội dung tiêu chí đánh giá</th>
+                                <th scope="col" class="text-center col-md-2">Thang điểm</th>
+                                <th scope="col" class="text-center col-md-2">Điểm số</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            ${markFormInnerHtml}
+                            </tbody>
+                        </table>`
+
+    return tableHtml;
+}
+
 // load html form update
 const loadFormUpdate = (scoreComponents) => {
     let markFormElement = document.getElementById("mark-form");
@@ -115,17 +158,23 @@ const mark = (appContext, thesisId, councilDetailId) => {
     loadScoresByThesisId(appContext, thesisId, councilDetailId, (data) => {
         if (data === null) {
             console.log("KHONG CO DU LIEU!!")
-            fetch(`${appContext}admin/api/evaluations-method/1`, {
+            fetch(`${appContext}admin/api/evaluations-method-active`, {
                 method: "GET", headers: {
                     "Content-Type": "application/json"
                 }
-            }).then(res => res.json()).then(evaluationData => {
-                // load form add
-                loadFormAdd(evaluationData.scoreComponents)
+            }).then(res => res.text()).then(evaluationData => {
+                let d = evaluationData.length === 0 ? null : JSON.parse(evaluationData)
 
-                // show modal add
-                document.getElementById("btn-submit-form").onclick = () => saveChange(appContext, thesisId, councilDetailId, null)
-                $('#modal-add-edit-score').modal()
+                if (d !== null) {
+                    // load form add
+                    loadFormAdd(d.scoreComponents)
+
+                    // show modal add
+                    document.getElementById("btn-submit-form").onclick = () => saveChange(appContext, thesisId, councilDetailId, null)
+                    $('#modal-add-edit-score').modal()
+                } else {
+                    errorAlert("Đã có lỗi", "Không tìm thấy phương pháp đánh giá để cho điểm. Vui lòng quay lại sau!", "Ok")
+                }
             })
         } else {
             console.log("CO DU LIEU!!")
@@ -135,6 +184,16 @@ const mark = (appContext, thesisId, councilDetailId) => {
             document.getElementById("btn-submit-form").onclick = () => saveChange(appContext, thesisId, councilDetailId, data.id)
             $('#modal-add-edit-score').modal()
         }
+    })
+}
+
+// review scored when the council is locked
+const viewScoredDetail = (appContext, thesisId, councilDetailId) => {
+    loadScoresByThesisId(appContext, thesisId, councilDetailId, (data) => {
+        let scoreComponents = groupScoreComponent(data)
+        let formView = loadFormView(scoreComponents)
+
+        viewAlert("Chi tiết điểm số đã chấm", "Ok", `${formView}`)
     })
 }
 
@@ -149,6 +208,7 @@ const saveChange = (appContext, thesisId, councilDetailId, scoreId = null) => {
 
     $('input').next('span').remove();
 
+    showLoading()
     if (scoreId === null) {
         console.log("ADD")
         formData = {
@@ -166,7 +226,7 @@ const saveChange = (appContext, thesisId, councilDetailId, scoreId = null) => {
                 "Content-Type": "application/json"
             }
         }).then(res => {
-            switch (res.status){
+            switch (res.status) {
                 case 403:
                     return Promise.reject("Không được phép thêm điểm số!")
                 case 500:
@@ -187,7 +247,7 @@ const saveChange = (appContext, thesisId, councilDetailId, scoreId = null) => {
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", err, "Ok")
-        })
+        }).finally(hideLoading)
     } else {
         console.log("UPDATE")
         formData = {
@@ -205,7 +265,7 @@ const saveChange = (appContext, thesisId, councilDetailId, scoreId = null) => {
                 "Content-Type": "application/json"
             }
         }).then(res => {
-            switch (res.status){
+            switch (res.status) {
                 case 403:
                     return Promise.reject("Không được phép chỉnh sửa!")
                 case 500:
@@ -226,7 +286,7 @@ const saveChange = (appContext, thesisId, councilDetailId, scoreId = null) => {
             }
         }).catch(err => {
             errorAlert("Đã có lỗi", err, "Ok")
-        })
+        }).finally(hideLoading)
     }
 }
 

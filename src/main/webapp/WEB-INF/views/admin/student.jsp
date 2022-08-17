@@ -107,11 +107,11 @@
             <c:forEach var="student" items="${students}">
                 <tr>
                     <td class="text-center col-1">
-                        <c:if test="${student.user.avatar == null}">
+                        <c:if test="${student.user.avatar == null || student.user.avatar.isEmpty()}">
                             <img src="${avatarDefault}" style="border-radius: 50%;" class="img-fluid" height="70"
                                  width="70" alt="">
                         </c:if>
-                        <c:if test="${student.user.avatar != null}">
+                        <c:if test="${student.user.avatar != null && !student.user.avatar.isEmpty()}">
                             <img src="${student.user.avatar}" style="border-radius: 50%;" class="img-fluid" height="70"
                                  width="70" alt="">
                         </c:if>

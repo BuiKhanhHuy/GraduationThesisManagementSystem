@@ -150,7 +150,8 @@
                         </c:if>
                     </td>
                     <td>
-                            ${thesis.totalScore}
+                        <fmt:formatNumber type = "number"
+                                          groupingUsed = "false" value = "${thesis.totalScore}" />
                     </td>
                     <td class="text-center">
                         <c:if test="${thesis.result == 1}">
@@ -309,14 +310,6 @@
                             <label class="font-weight-bold">Nội dung đánh giá</label>
                             <textarea name="comment" id="comment" class="textarea_editor form-control border-radius-0"
                                       placeholder="Viết nội dung đánh giá tại đây..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold">Tập tin khóa luận</label>
-                            <div class="custom-file">
-                                <input type="file" name="file" id="file" class="custom-file-input">
-                                <label class="custom-file-label">Chọn tệp</label>
-                            </div>
-
                         </div>
                     </div>
                 </form>

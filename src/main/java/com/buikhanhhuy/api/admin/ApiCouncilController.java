@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -61,5 +62,18 @@ public class ApiCouncilController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteCouncil(@PathVariable("councilId") int councilId) {
         this.councilService.deleteCouncil(councilId);
+    }
+
+    @PostMapping(path = "/councils/{councilId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(value = HttpStatus.OK)
+    public void lockOrUnlockCouncil(@PathVariable("councilId") int councilId,
+                                    @RequestParam(value = "block") Boolean block){
+        this.councilService.lockOrUnlockCouncil(councilId, block);
+    }
+
+    @GetMapping(path = "/councils/{councilId}/scores", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<Object[]>> scoreDetailOfCouncilForThesis(@PathVariable("councilId") int councilId,
+                                                              @RequestParam(value = "thesisId") int thesisId){
+        return new ResponseEntity<>(this.councilService.scoreDetailOfCouncilForThesis(councilId, thesisId), HttpStatus.OK);
     }
 }

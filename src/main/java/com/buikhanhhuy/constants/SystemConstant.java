@@ -2,7 +2,7 @@ package com.buikhanhhuy.constants;
 
 public class SystemConstant {
     // pagination
-    public static final int PAGE_SIZE = 2;
+    public static final int PAGE_SIZE = 10;
 
     // validator
     public static final int MAX_NUMBER_OF_TEACHER_INSTRUCTIONS = 2;
@@ -20,4 +20,7 @@ public class SystemConstant {
     public static final String ROLE_MINISTRY = "MINISTRY";
     public static final String ROLE_LECTURER = "LECTURER";
     public static final String ROLE_STUDENT = "STUDENT";
+
+    //score pass
+    public static final double SCORE_PASS = 5.0;
 }

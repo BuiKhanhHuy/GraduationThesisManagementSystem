@@ -112,16 +112,23 @@
                     </td>
                     <td class="text-center">
                         <div class="btn-list">
+                            <c:if test="${council.block == true}">
+                                <button onclick="lockOrUnLockCouncil('${appContext}', ${council.id}, ${!council.block})"
+                                        type="button" class="btn btn-sm btn-danger" data-toggle="tooltip">
+                                    <i class="icon-copy dw dw-lock font-weight-bold"></i> Mở khóa hội đồng
+                                </button>
+                            </c:if>
+                            <c:if test="${council.block != true}">
+                                <button onclick="lockOrUnLockCouncil('${appContext}', ${council.id}, ${!council.block})"
+                                        type="button" class="btn btn-sm btn-success" data-toggle="tooltip">
+                                    <i class="icon-copy dw dw-unlock font-weight-bold"></i> Khóa hội đồng
+                                </button>
+                            </c:if>
+                            |
                             <button onclick="showViewCouncilModal('${appContext}', ${council.id})"
                                     type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
                                     data-placement="bottom" title="Xem chi tiết">
                                 <i class="icon-copy dw dw-eye"></i>
-                            </button>
-                            <button onclick="showEditThesisModal('<c:url
-                                    value="/admin/api/councils/${council.id}"/>', ${council.id})"
-                                    type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                                    data-placement="bottom" title="Cập nhật">
-                                <i class="icon-copy dw dw-edit1"></i>
                             </button>
                             <button onclick="deleteCouncilItem('${appContext}', ${council.id})"
                                     type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
@@ -238,43 +245,74 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
-                <div class="pd-10">
-                    <h6 class="mb-10 text-danger">Tên hội đồng</h6>
-                    <div id="data-name" class="ml-1 mb-3"></div>
-                    <h6 class="mb-10 text-danger">Mô tả</h6>
-                    <div id="data-description" class="ml-1 mb-3"></div>
-                    <h6 class="mb-10 text-danger">Niên khóa</h6>
-                    <div id="data-schoolYear" class="ml-1 mb-3"></div>
-                    <h6 class="mb-10 text-danger">Khóa luận bảo vệ</h6>
-                    <div class="ml-1 mb-3">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th scope="col">Mã khóa luận</th>
-                                <th scope="col">Chủ đề</th>
-                            </tr>
-                            </thead>
-                            <tbody id="data-theses">
-                            </tbody>
-                        </table>
-                    </div>
-                    <h6 class="mb-10 text-danger">Thành viên hội đồng</h6>
-                    <div class="ml-1 mb-3">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th scope="col">Chức vụ</th>
-                                <th scope="col">Tên thành viên</th>
-                            </tr>
-                            </thead>
-                            <tbody id="data-lecturers">
-                            </tbody>
-                        </table>
-                    </div>
-                    <h6 class="mb-10 text-danger">Trạng thái hội đồng</h6>
-                    <div class="ml-1" id="data-block">
+                <div class="tab height-100-p">
+                    <ul class="nav nav-tabs customtab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab">Thông tin chi tiết</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tasks" role="tab">Điểm số</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- Timeline Tab start -->
+                        <div class="tab-pane fade show active" id="timeline" role="tabpanel">
+                            <div class="pd-20">
+                                <h6 class="mb-10 text-danger">Tên hội đồng</h6>
+                                <div id="data-name" class="ml-1 mb-3"></div>
+                                <h6 class="mb-10 text-danger">Mô tả</h6>
+                                <div id="data-description" class="ml-1 mb-3"></div>
+                                <h6 class="mb-10 text-danger">Niên khóa</h6>
+                                <div id="data-schoolYear" class="ml-1 mb-3"></div>
+                                <h6 class="mb-10 text-danger">Khóa luận bảo vệ</h6>
+                                <div class="ml-1 mb-3">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Mã khóa luận</th>
+                                            <th scope="col">Chủ đề</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="data-theses">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h6 class="mb-10 text-danger">Thành viên hội đồng</h6>
+                                <div class="ml-1 mb-3">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Chức vụ</th>
+                                            <th scope="col">Tên thành viên</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="data-lecturers">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h6 class="mb-10 text-danger">Trạng thái hội đồng</h6>
+                                <div class="ml-1" id="data-block">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Timeline Tab End -->
+                        <!-- Tasks Tab start -->
+                        <div class="tab-pane fade" id="tasks" role="tabpanel">
+                            <div class="pd-10" id="thesis-area">
+                            </div>
+                            <div class="pd-10">
+                                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
+                                    <i class="icon-copy fi-page-export-pdf"></i> Xuất file PDF
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
+                                    <i class="icon-copy fi-page-export-csv"></i> Xuất file EXCEL
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Tasks Tab End -->
                     </div>
                 </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>

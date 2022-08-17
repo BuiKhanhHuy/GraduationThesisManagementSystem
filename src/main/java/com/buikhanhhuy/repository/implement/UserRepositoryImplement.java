@@ -99,7 +99,7 @@ public class UserRepositoryImplement implements UserRepository {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
 
         try {
-            user.setPassword(user.getPassword());
+            user.setPassword(this.passwordEncoder.encode(user.getPassword()));
             session.save(user);
             return true;
         } catch (Exception ex) {

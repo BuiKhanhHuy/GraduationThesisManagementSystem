@@ -1,5 +1,6 @@
 package utils;
 
+import com.buikhanhhuy.constants.SystemConstant;
 import com.buikhanhhuy.pojo.EvaluationMethod;
 import com.buikhanhhuy.pojo.ScoreComponent;
 import com.buikhanhhuy.pojo.ScoreColumn;
@@ -16,6 +17,14 @@ public class Utils {
         }
 
         return totalWeight == 1;
+    }
+
+    public static int checkThesisResult(double score) {
+        if (score >= SystemConstant.SCORE_PASS) {
+            return 3;
+        } else {
+            return 2;
+        }
     }
 
 }

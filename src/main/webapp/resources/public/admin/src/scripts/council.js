@@ -133,11 +133,37 @@ const showViewCouncilModal = (appContext, councilId) => {
     loadCouncilById(appContext, councilId, (council, councilsDetail) => {
         let innerHtmlTheses = ''
         let innerHtmlLecturers = ''
+        let innerHtmlScores = ''
 
-        council.theses.map(thesis => innerHtmlTheses += `<tr>
+        council.theses.map(thesis => {
+            innerHtmlTheses += `<tr>
                                     <td>${thesis.code}</td>
                                     <td>${thesis.topic !== null ? thesis.topic.name : 'Chưa cập nhật'}</td>
-                                </tr>`)
+                                </tr>`
+
+            innerHtmlScores += `<div class="card mb-3">
+                                    <div class="card-header"
+                                     onclick="loadThesisScoresWhenClickShow('${appContext}', ${councilId}, ${thesis.id})">
+                                        <button class="btn btn-block text-left" data-toggle="collapse" data-target="#faq-score-${thesis.id}">
+                                           ${thesis.topic !== null ? thesis.topic.name : 'Chưa cập nhật'}
+                                        </button>
+                                    </div>
+                                    <div id="faq-score-${thesis.id}" class="collapse">
+                                        <div>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Giảng viên</th>
+                                                    <th scope="col" class="text-center">Tổng điểm</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="score-area-${thesis.id}"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>`
+        })
+
 
         councilsDetail.map(councilDetail => innerHtmlLecturers += `<tr>
                                     <td>${councilDetail.position}</td>
@@ -153,6 +179,7 @@ const showViewCouncilModal = (appContext, councilId) => {
                              </div>`
         document.getElementById("data-theses").innerHTML = innerHtmlTheses;
         document.getElementById("data-lecturers").innerHTML = innerHtmlLecturers;
+        document.getElementById("thesis-area").innerHTML = innerHtmlScores;
 
         $('#modal-view-council').modal()
     })
@@ -174,6 +201,39 @@ const loadCouncilById = (appContext, councilId, callback) => {
     }).catch(err => {
         errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình tải dữ liệu!", "Ok")
     })
+}
+
+const loadThesisScoresWhenClickShow = (appContext, councilId, thesisId) => {
+    let scoreArea = document.getElementById(`score-area-${thesisId}`)
+    let scoreItemHtml = ''
+
+    if (scoreArea.innerHTML === '') {
+        fetch(`${appContext}admin/api/councils/${councilId}/scores/?thesisId=${thesisId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                Promise.reject("Xảy ra lỗi trong quá trình tải dữ liệu!")
+            }
+        }).then(data => {
+            data.map(d => {
+                scoreItemHtml += `<tr>
+                                        <td>${d[2]}</td>
+                                        <td class="text-center">${d[3] !== null ? d[3].toFixed(2) :
+                                            `<span class="text-danger font-weight-bold">Chưa chấm điểm</span>`}
+                                        </td>
+                                    </tr>`
+            })
+
+            scoreArea.innerHTML = scoreItemHtml;
+        }).catch(err => {
+            errorAlert("Đã có lỗi", err, "Ok")
+        })
+    }
 }
 
 const saveChange = (endpoint, councilId = null) => {
@@ -270,6 +330,46 @@ const deleteCouncilItem = (appContext, councilId) => {
             errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình xóa dữ liệu!", "Ok")
         }).finally(hideLoading)
     })
+}
+
+
+// lock or unlock council
+const lockOrUnLockCouncil = (appContext, councilId, block = false) => {
+    const lockOrUnlockHandle = (appContext, councilId, block) => {
+        showLoading();
+        fetch(`${appContext}admin/api/councils/${councilId}/?block=${block}`, {
+            method: "POST", headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => {
+            if (res.ok) {
+                if (block) {
+                    successfulAlert("Khóa hội đồng thành công", "Ok", () => location.reload())
+                } else {
+                    successfulAlert("Mở khóa hội đồng thành công", "Ok", () => location.reload())
+                }
+            } else {
+                Promise.reject("Đã có lỗi trong quá trình cập nhật!")
+            }
+        }).catch(err => {
+            errorAlert("Đã có lỗi", err, "Ok")
+        }).finally(hideLoading)
+    }
+
+    switch (block) {
+        case true:
+            confirmAlert("Bạn có chắc chắn muốn khóa hội đồng này không?", "Khi hội đồng bị khóa, hệ thống sẽ tổng hợp điểm và gửi kết quả cho sinh viên!", "Có, khóa ngay", "Hủy", () => {
+                console.info("Khóa hội đồng.")
+                lockOrUnlockHandle(appContext, councilId, block)
+            })
+            break;
+        case false:
+            confirmAlert("Bạn có chắc chắn muốn mở khóa hội đồng này không?", "Khi hội đồng được mở khóa, giảng viên có chỉnh sửa điểm số cho khóa luận!", "Có, mở khóa", "Hủy", () => {
+                console.info("Mở khóa hội đồng.")
+                lockOrUnlockHandle(appContext, councilId, block)
+            })
+            break;
+    }
 }
 
 // event before hidden modal

@@ -164,4 +164,40 @@ public class CouncilRepositoryImplement implements CouncilRepository {
         return false;
     }
 
+    @Override
+    public List<Object[]> scoreDetailOfCouncilForThesis(int councilId, int thesisId) {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+
+        try {
+            String stringQuery = "SELECT l.user.id, l.id, l.fullName, SUM(scoD.scoreNum * scoC.weight) " + "FROM CouncilDetail cd LEFT JOIN cd.scores sco " + "LEFT JOIN sco.scoreDetails scoD " + "LEFT JOIN scoD.scoreColumn scoC, Lecturer l " + "WHERE sco.thesis.id =: thesisID AND cd.council.id =: councilId AND cd.lecturer = l " + "GROUP BY sco.councilDetail.id";
+
+            Query query = session.createQuery(stringQuery);
+            query.setParameter("thesisID", thesisId);
+            query.setParameter("councilId", councilId);
+
+            List<Object[]> resultList = query.getResultList();
+
+            return resultList;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Council lockOrUnlockCouncil(int councilId, boolean block) {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            Council council = session.get(Council.class, councilId);
+            council.setBlock(block);
+
+            session.update(council);
+            return council;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
 }

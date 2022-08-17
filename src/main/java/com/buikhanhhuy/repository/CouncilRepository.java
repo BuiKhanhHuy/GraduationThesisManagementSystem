@@ -11,4 +11,6 @@ public interface CouncilRepository {
     public long countCouncil(Map<String, String> params);
     public boolean addCouncil(Council council);
     public boolean deleteCouncil(int councilId);
+    public List<Object[]> scoreDetailOfCouncilForThesis(int councilId, int thesisId);
+    public Council lockOrUnlockCouncil(int councilId, boolean block);
 }

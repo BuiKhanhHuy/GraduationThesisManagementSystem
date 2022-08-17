@@ -43,7 +43,8 @@ public class ApiDepartmentController {
     }
 
     @PostMapping(path = "/departments", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Map<String, String>> addDepartment(@Valid @RequestBody Department department, BindingResult result) {
+    public ResponseEntity<Map<String, String>> addDepartment(@Valid @RequestBody Department department,
+                                                             BindingResult result) {
         Map<String, String> errorMessages = new HashMap<>();
         HttpStatus status = null;
 

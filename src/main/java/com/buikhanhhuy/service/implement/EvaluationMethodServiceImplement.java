@@ -35,6 +35,11 @@ public class EvaluationMethodServiceImplement implements EvaluationMethodService
     }
 
     @Override
+    public EvaluationMethod getEvaluationMethodActive() {
+        return this.evaluationMethodRepository.getEvaluationMethodActive();
+    }
+
+    @Override
     public boolean updateEvaluationMethod(int evaluationMethodId, EvaluationMethod evaluationMethod) {
         return this.evaluationMethodRepository.updateEvaluationMethod(evaluationMethodId, evaluationMethod);
     }

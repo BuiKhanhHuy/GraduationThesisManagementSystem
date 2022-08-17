@@ -1,21 +1,25 @@
 package com.buikhanhhuy.service.implement;
 
 import com.buikhanhhuy.constants.SystemConstant;
+import com.buikhanhhuy.pojo.Lecturer;
+import com.buikhanhhuy.pojo.Notification;
+import com.buikhanhhuy.pojo.Student;
 import com.buikhanhhuy.pojo.Thesis;
+import com.buikhanhhuy.repository.NotificationRepository;
 import com.buikhanhhuy.repository.ThesisRepository;
 import com.buikhanhhuy.service.EmailService;
 import com.buikhanhhuy.service.ThesisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ThesisServiceImplement implements ThesisService {
     @Autowired
     private ThesisRepository thesisRepository;
+    @Autowired
+    private NotificationRepository notificationRepository;
     @Autowired
     private EmailService emailService;
 
@@ -50,8 +54,35 @@ public class ThesisServiceImplement implements ThesisService {
     @Override
     public boolean addThesis(Thesis thesis) {
         if (this.thesisRepository.addThesis(thesis)) {
-            this.sendReviewLectureThesisNotification(thesis);
+//            Set<Integer> usersId;
+//            Notification notification;
+//
+//            usersId = new HashSet<>();
+//            notification = new Notification();
+//            notification.setTitle("Thông báo thực hiện khóa luận");
+//            notification.setContent("Đăng nhập vào hệ thống để xem thông tin chi tiết");
+//            for (Student student : thesis.getStudents()) {
+//                usersId.add(student.getUser().getId());
+//            }
+//            this.notificationRepository.addNotification(notification, usersId);
+//
+//            usersId = new HashSet<>();
+//            notification = new Notification();
+//            notification.setTitle("Thông báo giảng viên hướng dẫn khóa luận");
+//            notification.setContent("Đăng nhập vào hệ thống để xem thông tin chi tiết");
+//            for (Lecturer lecturer : thesis.getLecturers()) {
+//                usersId.add(lecturer.getUser().getId());
+//            }
+//            this.notificationRepository.addNotification(notification, usersId);
+//
+//            usersId = new HashSet<>();
+//            notification = new Notification();
+//            notification.setTitle("Thông báo giảng viên phản biện khóa luận");
+//            notification.setContent("Đăng nhập vào hệ thống để xem thông tin chi tiết");
+//            usersId.add(thesis.getReviewLecturer().getUser().getId());
+//            this.notificationRepository.addNotification(notification, usersId);
 
+            this.sendReviewLectureThesisNotification(thesis);
             return true;
         }
 
