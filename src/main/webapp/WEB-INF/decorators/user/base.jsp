@@ -7,89 +7,51 @@
 
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title><tiles:insertAttribute name="title"/></title>
+    <title>Hệ thống quản lý khóa luận</title>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg"/>
     <!-- Place favicon.ico in the root directory -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.css"
+          rel="stylesheet"/>
 
-    <!-- Web Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet">
+    <%--    sweetalert2--%>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" id="theme-styles">
 
-    <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="<c:url value="/public/user/css/bootstrap.min.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/public/user/css/LineIcons.2.0.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/public/user/css/animate.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/public/user/css/tiny-slider.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/public/user/css/glightbox.min.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/public/user/css/main.css"/>"/>
-
-    <c:forEach var="css" items="${stylesheets}">
-        <link rel="stylesheet" type="text/css" href="${css}">
-    </c:forEach>
+    <%--    overlay loading--%>
+    <link href="<c:url value="/public/common/css/overlay/overlay-style.css"/> " rel="stylesheet">
 </head>
 
 <body>
+<div id="cover-spin"></div>
 <div id="loading-area"></div>
+
 <tiles:insertAttribute name="header"/>
+<section style="background-color: #f6f9fc;">
+    <tiles:insertAttribute name="content"/>
+    <tiles:insertAttribute name="footer"/>
+</section>
 
-<tiles:insertAttribute name="content"/>
+<!-- MDB -->
+<script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.js"
+></script>
 
-<tiles:insertAttribute name="footer"/>
-
-<!-- ========================= JS here ========================= -->
-<script src="<c:url value="/public/user/js/bootstrap.min.js"/>"></script>
-<script src="<c:url value="/public/user/js/wow.min.js"/>"></script>
-<script src="<c:url value="/public/user/js/tiny-slider.js"/>"></script>
-<script src="<c:url value="/public/user/js/glightbox.min.js"/>"></script>
-<script src="<c:url value="/public/user/js/main.js"/>"></script>
-<script type="text/javascript">
-    //====== Clients Logo Slider
-    tns({
-        container: '.client-logo-carousel',
-        slideBy: 'page',
-        autoplay: true,
-        autoplayButtonOutput: false,
-        mouseDrag: true,
-        gutter: 15,
-        nav: false,
-        controls: false,
-        responsive: {
-            0: {
-                items: 1,
-            },
-            540: {
-                items: 2,
-            },
-            768: {
-                items: 3,
-            },
-            992: {
-                items: 4,
-            },
-            1170: {
-                items: 6,
-            }
-        }
-    });
-    //========= glightbox
-    GLightbox({
-        'href': 'https://www.youtube.com/watch?v=cz4z8CyvDas',
-        'type': 'video',
-        'source': 'youtube', //vimeo, youtube or local
-        'width': 900,
-        'autoplayVideos': true,
-    });
-</script>
-
-<c:forEach var="js" items="${javascripts}">
-    <script src="<c:url value="${js}"/>"></script>
-</c:forEach>
+<script src="<c:url value="/public/common/js/script.js"/> "></script>
+<script src="<c:url value="/public/user/src/scripts/script.js"/> "></script>
 </body>
 
 </html>

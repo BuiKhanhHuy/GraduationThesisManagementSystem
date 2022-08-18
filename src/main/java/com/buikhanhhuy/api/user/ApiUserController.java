@@ -1,4 +1,4 @@
-package com.buikhanhhuy.api.admin;
+package com.buikhanhhuy.api.user;
 
 import com.buikhanhhuy.req.PasswordUser;
 import com.buikhanhhuy.service.UserService;
@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@RestController(value = "AdminApiUserController")
-@RequestMapping(path = "/admin/api")
+@RestController(value = "UserApiUserController")
+@RequestMapping(path = "/api")
 @Validated
 public class ApiUserController {
     @Autowired
@@ -33,23 +32,10 @@ public class ApiUserController {
         binder.setValidator(passwordUserValidator);
     }
 
-    @GetMapping(path = "/users", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Object[]>> getUsers(@RequestParam Map<String, String> params) {
-
-        List<Object[]> users = this.userService.getUsers(params);
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
-
-    @PatchMapping(path = "/users/{userId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseStatus(value = HttpStatus.OK)
-    public void changePassword(@PathVariable("userId") int userId, @RequestBody String newPassword) {
-        this.userService.changePassword(userId, newPassword);
-    }
-
     @PostMapping(path = "/users/password", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Map<String, String>> changePasswordUser(@Valid @RequestBody PasswordUser passwordUser, BindingResult result) {
         Map<String, String> errorMessages = new HashMap<>();
-        HttpStatus status = null;
+        HttpStatus status;
 
         if (result.hasErrors()) {
             errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
@@ -64,6 +50,4 @@ public class ApiUserController {
 
         return new ResponseEntity<>(errorMessages, status);
     }
-
-
 }

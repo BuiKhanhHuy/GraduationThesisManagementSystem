@@ -4,6 +4,7 @@ import com.buikhanhhuy.pojo.Thesis;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface ThesisRepository {
     public List<Object[]> getThesisOptions();
@@ -20,4 +21,5 @@ public interface ThesisRepository {
 
     public Double scoreOfAThesisInCouncil(int councilId, int thesisId);
     public boolean thesisResult (int councilId);
+    public boolean uploadThesisReportFile(int thesisId, String urlReportFile);
 }

@@ -1,6 +1,7 @@
 package com.buikhanhhuy.validators;
 
 import com.buikhanhhuy.pojo.*;
+import com.buikhanhhuy.req.PasswordUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -21,7 +22,8 @@ public class WebAppValidator implements Validator {
                 || SchoolYear.class.isAssignableFrom(clazz)
                 || EvaluationMethod.class.isAssignableFrom(clazz)
                 || Thesis.class.isAssignableFrom(clazz)
-                || Council.class.isAssignableFrom(clazz);
+                || Council.class.isAssignableFrom(clazz)
+                || PasswordUser.class.isAssignableFrom(clazz);
     }
 
     @Override

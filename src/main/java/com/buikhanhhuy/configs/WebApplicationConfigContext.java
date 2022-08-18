@@ -2,9 +2,11 @@ package com.buikhanhhuy.configs;
 
 import com.buikhanhhuy.converters.StringToLocalDateConverter;
 import com.buikhanhhuy.formatters.*;
+import com.buikhanhhuy.service.UserService;
 import com.buikhanhhuy.validators.*;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,6 +32,9 @@ import java.util.Set;
 @EnableTransactionManagement
 @ComponentScan(basePackages = {"com.buikhanhhuy.controllers", "com.buikhanhhuy.api", "com.buikhanhhuy.repository", "com.buikhanhhuy.service", "com.buikhanhhuy.validators"})
 public class WebApplicationConfigContext implements WebMvcConfigurer {
+    @Autowired
+    private UserService userService;
+
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
@@ -138,6 +143,17 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
         springValidators.add(new CouncilThesisValidator());
         springValidators.add(new CouncilMemberValidator());
         springValidators.add(new CouncilMemberUnique());
+
+        WebAppValidator webAppValidator = new WebAppValidator();
+        webAppValidator.setValidators(springValidators);
+
+        return webAppValidator;
+    }
+
+    @Bean
+    public WebAppValidator passwordUserValidator(){
+        Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(new PasswordValidator(userService));
 
         WebAppValidator webAppValidator = new WebAppValidator();
         webAppValidator.setValidators(springValidators);

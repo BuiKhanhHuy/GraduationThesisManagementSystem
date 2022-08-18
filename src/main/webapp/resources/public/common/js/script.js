@@ -1,6 +1,6 @@
 // overlay loading
 const showLoading = () => {
-   $('#cover-spin').show(0)
+    $('#cover-spin').show(0)
 
 }
 
@@ -85,11 +85,10 @@ const turnOffNotification = (appContext, notificationUserId) => {
 
             if (document.getElementsByClassName("notification-user").length === 0) {
                 notificationUserArea.innerHTML = `<li class="text-center text-secondary">Không có thông báo.</li>`
+                document.getElementById("badge-notifi-active").style.display='none'
             }
         }
     }).catch(err => {
         console.error(err)
     })
 }
-
-

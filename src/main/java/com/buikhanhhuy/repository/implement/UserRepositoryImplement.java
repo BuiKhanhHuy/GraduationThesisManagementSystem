@@ -3,6 +3,7 @@ package com.buikhanhhuy.repository.implement;
 import com.buikhanhhuy.pojo.Student;
 import com.buikhanhhuy.pojo.User;
 import com.buikhanhhuy.repository.UserRepository;
+import com.buikhanhhuy.req.PasswordUser;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -122,7 +123,7 @@ public class UserRepositoryImplement implements UserRepository {
 
     @Override
     public void changePassword(int userId, String newPassword) {
-        if(newPassword != null && !newPassword.isEmpty()){
+        if (newPassword != null && !newPassword.isEmpty()) {
             Session session = sessionFactoryBean.getObject().getCurrentSession();
 
             User user = session.get(User.class, userId);
@@ -131,5 +132,36 @@ public class UserRepositoryImplement implements UserRepository {
 
             session.update(user);
         }
+    }
+
+    @Override
+    public boolean changePassword(PasswordUser passwordUser) {
+        Session session = Objects.requireNonNull(sessionFactoryBean.getObject()).getCurrentSession();
+        try {
+            if (passwordUser.getNewPassword() != null && !passwordUser.getNewPassword().isEmpty()) {
+                User user = session.get(User.class, passwordUser.getUserId());
+                user.setPassword(this.passwordEncoder.encode(passwordUser.getNewPassword()));
+
+                session.update(user);
+                return true;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean checkPassword(int userId, String password) {
+        Session session = Objects.requireNonNull(sessionFactoryBean.getObject()).getCurrentSession();
+        try {
+            User user = session.get(User.class, userId);
+            if (password != null && !password.isEmpty())
+                return passwordEncoder.matches(password, user.getPassword());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 }

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<c:url value="/public/admin/src/images/avatar/avatar-default.jpg" var="avatarDefault"/>
+<c:url value="/public/common/images/avatars/avatar-default.jpg" var="avatarDefault"/>
 <c:url var="logout" value="/logout"/>
 <c:url var="appContext" value="/"/>
 
@@ -60,7 +60,9 @@
                 <div class="dropdown">
                     <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
                         <i class="icon-copy dw dw-notification"></i>
-                        <span class="badge notification-active"></span>
+                        <c:if test="${notificationUsers.size() > 0}">
+                            <span class="badge notification-active" id="badge-notifi-active"></span>
+                        </c:if>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="notification-list mx-h-350 customscroll">
@@ -109,7 +111,10 @@
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                         <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
                         <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
-                        <a class="dropdown-item" href="faq.html"><i class="dw dw-key2"></i> Change password</a>
+                        <a onclick="changePasswordByUser('${appContext}', ${currentUser.id})"
+                           class="dropdown-item" href="javascript:;">
+                            <i class="dw dw-key2"></i> Change password
+                        </a>
                         <a class="dropdown-item text-danger" href="${logout}"><i class="dw dw-logout"></i> Log Out</a>
                     </div>
                 </div>
@@ -117,3 +122,42 @@
         </sec:authorize>
     </div>
 </div>
+
+
+<%--change password modal--%>
+<div class="modal fade" id="change-password-modal" tabindex="-1" role="dialog"
+     aria-labelledby="myChangePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myChangePasswordModalLabel">Thay đổi mật khẩu</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-change-password">
+                    <div class="pd-10">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Mật khẩu cũ <span class="text-danger">(*)</span></label>
+                            <input name="oldPassword" id="oldPassword" type="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Mật khẩu mới <span
+                                    class="text-danger">(*)</span></label>
+                            <input name="newPassword" id="newPassword" type="password" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button id="btn-submit-form-change-password"
+                        type="button" class="btn btn-success">Đổi mật khẩu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form id="logoutForm" action="<c:url value="/logout"/> ">
+</form>
+<%--change password modal--%>

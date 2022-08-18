@@ -13,7 +13,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-15T14:07:46")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-18T18:05:27")
 @StaticMetamodel(Thesis.class)
 public class Thesis_ { 
 
@@ -27,7 +27,6 @@ public class Thesis_ {
     public static volatile SingularAttribute<Thesis, Date> complateDate;
     public static volatile SingularAttribute<Thesis, Double> totalScore;
     public static volatile SingularAttribute<Thesis, Integer> result;
-    public static volatile SingularAttribute<Thesis, String> sourceCode;
     public static volatile SingularAttribute<Thesis, Date> thesisStartDate;
     public static volatile SingularAttribute<Thesis, Council> council;
     public static volatile SingularAttribute<Thesis, SchoolYear> schoolYear;

@@ -12,5 +12,6 @@ public interface CouncilService {
     public boolean addCouncil(Council council);
     public boolean deleteCouncil(int councilId);
     public List<Object[]> scoreDetailOfCouncilForThesis(int councilId, int thesisId);
+    public void sendThesisResultNotification(Council council);
     public boolean lockOrUnlockCouncil(int councilId, boolean block);
 }

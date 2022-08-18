@@ -3,6 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:url var="adminIndex" value="/admin/"/>
+<c:url var="news" value="/news/"/>
 <c:url var="deparment" value="/admin/departments/"/>
 <c:url var="major" value="/admin/majors/"/>
 <c:url var="schoolYear" value="/admin/school-years/"/>

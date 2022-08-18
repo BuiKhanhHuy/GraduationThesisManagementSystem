@@ -90,7 +90,7 @@ public class Student implements Serializable {
     @OneToOne
     @JsonIgnoreProperties({"news", "student", "lecturer", "manage", "notificationUsers", "role"})
     private User user;
-    @ManyToMany(mappedBy = "students")
+    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Thesis> theses;
 

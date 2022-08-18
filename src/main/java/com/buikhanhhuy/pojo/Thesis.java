@@ -58,9 +58,6 @@ public class Thesis implements Serializable {
     @Basic(optional = false)
     @Column(name = "report_file")
     private String reportFile;
-    @Basic(optional = false)
-    @Column(name = "source_code")
-    private String sourceCode;
 
     @Lob
     @Size(max = 2147483647, message = "{thesis.add.comment.sizeMessage}")
@@ -185,14 +182,6 @@ public class Thesis implements Serializable {
 
     public void setReportFile(String reportFile) {
         this.reportFile = reportFile;
-    }
-
-    public String getSourceCode() {
-        return sourceCode;
-    }
-
-    public void setSourceCode(String sourceCode) {
-        this.sourceCode = sourceCode;
     }
 
     public String getComment() {

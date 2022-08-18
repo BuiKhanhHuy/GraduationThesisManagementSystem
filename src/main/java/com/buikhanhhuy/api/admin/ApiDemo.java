@@ -2,6 +2,7 @@ package com.buikhanhhuy.api.admin;
 
 import com.buikhanhhuy.pojo.User;
 import com.buikhanhhuy.repository.ThesisRepository;
+import com.buikhanhhuy.service.UserService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class ApiDemo {
     private Cloudinary cloudinary;
     @Autowired
     private ThesisRepository thesisRepository;
+    @Autowired
+    private UserService userService;
 
     @PostMapping(path = "/upload-file",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
@@ -38,6 +41,7 @@ public class ApiDemo {
     @GetMapping(path = "/tinh-diem")
     @ResponseStatus(HttpStatus.OK)
     public  void tinhDiem(){
-        thesisRepository.scoreOfAThesisInCouncil(47, 30);
+//        thesisRepository.scoreOfAThesisInCouncil(47, 30);
+        System.out.println(userService.checkPassword(6, "123456789"));
     }
 }

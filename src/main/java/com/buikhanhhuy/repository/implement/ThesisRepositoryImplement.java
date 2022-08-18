@@ -86,6 +86,7 @@ public class ThesisRepositoryImplement implements ThesisRepository {
         return q.getResultList();
     }
 
+
     @Override
     public long countThesis(Map<String, String> params) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
@@ -179,12 +180,7 @@ public class ThesisRepositoryImplement implements ThesisRepository {
         Session session = sessionFactoryBean.getObject().getCurrentSession();
 
         try {
-            String stringQuery = "SELECT SUM(scoD.scoreNum * scoC.weight) " +
-                    "FROM CouncilDetail cd LEFT JOIN cd.scores sco " +
-                    "LEFT JOIN sco.scoreDetails scoD " +
-                    "LEFT JOIN scoD.scoreColumn scoC " +
-                    "WHERE sco.thesis.id =: thesisID AND cd.council.id =: councilId " +
-                    "GROUP BY sco.councilDetail.id";
+            String stringQuery = "SELECT SUM(scoD.scoreNum * scoC.weight) " + "FROM CouncilDetail cd LEFT JOIN cd.scores sco " + "LEFT JOIN sco.scoreDetails scoD " + "LEFT JOIN scoD.scoreColumn scoC " + "WHERE sco.thesis.id =: thesisID AND cd.council.id =: councilId " + "GROUP BY sco.councilDetail.id";
 
             Query query = session.createQuery(stringQuery);
             query.setParameter("thesisID", thesisId);
@@ -225,6 +221,24 @@ public class ThesisRepositoryImplement implements ThesisRepository {
             ex.printStackTrace();
         }
 
+        return false;
+    }
+
+    @Override
+    public boolean uploadThesisReportFile(int thesisId, String urlReportFile) {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            Thesis objThesis = session.get(Thesis.class, thesisId);
+            if (urlReportFile != null && !urlReportFile.isEmpty()) {
+                objThesis.setReportFile(urlReportFile);
+                session.update(objThesis);
+
+                return true;
+            }
+            return false;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         return false;
     }
 }

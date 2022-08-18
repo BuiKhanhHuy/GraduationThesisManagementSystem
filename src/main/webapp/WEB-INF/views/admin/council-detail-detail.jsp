@@ -107,27 +107,13 @@
                                                     <a href="${thesis.reportFile}" class="text-blue"><i
                                                             class="icon-copy fa fa-download"
                                                             aria-hidden="true"></i>
-                                                        Tải xuống tập tin báo cáo
+                                                        Tải xuống tập tin khóa luận
                                                     </a>
                                                 </c:if>
                                                 <c:if test="${thesis.reportFile == null || thesis.reportFile.isEmpty()}">
                                                     <span class="text-secondary"><i class="icon-copy fa fa-download"
                                                                                     aria-hidden="true"></i>
-                                                        Tập tin báo cáo không tồn tại
-                                                    </span>
-                                                </c:if>
-                                                |
-                                                <c:if test="${thesis.sourceCode != null && !thesis.sourceCode.isEmpty()}">
-                                                    <a href="${thesis.sourceCode}" class="text-blue"><i
-                                                            class="icon-copy fa fa-download"
-                                                            aria-hidden="true"></i>
-                                                        Tải xuống mã nguồn
-                                                    </a>
-                                                </c:if>
-                                                <c:if test="${thesis.sourceCode == null || thesis.sourceCode.isEmpty()}">
-                                                    <span class="text-secondary"><i class="icon-copy fa fa-download"
-                                                                                    aria-hidden="true"></i>
-                                                        Tập tin mã nguồn không tồn tại
+                                                        Tập tin khóa luận không tồn tại
                                                     </span>
                                                 </c:if>
                                             </div>

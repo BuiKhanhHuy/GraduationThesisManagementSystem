@@ -99,7 +99,7 @@
 <script src="<c:url value="/public/admin/vendors/scripts/process.js"/>"></script>
 <script src="<c:url value="/public/admin/vendors/scripts/layout-settings.js"/>"></script>
 
-<%--overlay loading--%>
+<%--custom--%>
 <script src="<c:url value="/public/common/js/script.js"/> "/>
 
 <script src="<c:url value="/public/admin/src/plugins/toast/jquery.toast.js"/> "></script>

@@ -2,6 +2,7 @@ package com.buikhanhhuy.service;
 
 
 import com.buikhanhhuy.pojo.User;
+import com.buikhanhhuy.req.PasswordUser;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface UserService extends UserDetailsService {
     public Set<Integer> getUsers(Map<String, String> params, List<Integer> usersId);
     public User getUserByUserName(String username);
     public void changePassword(int userId, String newPassword);
+    public boolean changePassword(PasswordUser passwordUser);
+    public boolean checkPassword(int userId, String password);
 }

@@ -2,6 +2,7 @@ package com.buikhanhhuy.service.implement;
 
 import com.buikhanhhuy.pojo.User;
 import com.buikhanhhuy.repository.UserRepository;
+import com.buikhanhhuy.req.PasswordUser;
 import com.buikhanhhuy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,6 +39,16 @@ public class UserServiceImplement implements UserService {
     @Override
     public void changePassword(int userId, String newPassword) {
         this.userRepository.changePassword(userId, newPassword);
+    }
+
+    @Override
+    public boolean changePassword(PasswordUser passwordUser) {
+        return this.userRepository.changePassword(passwordUser);
+    }
+
+    @Override
+    public boolean checkPassword(int userId, String password) {
+        return this.userRepository.checkPassword(userId,password);
     }
 
     @Override

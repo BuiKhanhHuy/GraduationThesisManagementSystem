@@ -1,6 +1,7 @@
 package com.buikhanhhuy.repository;
 
 import com.buikhanhhuy.pojo.User;
+import com.buikhanhhuy.req.PasswordUser;
 
 import java.util.List;
 import java.util.Map;
@@ -12,4 +13,6 @@ public interface UserRepository {
     public boolean addUser(User user);
     public User getUserByUserName(String username);
     public void changePassword(int userId, String newPassword);
+    public boolean changePassword(PasswordUser passwordUser);
+    public boolean checkPassword(int userId, String password);
 }
