@@ -34,6 +34,11 @@ public class LecturerServiceImplement implements LecturerService {
     }
 
     @Override
+    public long countAllLecturer() {
+        return this.lecturerRepository.countAllLecturer();
+    }
+
+    @Override
     public Lecturer getLecturerById(int lecturerId) {
         return this.lecturerRepository.getLecturerById(lecturerId);
     }

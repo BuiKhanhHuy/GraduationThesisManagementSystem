@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:url var="filterPosition" value="/admin/positions/"/>
 <c:url var="home" value="/admin/"/>
@@ -9,12 +10,18 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="title">
-                <h4>Chức vụ</h4>
+                <h4>
+                    <spring:message code="position.header.title.label"/>
+                </h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${home}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Chức vụ</li>
+                    <li class="breadcrumb-item"><a href="${home}">
+                        <spring:message code="layout.home.label"/>
+                    </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <spring:message code="position.header.title.label"/>
+                    </li>
                 </ol>
             </nav>
         </div>
@@ -28,14 +35,17 @@
         <div class="row justify-content-end mt-2">
             <div class="col-md-4 col-sm-12">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Nhập tên chức vụ cần tìm..." name="kw"
+                    <input class="form-control" type="text"
+                           placeholder="<spring:message code="position.table.search.keyword.label"/>"
+                           name="kw"
                            aria-label="Search">
                 </div>
             </div>
             <div class="col-md-2 col-sm-12">
                 <div>
                     <button class="form-control ml-1 btn-warning btn" type="submit">
-                        <i class=" fa fa-search" aria-hidden="true"></i> Tìm kiếm
+                        <i class=" fa fa-search" aria-hidden="true"></i>
+                        <spring:message code="position.table.search.button.label"/>
                     </button>
                 </div>
             </div>
@@ -44,13 +54,15 @@
     <hr style="height:5px;" class="text-black-50">
     <div class="clearfix mb-20">
         <div class="pull-left">
-            <h4 class="text-blue h4">Danh sách chức vụ</h4>
+            <h4 class="text-blue h4">
+                <spring:message code="position.table.list.title.label"/>
+            </h4>
         </div>
         <sec:authorize access="hasAuthority('ADMIN')">
             <div class="pull-right">
                 <button onclick="showAddPosition('<c:url value="/admin/api/positions"/>')"
                         type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
-                    Thêm chức vụ
+                    <spring:message code="position.table.list.button.addPosition.label"/>
                 </button>
             </div>
         </sec:authorize>
@@ -58,10 +70,16 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col">Chức vụ</th>
-            <th scope="col">Mô tả</th>
+            <th scope="col">
+                <spring:message code="position.table.list.header.positionName"/>
+            </th>
+            <th scope="col">
+                <spring:message code="position.table.list.header.description"/>
+            </th>
             <sec:authorize access="hasAuthority('ADMIN')">
-                <th scope="col" class="text-center">Hành động</th>
+                <th scope="col" class="text-center">
+                    <spring:message code="position.table.list.header.action"/>
+                </th>
             </sec:authorize>
         </tr>
         </thead>
@@ -78,14 +96,16 @@
                                         value="/admin/api/positions/${position.id}"/>', ${position.id})"
                                         type="button" class="btn btn-sm bg-warning text-white"
                                         data-toggle="tooltip"
-                                        data-placement="bottom" title="Cập nhật">
+                                        data-placement="bottom"
+                                        title="<spring:message code="position.table.list.button.edit"/>">
                                     <i class="icon-copy dw dw-edit1"></i>
                                 </button>
                                 <button onclick="deletePositionItem('<c:url
                                         value="/admin/api/positions/${position.id}"/>')"
                                         type="button" class="btn btn-sm bg-danger text-white"
                                         data-toggle="tooltip"
-                                        data-placement="bottom" title="Xóa">
+                                        data-placement="bottom"
+                                        title="<spring:message code="position.table.list.button.delete"/>">>
                                     <i class="icon-copy dw dw-delete-3"></i>
                                 </button>
                             </div>
@@ -98,7 +118,9 @@
             <tr>
                 <td colspan="4" class="text-black-50 text-center">
                     <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
-                    <p class="text-center">Danh sách chức vụ trống</p>
+                    <p class="text-center">
+                        <spring:message code="position.table.list.data.empty"/>
+                    </p>
                 </td>
             </tr>
         </c:if>
@@ -131,21 +153,26 @@
                 <form id="form-add-edit-position">
                     <div class="pd-10">
                         <div class="form-group">
-                            <label class="font-weight-bold">Niên khóa<span
-                                    class="text-danger">(*)</span></label>
+                            <label class="font-weight-bold">
+                                <spring:message code="position.modal.positionName.label"/>
+                                <span class="text-danger">(*)</span></label>
                             <input name="name" id="name" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Mô tả</label>
+                            <label class="font-weight-bold">
+                                <spring:message code="position.modal.description.label"/>
+                            </label>
                             <textarea name="description" id="description" class="form-control"></textarea>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">
+                    <spring:message code="layout.button.cancel.label"/>
+                </button>
                 <button type="button" class="btn btn-success" id="btn-submit-form">
-                    <i class="micon fa fa-save"> </i> Lưu dữ liệu
+                    <i class="micon fa fa-save"> </i>   <spring:message code="layout.button.saveData.label"/>
                 </button>
             </div>
         </div>

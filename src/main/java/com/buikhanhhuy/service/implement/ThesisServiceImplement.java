@@ -55,8 +55,14 @@ public class ThesisServiceImplement implements ThesisService {
     }
 
     @Override
+    public long countAllThesis() {
+        return this.thesisRepository.countAllThesis();
+    }
+
+    @Override
     public boolean addThesis(Thesis thesis) {
-        if (this.thesisRepository.addThesis(thesis)) {
+        Thesis thesisResult = this.thesisRepository.addThesis(thesis);
+        if (thesisResult != null) {
 //            Set<Integer> usersId;
 //            Notification notification;
 //

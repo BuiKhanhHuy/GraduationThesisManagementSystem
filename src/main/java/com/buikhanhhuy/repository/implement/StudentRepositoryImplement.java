@@ -9,6 +9,7 @@ import com.buikhanhhuy.repository.UserRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,8 @@ import java.util.Map;
 public class StudentRepositoryImplement implements StudentRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -143,6 +146,20 @@ public class StudentRepositoryImplement implements StudentRepository {
         Object result = q.getSingleResult();
 
         return (long) result;
+    }
+
+    @Override
+    public long countAllStudent() {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        try {
+           String sql = "SELECT COUNT(id) FROM Student";
+
+            return (long) session.createQuery(sql).getSingleResult();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return 0;
     }
 
     @Override

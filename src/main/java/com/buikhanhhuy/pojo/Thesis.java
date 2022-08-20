@@ -77,10 +77,10 @@ public class Thesis implements Serializable {
     @JsonIgnore
     @ManyToOne
     private Council council;
-    @JoinColumn(name = "department_id", referencedColumnName = "id")
-    @JsonIgnoreProperties({"code", "description", "founding"})
+    @JoinColumn(name = "major_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"code", "description", "department"})
     @ManyToOne
-    private Department department;
+    private Major major;
     @JoinColumn(name = "school_year_id", referencedColumnName = "id")
     @JsonIgnoreProperties({"startDate", "endDate"})
     @ManyToOne
@@ -224,12 +224,12 @@ public class Thesis implements Serializable {
         this.council = council;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Major getMajor() {
+        return major;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setMajor(Major major) {
+        this.major = major;
     }
 
     public SchoolYear getSchoolYear() {

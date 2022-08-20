@@ -52,8 +52,8 @@ const showEditThesisModal = (endpoint, thesisId) => {
         form["complateDate"].value = new Date(data.complateDate).toISOString().slice(0, 10)
         form["thesisStartDate"].value = new Date(data.thesisStartDate).toISOString().slice(0, 10)
         form["thesisEndDate"].value = new Date(data.thesisEndDate).toISOString().slice(0, 10)
-        if (data.department !== null) {
-            form["department"].value = data.department.id
+        if (data.major !== null) {
+            form["major"].value = data.major.id
         }
         if (data.schoolYear !== null) {
             form["schoolYear"].value = data.schoolYear.id
@@ -121,7 +121,7 @@ const saveChange = (endpoint, thesisId = null) => {
                 "complateDate": formData.complateDate,
                 "thesisStartDate": formData.thesisStartDate,
                 "thesisEndDate": formData.thesisEndDate,
-                "department": formData.department,
+                "major": formData.major,
                 "schoolYear": formData.schoolYear,
                 "topic": formData.topic,
                 "comment": formData.comment,
@@ -162,7 +162,7 @@ const saveChange = (endpoint, thesisId = null) => {
                 "complateDate": formData.complateDate,
                 "thesisStartDate": formData.thesisStartDate,
                 "thesisEndDate": formData.thesisEndDate,
-                "department": formData.department,
+                "major": formData.major,
                 "schoolYear": formData.schoolYear,
                 "topic": formData.topic,
                 "comment": formData.comment,

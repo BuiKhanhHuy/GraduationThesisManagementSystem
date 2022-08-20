@@ -9,6 +9,7 @@ public interface StudentRepository {
     public List<Object[]> getStudentOptions();
     public List<Student> getStudents (Map<String, String> params);
     public long countStudent(Map<String, String> params);
+    public long countAllStudent();
     public Student getStudentById(int studentId);
     public boolean addStudent(Student student);
     public boolean updateStudent(int studentId, Student student);

@@ -10,6 +10,7 @@ public interface LecturerRepository {
     public List<Lecturer> getLecturers(Map<String, String> params);
 
     public long countLecturer(Map<String, String> params);
+    public long countAllLecturer();
 
     public Lecturer getLecturerById(int lecturerId);
 

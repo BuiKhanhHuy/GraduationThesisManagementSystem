@@ -13,7 +13,9 @@
     <title>Hệ thống quản lý khóa luận</title>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="<c:url value="/public/admin/vendors/images/ou-icon.png"/> ">
+    <link rel="icon" type="image/png" sizes="32x32" href="<c:url value="/public/admin/vendors/images/ou-icon.png"/> ">
+    <link rel="icon" type="image/png" sizes="16x16" href="<c:url value="/public/admin/vendors/images/ou-icon.png"/> ">
     <!-- Place favicon.ico in the root directory -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- Font Awesome -->
@@ -32,6 +34,10 @@
 
     <%--    overlay loading--%>
     <link href="<c:url value="/public/common/css/overlay/overlay-style.css"/> " rel="stylesheet">
+
+    <c:forEach var="css" items="${stylesheets}">
+        <link rel="stylesheet" type="text/css" href="<c:url value="${css}"/> ">
+    </c:forEach>
 </head>
 
 <body>
@@ -49,9 +55,12 @@
         type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.js"
 ></script>
-
 <script src="<c:url value="/public/common/js/script.js"/> "></script>
 <script src="<c:url value="/public/user/src/scripts/script.js"/> "></script>
+
+<c:forEach var="js" items="${javascripts}">
+    <script src="<c:url value="${js}"/>"></script>
+</c:forEach>
 </body>
 
 </html>

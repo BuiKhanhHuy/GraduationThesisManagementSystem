@@ -55,7 +55,7 @@ const uploadReportFile = async (appContext, thesisId) => {
                         <input  class="form-control form-control-lg" name="fileName" id="fileName" type="text" />
                     </div>
                     <div class="text-left pb-2 pt-2">
-                        <label for="reportFile" class="form-label">Chọn tập tin khóa luận (.zip, .rar) <span class="text-danger">(*)</span></label>
+                        <label for="reportFile" class="form-label">Chọn tập tin khóa luận (tập tin có đuôi <strong>.zip</strong>) <span class="text-danger">(*)</span></label>
                         <input accept=".zip, .rar" class="form-control form-control-lg" name="reportFile" id="reportFile" type="file" />
                     </div>
                </form>`,

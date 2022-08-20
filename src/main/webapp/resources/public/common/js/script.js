@@ -85,8 +85,23 @@ const turnOffNotification = (appContext, notificationUserId) => {
 
             if (document.getElementsByClassName("notification-user").length === 0) {
                 notificationUserArea.innerHTML = `<li class="text-center text-secondary">Không có thông báo.</li>`
-                document.getElementById("badge-notifi-active").style.display='none'
+                document.getElementById("badge-notifi-active").style.display = 'none'
             }
+        }
+    }).catch(err => {
+        console.error(err)
+    })
+}
+
+const changeLang = (appContext, lang = "vi") => {
+    fetch(`${appContext}api/lang/?lang=${lang}`, {
+        method: "GET",
+    }).then(res => {
+        if (res.ok) {
+            console.log(res.ok)
+            location.reload();
+        } else {
+            Promise.reject("Error")
         }
     }).catch(err => {
         console.error(err)

@@ -34,6 +34,11 @@ public class StudentServiceImplement implements StudentService {
     }
 
     @Override
+    public long countAllStudent() {
+        return this.studentRepository.countAllStudent();
+    }
+
+    @Override
     public Student getStudentById(int studentId) {
         return this.studentRepository.getStudentById(studentId);
     }

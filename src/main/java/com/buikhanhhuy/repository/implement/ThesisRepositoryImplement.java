@@ -60,8 +60,8 @@ public class ThesisRepositoryImplement implements ThesisRepository {
             predicates.add(builder.equal(root.get("schoolYear"), Integer.parseInt(params.get("schoolYearId"))));
         }
 
-        if (params.containsKey("departmentId") && !params.get("departmentId").isEmpty()) {
-            predicates.add(builder.equal(root.get("department"), Integer.parseInt(params.get("departmentId"))));
+        if (params.containsKey("majorId") && !params.get("majorId").isEmpty()) {
+            predicates.add(builder.equal(root.get("major"), Integer.parseInt(params.get("majorId"))));
         }
 
         if (params.containsKey("result") && !params.get("result").isEmpty()) {
@@ -113,8 +113,8 @@ public class ThesisRepositoryImplement implements ThesisRepository {
             predicates.add(builder.equal(root.get("schoolYear"), Integer.parseInt(params.get("schoolYearId"))));
         }
 
-        if (params.containsKey("departmentId") && !params.get("departmentId").isEmpty()) {
-            predicates.add(builder.equal(root.get("department"), Integer.parseInt(params.get("departmentId"))));
+        if (params.containsKey("majorId") && !params.get("majorId").isEmpty()) {
+            predicates.add(builder.equal(root.get("major"), Integer.parseInt(params.get("majorId"))));
         }
 
         if (params.containsKey("result") && !params.get("result").isEmpty()) {
@@ -132,17 +132,31 @@ public class ThesisRepositoryImplement implements ThesisRepository {
     }
 
     @Override
-    public boolean addThesis(Thesis thesis) {
+    public long countAllThesis() {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         try {
-            session.save(thesis);
+            String sql = "SELECT COUNT(id) FROM Thesis";
 
-            return true;
+            return (long) session.createQuery(sql).getSingleResult();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        return false;
+        return 0;
+    }
+
+    @Override
+    public Thesis addThesis(Thesis thesis) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            session.save(thesis);
+
+            return thesis;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override
@@ -180,7 +194,12 @@ public class ThesisRepositoryImplement implements ThesisRepository {
         Session session = sessionFactoryBean.getObject().getCurrentSession();
 
         try {
-            String stringQuery = "SELECT SUM(scoD.scoreNum * scoC.weight) " + "FROM CouncilDetail cd LEFT JOIN cd.scores sco " + "LEFT JOIN sco.scoreDetails scoD " + "LEFT JOIN scoD.scoreColumn scoC " + "WHERE sco.thesis.id =: thesisID AND cd.council.id =: councilId " + "GROUP BY sco.councilDetail.id";
+            String stringQuery = "SELECT SUM(scoD.scoreNum * scoC.weight) " +
+                    "FROM CouncilDetail cd LEFT JOIN cd.scores sco " +
+                    "LEFT JOIN sco.scoreDetails scoD " +
+                    "LEFT JOIN scoD.scoreColumn scoC " +
+                    "WHERE sco.thesis.id =: thesisID AND cd.council.id =: councilId " +
+                    "GROUP BY sco.councilDetail.id";
 
             Query query = session.createQuery(stringQuery);
             query.setParameter("thesisID", thesisId);
@@ -204,10 +223,11 @@ public class ThesisRepositoryImplement implements ThesisRepository {
     }
 
     @Override
-    public boolean thesisResult(int councilId) {
+    public Council thesisResult(int councilId) {
         Session session = sessionFactoryBean.getObject().getCurrentSession();
         try {
-            for (Thesis thesis : session.get(Council.class, councilId).getTheses()) {
+            Council council = session.get(Council.class, councilId);
+            for (Thesis thesis : council.getTheses()) {
                 double scoreResult = this.scoreOfAThesisInCouncil(councilId, thesis.getId());
 
                 thesis.setTotalScore(scoreResult);
@@ -216,12 +236,12 @@ public class ThesisRepositoryImplement implements ThesisRepository {
                 session.update(thesis);
             }
 
-            return true;
+            return council;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        return false;
+        return null;
     }
 
     @Override

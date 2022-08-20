@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<c:url value="/public/admin/src/images/avatar/avatar-default.jpg" var="avatarDefault"/>
+<c:url value="/public/common/images/avatars/avatar-default.jpg" var="avatarDefault"/>
 <c:url var="filterStudent" value=""/>
 <c:url var="home" value="/admin/"/>
 <c:url var="appContext" value="/"/>
@@ -11,12 +12,18 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="title">
-                <h4>Sinh viên</h4>
+                <h4>
+                    <spring:message code="student.header.title.label"/>
+                </h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${home}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Sinh viên</li>
+                    <li class="breadcrumb-item"><a href="${home}">
+                        <spring:message code="layout.home.label"/>
+                    </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <spring:message code="student.header.title.label"/>
+                    </li>
                 </ol>
             </nav>
         </div>
@@ -30,7 +37,8 @@
         <div class="row justify-content-end mt-2">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Mã sinh viên, họ và tên, email, sđt..."
+                    <input class="form-control" type="text"
+                           placeholder="<spring:message code="student.table.search.keyword.label"/>"
                            name="kw"
                            aria-label="Search">
                 </div>
@@ -39,7 +47,9 @@
                 <div class="form-group">
                     <select class="custom-select2 form-control" name="schoolYearId" id="schoolYearId"
                             style="width: 100%">
-                        <option value="${""}">Tất cả niên khóa</option>
+                        <option value="${""}">
+                            <spring:message code="student.table.search.schoolYear"/>
+                        </option>
                         <c:forEach var="schoolYearOption" items="${schoolYearOptions}">
                             <option value="${schoolYearOption[0]}">${schoolYearOption[1]}</option>
                         </c:forEach>
@@ -50,7 +60,9 @@
                 <div class="form-group">
                     <select class="custom-select2 form-control" name="majorId" id="majorId"
                             style="width: 100%">
-                        <option value="${""}">Tất cả ngành</option>
+                        <option value="${""}">
+                            <spring:message code="student.table.search.major"/>
+                        </option>
                         <c:forEach var="majorOption" items="${majorOptions}">
                             <option value="${majorOption[0]}">${majorOption[1]}</option>
                         </c:forEach>
@@ -61,10 +73,14 @@
                 <div class="form-group">
                     <select class="custom-select2 form-control" name="active" id="active-filter"
                             style="width: 100%">
-                        <option value="${""}">Tất cả trạng thái</option>
-                        <option value="${true}">Hoạt động</option>
+                        <option value="${""}">
+                            <spring:message code="student.table.search.status"/>
+                        </option>
+                        <option value="${true}">
+                            <spring:message code="student.table.search.status.option.active"/>
+                        </option>
                         <option value="${false}">
-                            Không hoạt động
+                            <spring:message code="student.table.search.status.option.unActive"/>
                         </option>
                     </select>
                 </div>
@@ -72,7 +88,8 @@
             <div class="col-md-2 col-sm-12">
                 <div>
                     <button class="btn-warning btn form-control" type="submit">
-                        <i class=" fa fa-search" aria-hidden="true"></i> Tìm kiếm
+                        <i class=" fa fa-search" aria-hidden="true"></i>
+                        <spring:message code="student.table.search.button.label"/>
                     </button>
                 </div>
             </div>
@@ -81,25 +98,41 @@
     <hr style="height:5px;" class="text-black-50">
     <div class="clearfix mb-20">
         <div class="pull-left">
-            <h4 class="text-blue h4">Danh sách sinh viên</h4>
+            <h4 class="text-blue h4">
+                <spring:message code="student.table.list.title.label"/>
+            </h4>
         </div>
         <div class="pull-right">
             <button onclick="showAddStudentModal('${appContext}')"
                     type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
-                Thêm sinh viên
+                <spring:message code="student.table.list.button.addStudent.label"/>
             </button>
         </div>
     </div>
     <table class="table table-bordered table-responsive">
         <thead>
         <tr>
-            <th scope="col" class="text-center col-1">Hình ảnh</th>
-            <th scope="col" class="text-center">Mã sinh viên</th>
-            <th scope="col" class="text-center">Thông tin</th>
-            <th scope="col">Niên khóa</th>
-            <th scope="col">Thuộc ngành</th>
-            <th scope="col" class="text-center">Trạng thái</th>
-            <th scope="col" class="text-center">Hành động</th>
+            <th scope="col" class="text-center col-1">
+                <spring:message code="student.table.list.header.image"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="student.table.list.header.code"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="student.table.list.header.info"/>
+            </th>
+            <th scope="col">
+                <spring:message code="student.table.list.header.schoolYear"/>
+            </th>
+            <th scope="col">
+                <spring:message code="student.table.list.header.major"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="student.table.list.header.status"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="student.table.list.header.action"/>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -125,13 +158,13 @@
                             <li><fmt:formatDate type="date" value="${student.birthday}"/></li>
                             <li>
                                 <c:if test="${student.gender == 1}">
-                                    Nam
+                                    <spring:message code="student.table.list.data.option.gender.male"/>
                                 </c:if>
                                 <c:if test="${student.gender == 2}">
-                                    Nữ
+                                    <spring:message code="student.table.list.data.option.gender.female"/>
                                 </c:if>
                                 <c:if test="${student.gender == 3}">
-                                    Khác
+                                    <spring:message code="student.table.list.data.option.gender.other"/>
                                 </c:if>
                             </li>
                             <li>${student.address}</li>
@@ -140,14 +173,17 @@
                            href="javascript:;"
                            class="ml-2 text-blue">
                             <i class="icon-copy fa fa-key" aria-hidden="true"></i>
-                            Đổi mật khẩu</a>
+                            <spring:message code="student.table.list.data.option.changePassword.label"/>
+                        </a>
                     </td>
                     <td>
                         <c:if test="${student.schoolYear != null}">
                             ${student.schoolYear.name}
                         </c:if>
                         <c:if test="${student.schoolYear == null}">
-                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                            <span class="text-black-50 text-center">
+                                <spring:message code="student.table.list.cell.notUpdate"/>
+                            </span>
                         </c:if>
                     </td>
                     <td>
@@ -155,32 +191,36 @@
                             ${student.major.name}
                         </c:if>
                         <c:if test="${student.major == null}">
-                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                            <span class="text-black-50 text-center">
+                                 <spring:message code="student.table.list.cell.notUpdate"/>
+                            </span>
                         </c:if>
                     </td>
                     <td class="text-center">
                         <c:if test="${student.user.active == true}">
                             <i class="icon-copy fa fa-check-circle-o text-success" aria-hidden="true"
                                data-toggle="tooltip" data-placement="bottom"
-                               title="Hoạt động"></i>
+                               title="<spring:message code="student.table.search.status.option.active"/> "></i>
                         </c:if>
                         <c:if test="${student.user.active != true}">
                             <i class="icon-copy fa fa-times-circle-o text-danger" aria-hidden="true"
                                data-toggle="tooltip"
                                data-placement="bottom"
-                               title="Không hoạt động"></i>
+                               title="<spring:message code="student.table.search.status.option.unActive"/> "></i>
                         </c:if>
                     </td>
                     <td class="text-center">
                         <div class="btn-list">
                             <button onclick="showEditStudentModal('${appContext}', ${student.id} )"
                                     type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                                    data-placement="bottom" title="Chỉnh sửa">
+                                    data-placement="bottom"
+                                    title="<spring:message code="student.table.list.button.edit"/>">
                                 <i class="icon-copy dw dw-edit1"></i>
                             </button>
                             <button onclick="deleteStudentItem('${appContext}', ${student.id} )"
                                     type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
-                                    data-placement="bottom" title="Xóa">
+                                    data-placement="bottom"
+                                    title="<spring:message code="student.table.list.button.delete"/>">
                                 <i class="icon-copy dw dw-delete-3"></i>
                             </button>
                         </div>
@@ -192,7 +232,9 @@
             <tr>
                 <td colspan="7" class="text-black-50 text-center">
                     <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
-                    <p class="text-center">Danh sách sinh viên trống</p>
+                    <p class="text-center">
+                        <spring:message code="student.table.list.data.empty"/>
+                    </p>
                 </td>
             </tr>
         </c:if>
@@ -220,7 +262,6 @@
                 <button type="button" class="close close-custom" data-dismiss="modal" aria-hidden="true">×</button>
 
             </div>
-
             <div class="modal-body">
                 <form id="form-add-edit-student">
                     <div class="pd-10">
@@ -233,58 +274,75 @@
                         </div>
                         <div class="text-center">
                             <label class="btn btn-outline-info btn-sm">
-                                <i class="fa fa-upload"></i> Chọn ảnh <input type="file" id="file" name="file" accept="image/*" hidden>
+                                <i class="fa fa-upload"></i>
+                                <spring:message code="student.modal.chooseImageButton.label"/>
+                                <input type="file" id="file" name="file" accept="image/*" hidden>
                             </label>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Mã sinh viên<span
+                            <label class="font-weight-bold">
+                                <spring:message code="student.modal.code.label"/><span
                                     class="text-danger">(*)</span></label>
                             <input name="code" id="code" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Họ và tên<span
+                            <label class="font-weight-bold">
+                                <spring:message code="student.modal.fullName.label"/><span
                                     class="text-danger">(*)</span></label>
                             <input name="fullName" id="fullName" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Email<span
+                            <label class="font-weight-bold">
+                                <spring:message code="student.modal.email"/><span
                                     class="text-danger">(*)</span></label>
                             <input name="email" id="email" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Số điện thoại<span
+                            <label class="font-weight-bold">
+                                <spring:message code="student.modal.phone"/><span
                                     class="text-danger">(*)</span></label>
                             <input name="phone" id="phone" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Ngày sinh<span
+                            <label class="font-weight-bold">
+                                <spring:message code="student.modal.birthday"/><span
                                     class="text-danger">(*)</span></label>
                             <input name="birthday" id="birthday" type="date" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Giới tính<span
+                            <label class="font-weight-bold">
+                                <spring:message code="student.modal.gender"/><span
                                     class="text-danger">(*)</span></label>
                             <div>
                                 <select class="custom-select form-control"
                                         name="gender" id="gender" style="width: 100%;">
-                                    <option value="1">Nam</option>
-                                    <option value="2">Nữ</option>
-                                    <option value="3">Khác</option>
+                                    <option value="1">
+                                        <spring:message code="student.table.list.data.option.gender.male"/>
+                                    </option>
+                                    <option value="2">
+                                        <spring:message code="student.table.list.data.option.gender.female"/>
+                                    </option>
+                                    <option value="3">
+                                        <spring:message code="student.table.list.data.option.gender.other"/>
+                                    </option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Địa chỉ<span
+                            <label class="font-weight-bold">
+                                <spring:message code="student.modal.address"/><span
                                     class="text-danger">(*)</span></label>
                             <input name="address" id="address" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Điểm GPA<span
+                            <label class="font-weight-bold">
+                                <spring:message code="student.modal.gpa"/><span
                                     class="text-danger">(*)</span></label>
                             <input name="gpa" id="gpa" type="number" min="0" max="10" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Niên khóa<span
+                            <label class="font-weight-bold">
+                                <spring:message code="student.modal.schoolYear"/><span
                                     class="text-danger">(*)</span></label>
                             <div>
                                 <select class="custom-select form-control"
@@ -296,7 +354,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Thuộc ngành<span
+                            <label class="font-weight-bold">
+                                <spring:message code="student.modal.major"/><span
                                     class="text-danger">(*)</span></label>
                             <div>
                                 <select class="custom-select form-control"
@@ -311,16 +370,21 @@
                         <div class="form-group">
                             <div class="custom-control custom-checkbox mb-5">
                                 <input type="checkbox" class="custom-control-input" id="is-active" name="is-active">
-                                <label class="custom-control-label" for="is-active">Hoạt động</label>
+                                <label class="custom-control-label" for="is-active">
+                                    <spring:message code="student.modal.active"/>
+                                </label>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">
+                    <spring:message code="layout.button.cancel.label"/>
+                </button>
                 <button type="button" class="btn btn-success" id="btn-submit-form">
-                    <i class="micon fa fa-save"> </i> Lưu dữ liệu
+                    <i class="micon fa fa-save"> </i>
+                    <spring:message code="layout.button.saveData.label"/>
                 </button>
             </div>
         </div>

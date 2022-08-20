@@ -1,25 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<jsp:useBean id="now" class="java.util.Date"/>
 
 <section style="padding-top: 120px; padding-bottom: 120px;" class="bg-primary">
 </section>
 <section class="container-lg mb-5" style="margin-top: -140px;">
     <div class="box-shadow shadow-lg bg-white rounded">
         <div class="p-5">
-            <h5>Danh sách khóa luận</h5>
+            <h5>
+                <spring:message code="index.thesis.list.title"/>
+            </h5>
             <div class="mt-4">
                 <table class="table table-responsive-lg ">
                     <thead>
                     <tr>
-                        <th scope="col">Mã khóa luận</th>
-                        <th scope="col">Chủ đề</th>
-                        <th scope="col" class="text-center">Ngày bắt đầu</th>
-                        <th scope="col" class="text-center">Ngày kết thúc</th>
-                        <th scope="col">Khoa</th>
-                        <th scope="col">Niên khóa</th>
-                        <th scope="col">Trạng thái</th>
-                        <th scope="col" class="text-center">Hành động</th>
+                        <th scope="col"><spring:message code="index.thesis.list.table.header.code"/></th>
+                        <th scope="col"> <spring:message code="index.thesis.list.table.header.topic"/></th>
+                        <th scope="col" class="text-center"><spring:message code="index.thesis.list.table.header.startDate"/></th>
+                        <th scope="col" class="text-center"> <spring:message code="index.thesis.list.table.header.endDate"/></th>
+                        <th scope="col"> <spring:message code="index.thesis.list.table.header.major"/></th>
+                        <th scope="col"> <spring:message code="index.thesis.list.table.header.schoolYear"/></th>
+                        <th scope="col"><spring:message code="index.thesis.list.table.header.status"/></th>
+                        <th scope="col" class="text-center"><spring:message code="index.thesis.list.table.header.action"/></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -32,7 +36,9 @@
                                         ${thesis.topic.name}
                                     </c:if>
                                     <c:if test="${thesis.topic == null}">
-                                        <span class="text-black-50 text-center">Chưa cập nhật</span>
+                                        <span class="text-black-50 text-center">
+                                            <spring:message code="index.thesis.list.table.data.notUpdate"/>
+                                        </span>
                                     </c:if>
                                 </td>
                                 <td class="text-center">
@@ -42,11 +48,13 @@
                                     <fmt:formatDate type="date" value="${thesis.complateDate}"/>
                                 </td>
                                 <td>
-                                    <c:if test="${thesis.department != null}">
-                                        ${thesis.department.name}
+                                    <c:if test="${thesis.major != null}">
+                                        ${thesis.major.name}
                                     </c:if>
-                                    <c:if test="${thesis.department == null}">
-                                        <span class="text-black-50 text-center">Chưa cập nhật</span>
+                                    <c:if test="${thesis.major == null}">
+                                        <span class="text-black-50 text-center">
+                                             <spring:message code="index.thesis.list.table.data.notUpdate"/>
+                                        </span>
                                     </c:if>
                                 </td>
                                 <td>
@@ -54,14 +62,27 @@
                                         ${thesis.schoolYear.name}
                                     </c:if>
                                     <c:if test="${thesis.schoolYear == null}">
-                                        <span class="text-black-50 text-center">Chưa cập nhật</span>
+                                        <span class="text-black-50 text-center">
+                                             <spring:message code="index.thesis.list.table.data.notUpdate"/>
+                                        </span>
                                     </c:if>
                                 </td>
                                 <td>
-                                    <span class="text-danger">Đã kết thúc</span>
+                                    <c:if test="${thesis.thesisStartDate le now and now le thesis.thesisEndDate}">
+                                        <span class="text-success">
+                                             <spring:message code="index.thesis.list.table.header.status.active"/>
+                                        </span>
+                                    </c:if>
+                                    <c:if test="${thesis.thesisStartDate lt now and thesis.thesisEndDate lt now}">
+                                        <span class="text-danger">
+                                             <spring:message code="index.thesis.list.table.header.status.unActive"/>
+                                        </span>
+                                    </c:if>
                                 </td>
                                 <td class="text-center col-2">
-                                    <a href="<c:url value="thesis/${thesis.id}"/> " class="btn btn-info btn-sm">Xem chi tiết</a>
+                                    <a href="<c:url value="thesis/${thesis.id}"/>" class="btn btn-info btn-sm">
+                                        <spring:message code="index.thesis.list.table.header.action.button"/>
+                                    </a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -71,7 +92,9 @@
                             <td colspan="11" class="text-black-50 text-center">
                                 <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"
                                      alt="empty"/>
-                                <p class="text-center">Danh sách khóa luận trống</p>
+                                <p class="text-center">
+                                    <spring:message code="index.thesis.list.table.data.empty"/>
+                                </p>
                             </td>
                         </tr>
                     </c:if>

@@ -180,6 +180,7 @@ const showViewCouncilModal = (appContext, councilId) => {
         document.getElementById("data-theses").innerHTML = innerHtmlTheses;
         document.getElementById("data-lecturers").innerHTML = innerHtmlLecturers;
         document.getElementById("thesis-area").innerHTML = innerHtmlScores;
+        document.getElementById("btn-print").addEventListener("click", () => printScoreData(appContext, councilId))
 
         $('#modal-view-council').modal()
     })
@@ -199,6 +200,7 @@ const loadCouncilById = (appContext, councilId, callback) => {
     }).then(res => res.json()).then(data => {
         callback(council, data)
     }).catch(err => {
+        console.error(err)
         errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình tải dữ liệu!", "Ok")
     })
 }
@@ -209,8 +211,7 @@ const loadThesisScoresWhenClickShow = (appContext, councilId, thesisId) => {
 
     if (scoreArea.innerHTML === '') {
         fetch(`${appContext}admin/api/councils/${councilId}/scores/?thesisId=${thesisId}`, {
-            method: "GET",
-            headers: {
+            method: "GET", headers: {
                 "Content-Type": "application/json"
             }
         }).then(res => {
@@ -223,8 +224,7 @@ const loadThesisScoresWhenClickShow = (appContext, councilId, thesisId) => {
             data.map(d => {
                 scoreItemHtml += `<tr>
                                         <td>${d[2]}</td>
-                                        <td class="text-center">${d[3] !== null ? d[3].toFixed(2) :
-                                            `<span class="text-danger font-weight-bold">Chưa chấm điểm</span>`}
+                                        <td class="text-center">${d[3] !== null ? d[3].toFixed(2) : `<span class="text-danger font-weight-bold">Chưa chấm điểm</span>`}
                                         </td>
                                     </tr>`
             })
@@ -383,3 +383,151 @@ $('#modal-add-edit-council').on('hidden.bs.modal', function (e) {
     memberArray = [0]
     loadMemberForm(memberArray)
 })
+
+
+const printScoreData = (appContext, councilId) => {
+    let scoreDataArea = document.getElementById("score-data-area")
+
+    fetch(`${appContext}admin/api/councils/${councilId}`, {
+        method: 'GET', headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(res => res.json()).then(councilData => {
+        let promises = [];
+        let data = {}
+
+        councilData.theses.map((thesis, idx) => {
+            promises.push(fetch(`${appContext}admin/api/councils/${councilId}/scores/?thesisId=${thesis.id}`))
+            data[idx] = {"thesis": thesis}
+        })
+
+        Promise.all(promises)
+            .then(async function (responses) {
+                for (let i = 0; i < responses.length; i++) {
+                    data[i]["scores"] = await responses[i].json()
+                }
+            })
+            .then(() => {
+                let thesesHtml = ``
+                let thesisNo = 0;
+                for (let key in data) {
+                    let studentHtml = ``
+                    let scoresHtml = ``
+                    let totalScore = 0
+                    thesisNo += 1;
+
+                    for (let iStudent = 0; iStudent < 2; iStudent++) {
+                        if (data[key].thesis.students.length >= iStudent + 1) {
+                            studentHtml += `<td class="text-center align-middle">${data[key].thesis.students[iStudent].code}</td>
+                                        <td class="align-middle">${data[key].thesis.students[iStudent].fullName}</td>`
+                        } else {
+                            studentHtml += `<td class="text-center align-middle"></td>
+                                    <td class="align-middle"></td>`
+                        }
+                    }
+
+                    for (let iScore = 0; iScore < 5; iScore++) {
+                        if (data[key].scores.length >= iScore + 1) {
+                            scoresHtml += `<td class="text-center align-middle">${data[key].scores[iScore][3]}</td>`
+                            totalScore += data[key].scores[iScore][3]
+                        } else {
+                            scoresHtml += `<td class="text-center align-middle">1</td>`
+                        }
+                    }
+
+                    thesesHtml += `<tr>
+                                    <td class="text-center align-middle">${thesisNo}</td>
+                                    ${studentHtml}
+                                    <td class="text-center align-middle">${data[key].thesis.topic.name}</td>
+                                     ${scoresHtml}
+                                     <td class="align-middle">${totalScore / data[key].scores.length}</td>
+                                </tr>`
+                }
+
+                scoreDataArea.innerHTML = `<div class="pd-30 card-box mb-30" style="padding-bottom: 120px;" id="score-data">
+                                            <div class="pd-20 mb-5 row">
+                                                <div class="col-4">
+                                                    <div class="text-center">BỘ GIÁO DỤC VÀ ĐÀO TẠO</div>
+                                                    <div class="font-weight-bold text-center">
+                                                        TRƯỜNG ĐẠI HỌC MỞ THÀNH PHỐ HỒ CHÍ MINH
+                                                    </div>
+                                                    <h4 class="h5 mt-4 text-center">${councilData.name}</h4>
+                                                </div>
+                                                <div class="col-6 text-center">
+                                                    <h5 class="text-danger mb-2">
+                                                        PHIẾU CHẤM ĐỒ ÁN/KHÓA LUẬN TỐT NGHIỆP NIÊN KHÓA (${councilData.schoolYear.name})
+                                                    </h5>
+                                                    <h6 class="mb-2">
+                                                        DÀNH CHO THÀNH VIÊN HỘI ĐỒNG BẢO VỆ KHÓA LUẬN TỐT NGHIỆP
+                                                    </h6>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="p-2 mt-2 text-danger text-right font-weight-bold">
+                                                        Mẫu 001
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col" rowspan="2" class="text-center align-middle">
+                                                        Stt
+                                                    </th>
+                                                    <th scope="col" rowspan="2" class="text-center align-middle">
+                                                        Mssv 1
+                                                    </th>
+                                                    <th scope="col" rowspan="2" class="text-center align-middle">
+                                                        Họ và tên sinh viên 1
+                                                    </th>
+                                                    <th scope="col" rowspan="2" class="text-center align-middle">
+                                                        Mssv 2
+                                                    </th>
+                                                    <th scope="col" rowspan="2" class="text-center align-middle">
+                                                        Họ và tên sinh viên 2
+                                                    </th>
+                                                     <th scope="col" rowspan="2" class="text-center align-middle">
+                                                        Đề tài
+                                                    </th>
+                                                    <th scope="col" colspan="5" class="text-center align-middle">
+                                                        Điểm Hội đồng bảo vệ tốt nghiệp
+                                                    </th>
+                                                    <th scope="col" rowspan="2" class="text-center align-middle">
+                                                        Điểm tổng kết
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col" class="text-center align-middle">UVHĐ 01</th>
+                                                    <th scope="col" class="text-center align-middle">UVHĐ 02</th>
+                                                    <th scope="col" class="text-center align-middle">UVHĐ 03</th>
+                                                    <th scope="col" class="text-center align-middle">UVHĐ 04</th>
+                                                    <th scope="col" class="text-center align-middle">UVHĐ 05</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                ${thesesHtml}
+                                                </tbody>
+                                            </table>
+                                            <div class="row mt-4 mb-30">
+                                                <div class="col-6">
+                                                    <div class="text-center">
+                                                        TP. Hồ Chí Minh, ngày ______ tháng ______ năm ______
+                                                    </div>
+                                                    <p class="text-center">Lãnh đạo ký và ghi rõ họ tên</p>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="text-center">
+                                                        TP. Hồ Chí Minh, ngày ______ tháng ______ năm ______
+                                                    </div>
+                                                    <p class="text-center">Chủ tịch Hội đồng ký và ghi rõ họ tên</p>
+                                                </div>
+                                            </div>
+                                        </div>`
+
+                $("#score-data").printMe({"path": ["https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"]}, () => scoreDataArea.innerHTML = "");
+            }).catch(err => {
+            console.log(err)
+            errorAlert("Đã có lỗi!", "Đã có lỗi trong quá trình tải dữ liệu!", "Ok")
+        })
+    })
+}
+

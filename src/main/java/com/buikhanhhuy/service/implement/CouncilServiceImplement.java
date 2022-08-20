@@ -42,6 +42,11 @@ public class CouncilServiceImplement implements CouncilService {
     }
 
     @Override
+    public long countAllCouncil() {
+        return this.councilRepository.countAllCouncil();
+    }
+
+    @Override
     public boolean addCouncil(Council council) {
         return this.councilRepository.addCouncil(council);
     }
@@ -71,10 +76,7 @@ public class CouncilServiceImplement implements CouncilService {
                 toEmail.add(student.getEmail());
             }
 
-            this.emailService.sendMail(
-                    "Thông báo kết quả khóa luận tốt nghiệp",
-                    toEmail.toArray(new String[]{}), model,
-                    SystemConstant.THESIS_RESULT_EMAIL_TEMPLATE);
+            this.emailService.sendMail("Thông báo kết quả khóa luận tốt nghiệp", toEmail.toArray(new String[]{}), model, SystemConstant.THESIS_RESULT_EMAIL_TEMPLATE);
         }
     }
 
@@ -84,8 +86,9 @@ public class CouncilServiceImplement implements CouncilService {
         Council council = this.councilRepository.lockOrUnlockCouncil(councilId, block);
         if (council != null) {
             if (block) {
-                if(this.thesisRepository.thesisResult(council.getId())){
-                    this.sendThesisResultNotification(council);
+                Council councilResult = this.thesisRepository.thesisResult(council.getId());
+                if (councilResult != null) {
+                    this.sendThesisResultNotification(councilResult);
 
                     return true;
                 }

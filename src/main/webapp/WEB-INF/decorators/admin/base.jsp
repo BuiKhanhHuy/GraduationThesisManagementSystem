@@ -98,7 +98,6 @@
 <script src="<c:url value="/public/admin/vendors/scripts/script.min.js"/>"></script>
 <script src="<c:url value="/public/admin/vendors/scripts/process.js"/>"></script>
 <script src="<c:url value="/public/admin/vendors/scripts/layout-settings.js"/>"></script>
-
 <%--custom--%>
 <script src="<c:url value="/public/common/js/script.js"/> "/>
 

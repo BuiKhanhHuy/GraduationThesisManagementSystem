@@ -53,7 +53,7 @@ public class Council implements Serializable {
     private SchoolYear schoolYear;
     @OneToMany(mappedBy = "council", fetch = FetchType.EAGER)
     @NotEmpty(message = "{council.add.theses.notNullMessage}")
-    @JsonIncludeProperties({"id", "code", "topic"})
+    @JsonIncludeProperties({"id", "code", "topic", "students"})
     private Set<Thesis> theses;
 
 

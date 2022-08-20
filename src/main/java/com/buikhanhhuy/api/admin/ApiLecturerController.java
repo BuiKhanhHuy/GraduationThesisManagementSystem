@@ -44,7 +44,9 @@ public class ApiLecturerController {
         }
     }
 
-    @PostMapping(path = "/lecturers", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(path = "/lecturers",
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Map<String, String>> addLecturer(@RequestPart(value = "avatarFile", required = false) MultipartFile file,
                                                            @RequestPart("lecturer") @Valid Lecturer lecturer, BindingResult result) {
         Map<String, String> errorMessages = new HashMap<>();

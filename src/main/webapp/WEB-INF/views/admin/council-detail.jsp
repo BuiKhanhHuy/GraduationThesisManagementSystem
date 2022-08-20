@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:url var="filterCouncilDetail" value=""/>
 <c:url var="home" value="/admin/"/>
@@ -10,12 +11,17 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="title">
-                <h4>Hội đồng bảo vệ khóa luận</h4>
+                <h4>
+                    <spring:message code="council.header.title.label"/>
+                </h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${home}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Hội đồng bảo vệ khóa luận
+                    <li class="breadcrumb-item"><a href="${home}">
+                        <spring:message code="layout.home.label"/>
+                    </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <spring:message code="council.header.title.label"/>
                     </li>
                 </ol>
             </nav>
@@ -30,7 +36,8 @@
         <div class="row justify-content-end mt-2">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Tên hội đồng"
+                    <input class="form-control" type="text"
+                           placeholder="<spring:message code="council.table.search.keyword.label"/>"
                            name="kw"
                            aria-label="Search">
                 </div>
@@ -39,7 +46,7 @@
                 <div class="form-group">
                     <select class="custom-select2 form-control" name="schoolYearId" id="schoolYearId"
                             style="width: 100%">
-                        <option value="${""}">Tất cả niên khóa</option>
+                        <option value="${""}"><spring:message code="council.table.search.schoolYear"/></option>
                         <c:forEach var="schoolYearOption" items="${schoolYearOptions}">
                             <option value="${schoolYearOption[0]}">${schoolYearOption[1]}</option>
                         </c:forEach>
@@ -48,18 +55,25 @@
             </div>
             <div class="col-md-3 col-sm-12">
                 <div class="form-group">
-                    <select class="custom-select2 form-control" name="block" id="block"
-                            style="width: 100%">
-                        <option value="${""}">Tất cả trạng thái</option>
-                        <option value="true">Đang khóa</option>
-                        <option value="false">Đang mở</option>
+                    <label for="block"></label><select class="custom-select2 form-control" name="block" id="block"
+                                                       style="width: 100%">
+                        <option value="${""}">
+                            <spring:message code="council.table.search.status"/>
+                        </option>
+                        <option value="true">
+                            <spring:message code="council.table.search.status.close"/>
+                        </option>
+                        <option value="false">
+                            <spring:message code="council.table.search.status.open"/>
+                        </option>
                     </select>
                 </div>
             </div>
             <div class="col-md-2 col-sm-12">
                 <div>
                     <button class="btn-warning btn form-control" type="submit">
-                        <i class=" fa fa-search" aria-hidden="true"></i> Tìm kiếm
+                        <i class=" fa fa-search" aria-hidden="true"></i>
+                        <spring:message code="council.table.search.button.label"/>
                     </button>
                 </div>
             </div>
@@ -68,17 +82,19 @@
     <hr style="height:5px;" class="text-black-50">
     <div class="clearfix mb-20">
         <div class="pull-left">
-            <h4 class="text-blue h4">Danh sách hội đồng</h4>
+            <h4 class="text-blue h4">
+                <spring:message code="council.table.list.title.label"/>
+            </h4>
         </div>
     </div>
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="text-center">Tên hội đồng</th>
-            <th scope="col" class="text-center">Niên khóa</th>
-            <th scope="col" class="text-center">Chức vụ trong hội đồng</th>
-            <th scope="col" class="text-center">Trạng thái</th>
-            <th scope="col" class="text-center">Hành động</th>
+            <th scope="col" class="text-center"><spring:message code="council.table.list.header.name"/></th>
+            <th scope="col" class="text-center"><spring:message code="council.table.list.header.schoolYear"/></th>
+            <th scope="col" class="text-center"><spring:message code="council.table.list.header.position"/></th>
+            <th scope="col" class="text-center"><spring:message code="council.table.list.header.status"/></th>
+            <th scope="col" class="text-center"><spring:message code="council.table.list.header.action"/></th>
         </tr>
         </thead>
         <tbody>
@@ -93,7 +109,9 @@
                             ${council[4]}
                         </c:if>
                         <c:if test="${council[4] == null}">
-                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                            <span class="text-black-50 text-center">
+                                <spring:message code="council.table.list.cell.notUpdate"/>
+                            </span>
                         </c:if>
                     </td>
                     <td>
@@ -101,7 +119,9 @@
                             ${council[1] }
                         </c:if>
                         <c:if test="${council[1]  == null}">
-                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                            <span class="text-black-50 text-center">
+                                <spring:message code="council.table.list.cell.notUpdate"/>
+                            </span>
                         </c:if>
                     </td>
                     <td colspan="text-center">
@@ -109,14 +129,16 @@
                             <div class="text-center text-success">
                                 <i class="icon-copy fa fa-unlock font-20" aria-hidden="true"
                                    data-toggle="tooltip"
-                                   data-placement="bottom" title="Hội đồng đang được mở"></i>
+                                   data-placement="bottom"
+                                   title="<spring:message code="council.table.list.header.status.unLock"/>"></i>
                             </div>
                         </c:if>
                         <c:if test="${council[3] == true}">
                             <div class="text-center text-danger">
                                 <i class="icon-copy fa fa-lock font-20" aria-hidden="true"
                                    data-toggle="tooltip"
-                                   data-placement="bottom" title="Hội đồng đang bị khóa"></i>
+                                   data-placement="bottom"
+                                   title="<spring:message code="council.table.list.header.status.lock"/>"></i>
                             </div>
                         </c:if>
                     </td>
@@ -124,7 +146,7 @@
                         <div class="btn-list">
                             <a href="<c:url value="/admin/councils-detail/${council[0]}"/>"
                                type="button" class="btn btn-sm bg-success text-white">
-                                Chấm điểm khóa luận
+                                <spring:message code="council.button.score"/>
                             </a>
                         </div>
                     </td>
@@ -135,7 +157,7 @@
             <tr>
                 <td colspan="11" class="text-black-50 text-center">
                     <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png" alt="empty"/>
-                    <p class="text-center">Danh sách hội đồng trống</p>
+                    <p class="text-center"> <spring:message code="council.table.list.data.empty"/></p>
                 </td>
             </tr>
         </c:if>

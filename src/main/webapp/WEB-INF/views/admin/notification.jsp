@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:url var="endpointLoadUsers" value="/admin/api/users"/>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
+<c:url var="endpointLoadUsers" value="/admin/api/users"/>
 <c:url var="filterNews" value=""/>
 <c:url var="home" value="/admin/"/>
 
@@ -9,12 +10,18 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="title">
-                <h4>Bản tin</h4>
+                <h4>
+                    <spring:message code="notification.header.title.label"/>
+                </h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${home}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Bản tin</li>
+                    <li class="breadcrumb-item"><a href="${home}">
+                        <spring:message code="layout.home.label"/>
+                    </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <spring:message code="notification.header.title.label"/>
+                    </li>
                 </ol>
             </nav>
         </div>
@@ -29,14 +36,16 @@
         <div class="row justify-content-end mt-2">
             <div class="col-md-4 col-sm-12">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Nhập tiêu đề tìm kiếm..." name="kw"
+                    <input class="form-control" type="text"
+                           placeholder="<spring:message code="notification.table.search.keyword.label"/>" name="kw"
                            aria-label="Search">
                 </div>
             </div>
             <div class="col-md-2 col-sm-12">
                 <div>
                     <button class="form-control ml-1 btn-warning btn" type="submit">
-                        <i class=" fa fa-search" aria-hidden="true"></i> Tìm kiếm
+                        <i class=" fa fa-search" aria-hidden="true"></i>
+                        <spring:message code="notification.table.search.button.label"/>
                     </button>
                 </div>
             </div>
@@ -45,21 +54,29 @@
     <hr style="height:5px;" class="text-black-50">
     <div class="clearfix mb-20">
         <div class="pull-left">
-            <h4 class="text-blue h4">Danh sách thông báo</h4>
+            <h4 class="text-blue h4">
+                <spring:message code="notification.table.list.title.label"/>
+            </h4>
         </div>
         <div class="pull-right">
             <button onclick="showAddNotificationModal('<c:url value="/admin/api/notifications"/>')"
                     type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
-                Gửi thông báo
+                <spring:message code="notification.table.list.button.addNotification.label"/>
             </button>
         </div>
     </div>
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="col-2">Tiêu đề</th>
-            <th scope="col">Nội dung</th>
-            <th scope="col" class="text-center">Hành động</th>
+            <th scope="col" class="col-2">
+                <spring:message code="notification.table.list.header.notificationTitle"/>
+            </th>
+            <th scope="col">
+                <spring:message code="notification.table.list.header.notificationContent"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="notification.table.list.header.action"/>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -75,7 +92,8 @@
                             <button onclick="deleteNotificationItem('<c:url value="/admin/api/notifications/${notification.id}"/>')"
                                     type="button" class="btn btn-sm bg-danger text-white"
                                     data-toggle="tooltip"
-                                    data-placement="bottom" title="Xóa">
+                                    data-placement="bottom"
+                                    title="<spring:message code="notification.table.list.button.delete"/>">
                                 <i class="icon-copy dw dw-delete-3"></i>
                             </button>
                         </div>
@@ -87,7 +105,9 @@
             <tr>
                 <td colspan="5" class="text-black-50 text-center">
                     <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
-                    <p class="text-center">Danh sách thông báo trống</p>
+                    <p class="text-center">
+                        <spring:message code="notification.table.list.data.empty"/>
+                    </p>
                 </td>
             </tr>
         </c:if>
@@ -123,22 +143,28 @@
                 <form id="form-add-edit-notification">
                     <div class="pd-10">
                         <div class="form-group">
-                            <label class="font-weight-bold">Tiêu đề<span
+                            <label class="font-weight-bold">
+                                <spring:message code="notification.modal.notificationTitle.label"/><span
                                     class="text-danger">(*)</span></label>
                             <input name="title" id="title" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Nội dung<span
+                            <label class="font-weight-bold">
+                                <spring:message code="notification.modal.notificationContent.label"/><span
                                     class="text-danger">(*)</span></label>
                             <textarea name="content" id="content" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Đối tượng cần gửi</label>
+                            <label class="font-weight-bold">
+                                <spring:message code="notification.modal.object.label"/>
+                            </label>
                             <div>
                                 <select onchange="objectChange('${endpointLoadUsers}')"
                                         name="role" id="role"
                                         class="custom-select form-control" style="width: 100%;">
-                                    <option value="">Tất cả</option>
+                                    <option value="">
+                                        <spring:message code="notification.modal.object.allObjects.label"/>
+                                    </option>
                                     <c:forEach var="role" items="${roles}">
                                         <option value="${role.id}">${role.description}</option>
                                     </c:forEach>
@@ -146,12 +172,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Sinh viên thuộc khóa</label>
+                            <label class="font-weight-bold">
+                                <spring:message code="notification.modal.students.label"/>
+                            </label>
                             <div>
                                 <select onchange="schoolYearChange('${endpointLoadUsers}')"
                                         disabled id="schoolYear" name="schoolYear"
                                         class="custom-select form-control" style="width: 100%;">
-                                    <option value=""> Tất cả niên khóa</option>
+                                    <option value="">
+                                        <spring:message code="notification.modal.students.allStudent.label"/>
+                                    </option>
                                     <c:forEach var="schoolYearOption" items="${schoolYearOptions}">
                                         <option value="${schoolYearOption[0]}">${schoolYearOption[1]}</option>
                                     </c:forEach>
@@ -159,7 +189,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Gửi trực tiếp</label>
+                            <label class="font-weight-bold">
+                                <spring:message code="notification.modal.sendRedirect"/>
+                            </label>
                             <select name="users" id="users" disabled
                                     class="custom-select2 form-control" multiple="multiple" style="width: 100%;">
                             </select>
@@ -168,10 +200,13 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">
+                    <spring:message code="layout.button.cancel.label"/>
+                </button>
                 <button onclick="addNotification()"
                         type="button" class="btn btn-success" id="btn-submit-form">
-                    <i class="icon-copy fa fa-send" aria-hidden="true"></i> Gửi đi
+                    <i class="icon-copy fa fa-send" aria-hidden="true"></i>
+                    <spring:message code="layout.button.saveData.label"/>
                 </button>
             </div>
         </div>

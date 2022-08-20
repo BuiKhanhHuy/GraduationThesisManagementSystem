@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:url var="adminIndex" value="/admin/"/>
 <c:url var="news" value="/news/"/>
@@ -25,6 +26,8 @@
 <c:url var="news" value="/admin/news/"/>
 <c:url var="notification" value="/admin/notifications/"/>
 <c:url var="chat" value="/admin/chats/"/>
+<c:url var="scoreStatistics" value="/admin/stats/score-statistics"/>
+<c:url var="frequencyStatistics" value="/admin/stats/frequency-statistics"/>
 
 <c:url var="logout" value="/logout"/>
 
@@ -47,94 +50,147 @@
             <ul id="accordion-menu">
                 <li>
                     <a href="${adminIndex}" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-dashboard"></span><span class="mtext">Bảng điều khiển</span>
+                        <span class="micon fa fa-dashboard"></span>
+                        <span class="mtext">
+                            <spring:message code="layout.leftSidebar.menu.label.index"/>
+                        </span>
                     </a>
                 </li>
                 <sec:authorize access="hasAnyAuthority('LECTURER')">
                     <li>
                         <a href="${councilDetail}" class="dropdown-toggle no-arrow">
-                            <span class="micon fa fa-users"></span><span class="mtext">Hội đồng</span>
+                            <span class="micon fa fa-users"></span>
+                            <span class="mtext">
+                                <spring:message code="layout.leftSidebar.menu.label.council"/>
+                            </span>
                         </a>
                     </li>
                 </sec:authorize>
                 <sec:authorize access="hasAnyAuthority('ADMIN', 'MINISTRY')">
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon fa fa-sitemap"></span><span class="mtext">Quản lý đào tạo</span>
+                            <span class="micon fa fa-sitemap"></span>
+                            <span class="mtext">
+                                <spring:message code="layout.leftSidebar.menu.label.trainingManagement"/>
+                            </span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="${deparment}">Khoa</a></li>
-                            <li><a href="${major}">Ngành</a></li>
-                            <li><a href="${schoolYear}">Niên khóa</a></li>
+                            <li><a href="${deparment}">
+                                <spring:message code="layout.leftSidebar.menu.label.sub.department"/>
+                            </a></li>
+                            <li><a href="${major}">
+                                <spring:message code="layout.leftSidebar.menu.label.sub.major"/>
+                            </a></li>
+                            <li><a href="${schoolYear}">
+                                <spring:message code="layout.leftSidebar.menu.label.sub.schoolYear"/></a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon fa fa-user-o"></span><span class="mtext">Quản lý giảng viên</span>
+                            <span class="micon fa fa-user-o"></span>
+                            <span class="mtext">
+                                 <spring:message code="layout.leftSidebar.menu.label.lecturerManagement"/>
+                            </span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="${position}">Chức vụ</a></li>
-                            <li><a href="${lecturer}">Giảng viên</a></li>
+                            <li><a href="${position}">
+                                <spring:message code="layout.leftSidebar.menu.label.sub.position"/>
+                            </a></li>
+                            <li><a href="${lecturer}">
+                                <spring:message code="layout.leftSidebar.menu.label.sub.lecturer"/>
+                            </a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="${student}" class="dropdown-toggle no-arrow">
-                            <span class="micon fa fa-user"></span><span class="mtext">Sinh viên</span>
+                            <span class="micon fa fa-user"></span>
+                            <span class="mtext">
+                                <spring:message code="layout.leftSidebar.menu.label.student"/>
+                            </span>
                         </a>
                     </li>
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon fa fa-file-word-o"></span><span class="mtext">Quản lý khóa luận</span>
+                            <span class="micon fa fa-file-word-o"></span>
+                            <span class="mtext">
+                                 <spring:message code="layout.leftSidebar.menu.label.thesisManagement"/>
+                            </span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="${topic}">Đề tài</a></li>
-                            <li><a href="${thesis}">Khóa luận</a></li>
+                            <li><a href="${topic}">
+                                <spring:message code="layout.leftSidebar.menu.label.sub.topic"/>
+                            </a></li>
+                            <li><a href="${thesis}">
+                                <spring:message code="layout.leftSidebar.menu.label.sub.thesis"/>
+                            </a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="${council}" class="dropdown-toggle no-arrow">
-                            <span class="micon fa fa-users"></span><span class="mtext">Hội đồng</span>
+                            <span class="micon fa fa-users"></span><span class="mtext">
+                            <spring:message code="layout.leftSidebar.menu.label.council"/>
+                        </span>
                         </a>
                     </li>
                     <li>
                         <a href="${evaluationMethod}" class="dropdown-toggle no-arrow">
-                            <span class="micon fa fa-edit"></span><span class="mtext">Phương pháp đánh giá</span>
+                            <span class="micon fa fa-edit"></span><span class="mtext">
+                            <spring:message code="layout.leftSidebar.menu.label.evaluationMethod"/>
+                        </span>
                         </a>
                     </li>
                     <li>
                         <a href="${notification}" class="dropdown-toggle no-arrow">
-                            <span class="micon fa fa-bell-o"></span><span class="mtext">Quản lý thông báo</span>
+                            <span class="micon fa fa-bell-o"></span><span class="mtext">
+                                <spring:message code="layout.leftSidebar.menu.label.notificationManagement"/>
+                        </span>
                         </a>
                     </li>
                     <li>
                         <a href="${news}" class="dropdown-toggle no-arrow">
-                            <span class="micon fa fa-newspaper-o"></span><span class="mtext">Quản lý bảng tin</span>
+                            <span class="micon fa fa-newspaper-o"></span><span class="mtext">
+                                  <spring:message code="layout.leftSidebar.menu.label.newsManagement"/>
+                        </span>
                         </a>
                     </li>
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon fa fa-pie-chart"></span><span class="mtext">Thống kê</span>
+                            <span class="micon fa fa-pie-chart"></span><span class="mtext">
+                             <spring:message code="layout.leftSidebar.menu.label.stats"/>
+                        </span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="highchart.html">Thống kê điểm khóa luận</a></li>
-                            <li><a href="knob-chart.html">Thống kê tần suất khóa luận</a></li>
+                            <li><a href="${scoreStatistics}">
+                                <spring:message code="layout.leftSidebar.menu.label.sub.scoreStatistics"/>
+                            </a></li>
+                            <li><a href="${frequencyStatistics}">
+                                <spring:message code="layout.leftSidebar.menu.label.sub.frequencyStatistics"/>
+                            </a></li>
                         </ul>
                     </li>
                     <sec:authorize access="hasAuthority('ADMIN')">
                         <li class="dropdown">
                             <a href="javascript:;" class="dropdown-toggle">
-                                <span class="micon fa fa-gears"></span><span class="mtext">Quản lý hệ thống</span>
+                                <span class="micon fa fa-gears"></span><span class="mtext">
+                                <spring:message code="layout.leftSidebar.menu.label.systemManagement"/>
+                            </span>
                             </a>
                             <ul class="submenu">
-                                <li><a href="${role}">Quyền</a></li>
-                                <li><a href="${manage}">Quản trị viên</a></li>
+                                <li><a href="${role}">
+                                    <spring:message code="layout.leftSidebar.menu.label.sub.role"/>
+                                </a></li>
+                                <li><a href="${manage}">
+                                    <spring:message code="layout.leftSidebar.menu.label.sub.manage"/>
+                                </a></li>
                             </ul>
                         </li>
                     </sec:authorize>
                 </sec:authorize>
                 <li>
                     <a href="${chat}" class="dropdown-toggle no-arrow">
-                        <span class="micon dw dw-chat3"></span><span class="mtext">Trò chuyện</span>
+                        <span class="micon dw dw-chat3"></span><span class="mtext">
+                         <spring:message code="layout.leftSidebar.menu.label.chat"/>
+                    </span>
                     </a>
                 </li>
                 <li>

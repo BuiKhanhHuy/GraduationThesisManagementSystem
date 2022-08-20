@@ -68,6 +68,10 @@ public class Major implements Serializable {
     @JsonIgnore
     private Set<Student> students;
 
+    @OneToMany(mappedBy = "major")
+    @JsonIgnore
+    private Set<Thesis> theses;
+
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     @JsonIgnoreProperties({"code", "description", "founding"})
     @ManyToOne
@@ -125,6 +129,14 @@ public class Major implements Serializable {
 
     public void setStudents(Set<Student> studentSet) {
         this.students = studentSet;
+    }
+
+    public Set<Thesis> getTheses() {
+        return theses;
+    }
+
+    public void setTheses(Set<Thesis> theses) {
+        this.theses = theses;
     }
 
     public Department getDepartment() {

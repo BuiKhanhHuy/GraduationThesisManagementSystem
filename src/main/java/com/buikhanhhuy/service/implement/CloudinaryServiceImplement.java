@@ -35,7 +35,7 @@ public class CloudinaryServiceImplement implements CloudinaryService {
     public String uploadFile(MultipartFile file, String fileName) {
         try {
             Map res = this.cloudinary.uploader().upload(file.getBytes(),
-                    ObjectUtils.asMap("public_id", fileName, "resource_type", "auto"));
+                    ObjectUtils.asMap("public_id", fileName, "resource_type", "raw",  "format", "zip"));
 
             return res.get("secure_url").toString();
         } catch (IOException ex) {

@@ -294,9 +294,9 @@
                                                             <strong>${thesis.complateDate}</strong>
                                                         </#if>
                                                     </li>
-                                                    <li style="margin-bottom: 0px;">Khoa:
-                                                        <#if (thesis.department)??>
-                                                            <strong>${thesis.department.name}</strong>
+                                                    <li style="margin-bottom: 0px;">Ngành:
+                                                        <#if (thesis.major)??>
+                                                            <strong>${thesis.major.name}</strong>
                                                         </#if>
                                                     </li>
                                                     <li>Niên khóa:

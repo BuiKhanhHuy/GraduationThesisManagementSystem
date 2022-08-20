@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:url var="filterEvaluationMethod" value="/admin/evaluations-method"/>
 <c:url var="home" value="/admin/"/>
@@ -8,12 +9,18 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="title">
-                <h4>Phương pháp đánh giá</h4>
+                <h4>
+                    <spring:message code="evaluationMethod.header.title.label"/>
+                </h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${home}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Phương pháp đánh giá</li>
+                    <li class="breadcrumb-item"><a href="${home}">
+                        <spring:message code="layout.home.label"/>
+                    </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <spring:message code="evaluationMethod.header.title.label"/>
+                    </li>
                 </ol>
             </nav>
         </div>
@@ -27,22 +34,32 @@
     </form>
     <div class="clearfix mb-20">
         <div class="pull-left">
-            <h4 class="text-blue h4">Danh sách phương pháp đánh giá</h4>
+            <h4 class="text-blue h4">
+                <spring:message code="evaluationMethod.table.list.title.label"/>
+            </h4>
         </div>
         <div class="pull-right">
             <button onclick="showAddEvaluationMethodModal('<c:url value="/admin/api/evaluations-method"/>')"
                     type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
-                Thêm phương pháp đánh giá
+                <spring:message code="evaluationMethod.table.list.button.addTopic.label"/>
             </button>
         </div>
     </div>
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col">Tên phương pháp đánh giá</th>
-            <th scope="col">Nội dung đánh giá</th>
-            <th scope="col" class="text-center">Hoạt động</th>
-            <th scope="col" class="text-center">Hành động</th>
+            <th scope="col">
+                <spring:message code="evaluationMethod.table.list.header.evaluationMethodName"/>
+            </th>
+            <th scope="col">
+                <spring:message code="evaluationMethod.table.list.header.evaluationMethodContent"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="evaluationMethod.table.list.header.active"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="evaluationMethod.table.list.header.action"/>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -65,7 +82,9 @@
                                                 </c:forEach>
                                             </c:if>
                                             <c:if test="${scoreComponent.scoreColumns == null}">
-                                                <li><span class="text-black-50 text-center">Chưa cập nhật</span></li>
+                                                <li><span class="text-black-50 text-center">
+                                                     <spring:message code="evaluationMethod.table.list.cell.notUpdate"/>
+                                                </span></li>
                                             </c:if>
                                         </ol>
                                     </div>
@@ -73,20 +92,22 @@
                             </c:forEach>
                         </c:if>
                         <c:if test="${evaluationMethod.scoreComponents == null}">
-                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                            <span class="text-black-50 text-center">
+                                 <spring:message code="evaluationMethod.table.list.cell.notUpdate"/>
+                            </span>
                         </c:if>
                     </td>
                     <td class="text-center">
                         <c:if test="${evaluationMethod.active == true}">
                             <i class="icon-copy fa fa-check-circle-o text-success" aria-hidden="true"
                                data-toggle="tooltip" data-placement="bottom"
-                               title="Hoạt động"></i>
+                               title="<spring:message code="evaluationMethod.table.list.header.active.active"/>"></i>
                         </c:if>
                         <c:if test="${evaluationMethod.active != true}">
                             <i class="icon-copy fa fa-times-circle-o text-danger" aria-hidden="true"
                                data-toggle="tooltip"
                                data-placement="bottom"
-                               title="Không hoạt động"></i>
+                               title=" <spring:message code="evaluationMethod.table.list.header.active.unActive"/>"></i>
                         </c:if>
                     </td>
                     <td class="text-center">
@@ -96,7 +117,8 @@
                                 ${evaluationMethod.id})"
                                     type="button" class="btn btn-sm bg-warning text-white"
                                     data-toggle="tooltip"
-                                    data-placement="bottom" title="Cập nhật">
+                                    data-placement="bottom"
+                                    title="<spring:message code="evaluationMethod.table.list.button.edit"/>">
                                 <i class="icon-copy dw dw-edit1"></i>
                             </button>
                             <button onclick="deleteEvaluationMethodItem('<c:url
@@ -104,7 +126,8 @@
                                 ${evaluationMethod.id})"
                                     type="button" class="btn btn-sm bg-danger text-white"
                                     data-toggle="tooltip"
-                                    data-placement="bottom" title="Xóa">
+                                    data-placement="bottom"
+                                    title="<spring:message code="evaluationMethod.table.list.button.delete"/>">
                                 <i class="icon-copy dw dw-delete-3"></i>
                             </button>
                         </div>
@@ -116,7 +139,9 @@
             <tr>
                 <td colspan="4" class="text-black-50 text-center">
                     <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
-                    <p class="text-center">Danh sách phương pháp đánh giá trống</p>
+                    <p class="text-center">
+                        <spring:message code="evaluationMethod.table.list.data.empty"/>
+                    </p>
                 </td>
             </tr>
         </c:if>
@@ -151,7 +176,9 @@
                 <form id="form-add-edit-evaluation-method">
                     <div class="pd-10">
                         <div class="form-group">
-                            <label class="font-weight-bold">Tên phương pháp đánh giá<span
+                            <label class="font-weight-bold">
+                                <spring:message code="evaluationMethod.modal.evaluationMethodName.label"/>
+                                <span
                                     class="text-danger">(*)</span></label>
                             <input name="name" id="name" type="text" class="form-control">
                             <hr/>
@@ -163,16 +190,19 @@
                             </div>
                             <div class="add-more-task" id="add-more-task">
                                 <a href="javascript:;" onclick="addScoreComponent()"><i class="ion-plus-circled"></i>
-                                    Thêm điểm thành phần</a>
+                                    <spring:message code="evaluationMethod.modal.evaluationMethodName.addEvaluationMethodName"/></a>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">
+                    <spring:message code="layout.button.cancel.label"/>
+                </button>
                 <button type="button" class="btn btn-success" id="btn-submit-form">
-                    <i class="micon fa fa-save"> </i> Lưu dữ liệu
+                    <i class="micon fa fa-save"> </i>
+                    <spring:message code="layout.button.saveData.label"/>
                 </button>
             </div>
         </div>

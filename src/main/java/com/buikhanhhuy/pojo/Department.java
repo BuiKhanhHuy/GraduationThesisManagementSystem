@@ -63,9 +63,7 @@ public class Department implements Serializable {
     @OneToMany(mappedBy = "department")
     @JsonIgnore
     private Set<Major> majors;
-    @OneToMany(mappedBy = "department")
-    @JsonIgnore
-    private Set<Thesis> theses;
+
     @OneToMany(mappedBy = "department")
     @JsonIgnore
     private Set<Topic> topics;
@@ -142,14 +140,6 @@ public class Department implements Serializable {
         this.majors = majorSet;
     }
 
-    @XmlTransient
-    public Set<Thesis> getTheses() {
-        return theses;
-    }
-
-    public void setTheses(Set<Thesis> thesisSet) {
-        this.theses = thesisSet;
-    }
 
     @XmlTransient
     public Set<Topic> getTopics() {

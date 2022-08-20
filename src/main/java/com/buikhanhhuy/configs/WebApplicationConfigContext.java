@@ -78,7 +78,7 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-        source.setBasenames("messages/validator");
+        source.setBasenames("messages/validator", "messages/label", "messages/layout");
         source.setDefaultEncoding("UTF-8");
 
         return source;

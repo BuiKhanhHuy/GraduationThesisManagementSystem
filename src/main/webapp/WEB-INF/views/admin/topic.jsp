@@ -1,5 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:url var="filterTopic" value=""/>
 <c:url var="home" value="/admin/"/>
@@ -8,12 +9,18 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="title">
-                <h4>Đề tài</h4>
+                <h4>
+                    <spring:message code="topic.header.title.label"/>
+                </h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${home}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Đề tài</li>
+                    <li class="breadcrumb-item"><a href="${home}">
+                        <spring:message code="layout.home.label"/>
+                    </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <spring:message code="topic.header.title.label"/>
+                    </li>
                 </ol>
             </nav>
         </div>
@@ -28,7 +35,9 @@
         <div class="row justify-content-end mt-2">
             <div class="col-md-4 col-sm-12">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Nhập tên đề tài tìm kiếm ..." name="kw"
+                    <input class="form-control" type="text"
+                           placeholder="<spring:message code="topic.table.search.keyword.label"/>"
+                           name="kw"
                            aria-label="Search">
                 </div>
             </div>
@@ -36,7 +45,9 @@
                 <div class="form-group">
                     <select class="custom-select2 form-control" name="departmentId" id="departmentId"
                             style="width: 100%; height: 38px;">
-                        <option value="${""}">Tất cả khoa</option>
+                        <option value="${""}">
+                            <spring:message code="topic.table.search.department.label"/>
+                        </option>
                         <c:forEach var="departmentOption" items="${departmentOptions}">
                             <option value="${departmentOption[0]}">${departmentOption[1]}</option>
                         </c:forEach>
@@ -47,7 +58,8 @@
             <div class="col-md-2 col-sm-12">
                 <div>
                     <button class="form-control ml-1 btn-warning btn" type="submit">
-                        <i class=" fa fa-search" aria-hidden="true"></i> Tìm kiếm
+                        <i class=" fa fa-search" aria-hidden="true"></i>
+                        <spring:message code="topic.table.search.button.label"/>
                     </button>
                 </div>
             </div>
@@ -57,22 +69,32 @@
     <hr style="height:5px;" class="text-black-50">
     <div class="clearfix mb-20">
         <div class="pull-left">
-            <h4 class="text-blue h4">Danh sách đề tài</h4>
+            <h4 class="text-blue h4">
+                <spring:message code="topic.table.list.title.label"/>
+            </h4>
         </div>
         <div class="pull-right">
             <button onclick="showAddTopicModal('<c:url value="/admin/api/topics"/>')"
                     type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
-                Thêm đề tài
+                <spring:message code="topic.table.list.button.addTopic.label"/>
             </button>
         </div>
     </div>
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col">Tên đề tài</th>
-            <th scope="col">Mô tả</th>
-            <th scope="col">Thuộc khoa</th>
-            <th scope="col" class="col-2 text-center">Hành động</th>
+            <th scope="col">
+                <spring:message code="topic.table.list.header.topicName"/>
+            </th>
+            <th scope="col">
+                <spring:message code="topic.table.list.header.description"/>
+            </th>
+            <th scope="col">
+                <spring:message code="topic.table.list.header.department"/>
+            </th>
+            <th scope="col" class="col-2 text-center">
+                <spring:message code="topic.table.list.header.action"/>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -86,7 +108,9 @@
                             ${topic.department.name}
                         </c:if>
                         <c:if test="${topic.department == null}">
-                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                            <span class="text-black-50 text-center">
+                                <spring:message code="topic.table.list.cell.notUpdate"/>
+                            </span>
                         </c:if>
                     </td>
                     <td class="col-2 text-center">
@@ -95,13 +119,15 @@
                                     value="/admin/api/topics/${topic.id}"/>', ${topic.id})"
                                     type="button" class="btn btn-sm bg-warning text-white"
                                     data-toggle="tooltip"
-                                    data-placement="bottom" title="Xem chi tiết">
+                                    data-placement="bottom"
+                                    title="<spring:message code="topic.table.list.button.edit"/>">
                                 <i class="icon-copy dw dw-edit1"></i>
                             </button>
                             <button onclick="deleteTopicItem('<c:url value="/admin/api/topics/${topic.id}"/>')"
                                     type="button" class="btn btn-sm bg-danger text-white"
                                     data-toggle="tooltip"
-                                    data-placement="bottom" title="Xóa">
+                                    data-placement="bottom"
+                                    title="<spring:message code="topic.table.list.button.delete"/>">>
                                 <i class="icon-copy dw dw-delete-3"></i>
                             </button>
                         </div>
@@ -113,7 +139,9 @@
             <tr>
                 <td colspan="5" class="text-black-50 text-center">
                     <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
-                    <p class="text-center">Danh sách đề tài trống</p>
+                    <p class="text-center">
+                        <spring:message code="topic.table.list.data.empty"/>
+                    </p>
                 </td>
             </tr>
         </c:if>
@@ -142,19 +170,19 @@
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalAddAndEditTopic"></h4>
                 <button type="button" class="close close-custom" data-dismiss="modal" aria-hidden="true">×</button>
-
             </div>
-
             <div class="modal-body">
                 <form id="form-add-edit-topic">
                     <div class="pd-10">
                         <div class="form-group">
-                            <label class="font-weight-bold">Tên đề tài <span
+                            <label class="font-weight-bold">
+                                <spring:message code="topic.modal.topicName.label"/><span
                                     class="text-danger">(*)</span></label>
                             <input name="name" id="name" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Thuộc khoa<span
+                            <label class="font-weight-bold">
+                                <spring:message code="topic.modal.department.label"/><span
                                     class="text-danger">(*)</span></label>
                             <div>
                                 <select class="custom-select form-control"
@@ -166,16 +194,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Mô tả</label>
+                            <label class="font-weight-bold">
+                                <spring:message code="topic.modal.description.label"/>
+                            </label>
                             <textarea name="description" id="description" class="form-control"></textarea>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">
+                    <spring:message code="layout.button.cancel.label"/>
+                </button>
                 <button type="button" class="btn btn-success" id="btn-submit-form">
-                    <i class="micon fa fa-save"> </i> Lưu dữ liệu
+                    <i class="micon fa fa-save"> </i>
+                    <spring:message code="layout.button.saveData.label"/>
                 </button>
             </div>
         </div>

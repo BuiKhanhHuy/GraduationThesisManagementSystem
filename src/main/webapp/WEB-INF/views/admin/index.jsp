@@ -1,135 +1,120 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<div class="card-box pd-20 height-100-p mb-30">
-    <div class="row align-items-center">
-        <div class="col-md-4">
-            <img src="vendors/images/banner-img.png" alt="">
-        </div>
-        <div class="col-md-8">
-            <h4 class="font-20 weight-500 mb-10 text-capitalize">
-                Welcome back
-                <div class="weight-600 font-30 text-blue">Bùi Khánh Huy</div>
-            </h4>
-            <p class="font-18 max-width-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic non
-                repellendus debitis iure, doloremque assumenda. Autem modi, corrupti, nobis ea iure fugiat, veniam
-                non quaerat mollitia animi error corporis.</p>
-        </div>
-    </div>
-</div>
 <div class="row">
-    <div class="col-xl-3 mb-30">
+    <div class="col-xl-3 col-lg-6  mb-30">
         <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    <div id="chart"></div>
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">2020</div>
-                    <div class="weight-600 font-14">Contact</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-2">
+                            <spring:message code="index.statsNumber.thesis.label"/>
+                        </h5>
+                        <span class="h2 font-weight-bold mb-0">${countAllThesis}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="bg-warning text-white rounded-circle shadow text-center" style="width: 60px; height: 60px;">
+                            <i class="icon-copy fa fa-book font-30 mt-2" aria-hidden="true"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 mb-30">
+    <div class="col-xl-3 col-lg-6  mb-30">
         <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    <div id="chart2"></div>
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">400</div>
-                    <div class="weight-600 font-14">Deals</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-2">
+                            <spring:message code="index.statsNumber.council.label"/>
+                        </h5>
+                        <span class="h2 font-weight-bold mb-0">${countAllCouncil}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="bg-success text-white rounded-circle shadow text-center" style="width: 60px; height: 60px;">
+                            <i class="icon-copy fa fa-users font-30 mt-2" aria-hidden="true"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 mb-30">
+    <div class="col-xl-3 col-lg-6  mb-30">
         <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    <div id="chart3"></div>
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">350</div>
-                    <div class="weight-600 font-14">Campaign</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-2">
+                            <spring:message code="index.statsNumber.student.label"/>
+                        </h5>
+                        <span class="h2 font-weight-bold mb-0">${countAllStudent}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="bg-light-purple text-white rounded-circle shadow text-center" style="width: 60px; height: 60px;">
+                            <i class="icon-copy fa fa-user-o font-30 mt-2" aria-hidden="true"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 mb-30">
+    <div class="col-xl-3 col-lg-6  mb-30">
         <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    <div id="chart4"></div>
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">$6060</div>
-                    <div class="weight-600 font-14">Worth</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-2">
+                            <spring:message code="index.statsNumber.lecturer.label"/>
+                        </h5>
+                        <span class="h2 font-weight-bold mb-0">${countAllLecturer}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="bg-info text-white rounded-circle shadow text-center align-middle" style="width: 60px; height: 60px;">
+                            <i class="icon-copy fa fa-user font-30 mt-2" aria-hidden="true"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-xl-12 mb-30">
         <div class="card-box height-100-p pd-20">
-            <h4 class="h4 text-blue">Điểm khoá luận qua các năm</h4>
+            <h4 class="h4 text-blue">
+                <spring:message code="index.chart.scoreStatistics.title.label"/>
+            </h4>
             <div id="chart5"></div>
         </div>
     </div>
     <div class="col-xl-12 mb-30">
         <div class="card-box height-100-p pd-20">
-            <h4 class="h4 text-blue">Tần suất tham gia làm khoá luận từng ngành</h4>
+            <h4 class="h4 text-blue">
+                <spring:message code="index.chart.frequencyStatistics.title.label"/>
+            </h4>
             <div id="chart6"></div>
         </div>
     </div>
 </div>
 
-<div>
- <form id="myform">
-     <input type="file" name="file" id="file" value="Chọn file"/>
-     <img id="output" alt="image" width="100" height="100"/>
-     <button onclick="upload()">Upload</button>
- </form>
-</div>
+
 
 <script>
-    const fileUploader = document.getElementById('file');
-    var file = null;
+    document.addEventListener("DOMContentLoaded", () => {
+        let data1 = []
+        let labels1 = []
+        let data2 = []
+        let labels2 = []
 
-    fileUploader.addEventListener('change', (event) => {
-        file = event.target.files[0];
-        console.log(file)
+        <c:forEach var="stats" items="${thesisStatisticsByMajor}">
+        labels2.push('${stats[1]}')
+        data2.push(${stats[2]})
+        </c:forEach>
 
-        var output = document.getElementById('output');
-        output.src = URL.createObjectURL(file);
-        output.onload = function() {
-            URL.revokeObjectURL(output.src) // free memory
-        }
+        thesisScoreStatistics();
+        thesisStatisticsByMajor('bar', labels2, data2)
     });
-
-    const upload = () => {
-        var formData = new FormData();
-        formData.append("file", file);
-        formData.append('user', new Blob([JSON.stringify({
-            "username": "root",
-            "password": "root"
-        })], {
-            type: "application/json"
-        }));
-
-        fetch("/GraduationThesisManagementSystem/api/upload-file", {
-            method: 'POST',
-            body: formData,
-
-        }).then(res => {
-            if (res.ok) {
-                alert("thanh cong")
-            } else {
-                Promise.reject("Lỗi")
-            }
-        }).catch(err => {
-            errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình tải dữ liệu!", "Ok")
-        })
-    }
 </script>

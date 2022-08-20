@@ -1,5 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:url var="filterNews" value=""/>
 <c:url var="home" value="/admin/"/>
@@ -8,12 +9,18 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="title">
-                <h4>Bản tin</h4>
+                <h4>
+                    <spring:message code="news.header.title.label"/>
+                </h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${home}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Bản tin</li>
+                    <li class="breadcrumb-item"><a href="${home}">
+                        <spring:message code="layout.home.label"/>
+                    </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <spring:message code="news.header.title.label"/>
+                    </li>
                 </ol>
             </nav>
         </div>
@@ -28,14 +35,17 @@
         <div class="row justify-content-end mt-2">
             <div class="col-md-4 col-sm-12">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Nhập tiêu đề tìm kiếm..." name="kw"
+                    <input class="form-control" type="text"
+                           placeholder="<spring:message code="news.table.search.keyword.label"/>"
+                           name="kw"
                            aria-label="Search">
                 </div>
             </div>
             <div class="col-md-2 col-sm-12">
                 <div>
                     <button class="form-control ml-1 btn-warning btn" type="submit">
-                        <i class=" fa fa-search" aria-hidden="true"></i> Tìm kiếm
+                        <i class=" fa fa-search" aria-hidden="true"></i>
+                        <spring:message code="news.table.search.button.label"/>
                     </button>
                 </div>
             </div>
@@ -44,21 +54,29 @@
     <hr style="height:5px;" class="text-black-50">
     <div class="clearfix mb-20">
         <div class="pull-left">
-            <h4 class="text-blue h4">Danh sách bản tin</h4>
+            <h4 class="text-blue h4">
+                <spring:message code="news.table.list.title.label"/>
+            </h4>
         </div>
         <div class="pull-right">
             <button onclick="showAddNewsModal('<c:url value="/admin/api/news"/>')"
                     type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
-                Thêm bản tin
+                <spring:message code="news.table.list.button.addNews.label"/>
             </button>
         </div>
     </div>
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col">Tiêu đề</th>
-            <th scope="col" class="text-center">Người tạo</th>
-            <th scope="col" class="text-center">Hành động</th>
+            <th scope="col">
+                <spring:message code="news.table.list.header.newsTitle"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="news.table.list.header.newsCreator"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="news.table.list.header.action"/>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -71,7 +89,9 @@
                             ${n.user.username}
                         </c:if>
                         <c:if test="${n.user == null}">
-                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                            <span class="text-black-50 text-center">
+                                <spring:message code="news.table.list.cell.notUpdate"/>
+                            </span>
                         </c:if>
                     </td>
                     <td class="text-center">
@@ -79,20 +99,23 @@
                             <button onclick="showViewNewsModal('<c:url value="/admin/api/news/${n.id}"/>')"
                                     type="button" class="btn btn-sm bg-info text-white"
                                     data-toggle="tooltip"
-                                    data-placement="bottom" title="Xem chi tiết">
+                                    data-placement="bottom"
+                                    title="<spring:message code="news.table.list.button.viewDetail"/>">
                                 <i class="icon-copy dw dw-eye"></i>
                             </button>
                             <button onclick="showEditNewsModal('<c:url
                                     value="/admin/api/news/${n.id}/single"/>', ${n.id})"
                                     type="button" class="btn btn-sm bg-warning text-white"
                                     data-toggle="tooltip"
-                                    data-placement="bottom" title="Cập nhật">
+                                    data-placement="bottom"
+                                    title="<spring:message code="news.table.list.button.update"/>">
                                 <i class="icon-copy dw dw-edit1"></i>
                             </button>
                             <button onclick="deleteNewsItem('<c:url value="/admin/api/news/${n.id}"/>')"
                                     type="button" class="btn btn-sm bg-danger text-white"
                                     data-toggle="tooltip"
-                                    data-placement="bottom" title="Xóa">
+                                    data-placement="bottom"
+                                    title="<spring:message code="news.table.list.button.delete"/>">
                                 <i class="icon-copy dw dw-delete-3"></i>
                             </button>
                         </div>
@@ -104,7 +127,9 @@
             <tr>
                 <td colspan="6" class="text-black-50 text-center">
                     <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
-                    <p class="text-center">Danh sách bản tin trống</p>
+                    <p class="text-center">
+                        <spring:message code="news.table.list.data.empty"/>
+                    </p>
                 </td>
             </tr>
         </c:if>
@@ -142,11 +167,11 @@
                              src="#"
                              alt="avatar">
                     </div>
-                    <h6 class="mb-3 text-black-50 mt-2">Người tạo: <span class="text-danger"
+                    <h6 class="mb-3 text-black-50 mt-2"> <spring:message code="news.modal.view.creator.label"/>: <span class="text-danger"
                                                                          id="data-user-username"></span></h6>
                     <hr>
                     <div>
-                        <h6>Nội dung:</h6>
+                        <h6> <spring:message code="news.modal.view.content.label"/>:</h6>
                         <div class="mt-3" id="data-content">
                         </div>
                     </div>
@@ -176,12 +201,14 @@
                 <form id="form-add-edit-news">
                     <div class="pd-10">
                         <div class="form-group">
-                            <label class="font-weight-bold">Tiêu đề<span
+                            <label class="font-weight-bold">
+                                <spring:message code="news.modal.newsTitle.label"/><span
                                     class="text-danger">(*)</span></label>
                             <input name="title" id="title" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Nội dung<span
+                            <label class="font-weight-bold">
+                                <spring:message code="news.modal.newsContent.label"/><span
                                     class="text-danger">(*)</span></label>
                             <textarea name="content" id="content" class="textarea_editor form-control border-radius-0"
                                       placeholder="Viết nội dung tại đây..."></textarea>
@@ -191,9 +218,12 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <spring:message code="layout.button.cancel.label"/>
+                </button>
                 <button type="button" class="btn btn-success" id="btn-submit-form">
-                    <i class="micon fa fa-save"> </i> Lưu dữ liệu
+                    <i class="micon fa fa-save"> </i>
+                    <spring:message code="layout.button.saveData.label"/>
                 </button>
             </div>
         </div>

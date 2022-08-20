@@ -1,16 +1,10 @@
 package com.buikhanhhuy.controllers.admin;
 
 import com.buikhanhhuy.constants.SystemConstant;
-import com.buikhanhhuy.pojo.Notification;
-import com.buikhanhhuy.pojo.NotificationUser;
-import com.buikhanhhuy.pojo.Thesis;
-import com.buikhanhhuy.pojo.User;
-import com.buikhanhhuy.service.EmailService;
-import com.buikhanhhuy.service.NotificationUserService;
-import com.buikhanhhuy.service.ThesisService;
+import com.buikhanhhuy.pojo.*;
+import com.buikhanhhuy.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -33,24 +27,39 @@ public class HomeController {
     @Autowired
     private ThesisService thesisService;
     @Autowired
+    private CouncilService councilService;
+    @Autowired
+    private LecturerService lecturerService;
+    @Autowired
+    private StudentService studentService;
+    @Autowired
     private NotificationUserService notificationUserService;
+
+    @Autowired
+    private StatsService statsService;
 
 
     @ModelAttribute
     public void commonAttribute(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
-        if(currentUser != null){
+        if (currentUser != null) {
             model.addAttribute("notificationUsers", this.notificationUserService.getNotificationUser(currentUser.getId()));
-        }
-        else {
+        } else {
             model.addAttribute("notificationUsers", null);
         }
         model.addAttribute("pageSize", SystemConstant.PAGE_SIZE);
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("countAllThesis", this.thesisService.countAllThesis());
+        model.addAttribute("countAllCouncil", this.councilService.countAllCouncil());
+        model.addAttribute("countAllLecturer", this.lecturerService.countAllLecturer());
+        model.addAttribute("countAllStudent", this.studentService.countAllStudent());
     }
 
     @GetMapping(path = "/")
-    public String index() {
+    public String index(Model model) {
+        List<Object[]> a = this.statsService.thesisStatisticsByMajor(null);
+        model.addAttribute("thesisStatisticsByMajor", this.statsService.thesisStatisticsByMajor(null));
+
         return "adminIndex";
     }
 

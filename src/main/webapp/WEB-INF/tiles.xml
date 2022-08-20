@@ -52,6 +52,8 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="javascripts">
             <add-attribute value="/public/admin/src/plugins/apexcharts/apexcharts.min.js"/>
             <add-attribute value="/public/admin/vendors/scripts/dashboard.js"/>
+            <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts.js"/>
+            <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts-more.js"/>
         </put-list-attribute>
     </definition>
     <!--    department-->
@@ -167,8 +169,10 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Hội đồng"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/council.jsp"/>
         <put-list-attribute name="stylesheets">
+            <add-attribute value="/public/common/css/print-me/main.css"/>
         </put-list-attribute>
         <put-list-attribute name="javascripts">
+            <add-attribute value="/public/common/plugins/print-me/jquery-printme.js"/>
             <add-attribute value="/public/admin/src/scripts/council.js"/>
         </put-list-attribute>
     </definition>
@@ -247,4 +251,36 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content" value="/WEB-INF/views/admin/chat.jsp"/>
     </definition>
     <!--    chat-->
+
+    <!--    score statistics-->
+    <definition name="adminScoreStatistics" extends="adminBaseLayout">
+        <put-attribute name="title" value="Thống kê điểm"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/score-statistics.jsp"/>
+        <put-list-attribute name="stylesheets">
+            <add-attribute value=""/>
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/plugins/apexcharts/apexcharts.min.js"/>
+            <add-attribute value="/public/admin/vendors/scripts/dashboard.js"/>
+            <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts.js"/>
+            <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts-more.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    score statistics-->
+
+    <!--    frequency statistics-->
+    <definition name="adminFrequencyStatistics" extends="adminBaseLayout">
+        <put-attribute name="title" value="Thống kê tần suất"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/frequency-statistics.jsp"/>
+        <put-list-attribute name="stylesheets">
+            <add-attribute value=""/>
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/plugins/apexcharts/apexcharts.min.js"/>
+            <add-attribute value="/public/admin/vendors/scripts/dashboard.js"/>
+            <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts.js"/>
+            <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts-more.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    frequency statistics-->
 </tiles-definitions>

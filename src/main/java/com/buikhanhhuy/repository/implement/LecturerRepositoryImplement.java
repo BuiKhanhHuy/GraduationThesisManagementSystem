@@ -150,6 +150,21 @@ public class LecturerRepositoryImplement implements LecturerRepository {
     }
 
     @Override
+    public long countAllLecturer() {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            String sql = "SELECT COUNT(id) FROM Lecturer";
+
+            return (long) session.createQuery(sql).getSingleResult();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
+        return 0;
+    }
+
+    @Override
     public Lecturer getLecturerById(int lecturerId) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         try {

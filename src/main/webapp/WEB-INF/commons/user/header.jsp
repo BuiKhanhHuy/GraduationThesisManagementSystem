@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:url value="/public/common/images/avatars/avatar-default.jpg" var="avatarDefault"/>
 <c:url var="appContext" value="/"/>
 <c:url var="logout" value="/logout"/>
 <c:url var="home" value="/"/>
+<c:set value="${pageContext.response.locale.language}" var="lang"/>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
@@ -34,16 +36,19 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="${home}">Trang chủ</a>
+                    <a class="nav-link" href="${home}">
+                        <spring:message code="header.menu.home"/>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Tin tức</a>
+                    <a class="nav-link" href="#">
+                        <spring:message code="header.menu.news"/>
+                    </a>
                 </li>
             </ul>
             <!-- Left links -->
         </div>
         <!-- Collapsible wrapper -->
-
         <!-- Right elements -->
         <div class="d-flex align-items-center">
             <!-- Notifications -->
@@ -60,7 +65,8 @@
                     </c:if>
                 </a>
                 <ul id="notification-user-area"
-                    class="dropdown-menu dropdown-menu-end overflow-auto shadow-lg mt-2" style="width: 450px; max-height: 350px;"
+                    class="dropdown-menu dropdown-menu-end overflow-auto shadow-lg mt-2"
+                    style="width: 450px; max-height: 350px;"
                     aria-labelledby="navbarDropdownMenuLink">
                     <c:if test="${notificationUsers.size() > 0}">
                         <c:forEach var="notificationUser" items="${notificationUsers}">
@@ -78,8 +84,52 @@
                         </c:forEach>
                     </c:if>
                     <c:if test="${notificationUsers.size() == 0}">
-                        <li class="text-center text-black-50 p-3">Không có thông báo.</li>
+                        <li class="text-center text-black-50 p-3">
+                            <spring:message code="layout.notification.emptyLabel"/>
+                        </li>
                     </c:if>
+                </ul>
+            </div>
+            <div class="d-flex align-items-center">
+                <ul class="navbar-nav">
+                    <!-- Icon dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="navbarDropdown"
+                           role="button"
+                           data-mdb-toggle="dropdown"
+                           aria-expanded="false">
+                            <c:if test="${lang == 'vi'}">
+                                <i class="flag-vietnam flag m-0"></i>
+                            </c:if>
+                            <c:if test="${lang == 'en'}">
+                                <i class="flag-united-kingdom flag m-0"></i>
+                            </c:if>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="javascript:;"
+                                   onclick="changeLang('${appContext}', 'vi')">
+                                    <i class="flag-vietnam flag"></i>
+                                    Vietnamese
+                                    <c:if test="${lang == 'vi'}">
+                                        <i class="fa fa-check text-success ms-2"></i>
+                                    </c:if>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="javascript:;"
+                                   onclick="changeLang('${appContext}', 'en')">
+                                    <i class="flag-united-kingdom flag"></i>
+                                    English
+                                    <c:if test="${lang == 'en'}">
+                                        <i class="fa fa-check text-success ms-2"></i>
+                                    </c:if>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <!-- Avatar -->
@@ -103,18 +153,21 @@
                     aria-labelledby="navbarDropdownMenuAvatar">
                     <li>
                         <a class="dropdown-item" href="#"><i class="fa-solid fa-circle-info"
-                                                             style="margin-right: 5px;"></i> Thông tin cá
-                            nhân</a>
+                                                             style="margin-right: 5px;"></i>
+                            <spring:message code="layout.account.profile.label"/>
+                        </a>
                     </li>
                     <li>
                         <a onclick="changePasswordByUser('${appContext}', ${currentUser.id})"
                            class="dropdown-item" href="javascript:;"><i class="fa-solid fa-key"
-                                                                        style="margin-right: 5px;"></i> Đổi mật khẩu</a>
+                                                                        style="margin-right: 5px;"></i>
+                            <spring:message code="layout.account.changePassword.label"/></a>
                     </li>
                     <li>
                         <a class="dropdown-item text-danger" href="${logout}"><i class="fa-solid fa-power-off"
-                                                                                 style="margin-right: 5px;"></i> Đăng
-                            xuất</a>
+                                                                                 style="margin-right: 5px;"></i>
+                            <spring:message code="layout.account.logout.label"/>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -137,33 +190,44 @@
     <div class="modal-dialog  modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myChangePasswordModalLabel">Đổi mật khẩu</h5>
+                <h5 class="modal-title" id="myChangePasswordModalLabel">
+                    <spring:message code="layout.modal.changePassword.title.label"/>
+                </h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
                 <form id="form-change-password">
                     <div class="pd-10">
                         <div class="form-group mb-3">
-                            <label for="oldPassword" class="font-weight-bold mb-2">Mật khẩu cũ <span
+                            <label for="oldPassword" class="font-weight-bold mb-2">
+                                <spring:message code="layout.modal.oldPassword.label"/>
+                                <span
                                     class="text-danger">(*)</span></label>
-                            <input name="oldPassword" id="oldPassword" type="password" class="form-control form-control-lg">
+                            <input name="oldPassword" id="oldPassword" type="password"
+                                   class="form-control form-control-lg">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="newPassword" class="font-weight-bold mb-2">Mật khẩu mới <span
+                            <label for="newPassword" class="font-weight-bold mb-2">
+                                <spring:message code="layout.modal.newPassword.label"/>
+                                <span
                                     class="text-danger">(*)</span></label>
-                            <input name="newPassword" id="newPassword" type="password" class="form-control form-control-lg">
+                            <input name="newPassword" id="newPassword" type="password"
+                                   class="form-control form-control-lg">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-success" id="btn-submit-form-change-password">Đổi mật khẩu</button>
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                    <spring:message code="layout.button.cancel.label"/>
+                </button>
+                <button type="button" class="btn btn-success" id="btn-submit-form-change-password">
+                    <spring:message code="layout.modal.button.password.label"/>
+                </button>
             </div>
         </div>
     </div>
 </div>
-
 
 
 <form id="logoutForm" action="<c:url value="/logout"/> ">

@@ -11,6 +11,7 @@ public interface ThesisService {
     public List<Object[]> getThesisOptions();
     public List<Thesis> getTheses(Map<String, String> params);
     public long countThesis(Map<String, String> params);
+    public long countAllThesis();
     public void sendReviewLectureThesisNotification(Thesis thesis);
     public boolean addThesis(Thesis thesis);
     public Thesis getThesisById(int thesisId);

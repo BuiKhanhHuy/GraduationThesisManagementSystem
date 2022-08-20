@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<c:url value="/public/admin/src/images/avatar/avatar-default.jpg" var="avatarDefault"/>
+<c:url value="/public/common/images/avatars/avatar-default.jpg" var="avatarDefault"/>
 <c:url var="filterLecturer" value=""/>
 <c:url var="home" value="/admin/"/>
 <c:url var="appContext" value="/"/>
@@ -11,12 +12,18 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="title">
-                <h4>Giảng viên</h4>
+                <h4>
+                    <spring:message code="lecturer.header.title.label"/>
+                </h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${home}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Giảng viên</li>
+                    <li class="breadcrumb-item"><a href="${home}">
+                        <spring:message code="layout.home.label"/>
+                    </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <spring:message code="lecturer.header.title.label"/>
+                    </li>
                 </ol>
             </nav>
         </div>
@@ -31,7 +38,8 @@
         <div class="row justify-content-end mt-2">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Mã giảng viên, họ và tên, email, sđt..."
+                    <input class="form-control" type="text"
+                           placeholder="<spring:message code="lecturer.table.search.keyword.label"/>"
                            name="kw"
                            aria-label="Search">
                 </div>
@@ -40,7 +48,9 @@
                 <div class="form-group">
                     <select class="custom-select2 form-control" name="positionId" id="positionId"
                             style="width: 100%">
-                        <option value="${""}">Tất cả chức vụ</option>
+                        <option value="${""}">
+                            <spring:message code="lecturer.table.search.position"/>
+                        </option>
                         <c:forEach var="positionOption" items="${positionOptions}">
                             <option value="${positionOption[0]}">${positionOption[1]}</option>
                         </c:forEach>
@@ -51,7 +61,9 @@
                 <div class="form-group">
                     <select class="custom-select2 form-control" name="departmentId" id="departmentId"
                             style="width: 100%">
-                        <option value="${""}">Tất cả khoa</option>
+                        <option value="${""}">
+                            <spring:message code="lecturer.table.search.department"/>
+                        </option>
                         <c:forEach var="departmentOption" items="${departmentOptions}">
                             <option value="${departmentOption[0]}">${departmentOption[1]}</option>
                         </c:forEach>
@@ -62,7 +74,9 @@
                 <div class="form-group">
                     <select class="custom-select2 form-control" name="roleId" id="roleId"
                             style="width: 100%">
-                        <option value="${""}">Tất cả quyền</option>
+                        <option value="${""}">
+                            <spring:message code="lecturer.table.search.role"/>
+                        </option>
                         <c:forEach var="roleOption" items="${roleOptions}">
                             <option value="${roleOption[0]}">${roleOption[1]}</option>
                         </c:forEach>
@@ -73,10 +87,14 @@
                 <div class="form-group">
                     <select class="custom-select2 form-control" name="active" id="active-filter"
                             style="width: 100%">
-                        <option value="${""}">Tất cả trạng thái</option>
-                        <option value="${true}">Hoạt động</option>
+                        <option value="${""}">
+                            <spring:message code="lecturer.table.search.status"/>
+                        </option>
+                        <option value="${true}">
+                            <spring:message code="lecturer.table.search.status.option.active"/>
+                        </option>
                         <option value="${false}">
-                            Không hoạt động
+                            <spring:message code="lecturer.table.search.status.option.unActive"/>
                         </option>
                     </select>
                 </div>
@@ -84,7 +102,8 @@
             <div class="col-md-2 col-sm-12">
                 <div>
                     <button class="btn-warning btn form-control" type="submit">
-                        <i class=" fa fa-search" aria-hidden="true"></i> Tìm kiếm
+                        <i class=" fa fa-search" aria-hidden="true"></i>
+                        <spring:message code="lecturer.table.search.button.label"/>
                     </button>
                 </div>
             </div>
@@ -93,26 +112,44 @@
     <hr style="height:5px;" class="text-black-50">
     <div class="clearfix mb-20">
         <div class="pull-left">
-            <h4 class="text-blue h4">Danh sách giảng viên</h4>
+            <h4 class="text-blue h4">
+                <spring:message code="lecturer.table.list.title.label"/>
+            </h4>
         </div>
         <div class="pull-right">
             <button onclick="showAddLecturerModal('${appContext}')"
                     type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
-                Thêm giảng viên
+                <spring:message code="lecturer.table.list.button.addLecturer.label"/>
             </button>
         </div>
     </div>
     <table class="table table-bordered table-responsive">
         <thead>
         <tr>
-            <th scope="col" class="text-center col-1">Hình ảnh</th>
-            <th scope="col" class="text-center">Mã giảng viên</th>
-            <th scope="col" class="text-center">Thông tin</th>
-            <th scope="col">Chức vụ</th>
-            <th scope="col">Thuộc khoa</th>
-            <th scope="col">Quyền</th>
-            <th scope="col" class="text-center">Trạng thái</th>
-            <th scope="col" class="text-center">Hành động</th>
+            <th scope="col" class="text-center col-1">
+                <spring:message code="lecturer.table.list.header.image"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="lecturer.table.list.header.code"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="lecturer.table.list.header.info"/>
+            </th>
+            <th scope="col">
+                <spring:message code="lecturer.table.list.header.position"/>
+            </th>
+            <th scope="col">
+                <spring:message code="lecturer.table.list.header.department"/>
+            </th>
+            <th scope="col">
+                <spring:message code="lecturer.table.list.header.role"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="lecturer.table.list.header.status"/>
+            </th>
+            <th scope="col" class="text-center">
+                <spring:message code="lecturer.table.list.header.action"/>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -141,13 +178,13 @@
                             </li>
                             <li>
                                 <c:if test="${lecturer.gender == 1}">
-                                    Nam
+                                    <spring:message code="lecturer.table.list.data.option.gender.male"/>
                                 </c:if>
                                 <c:if test="${lecturer.gender == 2}">
-                                    Nữ
+                                    <spring:message code="lecturer.table.list.data.option.gender.female"/>
                                 </c:if>
                                 <c:if test="${lecturer.gender == 3}">
-                                    Khác
+                                    <spring:message code="lecturer.table.list.data.option.gender.other"/>
                                 </c:if>
                             </li>
                             <li>${lecturer.address}</li>
@@ -155,7 +192,8 @@
                                href="javascript:;"
                                class="ml-2 text-blue">
                                 <i class="icon-copy fa fa-key" aria-hidden="true"></i>
-                                Đổi mật khẩu</a>
+                                <spring:message code="lecturer.table.list.data.option.changePassword.label"/>
+                            </a>
                         </ul>
                     </td>
                     <td>
@@ -163,7 +201,9 @@
                             ${lecturer.position.name}
                         </c:if>
                         <c:if test="${lecturer.position == null}">
-                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                            <span class="text-black-50 text-center">
+                                <spring:message code="lecturer.table.list.cell.notUpdate"/>
+                            </span>
                         </c:if>
                     </td>
                     <td>
@@ -171,7 +211,9 @@
                             ${lecturer.department.name}
                         </c:if>
                         <c:if test="${lecturer.department == null}">
-                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                            <span class="text-black-50 text-center">
+                                <spring:message code="lecturer.table.list.cell.notUpdate"/>
+                            </span>
                         </c:if>
                     </td>
                     <td>
@@ -179,32 +221,35 @@
                             ${lecturer.user.role.description}
                         </c:if>
                         <c:if test="${lecturer.user.role == null}">
-                            <span class="text-black-50 text-center">Chưa cập nhật</span>
+                            <span class="text-black-50 text-center">
+                                <spring:message code="lecturer.table.list.cell.notUpdate"/>
+                            </span>
                         </c:if>
                     </td>
                     <td class="text-center">
                         <c:if test="${lecturer.user.active == true}">
                             <i class="icon-copy fa fa-check-circle-o text-success" aria-hidden="true"
                                data-toggle="tooltip" data-placement="bottom"
-                               title="Hoạt động"></i>
+                               title="<spring:message code="lecturer.table.search.status.option.active"/>"></i>
                         </c:if>
                         <c:if test="${lecturer.user.active != true}">
                             <i class="icon-copy fa fa-times-circle-o text-danger" aria-hidden="true"
                                data-toggle="tooltip"
                                data-placement="bottom"
-                               title="Không hoạt động"></i>
+                               title="<spring:message code="lecturer.table.search.status.option.unActive"/>"></i>
                         </c:if>
                     </td>
                     <td class="text-center">
                         <div class="btn-list">
                             <button onclick="showEditLectureModal('${appContext}', ${lecturer.id})"
                                     type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                                    data-placement="bottom" title="Chỉnh sửa">
+                                    data-placement="bottom"
+                                    title="<spring:message code="lecturer.table.list.button.edit"/>">
                                 <i class="icon-copy dw dw-edit1"></i>
                             </button>
                             <button onclick="deleteLecturerItem('${appContext}', ${lecturer.id})"
                                     type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
-                                    data-placement="bottom" title="Xóa">
+                                    data-placement="bottom" title="<spring:message code="lecturer.table.list.button.delete"/>">
                                 <i class="icon-copy dw dw-delete-3"></i>
                             </button>
                         </div>
@@ -216,7 +261,9 @@
             <tr>
                 <td colspan="7" class="text-black-50 text-center">
                     <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
-                    <p class="text-center">Danh sách giảng viên trống</p>
+                    <p class="text-center">
+                        <spring:message code="lecturer.table.list.data.empty"/>
+                    </p>
                 </td>
             </tr>
         </c:if>
@@ -244,7 +291,6 @@
                 <button type="button" class="close close-custom" data-dismiss="modal" aria-hidden="true">×</button>
 
             </div>
-
             <div class="modal-body">
                 <form id="form-add-edit-lecturer">
                     <div class="pd-10">
@@ -257,54 +303,70 @@
                         </div>
                         <div class="text-center">
                             <label class="btn btn-outline-info btn-sm">
-                                <i class="fa fa-upload"></i> Chọn ảnh <input type="file" id="file" name="file" accept="image/*" hidden>
+                                <i class="fa fa-upload"></i>
+                                <spring:message code="lecturer.modal.chooseImageButton.label"/>
+                                <input type="file" id="file" name="file" accept="image/*" hidden>
                             </label>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Mã giảng viên<span
-                                    class="text-danger">(*)</span></label>
+                            <label class="font-weight-bold">
+                                <spring:message code="lecturer.modal.code.label"/>
+                                <span  class="text-danger">(*)</span></label>
                             <input name="code" id="code" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Họ và tên<span
-                                    class="text-danger">(*)</span></label>
+                            <label class="font-weight-bold">
+                                <spring:message code="lecturer.modal.fullName.label"/>
+                                <span class="text-danger">(*)</span></label>
                             <input name="fullName" id="fullName" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Email<span
-                                    class="text-danger">(*)</span></label>
+                            <label class="font-weight-bold">
+                                <spring:message code="lecturer.modal.email"/>
+                                <span class="text-danger">(*)</span></label>
                             <input name="email" id="email" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Số điện thoại<span
-                                    class="text-danger">(*)</span></label>
+                            <label class="font-weight-bold">
+                                <spring:message code="lecturer.modal.phone"/>
+                                <span class="text-danger">(*)</span></label>
                             <input name="phone" id="phone" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Ngày sinh<span
-                                    class="text-danger">(*)</span></label>
+                            <label class="font-weight-bold">
+                                <spring:message code="lecturer.modal.birthday"/>
+                                <span  class="text-danger">(*)</span></label>
                             <input name="birthday" id="birthday" type="date" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Giới tính<span
-                                    class="text-danger">(*)</span></label>
+                            <label class="font-weight-bold">
+                                <spring:message code="lecturer.modal.gender"/>
+                                <span class="text-danger">(*)</span></label>
                             <div>
                                 <select class="custom-select form-control"
                                         name="gender" id="gender" style="width: 100%;">
-                                    <option value="1">Nam</option>
-                                    <option value="2">Nữ</option>
-                                    <option value="3">Khác</option>
+                                    <option value="1">
+                                        <spring:message code="lecturer.table.list.data.option.gender.male"/>
+                                    </option>
+                                    <option value="2">
+                                        <spring:message code="lecturer.table.list.data.option.gender.female"/>
+                                    </option>
+                                    <option value="3">
+                                        <spring:message code="lecturer.table.list.data.option.gender.other"/>
+                                    </option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Địa chỉ<span
-                                    class="text-danger">(*)</span></label>
+                            <label class="font-weight-bold">
+                                <spring:message code="lecturer.modal.address"/>
+                                <span  class="text-danger">(*)</span></label>
                             <input name="address" id="address" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Chức vụ<span
-                                    class="text-danger">(*)</span></label>
+                            <label class="font-weight-bold">
+                                <spring:message code="lecturer.modal.position"/>
+                                <span class="text-danger">(*)</span></label>
                             <div>
                                 <select class="custom-select form-control"
                                         name="position" id="position" style="width: 100%;">
@@ -315,8 +377,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Thuộc khoa<span
-                                    class="text-danger">(*)</span></label>
+                            <label class="font-weight-bold">
+                                <spring:message code="lecturer.modal.department"/>
+                                <span class="text-danger">(*)</span></label>
                             <div>
                                 <select class="custom-select form-control"
                                         name="department" id="department" style="width: 100%;">
@@ -327,8 +390,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Quyền<span
-                                    class="text-danger">(*)</span></label>
+                            <label class="font-weight-bold">
+                                <spring:message code="lecturer.modal.role"/>
+                                <span class="text-danger">(*)</span></label>
                             <div>
                                 <select class="custom-select form-control"
                                         name="role" id="role" style="width: 100%;">
@@ -342,16 +406,21 @@
                         <div class="form-group">
                             <div class="custom-control custom-checkbox mb-5">
                                 <input type="checkbox" class="custom-control-input" id="is-active" name="is-active">
-                                <label class="custom-control-label" for="is-active">Hoạt động</label>
+                                <label class="custom-control-label" for="is-active">
+                                    <spring:message code="lecturer.modal.active"/>
+                                </label>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-secondary close-custom" data-dismiss="modal">
+                    <spring:message code="layout.button.cancel.label"/>
+                </button>
                 <button type="button" class="btn btn-success" id="btn-submit-form">
-                    <i class="micon fa fa-save"> </i> Lưu dữ liệu
+                    <i class="micon fa fa-save"> </i>
+                    <spring:message code="layout.button.saveData.label"/>
                 </button>
             </div>
         </div>

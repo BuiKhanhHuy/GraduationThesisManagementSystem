@@ -126,6 +126,19 @@ public class CouncilRepositoryImplement implements CouncilRepository {
     }
 
     @Override
+    public long countAllCouncil() {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+        try {
+           String sql = "SELECT COUNT(id) FROM Council";
+
+           return (long) session.createQuery(sql).getSingleResult();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
     public boolean addCouncil(Council council) {
         Session session = Objects.requireNonNull(this.sessionFactoryBean.getObject()).getCurrentSession();
         try {

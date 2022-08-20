@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <footer class="bg-primary text-white text-center text-lg-start">
     <!-- Grid container -->
@@ -14,16 +15,24 @@
 
             <!--Grid column-->
             <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-                <h6 class="text-uppercase fw-bold mb-4">Danh mục</h6>
-                <p>Trang chủ</p>
-                <p>Tin tức</p>
+                <h6 class="text-uppercase fw-bold mb-4">
+                    <spring:message code="footer.category.label"/>
+                </h6>
+                <p>
+                    <spring:message code="footer.category.home"/>
+                </p>
+                <p>
+                    <spring:message code="footer.category.news"/>
+                </p>
             </div>
             <!--Grid column-->
 
             <!--Grid column-->
             <div class="col-lg-5 col-md-6 mb-4 mb-md-0">
                 <!-- Links -->
-                <h6 class="text-uppercase fw-bold mb-4">Thông tin</h6>
+                <h6 class="text-uppercase fw-bold mb-4">
+                    <spring:message code="footer.info.label"/>
+                </h6>
                 <p><i class="fas fa-home me-3"></i> Phòng 604 (Lầu 6), số 35 - 37 Hồ Hảo Hớn, Phường Cô Giang, Quận 1, Thành</p>
                 <p>
                     <i class="fas fa-envelope me-3"></i>

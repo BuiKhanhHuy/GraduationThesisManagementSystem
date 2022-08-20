@@ -11,6 +11,7 @@ public interface StudentService {
     public List<Object[]> getStudentOptions();
     public List<Student> getStudents( Map<String, String> params);
     public long countStudent(Map<String, String> params);
+    public long countAllStudent();
     public Student getStudentById(int studentId);
     public boolean addStudent(Student student, MultipartFile file) throws IOException;
     public boolean updateStudent(int studentId, Student student, MultipartFile file) throws IOException;
