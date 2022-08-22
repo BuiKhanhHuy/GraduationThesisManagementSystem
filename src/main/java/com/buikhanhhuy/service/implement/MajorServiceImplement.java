@@ -16,6 +16,16 @@ public class MajorServiceImplement implements MajorService {
     private MajorRepository majorRepository;
 
     @Override
+    public boolean checkUniqueMajorCode(String majorCode) {
+        return this.majorRepository.checkUniqueMajorCode(majorCode);
+    }
+
+    @Override
+    public boolean checkUniqueMajorName(String majorName) {
+        return this.majorRepository.checkUniqueMajorName(majorName);
+    }
+
+    @Override
     public List<Major> getMajors(Map<String, String> params) {
         return this.majorRepository.getMajors(params);
     }

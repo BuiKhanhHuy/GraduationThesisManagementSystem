@@ -23,6 +23,28 @@ public class MajorRepositoryImplement implements MajorRepository {
     private LocalSessionFactoryBean sessionFactoryBean;
 
     @Override
+    public boolean checkUniqueMajorCode(String majorCode) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Major WHERE code=:code";
+        Query query = session.createQuery(sql);
+        query.setParameter("code", majorCode.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
+    public boolean checkUniqueMajorName(String majorName) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Major WHERE name=:name";
+        Query query = session.createQuery(sql);
+        query.setParameter("name", majorName.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
     public List<Major> getMajors(Map<String, String> params) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();

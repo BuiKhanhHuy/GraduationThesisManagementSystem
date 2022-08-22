@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface StudentService {
+    public boolean checkUniqueStudentCode(String studentCode);
+    public boolean checkUniqueStudentEmail(String studentEmail);
+    public boolean checkUniqueStudentPhone(String studentPhone);
     public List<Object[]> getStudentOptions();
     public List<Student> getStudents( Map<String, String> params);
     public long countStudent(Map<String, String> params);

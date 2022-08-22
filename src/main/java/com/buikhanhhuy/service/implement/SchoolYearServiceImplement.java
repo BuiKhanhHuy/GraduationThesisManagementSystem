@@ -15,6 +15,11 @@ public class SchoolYearServiceImplement implements SchoolYearService {
     private SchoolYearRepository schoolYearRepository;
 
     @Override
+    public boolean checkUniqueSchoolYearName(String schoolYearName) {
+        return this.schoolYearRepository.checkUniqueSchoolYearName(schoolYearName);
+    }
+
+    @Override
     public List<SchoolYear> getSchoolYears(Map<String, String> params) {
         return this.schoolYearRepository.getSchoolYears(params);
     }

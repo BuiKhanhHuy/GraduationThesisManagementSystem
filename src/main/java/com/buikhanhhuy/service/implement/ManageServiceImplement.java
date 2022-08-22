@@ -19,6 +19,16 @@ public class ManageServiceImplement implements ManageService {
     private CloudinaryService cloudinaryService;
 
     @Override
+    public boolean checkUniqueManageEmail(String manageEmail) {
+        return this.manageRepository.checkUniqueManageEmail(manageEmail);
+    }
+
+    @Override
+    public boolean checkUniqueManagePhone(String managePhone) {
+        return this.manageRepository.checkUniqueManagePhone(managePhone);
+    }
+
+    @Override
     public List<Manage> getManages(Map<String, String> params) {
         return this.manageRepository.getManages(params);
     }

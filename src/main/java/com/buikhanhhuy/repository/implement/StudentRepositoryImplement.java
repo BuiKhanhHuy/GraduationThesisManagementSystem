@@ -28,11 +28,42 @@ public class StudentRepositoryImplement implements StudentRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+
+    @Override
+    public boolean checkUniqueStudentCode(String studentCode) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Student WHERE code=:code";
+        Query query = session.createQuery(sql);
+        query.setParameter("code", studentCode.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
+    public boolean checkUniqueStudentEmail(String studentEmail) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Student WHERE email=:email";
+        Query query = session.createQuery(sql);
+        query.setParameter("email", studentEmail.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
+    public boolean checkUniqueStudentPhone(String studentPhone) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Student WHERE phone=:phone";
+        Query query = session.createQuery(sql);
+        query.setParameter("phone", studentPhone.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
 
     @Override
     public List<Object[]> getStudentOptions() {

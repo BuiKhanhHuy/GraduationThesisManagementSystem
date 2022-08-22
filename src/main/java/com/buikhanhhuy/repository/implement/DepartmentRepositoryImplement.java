@@ -24,6 +24,28 @@ public class DepartmentRepositoryImplement implements DepartmentRepository {
     private LocalSessionFactoryBean sessionFactoryBean;
 
     @Override
+    public boolean checkUniqueDepartmentCode(String departmentCode) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Department WHERE code=:code";
+        Query query = session.createQuery(sql);
+        query.setParameter("code", departmentCode.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
+    public boolean checkUniqueDepartmentName(String departmentName) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Department WHERE name=:name";
+        Query query = session.createQuery(sql);
+        query.setParameter("name", departmentName.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
     public List<Department> getDepartments(Map<String, String> params) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();

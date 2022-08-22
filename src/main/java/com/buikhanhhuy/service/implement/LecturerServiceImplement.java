@@ -19,6 +19,21 @@ public class LecturerServiceImplement implements LecturerService {
     private CloudinaryService cloudinaryService;
 
     @Override
+    public boolean checkUniqueLecturerCode(String lecturerCode) {
+        return this.lecturerRepository.checkUniqueLecturerCode(lecturerCode);
+    }
+
+    @Override
+    public boolean checkUniqueLecturerEmail(String lecturerEmail) {
+        return this.lecturerRepository.checkUniqueLecturerEmail(lecturerEmail);
+    }
+
+    @Override
+    public boolean checkUniqueLecturerPhone(String lecturerPhone) {
+        return this.lecturerRepository.checkUniqueLecturerPhone(lecturerPhone);
+    }
+
+    @Override
     public List<Object[]> getLecturerOptions() {
         return this.lecturerRepository.getLecturerOptions();
     }

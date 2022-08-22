@@ -22,6 +22,11 @@ public class UserServiceImplement implements UserService {
     private UserRepository userRepository;
 
     @Override
+    public boolean checkUniqueUserUsername(String username) {
+        return this.userRepository.checkUniqueUserUsername(username);
+    }
+
+    @Override
     public List<Object[]> getUsers(Map<String, String> params) {
         return this.userRepository.getUsers(params);
     }

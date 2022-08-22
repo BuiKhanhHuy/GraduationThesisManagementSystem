@@ -105,7 +105,7 @@
                                         type="button" class="btn btn-sm bg-danger text-white"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
-                                        title="<spring:message code="position.table.list.button.delete"/>">>
+                                        title="<spring:message code="position.table.list.button.delete"/>">
                                     <i class="icon-copy dw dw-delete-3"></i>
                                 </button>
                             </div>

@@ -19,7 +19,13 @@ public class WebAppValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
         return Department.class.isAssignableFrom(clazz)
+                || Major.class.isAssignableFrom(clazz)
                 || SchoolYear.class.isAssignableFrom(clazz)
+                || Position.class.isAssignableFrom(clazz)
+                || Lecturer.class.isAssignableFrom(clazz)
+                || Student.class.isAssignableFrom(clazz)
+                || User.class.isAssignableFrom(clazz)
+                || Manage.class.isAssignableFrom(clazz)
                 || EvaluationMethod.class.isAssignableFrom(clazz)
                 || Thesis.class.isAssignableFrom(clazz)
                 || Council.class.isAssignableFrom(clazz)

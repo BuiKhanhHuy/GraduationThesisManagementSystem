@@ -19,6 +19,21 @@ public class StudentServiceImplement implements StudentService {
     private CloudinaryService cloudinaryService;
 
     @Override
+    public boolean checkUniqueStudentCode(String studentCode) {
+        return this.studentRepository.checkUniqueStudentCode(studentCode);
+    }
+
+    @Override
+    public boolean checkUniqueStudentEmail(String studentEmail) {
+        return this.studentRepository.checkUniqueStudentEmail(studentEmail);
+    }
+
+    @Override
+    public boolean checkUniqueStudentPhone(String studentPhone) {
+        return this.studentRepository.checkUniqueStudentPhone(studentPhone);
+    }
+
+    @Override
     public List<Object[]> getStudentOptions() {
         return this.studentRepository.getStudentOptions();
     }

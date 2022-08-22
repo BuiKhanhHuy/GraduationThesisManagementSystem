@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface PositionRepository {
+    public boolean checkUniquePositionName (String positionName);
     public List<Position> getPositions(Map<String, String> params);
     public List<Object[]> getPositionOptions();
     public long countPosition(Map<String, String> params);

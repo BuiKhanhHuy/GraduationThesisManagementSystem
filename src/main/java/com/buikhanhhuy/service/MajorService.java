@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface MajorService {
-
+    public boolean checkUniqueMajorCode(String majorCode);
+    public boolean checkUniqueMajorName(String majorName);
     public List<Major> getMajors(Map<String, String> params);
     public long countMajor(Map<String, String> params);
     public List<Object[]> getMajorOptions();

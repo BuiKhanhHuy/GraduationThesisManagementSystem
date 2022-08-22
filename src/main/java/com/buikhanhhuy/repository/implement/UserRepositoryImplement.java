@@ -24,6 +24,17 @@ public class UserRepositoryImplement implements UserRepository {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
+    public boolean checkUniqueUserUsername(String username) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM User WHERE username=:username";
+        Query query = session.createQuery(sql);
+        query.setParameter("username", username.trim());
+
+        return (long) query.getSingleResult() > 0;
+    }
+
+    @Override
     public List<Object[]> getUsers(Map<String, String> params) {
         Session session = sessionFactoryBean.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();

@@ -2,6 +2,7 @@ package com.buikhanhhuy.api.admin;
 
 import com.buikhanhhuy.pojo.Position;
 import com.buikhanhhuy.service.PositionService;
+import com.buikhanhhuy.validators.WebAppValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,11 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,13 @@ import java.util.stream.Collectors;
 public class ApiPositionController {
     @Autowired
     private PositionService positionService;
+    @Autowired
+    private WebAppValidator positionValidator;
+    @InitBinder
+    public void InitBinder(WebDataBinder binder) {
+        binder.setValidator(positionValidator);
+    }
+
 
     @GetMapping(path = "/positions/{positionId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Position> loadPosition(@PathVariable(value = "positionId") int positionId) {

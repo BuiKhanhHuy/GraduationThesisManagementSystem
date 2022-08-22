@@ -15,6 +15,16 @@ public class DepartmentServiceImplement implements DepartmentService {
     private DepartmentRepository departmentRepository;
 
     @Override
+    public boolean checkUniqueDepartmentCode(String departmentCode) {
+        return this.departmentRepository.checkUniqueDepartmentCode(departmentCode);
+    }
+
+    @Override
+    public boolean checkUniqueDepartmentName(String departmentName) {
+        return this.departmentRepository.checkUniqueDepartmentName(departmentName);
+    }
+
+    @Override
     public List<Department> getDepartments(Map<String, String> params) {
         return this.departmentRepository.getDepartments(params);
     }

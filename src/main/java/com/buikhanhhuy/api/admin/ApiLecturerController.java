@@ -2,6 +2,7 @@ package com.buikhanhhuy.api.admin;
 
 import com.buikhanhhuy.pojo.Lecturer;
 import com.buikhanhhuy.service.LecturerService;
+import com.buikhanhhuy.validators.WebAppValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +26,14 @@ import java.util.stream.Collectors;
 public class ApiLecturerController {
     @Autowired
     private LecturerService lecturerService;
+
+    @Autowired
+    private WebAppValidator lecturerValidator;
+
+    @InitBinder
+    public void InitBinder(WebDataBinder binder) {
+        binder.setValidator(lecturerValidator);
+    }
 
     @GetMapping(path = "/lecturer-options", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<Object[]>> loadLecturerOptions() {

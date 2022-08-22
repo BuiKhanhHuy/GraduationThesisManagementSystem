@@ -23,6 +23,17 @@ public class PositionRepositoryImplement implements PositionRepository {
     private LocalSessionFactoryBean sessionFactoryBean;
 
     @Override
+    public boolean checkUniquePositionName(String positionName) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Position WHERE name=:name";
+        Query query = session.createQuery(sql);
+        query.setParameter("name", positionName.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
     public List<Position> getPositions(Map<String, String> params) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();

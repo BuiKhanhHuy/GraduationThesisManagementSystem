@@ -28,11 +28,31 @@ public class ManageRepositoryImplement implements ManageRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+
+    @Override
+    public boolean checkUniqueManageEmail(String manageEmail) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Manage WHERE email=:email";
+        Query query = session.createQuery(sql);
+        query.setParameter("email", manageEmail.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
+    public boolean checkUniqueManagePhone(String managePhone) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Manage WHERE phone=:phone";
+        Query query = session.createQuery(sql);
+        query.setParameter("phone", managePhone.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
 
     @Override
     public List<Manage> getManages(Map<String, String> params) {

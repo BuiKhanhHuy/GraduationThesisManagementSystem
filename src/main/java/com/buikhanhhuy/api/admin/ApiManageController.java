@@ -3,6 +3,7 @@ package com.buikhanhhuy.api.admin;
 import com.buikhanhhuy.pojo.Manage;
 import com.buikhanhhuy.pojo.Topic;
 import com.buikhanhhuy.service.ManageService;
+import com.buikhanhhuy.validators.WebAppValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +26,15 @@ import java.util.stream.Collectors;
 public class ApiManageController {
     @Autowired
     private ManageService manageService;
+    @Autowired
+    private WebAppValidator manageValidator;
+    @Autowired
+    private WebAppValidator userValidator;
+
+    @InitBinder
+    public void InitBinder(WebDataBinder binder) {
+        binder.setValidator(manageValidator);
+    }
 
     @GetMapping(path = "/manages/{manageId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Manage> loadManage(@PathVariable(value = "manageId") int manageId) {

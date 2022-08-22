@@ -29,6 +29,39 @@ public class LecturerRepositoryImplement implements LecturerRepository {
     private UserRepository userRepository;
 
     @Override
+    public boolean checkUniqueLecturerCode(String lecturerCode) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Lecturer WHERE code=:code";
+        Query query = session.createQuery(sql);
+        query.setParameter("code", lecturerCode.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
+    public boolean checkUniqueLecturerEmail(String lecturerEmail) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Lecturer WHERE email=:email";
+        Query query = session.createQuery(sql);
+        query.setParameter("email", lecturerEmail.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
+    public boolean checkUniqueLecturerPhone(String lecturerPhone) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Lecturer WHERE phone=:phone";
+        Query query = session.createQuery(sql);
+        query.setParameter("phone", lecturerPhone.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
     public List<Object[]> getLecturerOptions() {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();

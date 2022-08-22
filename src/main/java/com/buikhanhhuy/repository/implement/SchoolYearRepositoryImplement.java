@@ -23,6 +23,17 @@ public class SchoolYearRepositoryImplement implements SchoolYearRepository {
     private LocalSessionFactoryBean sessionFactoryBean;
 
     @Override
+    public boolean checkUniqueSchoolYearName(String schoolYearName) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM SchoolYear WHERE name=:name";
+        Query query = session.createQuery(sql);
+        query.setParameter("name", schoolYearName.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
     public List<SchoolYear> getSchoolYears(Map<String, String> params) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
 

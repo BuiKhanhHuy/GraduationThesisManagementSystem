@@ -15,6 +15,11 @@ public class PositionServiceImplement implements PositionService {
     private PositionRepository positionRepository;
 
     @Override
+    public boolean checkUniquePositionName(String positionName) {
+        return this.positionRepository.checkUniquePositionName(positionName);
+    }
+
+    @Override
     public List<Position> getPositions(Map<String, String> params) {
         return this.positionRepository.getPositions(params);
     }
