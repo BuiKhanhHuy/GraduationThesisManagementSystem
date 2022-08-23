@@ -65,6 +65,7 @@ const saveChange = (endpoint, topicId = null) => {
         }).finally(hideLoading)
     } else {
         // UPDATE
+        formData["id"] = topicId;
         fetch(endpoint, {
             method: "PATCH", body: JSON.stringify(formData), headers: {
                 "Content-Type": "application/json"

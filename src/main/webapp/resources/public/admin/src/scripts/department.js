@@ -79,6 +79,7 @@ const saveChange = (endpoint, departmentId = null) => {
         }).finally(hideLoading)
     } else {
         // UPDATE
+        formData["id"] = departmentId
         fetch(endpoint, {
             method: "PATCH", body: JSON.stringify(formData), headers: {
                 "Content-Type": "application/json"

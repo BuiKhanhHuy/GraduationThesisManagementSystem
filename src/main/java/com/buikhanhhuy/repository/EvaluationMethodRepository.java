@@ -13,4 +13,5 @@ public interface EvaluationMethodRepository {
     public boolean addEvaluationMethod(EvaluationMethod evaluationMethod);
     public boolean updateEvaluationMethod(int evaluationMethodId, EvaluationMethod evaluationMethod);
     public boolean deleteEvaluationMethod(int evaluationMethodId);
+    public boolean activeAEvaluationMethod(int evaluationMethodId);
 }

@@ -4,6 +4,7 @@
 
 <c:url var="filterEvaluationMethod" value="/admin/evaluations-method"/>
 <c:url var="home" value="/admin/"/>
+<c:url var="appContext" value="/"/>
 
 <div class="page-header">
     <div class="row">
@@ -98,17 +99,11 @@
                         </c:if>
                     </td>
                     <td class="text-center">
+                        <input onclick="turnOnOrTurnOffEvaluationMethod('${appContext}', ${evaluationMethod.id}, this)"
                         <c:if test="${evaluationMethod.active == true}">
-                            <i class="icon-copy fa fa-check-circle-o text-success" aria-hidden="true"
-                               data-toggle="tooltip" data-placement="bottom"
-                               title="<spring:message code="evaluationMethod.table.list.header.active.active"/>"></i>
-                        </c:if>
-                        <c:if test="${evaluationMethod.active != true}">
-                            <i class="icon-copy fa fa-times-circle-o text-danger" aria-hidden="true"
-                               data-toggle="tooltip"
-                               data-placement="bottom"
-                               title=" <spring:message code="evaluationMethod.table.list.header.active.unActive"/>"></i>
-                        </c:if>
+                               checked
+                               disabled
+                        </c:if> type="checkbox">
                     </td>
                     <td class="text-center">
                         <div class="btn-list">
@@ -179,7 +174,7 @@
                             <label class="font-weight-bold">
                                 <spring:message code="evaluationMethod.modal.evaluationMethodName.label"/>
                                 <span
-                                    class="text-danger">(*)</span></label>
+                                        class="text-danger">(*)</span></label>
                             <input name="name" id="name" type="text" class="form-control">
                             <hr/>
                         </div>
@@ -190,7 +185,8 @@
                             </div>
                             <div class="add-more-task" id="add-more-task">
                                 <a href="javascript:;" onclick="addScoreComponent()"><i class="ion-plus-circled"></i>
-                                    <spring:message code="evaluationMethod.modal.evaluationMethodName.addEvaluationMethodName"/></a>
+                                    <spring:message
+                                            code="evaluationMethod.modal.evaluationMethodName.addEvaluationMethodName"/></a>
                             </div>
                         </div>
                     </div>

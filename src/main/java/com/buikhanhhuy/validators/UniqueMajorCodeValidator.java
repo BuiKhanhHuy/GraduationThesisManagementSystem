@@ -21,7 +21,8 @@ public class UniqueMajorCodeValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Major major = (Major) target;
 
-        if(this.majorService.checkUniqueMajorCode(major.getCode())){
+        if(major.getId() == null &&
+                this.majorService.checkUniqueMajorCode(major.getCode())){
             errors.rejectValue("code", "major.add.code.existsMessage",
                     "Mã ngành đã tồn tại");
         }

@@ -42,7 +42,7 @@ public class EvaluationMethodRepositoryImplement implements EvaluationMethodRepo
         query.multiselect(builder.count(root.get("id")));
 
         Query q = session.createQuery(query);
-        Object result =  q.getSingleResult();
+        Object result = q.getSingleResult();
 
         return (long) result;
     }
@@ -117,7 +117,7 @@ public class EvaluationMethodRepositoryImplement implements EvaluationMethodRepo
 
 
                 for (ScoreColumn scoreColumn : scoreComponent.getScoreColumns()) {
-                   ScoreColumn objScoreColumn = session.get(ScoreColumn.class, scoreColumn.getId());
+                    ScoreColumn objScoreColumn = session.get(ScoreColumn.class, scoreColumn.getId());
                 }
             }
             return true;
@@ -137,6 +137,24 @@ public class EvaluationMethodRepositoryImplement implements EvaluationMethodRepo
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return false;
+    }
+
+    @Override
+    public boolean activeAEvaluationMethod(int evaluationMethodId) {
+        Session session = sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            String sql = "UPDATE EvaluationMethod e SET e.active=false";
+            session.createQuery(sql).executeUpdate();
+
+            EvaluationMethod evaluationMethod = session.get(EvaluationMethod.class, evaluationMethodId);
+            evaluationMethod.setActive(true);
+
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
         return false;
     }
 }

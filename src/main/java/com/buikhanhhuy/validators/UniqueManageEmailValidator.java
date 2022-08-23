@@ -21,7 +21,8 @@ public class UniqueManageEmailValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Manage manage = (Manage) target;
 
-        if(this.manageService.checkUniqueManageEmail(manage.getEmail())){
+        if(manage.getId() == null
+                && this.manageService.checkUniqueManageEmail(manage.getEmail())){
             errors.rejectValue("email", "manage.add.email.existsMessage",
                     "Email quản trị viên đã tồn tại");
         }

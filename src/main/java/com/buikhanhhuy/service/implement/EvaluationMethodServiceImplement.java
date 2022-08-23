@@ -49,5 +49,10 @@ public class EvaluationMethodServiceImplement implements EvaluationMethodService
         return this.evaluationMethodRepository.deleteEvaluationMethod(evaluationMethodId);
     }
 
+    @Override
+    public boolean activeAEvaluationMethod(int evaluationMethodId) {
+        return this.evaluationMethodRepository.activeAEvaluationMethod(evaluationMethodId);
+    }
+
 
 }

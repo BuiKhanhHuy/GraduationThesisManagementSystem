@@ -21,7 +21,8 @@ public class UniqueStudentPhoneValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Student student = (Student) target;
 
-        if(this.studentService.checkUniqueStudentPhone(student.getPhone())){
+        if(student.getId() == null
+                && this.studentService.checkUniqueStudentPhone(student.getPhone())){
             errors.rejectValue("phone", "student.add.phone.existsMessage",
                     "Số điện thoại sinh viên đã tồn tại");
         }

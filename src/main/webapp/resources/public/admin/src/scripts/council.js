@@ -5,7 +5,7 @@ var council;
 
 const loadDataOptions = (callback) => {
     if (isLoadDataOptions) {
-        fetch("/GraduationThesisManagementSystem/admin/api/thesis-options", {
+        fetch("/GraduationThesisManagementSystem/admin/api/thesis-options/?isCouncil=False", {
             method: "GET", headers: {
                 "Content-Type": "application/json"
             }
@@ -385,8 +385,8 @@ $('#modal-add-edit-council').on('hidden.bs.modal', function (e) {
 })
 
 
+var scoreDataArea = document.getElementById("score-data-area")
 const printScoreData = (appContext, councilId) => {
-    let scoreDataArea = document.getElementById("score-data-area")
 
     fetch(`${appContext}admin/api/councils/${councilId}`, {
         method: 'GET', headers: {
@@ -523,7 +523,8 @@ const printScoreData = (appContext, councilId) => {
                                             </div>
                                         </div>`
 
-                $("#score-data").printMe({"path": ["https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"]}, () => scoreDataArea.innerHTML = "");
+                $("#score-data").printMe({"path": ["https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"]})
+                location.reload()
             }).catch(err => {
             console.log(err)
             errorAlert("Đã có lỗi!", "Đã có lỗi trong quá trình tải dữ liệu!", "Ok")

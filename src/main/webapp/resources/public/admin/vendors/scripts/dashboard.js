@@ -1,281 +1,281 @@
 var options = {
-	series: [80],
-	grid: {
-		padding: {
-			top: 0,
-			right: 0,
-			bottom: 0,
-			left: 0
-		},
-	},
-	chart: {
-		height: 100,
-		width: 70,
-		type: 'radialBar',
-	},
-	plotOptions: {
-		radialBar: {
-			hollow: {
-				size: '50%',
-			},
-			dataLabels: {
-				name: {
-					show: false,
-					color: '#fff'
-				},
-				value: {
-					show: true,
-					color: '#333',
-					offsetY: 5,
-					fontSize: '15px'
-				}
-			}
-		}
-	},
-	colors: ['#ecf0f4'],
-	fill: {
-		type: 'gradient',
-		gradient: {
-			shade: 'dark',
-			type: 'diagonal1',
-			shadeIntensity: 0.8,
-			gradientToColors: ['#1b00ff'],
-			inverseColors: false,
-			opacityFrom: [1, 0.2],
-			opacityTo: 1,
-			stops: [0, 100],
-		}
-	},
-	states: {
-		normal: {
-			filter: {
-				type: 'none',
-				value: 0,
-			}
-		},
-		hover: {
-			filter: {
-				type: 'none',
-				value: 0,
-			}
-		},
-		active: {
-			filter: {
-				type: 'none',
-				value: 0,
-			}
-		},
-	}
+    series: [80],
+    grid: {
+        padding: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0
+        },
+    },
+    chart: {
+        height: 100,
+        width: 70,
+        type: 'radialBar',
+    },
+    plotOptions: {
+        radialBar: {
+            hollow: {
+                size: '50%',
+            },
+            dataLabels: {
+                name: {
+                    show: false,
+                    color: '#fff'
+                },
+                value: {
+                    show: true,
+                    color: '#333',
+                    offsetY: 5,
+                    fontSize: '15px'
+                }
+            }
+        }
+    },
+    colors: ['#ecf0f4'],
+    fill: {
+        type: 'gradient',
+        gradient: {
+            shade: 'dark',
+            type: 'diagonal1',
+            shadeIntensity: 0.8,
+            gradientToColors: ['#1b00ff'],
+            inverseColors: false,
+            opacityFrom: [1, 0.2],
+            opacityTo: 1,
+            stops: [0, 100],
+        }
+    },
+    states: {
+        normal: {
+            filter: {
+                type: 'none',
+                value: 0,
+            }
+        },
+        hover: {
+            filter: {
+                type: 'none',
+                value: 0,
+            }
+        },
+        active: {
+            filter: {
+                type: 'none',
+                value: 0,
+            }
+        },
+    }
 };
 
 var options2 = {
-	series: [70],
-	grid: {
-		padding: {
-			top: 0,
-			right: 0,
-			bottom: 0,
-			left: 0
-		},
-	},
-	chart: {
-		height: 100,
-		width: 70,
-		type: 'radialBar',
-	},
-	plotOptions: {
-		radialBar: {
-			hollow: {
-				size: '50%',
-			},
-			dataLabels: {
-				name: {
-					show: false,
-					color: '#fff'
-				},
-				value: {
-					show: true,
-					color: '#333',
-					offsetY: 5,
-					fontSize: '15px'
-				}
-			}
-		}
-	},
-	colors: ['#ecf0f4'],
-	fill: {
-		type: 'gradient',
-		gradient: {
-			shade: 'dark',
-			type: 'diagonal1',
-			shadeIntensity: 1,
-			gradientToColors: ['#009688'],
-			inverseColors: false,
-			opacityFrom: [1, 0.2],
-			opacityTo: 1,
-			stops: [0, 100],
-		}
-	},
-	states: {
-		normal: {
-			filter: {
-				type: 'none',
-				value: 0,
-			}
-		},
-		hover: {
-			filter: {
-				type: 'none',
-				value: 0,
-			}
-		},
-		active: {
-			filter: {
-				type: 'none',
-				value: 0,
-			}
-		},
-	}
+    series: [70],
+    grid: {
+        padding: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0
+        },
+    },
+    chart: {
+        height: 100,
+        width: 70,
+        type: 'radialBar',
+    },
+    plotOptions: {
+        radialBar: {
+            hollow: {
+                size: '50%',
+            },
+            dataLabels: {
+                name: {
+                    show: false,
+                    color: '#fff'
+                },
+                value: {
+                    show: true,
+                    color: '#333',
+                    offsetY: 5,
+                    fontSize: '15px'
+                }
+            }
+        }
+    },
+    colors: ['#ecf0f4'],
+    fill: {
+        type: 'gradient',
+        gradient: {
+            shade: 'dark',
+            type: 'diagonal1',
+            shadeIntensity: 1,
+            gradientToColors: ['#009688'],
+            inverseColors: false,
+            opacityFrom: [1, 0.2],
+            opacityTo: 1,
+            stops: [0, 100],
+        }
+    },
+    states: {
+        normal: {
+            filter: {
+                type: 'none',
+                value: 0,
+            }
+        },
+        hover: {
+            filter: {
+                type: 'none',
+                value: 0,
+            }
+        },
+        active: {
+            filter: {
+                type: 'none',
+                value: 0,
+            }
+        },
+    }
 };
 
 var options3 = {
-	series: [75],
-	grid: {
-		padding: {
-			top: 0,
-			right: 0,
-			bottom: 0,
-			left: 0
-		},
-	},
-	chart: {
-		height: 100,
-		width: 70,
-		type: 'radialBar',
-	},
-	plotOptions: {
-		radialBar: {
-			hollow: {
-				size: '50%',
-			},
-			dataLabels: {
-				name: {
-					show: false,
-					color: '#fff'
-				},
-				value: {
-					show: true,
-					color: '#333',
-					offsetY: 5,
-					fontSize: '15px'
-				}
-			}
-		}
-	},
-	colors: ['#ecf0f4'],
-	fill: {
-		type: 'gradient',
-		gradient: {
-			shade: 'dark',
-			type: 'diagonal1',
-			shadeIntensity: 0.8,
-			gradientToColors: ['#f56767'],
-			inverseColors: false,
-			opacityFrom: [1, 0.2],
-			opacityTo: 1,
-			stops: [0, 100],
-		}
-	},
-	states: {
-		normal: {
-			filter: {
-				type: 'none',
-				value: 0,
-			}
-		},
-		hover: {
-			filter: {
-				type: 'none',
-				value: 0,
-			}
-		},
-		active: {
-			filter: {
-				type: 'none',
-				value: 0,
-			}
-		},
-	}
+    series: [75],
+    grid: {
+        padding: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0
+        },
+    },
+    chart: {
+        height: 100,
+        width: 70,
+        type: 'radialBar',
+    },
+    plotOptions: {
+        radialBar: {
+            hollow: {
+                size: '50%',
+            },
+            dataLabels: {
+                name: {
+                    show: false,
+                    color: '#fff'
+                },
+                value: {
+                    show: true,
+                    color: '#333',
+                    offsetY: 5,
+                    fontSize: '15px'
+                }
+            }
+        }
+    },
+    colors: ['#ecf0f4'],
+    fill: {
+        type: 'gradient',
+        gradient: {
+            shade: 'dark',
+            type: 'diagonal1',
+            shadeIntensity: 0.8,
+            gradientToColors: ['#f56767'],
+            inverseColors: false,
+            opacityFrom: [1, 0.2],
+            opacityTo: 1,
+            stops: [0, 100],
+        }
+    },
+    states: {
+        normal: {
+            filter: {
+                type: 'none',
+                value: 0,
+            }
+        },
+        hover: {
+            filter: {
+                type: 'none',
+                value: 0,
+            }
+        },
+        active: {
+            filter: {
+                type: 'none',
+                value: 0,
+            }
+        },
+    }
 };
 
 var options4 = {
-	series: [85],
-	grid: {
-		padding: {
-			top: 0,
-			right: 0,
-			bottom: 0,
-			left: 0
-		},
-	},
-	chart: {
-		height: 100,
-		width: 70,
-		type: 'radialBar',
-	},
-	plotOptions: {
-		radialBar: {
-			hollow: {
-				size: '50%',
-			},
-			dataLabels: {
-				name: {
-					show: false,
-					color: '#fff'
-				},
-				value: {
-					show: true,
-					color: '#333',
-					offsetY: 5,
-					fontSize: '15px'
-				}
-			}
-		}
-	},
-	colors: ['#ecf0f4'],
-	fill: {
-		type: 'gradient',
-		gradient: {
-			shade: 'dark',
-			type: 'diagonal1',
-			shadeIntensity: 0.8,
-			gradientToColors: ['#2979ff'],
-			inverseColors: false,
-			opacityFrom: [1, 0.5],
-			opacityTo: 1,
-			stops: [0, 100],
-		}
-	},
-	states: {
-		normal: {
-			filter: {
-				type: 'none',
-				value: 0,
-			}
-		},
-		hover: {
-			filter: {
-				type: 'none',
-				value: 0,
-			}
-		},
-		active: {
-			filter: {
-				type: 'none',
-				value: 0,
-			}
-		},
-	}
+    series: [85],
+    grid: {
+        padding: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0
+        },
+    },
+    chart: {
+        height: 100,
+        width: 70,
+        type: 'radialBar',
+    },
+    plotOptions: {
+        radialBar: {
+            hollow: {
+                size: '50%',
+            },
+            dataLabels: {
+                name: {
+                    show: false,
+                    color: '#fff'
+                },
+                value: {
+                    show: true,
+                    color: '#333',
+                    offsetY: 5,
+                    fontSize: '15px'
+                }
+            }
+        }
+    },
+    colors: ['#ecf0f4'],
+    fill: {
+        type: 'gradient',
+        gradient: {
+            shade: 'dark',
+            type: 'diagonal1',
+            shadeIntensity: 0.8,
+            gradientToColors: ['#2979ff'],
+            inverseColors: false,
+            opacityFrom: [1, 0.5],
+            opacityTo: 1,
+            stops: [0, 100],
+        }
+    },
+    states: {
+        normal: {
+            filter: {
+                type: 'none',
+                value: 0,
+            }
+        },
+        hover: {
+            filter: {
+                type: 'none',
+                value: 0,
+            }
+        },
+        active: {
+            filter: {
+                type: 'none',
+                value: 0,
+            }
+        },
+    }
 };
 
 var chart = new ApexCharts(document.querySelector("#chart"), options);
@@ -290,92 +290,81 @@ chart3.render();
 var chart4 = new ApexCharts(document.querySelector("#chart4"), options4);
 chart4.render();
 
-const thesisScoreStatistics = (type="spline", labels=[], data=[]) => {
-	Highcharts.chart('chart5', {
-		chart: {
-			type: 'line'
-		},
-		title: {
-			text: ''
-		},
-		xAxis: {
-			categories: ['jan 01', 'jan 05', 'jan 10', 'jan 15', 'jan 20', 'jan 25', 'jan 30'],
-			labels: {
-				style: {
-					color: '#1b00ff',
-					fontSize: '12px',
-				}
-			}
-		},
-		yAxis: {
-			labels: {
-				formatter: function () {
-					return this.value;
-				},
-				style: {
-					color: '#1b00ff',
-					fontSize: '14px'
-				}
-			},
-			max: 10,
-			title: {
-				text: 'Điểm trung bình khóa luận từng ngành qua các niên khóa'
-			},
-		},
-		credits: {
-			enabled: false
-		},
-		tooltip: {
-			crosshairs: true,
-			shared: true
-		},
-		plotOptions: {
-			spline: {
-				marker: {
-					radius: 10,
-					lineColor: '#1b00ff',
-					lineWidth: 2
-				}
-			}
-		},
-		legend: {
-			align: 'center',
-			x: 0,
-			y: 0
-		},
-		series: [{
-			name: 'Twitter',
-			color: '#00789c',
-			marker: {
-				symbol: 'circle'
-			},
-			data: [0, 10, 5, 3, 4, 2, 4]
-		},
-			{
-				name: 'Facebook',
-				color: '#236adc',
-				marker: {
-					symbol: 'circle'
-				},
-				data: [4, 2, 10, 4, 1, 1, 2]
-			},
-			{
-				name: 'Chat',
-				color: '#ff686b',
-				marker: {
-					symbol: 'circle'
-				},
-				data: [0, 5, 5, 4, 6, 10, 9]
-			},
-			{
-				name: 'Forum',
-				color: '#264653',
-				marker: {
-					symbol: 'circle'
-				},
-				data: [3.5, 2.5, 5.5, 7.5, 1.5, 5, 3.8]
-			}]
-	});
+const thesisScoreStatistics = (type = "spline", data) => {
+    let series = []
+    for (let name in data.series) {
+        if (name !== '') {
+            let r = Math.random() * 255
+            let g = Math.random() * 255
+            let b = Math.random() * 255
+
+            series.push({
+                'name': name,
+                'color': `rgba(${r}, ${g}, ${b}, 1)`,
+                'marker': {
+                    'symbol': 'circle'
+                },
+                'data': data.series[name]
+            })
+        }
+    }
+    console.log(series)
+
+
+    Highcharts.chart('chart5', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: data.categories,
+            labels: {
+                style: {
+                    color: '#1b00ff',
+                    fontSize: '12px',
+                }
+            }
+        },
+        yAxis: {
+            labels: {
+                formatter: function () {
+                    return this.value + " điểm";
+                },
+                style: {
+                    color: '#1b00ff',
+                    fontSize: '14px'
+                }
+            },
+            max: 10,
+            title: {
+                text: 'Điểm trung bình khóa luận từng ngành qua các niên khóa'
+            },
+        },
+        credits: {
+            enabled: false
+        },
+        tooltip: {
+            crosshairs: true,
+            shared: true,
+        },
+        plotOptions: {
+            spline: {
+                marker: {
+                    radius: 10,
+                    lineColor: '#1b00ff',
+                    lineWidth: 2
+                }
+            }
+        },
+        legend: {
+            align: 'center',
+            x: 0,
+            y: 0
+        },
+        series: series
+    });
 }
 
 const thesisStatisticsByMajor = (type = "bar", labels = [], data = []) => {
@@ -396,7 +385,7 @@ const thesisStatisticsByMajor = (type = "bar", labels = [], data = []) => {
                 horizontal: false,
                 columnWidth: '25%',
                 endingShape: 'rounded',
-				distributed: true
+                distributed: true
             },
         },
         dataLabels: {

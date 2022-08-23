@@ -32,7 +32,7 @@
                             <span class="badge notification-active" id="badge-notifi-active"></span>
                         </c:if>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-right" style="width: 550px;">
                         <div class="notification-list mx-h-350 customscroll">
                             <ul id="notification-user-area">
                                 <c:if test="${notificationUsers.size() > 0}">
@@ -44,6 +44,9 @@
                                                     <div class="col">
                                                         <h3>${notificationUser.notification.title}</h3>
                                                         <p>${notificationUser.notification.content}</p>
+                                                        <span class="font-italic mt-2 text-black-50">
+                                                            (<span class="notification-created-date">${notificationUser.notification.createdDate}</span>)
+                                                        </span>
                                                     </div>
                                                     <div onclick="turnOffNotification('${appContext}', ${notificationUser.id})"
                                                          class="col-md-1 text-danger" style="cursor: pointer;">

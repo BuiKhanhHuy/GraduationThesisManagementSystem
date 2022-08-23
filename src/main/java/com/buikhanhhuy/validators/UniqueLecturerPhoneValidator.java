@@ -21,7 +21,8 @@ public class UniqueLecturerPhoneValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Lecturer lecturer = (Lecturer) target;
 
-        if(this.lecturerService.checkUniqueLecturerPhone(lecturer.getPhone())){
+        if(lecturer.getId() == null
+                && this.lecturerService.checkUniqueLecturerPhone(lecturer.getPhone())){
             errors.rejectValue("phone", "lecturer.add.phone.existsMessage",
                     "Số điện thoại giảng viên đã tồn tại");
         }

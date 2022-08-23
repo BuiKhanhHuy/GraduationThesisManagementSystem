@@ -27,6 +27,7 @@ public class WebAppValidator implements Validator {
                 || User.class.isAssignableFrom(clazz)
                 || Manage.class.isAssignableFrom(clazz)
                 || EvaluationMethod.class.isAssignableFrom(clazz)
+                || Topic.class.isAssignableFrom(clazz)
                 || Thesis.class.isAssignableFrom(clazz)
                 || Council.class.isAssignableFrom(clazz)
                 || PasswordUser.class.isAssignableFrom(clazz);

@@ -35,9 +35,9 @@ public class ApiThesisController {
     }
 
     @GetMapping(path = "/thesis-options", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Object[]>> loadThesisOptions() {
+    public ResponseEntity<List<Object[]>> loadThesisOptions(@RequestParam(value = "isCouncil", required = false) String isCouncil) {
         try {
-            return new ResponseEntity<>(this.thesisService.getThesisOptions(), HttpStatus.OK);
+            return new ResponseEntity<>(this.thesisService.getThesisOptions(isCouncil), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

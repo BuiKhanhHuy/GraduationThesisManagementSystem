@@ -378,6 +378,7 @@
                             <select name="reviewLecturer" id="reviewLecturer"
                                     class="custom-select form-control" style="width: 100%;">
                             </select>
+                            <span></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold">

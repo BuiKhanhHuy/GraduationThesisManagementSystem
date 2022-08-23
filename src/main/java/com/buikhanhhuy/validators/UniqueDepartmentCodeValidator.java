@@ -21,7 +21,8 @@ public class UniqueDepartmentCodeValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Department department = (Department) target;
 
-        if(this.departmentService.checkUniqueDepartmentCode(department.getCode())){
+        if(department.getId() == null
+                && this.departmentService.checkUniqueDepartmentCode(department.getCode())){
             errors.rejectValue("code",
                     "department.add.code.existsMessage",
                     "Mã khoa đã tồn tại.");

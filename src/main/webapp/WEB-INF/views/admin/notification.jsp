@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:url var="endpointLoadUsers" value="/admin/api/users"/>
 <c:url var="filterNews" value=""/>
@@ -74,6 +75,9 @@
             <th scope="col">
                 <spring:message code="notification.table.list.header.notificationContent"/>
             </th>
+            <th>
+                Ngày tạo
+            </th>
             <th scope="col" class="text-center">
                 <spring:message code="notification.table.list.header.action"/>
             </th>
@@ -86,6 +90,9 @@
                     <td>${notification.title}</td>
                     <td>
                             ${notification.content}
+                    </td>
+                    <td>
+                        <fmt:formatDate type = "both" value="${notification.createdDate}"/>
                     </td>
                     <td class="text-center">
                         <div class="btn-list">

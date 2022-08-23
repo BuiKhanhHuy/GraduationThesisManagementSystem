@@ -1,6 +1,9 @@
 package com.buikhanhhuy.service.implement;
 
 import com.buikhanhhuy.constants.SystemConstant;
+import com.buikhanhhuy.pojo.Lecturer;
+import com.buikhanhhuy.pojo.Notification;
+import com.buikhanhhuy.pojo.Student;
 import com.buikhanhhuy.pojo.Thesis;
 import com.buikhanhhuy.repository.NotificationRepository;
 import com.buikhanhhuy.repository.ThesisRepository;
@@ -35,12 +38,24 @@ public class ThesisServiceImplement implements ThesisService {
 
         toEmail = new String[]{modelThesis.getReviewLecturer().getEmail()};
 
-        this.emailService.sendMail("Thông báo giảng viên phản biện khóa luận tốt nghiệp", toEmail, model, SystemConstant.REVIEW_LECTURER_EMAIL_TEMPLATE);
+        this.emailService.sendMail("Thông báo giảng viên phản biện khóa luận tốt nghiệp",
+                toEmail, model,
+                SystemConstant.REVIEW_LECTURER_EMAIL_TEMPLATE);
     }
 
     @Override
-    public List<Object[]> getThesisOptions() {
-        return this.thesisRepository.getThesisOptions();
+    public boolean checkStudentDoManyThesisInASchoolYear(int studentId) {
+        return this.thesisRepository.checkStudentDoManyThesisInASchoolYear(studentId);
+    }
+
+    @Override
+    public boolean checkStudentCompletedThesis(int studentId) {
+        return this.thesisRepository.checkStudentCompletedThesis(studentId);
+    }
+
+    @Override
+    public List<Object[]> getThesisOptions(String isCouncil) {
+        return this.thesisRepository.getThesisOptions(isCouncil);
     }
 
     @Override
@@ -60,28 +75,41 @@ public class ThesisServiceImplement implements ThesisService {
     }
 
     @Override
-    public boolean addThesis(Thesis thesis) {
-        Thesis thesisResult = this.thesisRepository.addThesis(thesis);
-        if (thesisResult != null) {
-//            Set<Integer> usersId;
-//            Notification notification;
-//
-//            usersId = new HashSet<>();
-//            notification = new Notification();
-//
-//            for (Student student : thesis.getStudents()) {
-//                usersId.add(student.getUser().getId());
-//            }
-//            for (Lecturer lecturer : thesis.getLecturers()) {
-//                usersId.add(lecturer.getUser().getId());
-//            }
-//            usersId.add(thesis.getReviewLecturer().getUser().getId());
-//
-//            notification.setTitle("Thông báo thực hiện khóa luận tốt nghiệp");
-//            notification.setContent("Đăng nhập vào hệ thống để xem thông tin chi tiết");
-//            this.notificationRepository.addNotification(notification, usersId);
+    public Boolean addThesis(Thesis thesis) {
+        if (this.thesisRepository.addThesis(thesis)) {
+            Thesis thesisResult = this.thesisRepository.getThesisById(thesis.getId());
+            Set<Integer> usersId;
+            Notification notification;
 
-            this.sendReviewLectureThesisNotification(thesis);
+            usersId = new HashSet<>();
+            notification = new Notification();
+            for (Student student : thesisResult.getStudents()) {
+                usersId.add(student.getUser().getId());
+            }
+            notification.setTitle("Thông báo thực hiện khóa luận tốt nghiệp");
+            notification.setContent(String.format("Thông báo thực hiện khóa luận từ ngày %s đến ngày %s. " +
+                            "Thông tin chi tiết trên hệ thống.",
+                    thesisResult.getStartDate().toString(),
+                    thesisResult.getComplateDate().toString()));
+            this.notificationRepository.addNotification(notification, usersId);
+
+            usersId = new HashSet<>();
+            notification = new Notification();
+            for (Lecturer lecturer : thesisResult.getLecturers()) {
+                usersId.add(lecturer.getUser().getId());
+            }
+            notification.setTitle("Thông báo giảng viên hướng dẫn khóa luận");
+            notification.setContent("Đăng nhập vào hệ thống để xem thông tin chi tiết");
+            this.notificationRepository.addNotification(notification, usersId);
+
+            usersId = new HashSet<>();
+            notification = new Notification();
+            usersId.add(thesisResult.getReviewLecturer().getUser().getId());
+            notification.setTitle("Thông báo giảng viên phản biện khóa luận tốt nghiệp");
+            notification.setContent("Đăng nhập vào hệ thống để xem thông tin chi tiết");
+            this.notificationRepository.addNotification(notification, usersId);
+
+            this.sendReviewLectureThesisNotification(thesisResult);
             return true;
         }
 

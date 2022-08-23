@@ -18,8 +18,16 @@ public class StatsController {
     private StatsService statsService;
 
     @GetMapping(path = "/stats/score-statistics")
-    public String scoreStatistics() {
+    public String scoreStatistics(Model model,
+                                  @RequestParam(value = "schoolYearId", required = false) String schoolYearId) {
+        Integer schoolYearIdInt = null;
 
+        if (schoolYearId != null && !schoolYearId.isEmpty()) {
+            schoolYearIdInt = Integer.parseInt(schoolYearId);
+        }
+
+        model.addAttribute("schoolYearOptions", this.schoolYearService.getSchoolYearOptions());
+        model.addAttribute("scoreStatistics", this.statsService.thesisScoreStatistics(schoolYearIdInt));
 
         return "adminScoreStatistics";
     }

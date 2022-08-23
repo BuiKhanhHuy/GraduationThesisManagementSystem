@@ -48,6 +48,10 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
     private StudentService studentService;
     @Autowired
     private ManageService manageService;
+    @Autowired
+    private TopicService topicService;
+    @Autowired
+    private ThesisService thesisService;
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -205,8 +209,9 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
     public WebAppValidator thesisValidator() {
         Set<Validator> springValidators = new HashSet<>();
         springValidators.add(new ThesisLecturersValidator());
-        springValidators.add(new ThesisStudentsValidator());
+        springValidators.add(new ThesisStudentsValidator(thesisService));
         springValidators.add(new ThesisReviewLecturerValidator());
+        springValidators.add(new ThesisDateValidator());
 
         WebAppValidator webAppValidator = new WebAppValidator();
         webAppValidator.setValidators(springValidators);
@@ -231,6 +236,17 @@ public class WebApplicationConfigContext implements WebMvcConfigurer {
     public WebAppValidator userValidator() {
         Set<Validator> springValidators = new HashSet<>();
         springValidators.add(new UniqueUserUsernameValidator(userService));
+
+        WebAppValidator webAppValidator = new WebAppValidator();
+        webAppValidator.setValidators(springValidators);
+
+        return webAppValidator;
+    }
+
+    @Bean
+    public WebAppValidator topicValidator() {
+        Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(new UniqueTopicNameValidator(topicService));
 
         WebAppValidator webAppValidator = new WebAppValidator();
         webAppValidator.setValidators(springValidators);

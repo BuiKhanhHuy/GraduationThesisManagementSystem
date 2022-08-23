@@ -20,7 +20,8 @@ public class UniqueMajorNameValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Major major = (Major) target;
-        if(this.majorService.checkUniqueMajorName(major.getName())){
+        if(major.getId() == null
+                && this.majorService.checkUniqueMajorName(major.getName())){
             errors.rejectValue("name", "major.add.name.existsMessage",
                     "Tên ngành đã tồn tại");
         }

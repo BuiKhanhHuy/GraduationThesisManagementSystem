@@ -21,7 +21,8 @@ public class UniqueSchoolYearNameValidator implements Validator {
     public void validate(Object target, Errors errors) {
         SchoolYear schoolYear = (SchoolYear) target;
 
-        if (this.schoolYearService.checkUniqueSchoolYearName(schoolYear.getName())) {
+        if (schoolYear.getId() == null
+            && this.schoolYearService.checkUniqueSchoolYearName(schoolYear.getName())) {
             errors.rejectValue("name", "schoolYear.add.name.existsMessage",
                     "Niên khóa đã tồn tại");
         }

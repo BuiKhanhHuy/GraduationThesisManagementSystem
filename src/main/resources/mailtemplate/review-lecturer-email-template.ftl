@@ -286,8 +286,7 @@
                                                         </#if>
                                                     </li>
                                                     <li style="margin-bottom: 0px;">Ngày bắt đầu:
-                                                            <strong>${thesis.startDate}</strong>
-                                                        </#if>
+                                                        <strong>${thesis.startDate}</strong>
                                                     </li>
                                                     <li style="margin-bottom: 0px;">Ngày kết thúc:
                                                         <#if (thesis.complateDate)??>

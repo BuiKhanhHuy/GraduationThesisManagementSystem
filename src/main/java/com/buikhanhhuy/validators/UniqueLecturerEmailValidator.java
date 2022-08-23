@@ -21,7 +21,8 @@ public class UniqueLecturerEmailValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Lecturer lecturer = (Lecturer) target;
 
-        if(this.lecturerService.checkUniqueLecturerEmail(lecturer.getEmail())){
+        if(lecturer.getId() == null
+                && this.lecturerService.checkUniqueLecturerEmail(lecturer.getEmail())){
             errors.rejectValue("email", "lecturer.add.email.existsMessage",
                     "Email giảng viên đã tồn tại");
         }

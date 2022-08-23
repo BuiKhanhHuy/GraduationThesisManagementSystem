@@ -74,7 +74,10 @@ public class ApiLecturerController {
     }
 
     @PostMapping(path = "/lecturers/{lecturerId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Map<String, String>> updateLecturer(@PathVariable("lecturerId") int lecturerId, @RequestPart(value = "avatarFile", required = false) MultipartFile file, @RequestPart("lecturer") @Valid Lecturer lecturer, BindingResult result) {
+    public ResponseEntity<Map<String, String>> updateLecturer(@PathVariable("lecturerId") int lecturerId,
+                                                              @RequestPart(value = "avatarFile", required = false) MultipartFile file,
+                                                              @RequestPart(value = "lecturer") @Valid Lecturer lecturer,
+                                                              BindingResult result) {
         Map<String, String> errorMessages = new HashMap<>();
         HttpStatus status = null;
 

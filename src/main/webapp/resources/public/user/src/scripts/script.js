@@ -50,12 +50,12 @@ const uploadReportFile = async (appContext, thesisId) => {
     Swal.fire({
         title: 'Nộp khóa luận',
         html: `<form name="form-upload-file">
-                    <div class="text-left pb-2 pt-4">
-                        <label for="fileName" class="form-label">Nhập tên file <span class="text-danger">(*)</span></label>
+                    <div class="text-left pb-2 pt-4" style="text-align: left;">
+                        <label for="fileName" class="form-label mb-2">Nhập tên file <span class="text-danger">(*)</span></label>
                         <input  class="form-control form-control-lg" name="fileName" id="fileName" type="text" />
                     </div>
-                    <div class="text-left pb-2 pt-2">
-                        <label for="reportFile" class="form-label">Chọn tập tin khóa luận (tập tin có đuôi <strong>.zip</strong>) <span class="text-danger">(*)</span></label>
+                    <div class="text-left pb-2 pt-2" style="text-align: left;">
+                        <label for="reportFile" class="form-label mb-2">Chọn tập tin khóa luận (tập tin có đuôi <strong>.zip</strong>) <span class="text-danger">(*)</span></label>
                         <input accept=".zip, .rar" class="form-control form-control-lg" name="reportFile" id="reportFile" type="file" />
                     </div>
                </form>`,

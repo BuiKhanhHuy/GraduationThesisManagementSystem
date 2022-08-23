@@ -40,7 +40,11 @@
                             </tr>
                             <tr>
                                 <th scope="row"><spring:message code="thesisDetail.lecturers"/>:</th>
-                                <td>Trần Thị A, Trần Văn B</td>
+                                <td>
+                                    <c:forEach var="lecturer" items="${thesis.lecturers}">
+                                        ${lecturer.fullName},
+                                    </c:forEach>
+                                </td>
                             </tr>
                             <tr>
                                 <th scope="row"><spring:message code="thesisDetail.reviewLecturer"/>:</th>
@@ -129,7 +133,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row"> <spring:message code="thesisDetail.file.status"/>:</th>
+                                    <th scope="row"><spring:message code="thesisDetail.file.status"/>:</th>
                                     <td>
                                         <c:if test="${thesis.reportFile == null || thesis.reportFile.isEmpty()}">
                                             <span class="text-danger font-weight-bold">
@@ -151,7 +155,7 @@
                             <table class="table table-responsive-lg ">
                                 <tbody>
                                 <tr>
-                                    <th scope="row"> <spring:message code="thesisDetail.result.score"/>:</th>
+                                    <th scope="row"><spring:message code="thesisDetail.result.score"/>:</th>
                                     <td style="font-weight: bold; color: black  ; font-size: 18px; vertical-align: middle;">
                                         <fmt:formatNumber type="number"
                                                           groupingUsed="false" value="${thesis.totalScore}"/>
@@ -185,15 +189,19 @@
                             <c:if test="${thesis.thesisStartDate le now and now le thesis.thesisEndDate}">
                                 <button onclick="uploadReportFile('${appContext}', ${thesis.id})"
                                         class="mt-auto btn btn-warning">
-                                    <i class="fa-solid fa-upload" style="font-size: 16px; margin-right: 5px;"></i><spring:message code="thesisDetail.reportFile.button.label"/>
+                                    <i class="fa-solid fa-upload"
+                                       style="font-size: 16px; margin-right: 5px;"></i><spring:message
+                                        code="thesisDetail.reportFile.button.label"/>
                                 </button>
                             </c:if>
                             <c:if test="${thesis.thesisStartDate lt now and thesis.thesisEndDate lt now}">
                                 <button disabled
                                         class="mt-auto btn btn-warning">
-                                    <i class="fa-solid fa-upload" style="font-size: 16px; margin-right: 5px;"></i> <spring:message code="thesisDetail.reportFile.button.label"/>
+                                    <i class="fa-solid fa-upload" style="font-size: 16px; margin-right: 5px;"></i>
+                                    <spring:message code="thesisDetail.reportFile.button.label"/>
                                 </button>
-                                <p class="mt-2 text-danger"><spring:message code="thesisDetail.reportFile.button.overtime"/></p>
+                                <p class="mt-2 text-danger"><spring:message
+                                        code="thesisDetail.reportFile.button.overtime"/></p>
                             </c:if>
                         </div>
                     </div>

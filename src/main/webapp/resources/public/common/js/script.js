@@ -107,3 +107,10 @@ const changeLang = (appContext, lang = "vi") => {
         console.error(err)
     })
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    let notificationCreatedDate = document.getElementsByClassName("notification-created-date")
+    for (let i = 0; i < notificationCreatedDate.length; i++) {
+        notificationCreatedDate[i].innerText = moment(`${notificationCreatedDate[i].innerText}`, "YYYYMMDD HHmmSS").fromNow()
+    }
+});

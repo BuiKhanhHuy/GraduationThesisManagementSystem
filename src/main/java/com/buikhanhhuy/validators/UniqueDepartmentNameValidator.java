@@ -21,7 +21,8 @@ public class UniqueDepartmentNameValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Department department = (Department) target;
 
-        if(this.departmentService.checkUniqueDepartmentName(department.getName())){
+        if(department.getId() == null
+                && this.departmentService.checkUniqueDepartmentName(department.getName())){
             errors.rejectValue("name", "department.add.name.existsMessage",
                     "Tên khoa đã tồn tại");
         }

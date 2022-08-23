@@ -16,4 +16,9 @@ public class StatsServiceImplement implements StatsService {
     public List<Object[]> thesisStatisticsByMajor(Integer schoolYearId) {
         return this.statsRepository.thesisStatisticsByMajor(schoolYearId);
     }
+
+    @Override
+    public List<Object[]> thesisScoreStatistics(Integer schoolYearId) {
+        return this.statsRepository.thesisScoreStatistics(schoolYearId);
+    }
 }

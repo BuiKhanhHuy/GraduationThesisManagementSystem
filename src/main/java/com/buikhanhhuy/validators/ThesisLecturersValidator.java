@@ -15,6 +15,7 @@ public class ThesisLecturersValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Thesis thesis = (Thesis) target;
         if (thesis.getLecturers().size() > SystemConstant.MAX_NUMBER_OF_TEACHER_INSTRUCTIONS)
-            errors.rejectValue("lecturers", "thesis.add.lecturers.quantityMessage", "Số lượng giảng viên hướng dẫn không được lớn hơn 2 giảng viên");
+            errors.rejectValue("lecturers", "thesis.add.lecturers.quantityMessage",
+                    "Số lượng giảng viên hướng dẫn không được lớn hơn 2 giảng viên");
     }
 }

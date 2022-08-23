@@ -111,14 +111,20 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        let data1 = []
-        let labels1 = []
+        let a = {categories: [], series: {}}
 
         <c:forEach var="stats" items="${scoreStatistics}">
-        labels2.push('${stats[1]}')
-        data2.push(${stats[2]})
+        if (a.categories.indexOf('${stats[0]}') === -1) {
+            a.categories.push('${stats[0]}')
+        }
+
+        if ('${stats[1]}' in a.series) {
+            a.series['${stats[1]}'].push(${stats[2]})
+        } else {
+            a.series['${stats[1]}'] = [${stats[2]}]
+        }
         </c:forEach>
 
-        thesisScoreStatistics();
+        thesisScoreStatistics(type = "spline", a);
     });
 </script>

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.stereotype.Repository;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import utils.Utils;
 
 import javax.validation.Valid;
+import javax.ws.rs.HttpMethod;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,7 +41,6 @@ public class ApiEvaluationMethodController {
     }
 
     @GetMapping(path = "/evaluations-method-active", produces = {MediaType.APPLICATION_JSON_VALUE})
-
     public ResponseEntity<EvaluationMethod> loadEvaluationMethod() {
         try {
             EvaluationMethod evaluationMethod = this.evaluationMethodService.getEvaluationMethodActive();
@@ -103,5 +104,12 @@ public class ApiEvaluationMethodController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteEvaluationMethod(@PathVariable("evaluationMethodId") int evaluationMethodId) {
         this.evaluationMethodService.deleteEvaluationMethod(evaluationMethodId);
+    }
+
+    @PostMapping(path = "/evaluations-method/{evaluationMethodId}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(value = HttpStatus.OK)
+    public void activeEvaluationMethod(@PathVariable("evaluationMethodId") int evaluationMethodId) {
+        this.evaluationMethodService.activeAEvaluationMethod(evaluationMethodId);
     }
 }

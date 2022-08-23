@@ -18,6 +18,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="<c:url value="/public/admin/vendors/images/ou-icon.png"/> ">
     <!-- Place favicon.ico in the root directory -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
           rel="stylesheet"/>
@@ -50,6 +51,7 @@
     <tiles:insertAttribute name="footer"/>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <!-- MDB -->
 <script
         type="text/javascript"
@@ -57,7 +59,6 @@
 ></script>
 <script src="<c:url value="/public/common/js/script.js"/> "></script>
 <script src="<c:url value="/public/user/src/scripts/script.js"/> "></script>
-
 <c:forEach var="js" items="${javascripts}">
     <script src="<c:url value="${js}"/>"></script>
 </c:forEach>

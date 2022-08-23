@@ -8,7 +8,7 @@ import org.springframework.validation.Validator;
 public class UniqueLecturerCodeValidator implements Validator {
     private LecturerService lecturerService;
 
-    public UniqueLecturerCodeValidator(LecturerService lecturerService){
+    public UniqueLecturerCodeValidator(LecturerService lecturerService) {
         this.lecturerService = lecturerService;
     }
 
@@ -21,7 +21,8 @@ public class UniqueLecturerCodeValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Lecturer lecturer = (Lecturer) target;
 
-        if(this.lecturerService.checkUniqueLecturerCode(lecturer.getCode())){
+        if (lecturer.getId() == null
+                && this.lecturerService.checkUniqueLecturerCode(lecturer.getCode())) {
             errors.rejectValue("code", "lecturer.add.code.existsMessage",
                     "Mã giảng viên đã tồn tại");
         }

@@ -58,8 +58,9 @@
 
         gtag('config', 'UA-119386393-1');
     </script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"
+            integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 <div id="cover-spin"></div>
@@ -98,7 +99,6 @@
 <script src="<c:url value="/public/admin/vendors/scripts/script.min.js"/>"></script>
 <script src="<c:url value="/public/admin/vendors/scripts/process.js"/>"></script>
 <script src="<c:url value="/public/admin/vendors/scripts/layout-settings.js"/>"></script>
-<%--custom--%>
 <script src="<c:url value="/public/common/js/script.js"/> "/>
 
 <script src="<c:url value="/public/admin/src/plugins/toast/jquery.toast.js"/> "></script>

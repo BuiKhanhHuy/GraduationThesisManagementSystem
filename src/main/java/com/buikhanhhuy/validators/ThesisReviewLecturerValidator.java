@@ -1,5 +1,6 @@
 package com.buikhanhhuy.validators;
 
+import com.buikhanhhuy.pojo.Lecturer;
 import com.buikhanhhuy.pojo.Thesis;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -18,7 +19,8 @@ public class ThesisReviewLecturerValidator implements Validator {
 
        if(thesis.getLecturers().contains(thesis.getReviewLecturer())){
            errors.rejectValue("reviewLecturer",
-                   "thesis.add.reviewLecturer.uniqueWithLecturers", "Giảng viên phản biện phải khác giảng viên hướng dẫn");
+                   "thesis.add.reviewLecturer.uniqueWithLecturers",
+                   "Giảng viên phản biện phải khác giảng viên hướng dẫn");
        }
     }
 }

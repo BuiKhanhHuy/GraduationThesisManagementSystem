@@ -21,7 +21,8 @@ public class UniqueStudentEmailValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Student student = (Student) target;
 
-        if(this.studentService.checkUniqueStudentEmail(student.getEmail())){
+        if(student.getId() == null
+                && this.studentService.checkUniqueStudentEmail(student.getEmail())){
             errors.rejectValue("email", "student.add.email.existsMessage",
                     "Email sinh viên đã tồn tại");
         }

@@ -66,15 +66,18 @@
                 </a>
                 <ul id="notification-user-area"
                     class="dropdown-menu dropdown-menu-end overflow-auto shadow-lg mt-2"
-                    style="width: 450px; max-height: 350px;"
+                    style="width: 500px; max-height: 350px;"
                     aria-labelledby="navbarDropdownMenuLink">
                     <c:if test="${notificationUsers.size() > 0}">
                         <c:forEach var="notificationUser" items="${notificationUsers}">
                             <li id="notification-user-${notificationUser.id}" class="notification-user">
                                 <div class=" bg-white flex-row px-3 py-2 mb-1 d-flex justify-content-between align-items-center">
                                     <div class="d-block">
-                                        <h6>${notificationUser.notification.title}</h6>
+                                        <h6 style="font-size: 18px;">${notificationUser.notification.title}</h6>
                                         <p class="text-muted mb-0">${notificationUser.notification.content}</p>
+                                        <span class="mt-2 text-black-50" style="font-style: italic;">
+                                             (<span class="notification-created-date">${notificationUser.notification.createdDate}</span>)
+                                        </span>
                                     </div>
                                     <a href="javascript:;"
                                        onclick="turnOffNotification('${appContext}', ${notificationUser.id})"

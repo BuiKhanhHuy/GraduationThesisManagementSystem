@@ -89,9 +89,10 @@ public class Thesis implements Serializable {
     @JsonIgnoreProperties({"description", "department"})
     @ManyToOne
     private Topic topic;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @NotEmpty(message = "{thesis.add.lecturers.notNullMessage}")
     @JoinTable(name = "guide", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "lecturer_id")})
+    @JsonIncludeProperties({"id", "fullName"})
     private Set<Lecturer> lecturers;
     @ManyToMany(fetch = FetchType.EAGER)
     @NotEmpty(message = "{thesis.add.students.notNullMessage}")

@@ -21,7 +21,29 @@ public class ThesisRepositoryImplement implements ThesisRepository {
     private LocalSessionFactoryBean sessionFactoryBean;
 
     @Override
-    public List<Object[]> getThesisOptions() {
+    public boolean checkStudentDoManyThesisInASchoolYear(int studentId) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(t.id) FROM Student s INNER JOIN s.theses t WHERE s.id=:studentId AND t.result = 1";
+        Query query = session.createQuery(sql);
+        query.setParameter("studentId", studentId);
+
+        return (long) query.getSingleResult() > 0;
+    }
+
+    @Override
+    public boolean checkStudentCompletedThesis(int studentId) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(t.id) FROM Student s INNER JOIN s.theses t WHERE s.id=:studentId AND t.result = 3";
+        Query query = session.createQuery(sql);
+        query.setParameter("studentId", studentId);
+
+        return (long) query.getSingleResult() > 0;
+    }
+
+    @Override
+    public List<Object[]> getThesisOptions(String isCouncil) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> query = builder.createQuery(Object[].class);
@@ -29,7 +51,14 @@ public class ThesisRepositoryImplement implements ThesisRepository {
         Root<Topic> topicRoot = query.from(Topic.class);
         query.multiselect(root.get("id"), root.get("code"), topicRoot.get("name"));
 
-        query.where(builder.equal(root.get("topic"), topicRoot.get("id")));
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.equal(root.get("topic"), topicRoot.get("id")));
+
+        if (isCouncil != null && !isCouncil.isEmpty() && !Boolean.parseBoolean(isCouncil)) {
+            predicates.add(builder.isNull(root.get("council")));
+        }
+
+        query.where(predicates.toArray(new Predicate[]{}));
 
         return session.createQuery(query).getResultList();
     }
@@ -146,17 +175,17 @@ public class ThesisRepositoryImplement implements ThesisRepository {
     }
 
     @Override
-    public Thesis addThesis(Thesis thesis) {
+    public Boolean addThesis(Thesis thesis) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         try {
             session.save(thesis);
 
-            return thesis;
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        return null;
+        return false;
     }
 
     @Override

@@ -47,8 +47,7 @@ jQuery.fn.printMe = function(options, callback){
 		// Add a content to print
 		w.document.write( $this.html() );
 		w.document.write('<script type="text/javascript">function closeme()' +
-			'{window.close();}setTimeout(closeme,50);window.print();</script></body></html>');
-		callback()
+			'{window.close(); }setTimeout(closeme,50);window.print();</script></body></html>');
 		w.document.close();
-	});
+	})
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface TopicRepository {
+    public boolean checkUniqueTopicName(String topicName);
     public List<Object[]> getTopicOptions();
     public List<Topic> getTopics(Map<String, String> params);
     public long countTopic(Map<String, String> params);

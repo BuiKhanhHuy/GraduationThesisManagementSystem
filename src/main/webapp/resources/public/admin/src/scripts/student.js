@@ -119,6 +119,7 @@ const saveChange = (appContext, studentId = null) => {
     } else {
         // UPDATE
         formDataSubmit.append("student", new Blob([JSON.stringify({
+            id: studentId,
             code: formData.code,
             fullName: formData.fullName,
             email: formData.email,

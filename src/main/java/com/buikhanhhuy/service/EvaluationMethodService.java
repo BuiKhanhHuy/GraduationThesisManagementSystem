@@ -13,4 +13,5 @@ public interface EvaluationMethodService {
     public EvaluationMethod getEvaluationMethodActive();
     public boolean updateEvaluationMethod(int evaluationMethodId, EvaluationMethod evaluationMethod);
     public boolean deleteEvaluationMethod(int evaluationMethodId);
+    public boolean activeAEvaluationMethod(int evaluationMethodId);
 }

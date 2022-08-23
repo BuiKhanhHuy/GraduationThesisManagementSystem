@@ -25,6 +25,17 @@ public class TopicRepositoryImplement implements TopicRepository {
     private LocalSessionFactoryBean sessionFactoryBean;
 
     @Override
+    public boolean checkUniqueTopicName(String topicName) {
+        Session session = this.sessionFactoryBean.getObject().getCurrentSession();
+
+        String sql = "SELECT COUNT(id) FROM Topic WHERE name=:name";
+        Query query = session.createQuery(sql);
+        query.setParameter("name", topicName.trim());
+
+        return (long)query.getSingleResult() > 0;
+    }
+
+    @Override
     public List<Object[]> getTopicOptions() {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();

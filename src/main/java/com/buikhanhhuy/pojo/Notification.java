@@ -7,6 +7,7 @@ package com.buikhanhhuy.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -47,11 +48,17 @@ public class Notification implements Serializable {
     @Size(max = 255, message = "{notification.add.content.sizeMessage}")
     @Column(name = "content")
     private String content;
+    @Column(name = "created_date")
+    private Timestamp createdDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "notification")
     @JsonIgnore
     private Set<NotificationUser> notificationUsers;
     @Transient
     private Integer [] usersId;
+
+    {
+        this.createdDate = new Timestamp(System.currentTimeMillis());
+    }
 
     public Notification() {
     }
@@ -96,6 +103,14 @@ public class Notification implements Serializable {
 
     public void setNotificationUsers(Set<NotificationUser> notificationUserSet) {
         this.notificationUsers = notificationUserSet;
+    }
+
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
     }
 
     @Override

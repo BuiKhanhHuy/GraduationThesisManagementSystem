@@ -103,6 +103,7 @@ const saveChange = (appContext, manageId = null) => {
     } else {
         // UPDATE
         formDataSubmit.append("manage", new Blob([JSON.stringify({
+            "id": manageId,
             "fullName": formData.fullName, "email": formData.email, "phone": formData.phone, "user": {
                 "username": formData.username, "password": ' ', "active": formData.active,
             }

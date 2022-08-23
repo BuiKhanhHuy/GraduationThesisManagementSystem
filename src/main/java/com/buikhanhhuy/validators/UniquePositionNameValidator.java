@@ -8,7 +8,7 @@ import org.springframework.validation.Validator;
 public class UniquePositionNameValidator implements Validator {
     private final PositionService positionService;
 
-    public UniquePositionNameValidator(PositionService positionService){
+    public UniquePositionNameValidator(PositionService positionService) {
         this.positionService = positionService;
     }
 
@@ -21,7 +21,8 @@ public class UniquePositionNameValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Position position = (Position) target;
 
-        if(this.positionService.checkUniquePositionName(position.getName())){
+        if (position.getId() == null
+                && this.positionService.checkUniquePositionName(position.getName())) {
             errors.rejectValue("name", "position.add.name.existsMessage",
                     "Chức vụ đã tồn tại");
         }

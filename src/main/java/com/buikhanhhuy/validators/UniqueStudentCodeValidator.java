@@ -8,7 +8,7 @@ import org.springframework.validation.Validator;
 public class UniqueStudentCodeValidator implements Validator {
     private final StudentService studentService;
 
-    public UniqueStudentCodeValidator(StudentService studentService){
+    public UniqueStudentCodeValidator(StudentService studentService) {
         this.studentService = studentService;
     }
 
@@ -21,7 +21,8 @@ public class UniqueStudentCodeValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Student student = (Student) target;
 
-        if(this.studentService.checkUniqueStudentCode(student.getCode())){
+        if (student.getId() == null
+                && this.studentService.checkUniqueStudentCode(student.getCode())) {
             errors.rejectValue("code", "student.add.code.existsMessage",
                     "Mã sinh viên đã tồn tại");
         }

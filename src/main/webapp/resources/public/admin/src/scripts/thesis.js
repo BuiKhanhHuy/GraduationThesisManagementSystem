@@ -186,6 +186,7 @@ const saveChange = (endpoint, thesisId = null) => {
                     } else {
                         $('select[name=' + key + '] + span').after('<span class="text-danger">' + value + '</span>');
                     }
+
                 });
             }
         }).catch(err => {

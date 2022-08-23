@@ -15,6 +15,11 @@ public class TopicServiceImplement implements TopicService {
     private TopicRepository topicRepository;
 
     @Override
+    public boolean checkUniqueTopicName(String topicName) {
+        return this.topicRepository.checkUniqueTopicName(topicName);
+    }
+
+    @Override
     public List<Object[]> getTopicOptions() {
         return this.topicRepository.getTopicOptions();
     }

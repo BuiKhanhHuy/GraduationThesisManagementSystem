@@ -8,11 +8,13 @@ import java.util.Map;
 import java.util.Set;
 
 public interface ThesisRepository {
-    public List<Object[]> getThesisOptions();
+    public boolean checkStudentDoManyThesisInASchoolYear(int studentId);
+    public boolean checkStudentCompletedThesis(int studentId);
+    public List<Object[]> getThesisOptions(String isCouncil);
     public List<Thesis> getTheses(Map<String, String> params);
     public long countThesis(Map<String, String> params);
     public long countAllThesis();
-    public Thesis addThesis(Thesis thesis);
+    public Boolean addThesis(Thesis thesis);
 
     public Thesis getThesisById(int thesisId);
 

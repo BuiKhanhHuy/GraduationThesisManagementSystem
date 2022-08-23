@@ -302,6 +302,33 @@ const deleteEvaluationMethodItem = (endpoint) => {
     })
 }
 
+const turnOnOrTurnOffEvaluationMethod = (appContext, evaluationMethodId, chkActive) => {
+    if (chkActive.checked) {
+        confirmAlert("Bạn có chắc không?", "Nếu bạn bật hoạt động của phương pháp đánh giá này, " +
+            "tất cả phương pháp đánh giá khác sẽ bị tắt!", "Có, xóa nó", "Không, hủy bỏ", () => {
+            showLoading()
+
+            fetch(`${appContext}admin/api/evaluations-method/${evaluationMethodId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => {
+                if (res.ok) {
+                    successfulAlert("Chọn phương thức đánh giá thành công.",
+                        "Ok", () => location.reload());
+                } else {
+                    return Promise.reject("Đã có lỗi trong quá trình cập nhật!")
+                }
+            }).catch(err => {
+                console.log(err)
+                errorAlert("Đã có lỗi", err, "Ok")
+            }).finally(hideLoading)
+        })
+        chkActive.checked = !chkActive.checked
+    }
+}
+
 // event before hidden modal
 $('#modal-add-edit-evaluation-method').on('hidden.bs.modal', function (e) {
     $('input').next('span').remove();
