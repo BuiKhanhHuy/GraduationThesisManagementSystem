@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache
+Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <!--    USER-->
+    <definition name="baseLayout" template="/WEB-INF/decorators/user/base.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/commons/user/header.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/commons/user/footer.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+        </put-list-attribute>
+        <put-list-attribute name="javascriptsModule">
+        </put-list-attribute>
+    </definition>
+    <definition name="index" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ"/>
+        <put-attribute name="content" value="/WEB-INF/views/user/index.jsp"/>
+    </definition>
+    <definition name="news" extends="baseLayout">
+        <put-attribute name="title" value="Tin tức"/>
+        <put-attribute name="content" value="/WEB-INF/views/user/news.jsp"/>
+    </definition>
+    <definition name="newsDetail" extends="baseLayout">
+        <put-attribute name="title" value="Tin tức"/>
+        <put-attribute name="content" value="/WEB-INF/views/user/news-detail.jsp"/>
+    </definition>
+    <definition name="thesisDetail" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ"/>
+        <put-attribute name="content" value="/WEB-INF/views/user/thesis-detail.jsp"/>
+    </definition>
+    <definition name="login" extends="baseLayout">
+        <put-attribute name="title" value="Đăng nhập"/>
+        <put-attribute name="header" value=""/>
+        <put-attribute name="content" value="/WEB-INF/views/auth/login.jsp"/>
+        <put-attribute name="footer" value=""/>
+    </definition>
+    <definition name="chat" extends="baseLayout">
+        <put-attribute name="title" value="Chat"/>
+        <put-attribute name="content" value="/WEB-INF/views/user/chat.jsp"/>
+        <put-attribute name="footer" value=""/>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/user/src/scripts/chat.js"/>
+        </put-list-attribute>
+        <put-list-attribute name="javascriptsModule">
+            <add-attribute value="/public/common/js/chat/chat.js"/>
+        </put-list-attribute>
+    </definition>
+
+    <!--    ADMIN-->
+    <definition name="adminBaseLayout" template="/WEB-INF/decorators/admin/base.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/commons/admin/header.jsp"/>
+        <put-attribute name="rightSidebar" value="/WEB-INF/commons/admin/right-sidebar.jsp"/>
+        <put-attribute name="leftSidebar" value="/WEB-INF/commons/admin/left-sidebar.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/commons/admin/footer.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+        </put-list-attribute>
+        <put-list-attribute name="javascriptsModule">
+        </put-list-attribute>
+    </definition>
+    <definition name="adminIndex" extends="adminBaseLayout">
+        <put-attribute name="title" value="Trang quan tri"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/index.jsp"/>
+        <put-list-attribute name="stylesheets">
+            <add-attribute value=""/>
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/plugins/apexcharts/apexcharts.min.js"/>
+            <add-attribute value="/public/admin/vendors/scripts/dashboard.js"/>
+            <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts.js"/>
+            <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts-more.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    department-->
+    <definition name="adminDepartmentList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Khoa"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/department.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/department.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    department-->
+
+    <!--    major-->
+    <definition name="adminMajorList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Ngành"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/major.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/major.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    major-->
+
+    <!--    school year-->
+    <definition name="adminSchoolYearList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Niên khóa"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/schoolyear.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/school-year.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    school year-->
+
+    <!--    position-->
+    <definition name="adminPositionList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Chức vụ"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/position.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/position.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    position-->
+
+    <!--    lecturer-->
+    <definition name="adminLecturerList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Giảng viên"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/lecturer.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/lecturer.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    lecturer-->
+
+    <!--    student-->
+    <definition name="adminStudentList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Sinh viên"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/student.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/student.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    student-->
+
+    <!--    topic-->
+    <definition name="adminTopicList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Đề tài"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/topic.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/topic.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    topic-->
+
+    <!--    evaluationmethod-->
+    <definition name="adminEvaluationMethodList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Phương pháp đánh giá"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/evaluationmethod.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/evaluationmethod.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    evaluationmethod-->
+
+    <!--    thesis-->
+    <definition name="adminThesisList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Khóa luận"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/thesis.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/thesis.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    thesis-->
+
+    <!--    thesis guide-->
+    <definition name="adminThesisGuideList" extends="adminThesisList">
+        <put-attribute name="title" value="Khóa luận đang hướng dẫn"/>
+    </definition>
+    <!--    thesis guide-->
+
+    <!--    thesis review-->
+    <definition name="adminThesisReviewList" extends="adminThesisList">
+        <put-attribute name="title" value="Khóa luận đang phản biện"/>
+    </definition>
+    <!--    thesis review-->
+
+    <!--    council -->
+    <definition name="adminCouncilList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Hội đồng"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/council.jsp"/>
+        <put-list-attribute name="stylesheets">
+            <add-attribute value="/public/common/css/print-me/main.css"/>
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/common/plugins/print-me/jquery-printme.js"/>
+            <add-attribute value="/public/admin/src/scripts/council.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    council-->
+
+    <!--    council detail -->
+    <definition name="adminCouncilDetailList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Hội đồng"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/council-detail.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <!--            <add-attribute value="/public/admin/src/scripts/council-detail.js"/>-->
+        </put-list-attribute>
+    </definition>
+    <!--    council detail-->
+
+    <!--    council detail detail-->
+    <definition name="adminCouncilDetailDetail" extends="adminBaseLayout">
+        <put-attribute name="title" value="Đánh giá khóa luận"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/council-detail-detail.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/council-detail-detail.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    council detail detail-->
+
+    <!--    role-->
+    <definition name="adminRoleList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Quyền"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/role.jsp"/>
+    </definition>
+    <!--    role-->
+
+    <!--    manage-->
+    <definition name="adminManageList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Quản trị viên"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/manage.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/manage.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    manage-->
+
+    <!--    notification-->
+    <definition name="adminNotificationList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Thông báo"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/notification.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/notification.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    notification-->
+
+    <!--    news-->
+    <definition name="adminNewsList" extends="adminBaseLayout">
+        <put-attribute name="title" value="Tin tức"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/news.jsp"/>
+        <put-list-attribute name="stylesheets">
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/news.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    news-->
+
+    <!--    chat-->
+    <definition name="adminChat" extends="adminBaseLayout">
+        <put-attribute name="title" value="Chat"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/chat.jsp"/>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/chat.js"/>
+        </put-list-attribute>
+        <put-list-attribute name="javascriptsModule">
+            <add-attribute value="/public/common/js/chat/chat.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    chat-->
+
+    <!--    score statistics-->
+    <definition name="adminScoreStatistics" extends="adminBaseLayout">
+        <put-attribute name="title" value="Thống kê điểm"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/score-statistics.jsp"/>
+        <put-list-attribute name="stylesheets">
+            <add-attribute value=""/>
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/plugins/apexcharts/apexcharts.min.js"/>
+            <add-attribute value="/public/admin/vendors/scripts/dashboard.js"/>
+            <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts.js"/>
+            <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts-more.js"/>
+            <add-attribute value="/public/admin/src/scripts/score-statistics.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    score statistics-->
+
+    <!--    frequency statistics-->
+    <definition name="adminFrequencyStatistics" extends="adminBaseLayout">
+        <put-attribute name="title" value="Thống kê tần suất"/>
+        <put-attribute name="content" value="/WEB-INF/views/admin/frequency-statistics.jsp"/>
+        <put-list-attribute name="stylesheets">
+            <add-attribute value=""/>
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/plugins/apexcharts/apexcharts.min.js"/>
+            <add-attribute value="/public/admin/vendors/scripts/dashboard.js"/>
+            <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts.js"/>
+            <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts-more.js"/>
+        </put-list-attribute>
+    </definition>
+    <!--    frequency statistics-->
+</tiles-definitions>
