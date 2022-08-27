@@ -32,6 +32,20 @@ public class CloudinaryServiceImplement implements CloudinaryService {
     }
 
     @Override
+    public String uploadAvatar(String fileUrl) {
+        try {
+            Map res = this.cloudinary.uploader().upload(fileUrl,
+                    ObjectUtils.asMap("resource_type", "auto"));
+
+            return res.get("secure_url").toString();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
     public String uploadFile(MultipartFile file, String fileName) {
         try {
             Map res = this.cloudinary.uploader().upload(file.getBytes(),

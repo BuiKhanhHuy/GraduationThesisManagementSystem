@@ -1,6 +1,7 @@
 package com.buikhanhhuy.api.admin;
 
 import com.buikhanhhuy.pojo.Student;
+import com.buikhanhhuy.service.ReadExcelService;
 import com.buikhanhhuy.service.StudentService;
 import com.buikhanhhuy.validators.WebAppValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ import java.util.stream.Collectors;
 public class ApiStudentController {
     @Autowired
     private StudentService studentService;
+    @Autowired
+    ReadExcelService readExcelService;
     @Autowired
     private WebAppValidator studentValidator;
 
@@ -59,7 +62,7 @@ public class ApiStudentController {
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Map<String, String>> addStudent(@RequestPart(value = "avatarFile", required = false) MultipartFile file,
-                                                          @RequestPart("student") @Valid  Student student,
+                                                          @RequestPart("student") @Valid Student student,
                                                           BindingResult result) throws IOException {
         Map<String, String> errorMessages = new HashMap<>();
         HttpStatus status = null;
@@ -76,12 +79,21 @@ public class ApiStudentController {
         return new ResponseEntity<>(errorMessages, status);
     }
 
+    @PostMapping(path = "/students/file",
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<HttpStatus> addStudentInFile(@RequestParam(value = "file") MultipartFile file) throws IOException {
+           if(this.studentService.addStudent(this.readExcelService.getStudentsFromFile(file)))
+               return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @PostMapping(path = "/students/{studentId}",
-            consumes =  {MediaType.MULTIPART_FORM_DATA_VALUE},
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Map<String, String>> updateStudent(@PathVariable("studentId") int studentId,
                                                              @RequestPart(value = "avatarFile", required = false) MultipartFile file,
-                                                             @RequestPart("student") @Valid  Student student,
+                                                             @RequestPart("student") @Valid Student student,
                                                              BindingResult result) throws IOException {
         Map<String, String> errorMessages = new HashMap<>();
         HttpStatus status = null;

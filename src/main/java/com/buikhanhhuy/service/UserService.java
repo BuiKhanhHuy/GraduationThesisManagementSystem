@@ -12,6 +12,7 @@ import java.util.Set;
 public interface UserService extends UserDetailsService {
     public boolean checkUniqueUserUsername(String username);
     public List<Object[]> getUsers(Map<String, String> params);
+    public List<User> getUsersChat(Map<String, String> params);
     public Set<Integer> getUsers(Map<String, String> params, List<Integer> usersId);
     public User getUserByUserName(String username);
     public void changePassword(int userId, String newPassword);

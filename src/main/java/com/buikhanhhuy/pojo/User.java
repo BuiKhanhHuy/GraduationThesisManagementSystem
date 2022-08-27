@@ -4,6 +4,7 @@
  */
 package com.buikhanhhuy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -63,6 +64,7 @@ public class User implements Serializable {
     @Column(name = "active")
     private Boolean active;
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private Set<News> news;
     @OneToOne(mappedBy = "user")
     private Student student;
@@ -71,10 +73,16 @@ public class User implements Serializable {
     @OneToOne(mappedBy = "user")
     private Manage manage;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
     private Set<NotificationUser> notificationUsers;
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     @ManyToOne
     private Role role;
+
+
+    {
+        this.active=true;
+    }
 
     public User() {
     }

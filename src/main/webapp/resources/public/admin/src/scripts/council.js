@@ -13,7 +13,7 @@ const loadDataOptions = (callback) => {
             let thesesHtml = ''
             data.forEach(d => thesesHtml += `<option value=${d[0]}>${d[1]} - ${d[2]}</option>`)
             document.getElementById("theses").innerHTML = thesesHtml;
-        }).then(() => fetch("/GraduationThesisManagementSystem/admin/api/lecturer-options", {
+        }).then(() => fetch("/GraduationThesisManagementSystem/admin/api/lecturer-options/?isMinistry=False", {
             method: "GET", headers: {
                 "Content-Type": "application/json"
             }

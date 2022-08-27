@@ -65,6 +65,22 @@ public class UserRepositoryImplement implements UserRepository {
     }
 
     @Override
+    public List<User> getUsersChat(Map<String, String> params) {
+        Session session = Objects.requireNonNull(sessionFactoryBean.getObject()).getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root);
+
+        if (params.containsKey("kw-username")){
+            query.where(builder.like(root.get("username").as(String.class),
+                    String.format("%s%%", params.get("kw-username"))));
+        }
+
+        return session.createQuery(query).getResultList();
+    }
+
+    @Override
     public Set<Integer> getUsers(Map<String, String> params, List<Integer> usersId) {
         Session session = sessionFactoryBean.getObject().getCurrentSession();
 

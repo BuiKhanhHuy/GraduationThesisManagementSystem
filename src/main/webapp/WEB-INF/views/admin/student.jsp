@@ -103,6 +103,10 @@
             </h4>
         </div>
         <div class="pull-right">
+            <button onclick="importStudentsFile('${appContext}')"
+                    type="button" class="btn btn-success btn-md mr-1"><i class="micon icon-copy dw dw-upload1"></i>
+                Import File
+            </button>
             <button onclick="showAddStudentModal('${appContext}')"
                     type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
                 <spring:message code="student.table.list.button.addStudent.label"/>
@@ -268,7 +272,7 @@
                         <div class="profile-photo text-center" style="width: 120px; height: 120px">
                             <img style="width: 120px; height: 120px"
                                  id="file-output"
-                                 src="<c:url value="/public/admin/vendors/images/photo1.jpg"/> "
+                                 src="${avatarDefault}"
                                  alt=""
                                  class="avatar-photo img-fluid">
                         </div>
@@ -392,6 +396,61 @@
 </div>
 <!-- ADD and EDIT modal -->
 
+<!-- import file modal -->
+<div class="modal fade bs-example-modal-lg " id="modal-add-import-student" tabindex="-1" role="dialog"
+     aria-labelledby="myModalImportStudent" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalImportStudent">
+                    <spring:message code="student.modal.import.title"/>
+                </h4>
+                <button type="button" class="close close-custom" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form name="form-upload-file">
+                    <div class="pd-10">
+                        <div class="form-group">
+                            <div class="alert alert-warning" role="alert">
+                                <h5 class="alert-heading h4">
+                                    <spring:message code="student.modal.import.subTitle"/>
+                                </h5>
+                                <ul type="circle">
+                                    <li>- <spring:message code="student.modal.import.labelOne"/></li>
+                                    <li>- <spring:message code="student.modal.import.labelTwo"/></li>
+                                    <li>- <spring:message code="student.modal.import.labelThree"/></li>
+                                </ul>
+                                <hr>
+                                <a href="<c:url value="/public/excel-file/students-example.xlsx"/> ">
+                                    <i class="icon-copy fa fa-download" aria-hidden="true"></i>
+                                    <spring:message code="student.modal.import.fileExample"/>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">
+                                <spring:message code="student.modal.import.file.label"/> <span class="text-danger">(*)</span>
+                            </label>
+                            <input accept=".xlsx, .xls" name="file" id="file" type="file" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button
+                        type="button" class="btn btn-secondary close-custom" data-dismiss="modal">
+                    <spring:message code="layout.button.cancel.label"/>
+                </button>
+                <button
+                        type="button" class="btn btn-success" id="btn-import">
+                    <i class="micon fa fa-upload"> </i>
+                    Tải lên
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- import file modal -->
 
 <script>
     let currentPage = ${page};

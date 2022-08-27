@@ -35,8 +35,8 @@ public class NewsServiceImplement implements NewsService {
     }
 
     @Override
-    public boolean addNews(News news) {
-        return this.newsRepository.addNews(news);
+    public boolean addNews(News news, int userId) {
+        return this.newsRepository.addNews(news, userId);
     }
 
     @Override

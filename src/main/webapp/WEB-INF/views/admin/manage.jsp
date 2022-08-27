@@ -211,7 +211,7 @@
                         <div class="profile-photo text-center" style="width: 120px; height: 120px">
                             <img style="width: 120px; height: 120px"
                                  id="file-output"
-                                 src="<c:url value="/public/admin/vendors/images/photo1.jpg"/> "
+                                 src="${avatarDefault}"
                                  alt=""
                                  class="avatar-photo img-fluid">
                         </div>

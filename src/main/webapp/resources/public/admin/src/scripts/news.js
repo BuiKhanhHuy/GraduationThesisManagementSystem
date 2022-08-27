@@ -21,17 +21,20 @@ const showViewNewsModal = (endpoint) => {
         console.log(data)
         for (let d in data) {
             if (d === "user") {
-                if(data[d] === null)
-                {
+                if (data[d] === null) {
                     document.getElementById(`data-user-username`).innerText = 'Chưa cập nhật'
                     document.getElementById(`data-avatar`).src = "#"
-                }else {
+                } else {
                     document.getElementById(`data-user-username`).innerText = data[d].username
                     document.getElementById(`data-avatar`).src = data[d].avatar
                 }
-            }
-            else {
-                document.getElementById(`data-${d}`).innerHTML = data[d]
+            } else {
+                if (['title', 'content'].indexOf(d.toString()) > -1)
+                    document.getElementById(`data-${d}`).innerHTML = data[d]
+                else
+                    if(d === 'createdDate'){
+                        document.getElementById(`data-${d}`).innerHTML = moment(data[d]).fromNow()
+                    }
             }
         }
         $('#modal-view-news').modal()
@@ -47,8 +50,8 @@ const loadNewsById = (endpoint, callback) => {
         callback(data);
     })
         .catch(err => {
-        errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình tải dữ liệu!", "Ok")
-    })
+            errorAlert("Đã có lỗi", "Đã có lỗi xảy ra trong quá trình tải dữ liệu!", "Ok")
+        })
 }
 
 const saveChange = (endpoint, newsId = null) => {
@@ -114,7 +117,7 @@ const saveChange = (endpoint, newsId = null) => {
 const deleteNewsItem = (endpoint) => {
     // DELETE
     confirmAlert("Bạn có chắc không?", "Bạn sẽ không thể khôi phục điều này!", "Có, xóa nó", "Không, hủy bỏ", () => {
-       showLoading()
+        showLoading()
 
         fetch(endpoint, {
             method: "DELETE", headers: {

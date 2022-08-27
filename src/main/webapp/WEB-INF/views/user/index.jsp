@@ -17,13 +17,16 @@
                     <thead>
                     <tr>
                         <th scope="col"><spring:message code="index.thesis.list.table.header.code"/></th>
-                        <th scope="col"> <spring:message code="index.thesis.list.table.header.topic"/></th>
-                        <th scope="col" class="text-center"><spring:message code="index.thesis.list.table.header.startDate"/></th>
-                        <th scope="col" class="text-center"> <spring:message code="index.thesis.list.table.header.endDate"/></th>
-                        <th scope="col"> <spring:message code="index.thesis.list.table.header.major"/></th>
-                        <th scope="col"> <spring:message code="index.thesis.list.table.header.schoolYear"/></th>
+                        <th scope="col"><spring:message code="index.thesis.list.table.header.topic"/></th>
+                        <th scope="col" class="text-center"><spring:message
+                                code="index.thesis.list.table.header.startDate"/></th>
+                        <th scope="col" class="text-center"><spring:message
+                                code="index.thesis.list.table.header.endDate"/></th>
+                        <th scope="col"><spring:message code="index.thesis.list.table.header.major"/></th>
+                        <th scope="col"><spring:message code="index.thesis.list.table.header.schoolYear"/></th>
                         <th scope="col"><spring:message code="index.thesis.list.table.header.status"/></th>
-                        <th scope="col" class="text-center"><spring:message code="index.thesis.list.table.header.action"/></th>
+                        <th scope="col" class="text-center"><spring:message
+                                code="index.thesis.list.table.header.action"/></th>
                     </tr>
                     </thead>
                     <tbody>

@@ -1,5 +1,6 @@
 package com.buikhanhhuy.api.user;
 
+import com.buikhanhhuy.pojo.User;
 import com.buikhanhhuy.req.PasswordUser;
 import com.buikhanhhuy.service.UserService;
 import com.buikhanhhuy.validators.WebAppValidator;
@@ -13,8 +14,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -49,5 +52,21 @@ public class ApiUserController {
         }
 
         return new ResponseEntity<>(errorMessages, status);
+    }
+
+    @GetMapping(path = "/current-user", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<User> getCurrentUser(HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
+
+        if (currentUser != null)
+            return new ResponseEntity<>(currentUser, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @GetMapping(path = "/users-chat", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<User>> getUsersChat(@RequestParam Map<String, String> params) {
+
+        List<User> users = this.userService.getUsersChat(params);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

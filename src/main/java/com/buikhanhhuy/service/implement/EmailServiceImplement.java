@@ -44,7 +44,7 @@ public class EmailServiceImplement implements EmailService {
 
     private MimeMessagePreparator getMessagePreparator(String subject, String[] to, Map<String, Object> model, int type) {
 
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
+        return new MimeMessagePreparator() {
 
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
@@ -52,12 +52,12 @@ public class EmailServiceImplement implements EmailService {
                 helper.setSubject(subject);
                 helper.setFrom(Objects.requireNonNull(environment.getProperty("default.from.email")));
                 helper.setTo(to);
-
                 String text = geFreeMarkerTemplateContent(model, type);
                 /*
                  * use the true flag to indicate you need a multipart message
                  */
-                helper.setText(text, true);
+//                helper.setText(text, true);
+                helper.getMimeMessage().setContent(text, "text/html;charset=utf-8");
 
                 /*
                  * Additionally, let's add a resource as an attachment as well.
@@ -66,7 +66,6 @@ public class EmailServiceImplement implements EmailService {
 
             }
         };
-        return preparator;
     }
 
     public String geFreeMarkerTemplateContent(Map<String, Object> model, int type) {
@@ -74,10 +73,10 @@ public class EmailServiceImplement implements EmailService {
         try {
             switch (type) {
                 case SystemConstant.REVIEW_LECTURER_EMAIL_TEMPLATE:
-                    content.append(FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerConfiguration.getTemplate("review-lecturer-email-template.ftl"), model));
+                    content.append(FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerConfiguration.getTemplate("review-lecturer-email-template.html"), model));
                     break;
                 case SystemConstant.THESIS_RESULT_EMAIL_TEMPLATE:
-                    content.append(FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerConfiguration.getTemplate("thesis-result-email-template.ftl"), model));
+                    content.append(FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerConfiguration.getTemplate("thesis-result-email-template.html"), model));
                     break;
             }
             return content.toString();

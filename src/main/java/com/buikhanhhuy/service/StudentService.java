@@ -17,6 +17,7 @@ public interface StudentService {
     public long countAllStudent();
     public Student getStudentById(int studentId);
     public boolean addStudent(Student student, MultipartFile file) throws IOException;
+    public boolean addStudent(List<Student> students) throws IOException;
     public boolean updateStudent(int studentId, Student student, MultipartFile file) throws IOException;
     public boolean deleteStudent(int studentId);
 }

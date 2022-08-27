@@ -292,6 +292,7 @@ chart4.render();
 
 const thesisScoreStatistics = (type = "spline", data) => {
     let series = []
+    console.log(data)
     for (let name in data.series) {
         if (name !== '') {
             let r = Math.random() * 255

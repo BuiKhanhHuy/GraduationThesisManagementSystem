@@ -8,6 +8,7 @@
 <c:url var="appContext" value="/"/>
 <c:url var="langVi" value="/api/lang/?lang=vi"/>
 <c:url var="langEn" value="/api/lang/?lang=en"/>
+<c:url var="chat" value="/admin/chats/"/>
 <c:set value="${pageContext.response.locale.language}" var="lang"/>
 
 
@@ -26,6 +27,9 @@
         <sec:authorize access="isAuthenticated()">
             <div class="user-notification">
                 <div class="dropdown">
+                    <a class="no-arrow" href="${chat}" role="button" >
+                        <i class="icon-copy dw dw-chat font-20"></i>
+                    </a>
                     <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
                         <i class="icon-copy dw dw-notification"></i>
                         <c:if test="${notificationUsers.size() > 0}">

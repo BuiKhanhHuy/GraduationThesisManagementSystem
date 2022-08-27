@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,10 +58,16 @@ public class News implements Serializable {
     @Size(max = 2147483647, message = "{news.add.content.sizeMessage}")
     @Column(name = "content")
     private String content;
+    @Column(name = "created_date")
+    private Timestamp createdDate;
     @JsonIgnoreProperties({"password", "active", "role", "manage", "lecturer", "notificationUsers", "student", "news"})
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User user;
+
+    {
+        this.createdDate = new Timestamp(System.currentTimeMillis());
+    }
 
     public News() {
     }
@@ -105,6 +112,14 @@ public class News implements Serializable {
 
     public void setUser(User userId) {
         this.user = userId;
+    }
+
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
     }
 
     @Override

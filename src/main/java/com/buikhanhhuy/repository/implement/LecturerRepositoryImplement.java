@@ -2,8 +2,10 @@ package com.buikhanhhuy.repository.implement;
 
 import com.buikhanhhuy.constants.SystemConstant;
 import com.buikhanhhuy.pojo.Lecturer;
+import com.buikhanhhuy.pojo.Role;
 import com.buikhanhhuy.pojo.User;
 import com.buikhanhhuy.repository.LecturerRepository;
+import com.buikhanhhuy.repository.RoleRepository;
 import com.buikhanhhuy.repository.UserRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +30,8 @@ public class LecturerRepositoryImplement implements LecturerRepository {
     private LocalSessionFactoryBean sessionFactoryBean;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public boolean checkUniqueLecturerCode(String lecturerCode) {
@@ -62,12 +67,25 @@ public class LecturerRepositoryImplement implements LecturerRepository {
     }
 
     @Override
-    public List<Object[]> getLecturerOptions() {
+    public List<Object[]> getLecturerOptions(String isMinistry) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> query = builder.createQuery(Object[].class);
         Root<Lecturer> root = query.from(Lecturer.class);
+        Root<User> userRoot = query.from(User.class);
+
         query.multiselect(root.get("id"), root.get("fullName"));
+
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.equal(root.get("user"), userRoot.get("id")));
+
+        if(isMinistry != null && !isMinistry.isEmpty() && !Boolean.parseBoolean(isMinistry)){
+            Role role = this.roleRepository.getRoleByRoleName(SystemConstant.ROLE_MINISTRY);
+
+            predicates.add(builder.notEqual(userRoot.get("role"), role.getId()));
+        }
+
+        query.where(predicates.toArray(new Predicate[]{}));
 
         return session.createQuery(query).getResultList();
     }
@@ -225,6 +243,7 @@ public class LecturerRepositoryImplement implements LecturerRepository {
 
         return false;
     }
+
 
     @Override
     public boolean updateLecturer(int lecturerId, Lecturer lecturer) {

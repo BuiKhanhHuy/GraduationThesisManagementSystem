@@ -57,8 +57,8 @@ public class HomeController {
 
     @GetMapping(path = "/")
     public String index(Model model) {
-        List<Object[]> a = this.statsService.thesisStatisticsByMajor(null);
         model.addAttribute("thesisStatisticsByMajor", this.statsService.thesisStatisticsByMajor(null));
+        model.addAttribute("thesisScoreStatistics", this.statsService.thesisScoreStatistics(null));
 
         return "adminIndex";
     }

@@ -22,4 +22,9 @@ public class RoleServiceImplement implements RoleService {
     public List<Object[]> getRoleOptions(String[] exceptRole) {
         return this.roleRepository.getRoleOptions(exceptRole);
     }
+
+    @Override
+    public Role getRoleByRoleName(String roleName) {
+        return this.roleRepository.getRoleByRoleName(roleName);
+    }
 }

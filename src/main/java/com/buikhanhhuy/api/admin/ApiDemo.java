@@ -1,19 +1,22 @@
 package com.buikhanhhuy.api.admin;
 
+import com.buikhanhhuy.pojo.Student;
 import com.buikhanhhuy.pojo.User;
-import com.buikhanhhuy.repository.ThesisRepository;
-import com.buikhanhhuy.service.UserService;
+import com.buikhanhhuy.service.ReadExcelService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
+
 
 @RestController("ApiDemo")
 @Validated
@@ -22,26 +25,29 @@ public class ApiDemo {
     @Autowired
     private Cloudinary cloudinary;
     @Autowired
-    private ThesisRepository thesisRepository;
-    @Autowired
-    private UserService userService;
+    private ReadExcelService readExcelService;
 
-    @PostMapping(path = "/upload-file",
-            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseStatus(HttpStatus.OK)
-    public void uploadFile(@RequestParam(value = "file", required = false) MultipartFile file,
-                           @RequestPart("user") User user) throws IOException {
-//        Map res = this.cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
-//
-        System.out.println(user);
-        System.out.println("OKE");
+    //demo
+    @GetMapping(path = "/demo")
+    public String demo(Model model) throws IOException {
+        Map res = cloudinary.uploader().upload("https://cdn.tgdd.vn/Products/Images/42/230529/TimerThumb/iphone-13-pro-max-(8).jpg", ObjectUtils.asMap("resource_type", "auto"));
+        System.out.println(res.get("secure_url"));
+        return "index";
     }
 
-    @GetMapping(path = "/tinh-diem")
+    @PostMapping(path = "/upload-file", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.OK)
-    public  void tinhDiem(){
-//        thesisRepository.scoreOfAThesisInCouncil(47, 30);
-        System.out.println(userService.checkPassword(6, "123456789"));
+    public ResponseEntity<List<Student>> uploadFile(@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+        try {
+            List<Student> students = this.readExcelService.getStudentsFromFile(file);
+
+            return new ResponseEntity<>(students, HttpStatus.OK);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+
 }

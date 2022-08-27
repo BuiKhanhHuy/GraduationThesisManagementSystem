@@ -2,6 +2,7 @@ package com.buikhanhhuy.api.admin;
 
 import com.buikhanhhuy.pojo.Major;
 import com.buikhanhhuy.pojo.News;
+import com.buikhanhhuy.pojo.User;
 import com.buikhanhhuy.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,15 +49,17 @@ public class ApiNewsController {
     }
 
     @PostMapping(path = "/news", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Map<String, String>> addNews(@Valid @RequestBody News news, BindingResult result) {
+    public ResponseEntity<Map<String, String>> addNews(HttpSession session, @Valid @RequestBody News news, BindingResult result) {
         Map<String, String> errorMessages = new HashMap<>();
         HttpStatus status = null;
+
+        User currentUser = (User) session.getAttribute("currentUser");
 
         if (result.hasErrors()) {
             errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             status = HttpStatus.BAD_REQUEST;
         } else {
-            if (this.newsService.addNews(news)) status = HttpStatus.CREATED;
+            if (this.newsService.addNews(news, currentUser.getId())) status = HttpStatus.CREATED;
             else status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 

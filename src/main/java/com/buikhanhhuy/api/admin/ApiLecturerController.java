@@ -2,6 +2,7 @@ package com.buikhanhhuy.api.admin;
 
 import com.buikhanhhuy.pojo.Lecturer;
 import com.buikhanhhuy.service.LecturerService;
+import com.buikhanhhuy.service.ReadExcelService;
 import com.buikhanhhuy.validators.WebAppValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +28,10 @@ import java.util.stream.Collectors;
 public class ApiLecturerController {
     @Autowired
     private LecturerService lecturerService;
-
     @Autowired
     private WebAppValidator lecturerValidator;
+    @Autowired
+    private ReadExcelService readExcelService;
 
     @InitBinder
     public void InitBinder(WebDataBinder binder) {
@@ -36,9 +39,9 @@ public class ApiLecturerController {
     }
 
     @GetMapping(path = "/lecturer-options", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Object[]>> loadLecturerOptions() {
+    public ResponseEntity<List<Object[]>> loadLecturerOptions(@RequestParam(value = "isMinistry", required = false) String isMinistry) {
         try {
-            return new ResponseEntity<>(this.lecturerService.getLecturerOptions(), HttpStatus.OK);
+            return new ResponseEntity<>(this.lecturerService.getLecturerOptions(isMinistry), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -52,6 +55,15 @@ public class ApiLecturerController {
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping(path = "/lecturers/file",
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<HttpStatus> addLecturerInFile(@RequestParam(value = "file") MultipartFile file) throws IOException {
+        if(this.lecturerService.addLecturer(this.readExcelService.getLecturersFromFile(file)))
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(path = "/lecturers",

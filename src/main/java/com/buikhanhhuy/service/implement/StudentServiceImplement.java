@@ -1,5 +1,6 @@
 package com.buikhanhhuy.service.implement;
 
+import com.buikhanhhuy.constants.SystemConstant;
 import com.buikhanhhuy.pojo.Student;
 import com.buikhanhhuy.repository.StudentRepository;
 import com.buikhanhhuy.service.CloudinaryService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -60,17 +62,33 @@ public class StudentServiceImplement implements StudentService {
 
     @Override
     public boolean addStudent(Student student, MultipartFile file) {
-        if(file != null){
-            String avatarStr = this.cloudinaryService.uploadAvatar(file);
-            student.getUser().setAvatar(avatarStr);
+        String avatarStr = SystemConstant.AVATAR_DEFAULT_URL;
+
+        if (file != null) {
+            avatarStr = this.cloudinaryService.uploadAvatar(file);
         }
 
+        student.getUser().setAvatar(avatarStr);
         return this.studentRepository.addStudent(student);
     }
 
     @Override
+    public boolean addStudent(List<Student> students) throws IOException {
+        for (Student student : students) {
+            if (student.getUser().getAvatar() != null && !student.getUser().getAvatar().isEmpty()) {
+                String avatarStr = this.cloudinaryService.uploadAvatar(student.getUser().getAvatar());
+                student.getUser().setAvatar(avatarStr);
+            }
+
+            if (!this.studentRepository.addStudent(student))
+                return false;
+        }
+        return true;
+    }
+
+    @Override
     public boolean updateStudent(int studentId, Student student, MultipartFile file) {
-        if(file != null){
+        if (file != null) {
             String avatarStr = this.cloudinaryService.uploadAvatar(file);
             student.getUser().setAvatar(avatarStr);
         }

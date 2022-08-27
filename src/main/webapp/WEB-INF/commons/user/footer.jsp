@@ -33,7 +33,7 @@
                 <h6 class="text-uppercase fw-bold mb-4">
                     <spring:message code="footer.info.label"/>
                 </h6>
-                <p><i class="fas fa-home me-3"></i> Phòng 604 (Lầu 6), số 35 - 37 Hồ Hảo Hớn, Phường Cô Giang, Quận 1, Thành</p>
+                <p><i class="fas fa-home me-3"></i> Phòng 604 (Lầu 6), số 35 - 37 Hồ Hảo Hớn, Phường Cô Giang, Quận 1, Thành phố Hồ Chí Minh</p>
                 <p>
                     <i class="fas fa-envelope me-3"></i>
                     hethongquanlykhoaluan@gmail.com

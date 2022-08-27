@@ -4,6 +4,7 @@
 
 <tiles:importAttribute name="stylesheets"/>
 <tiles:importAttribute name="javascripts"/>
+<tiles:importAttribute name="javascriptsModule"/>
 
 <!DOCTYPE html>
 <html>
@@ -18,6 +19,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="<c:url value="/public/admin/vendors/images/ou-icon.png"/> ">
     <!-- Place favicon.ico in the root directory -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="<c:url value="/public/common/plugins/pagination/jquery.twbsPagination.min.js"/> "></script>
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -59,9 +61,11 @@
 ></script>
 <script src="<c:url value="/public/common/js/script.js"/> "></script>
 <script src="<c:url value="/public/user/src/scripts/script.js"/> "></script>
+<c:forEach var="js" items="${javascriptsModule}">
+    <script type="module" src="<c:url value="${js}"/>"></script>
+</c:forEach>
 <c:forEach var="js" items="${javascripts}">
     <script src="<c:url value="${js}"/>"></script>
 </c:forEach>
 </body>
-
 </html>

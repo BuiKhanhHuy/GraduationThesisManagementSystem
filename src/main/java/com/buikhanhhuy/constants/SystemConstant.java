@@ -23,4 +23,7 @@ public class SystemConstant {
 
     //score pass
     public static final double SCORE_PASS = 5.0;
+
+    // avatar default
+    public static final String AVATAR_DEFAULT_URL = "https://res.cloudinary.com/dtnpj540t/image/upload/v1661526519/GraduationThesisManagementSystem/ipklz9n8lljcb9yxagk3.jpg";
 }

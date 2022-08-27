@@ -101,7 +101,7 @@ public class Thesis implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "review_lecturer_id", referencedColumnName = "id")
-    @JsonIncludeProperties({"id"})
+    @JsonIncludeProperties({"id", "fullName"})
     private Lecturer reviewLecturer;
 
     @Transient

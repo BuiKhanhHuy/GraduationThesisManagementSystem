@@ -14,10 +14,20 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         </put-list-attribute>
         <put-list-attribute name="javascripts">
         </put-list-attribute>
+        <put-list-attribute name="javascriptsModule">
+        </put-list-attribute>
     </definition>
     <definition name="index" extends="baseLayout">
         <put-attribute name="title" value="Trang chủ"/>
         <put-attribute name="content" value="/WEB-INF/views/user/index.jsp"/>
+    </definition>
+    <definition name="news" extends="baseLayout">
+        <put-attribute name="title" value="Tin tức"/>
+        <put-attribute name="content" value="/WEB-INF/views/user/news.jsp"/>
+    </definition>
+    <definition name="newsDetail" extends="baseLayout">
+        <put-attribute name="title" value="Tin tức"/>
+        <put-attribute name="content" value="/WEB-INF/views/user/news-detail.jsp"/>
     </definition>
     <definition name="thesisDetail" extends="baseLayout">
         <put-attribute name="title" value="Trang chủ"/>
@@ -28,6 +38,17 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="header" value=""/>
         <put-attribute name="content" value="/WEB-INF/views/auth/login.jsp"/>
         <put-attribute name="footer" value=""/>
+    </definition>
+    <definition name="chat" extends="baseLayout">
+        <put-attribute name="title" value="Chat"/>
+        <put-attribute name="content" value="/WEB-INF/views/user/chat.jsp"/>
+        <put-attribute name="footer" value=""/>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/user/src/scripts/chat.js"/>
+        </put-list-attribute>
+        <put-list-attribute name="javascriptsModule">
+            <add-attribute value="/public/common/js/chat/chat.js"/>
+        </put-list-attribute>
     </definition>
 
     <!--    ADMIN-->
@@ -41,6 +62,8 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-list-attribute name="stylesheets">
         </put-list-attribute>
         <put-list-attribute name="javascripts">
+        </put-list-attribute>
+        <put-list-attribute name="javascriptsModule">
         </put-list-attribute>
     </definition>
     <definition name="adminIndex" extends="adminBaseLayout">
@@ -164,6 +187,18 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     </definition>
     <!--    thesis-->
 
+    <!--    thesis guide-->
+    <definition name="adminThesisGuideList" extends="adminThesisList">
+        <put-attribute name="title" value="Khóa luận đang hướng dẫn"/>
+    </definition>
+    <!--    thesis guide-->
+
+    <!--    thesis review-->
+    <definition name="adminThesisReviewList" extends="adminThesisList">
+        <put-attribute name="title" value="Khóa luận đang phản biện"/>
+    </definition>
+    <!--    thesis review-->
+
     <!--    council -->
     <definition name="adminCouncilList" extends="adminBaseLayout">
         <put-attribute name="title" value="Hội đồng"/>
@@ -249,6 +284,12 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="adminChat" extends="adminBaseLayout">
         <put-attribute name="title" value="Chat"/>
         <put-attribute name="content" value="/WEB-INF/views/admin/chat.jsp"/>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/public/admin/src/scripts/chat.js"/>
+        </put-list-attribute>
+        <put-list-attribute name="javascriptsModule">
+            <add-attribute value="/public/common/js/chat/chat.js"/>
+        </put-list-attribute>
     </definition>
     <!--    chat-->
 
@@ -264,6 +305,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
             <add-attribute value="/public/admin/vendors/scripts/dashboard.js"/>
             <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts.js"/>
             <add-attribute value="/public/admin/src/plugins/highcharts-6.0.7/code/highcharts-more.js"/>
+            <add-attribute value="/public/admin/src/scripts/score-statistics.js"/>
         </put-list-attribute>
     </definition>
     <!--    score statistics-->

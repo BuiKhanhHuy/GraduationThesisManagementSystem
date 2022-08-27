@@ -30,6 +30,17 @@ const showEditStudentModal = (appContext, studentId) => {
         $('#modal-add-edit-student').modal()
 
         let form = document.forms['form-add-edit-student']
+
+        if (data.user.avatar && data.user.avatar !== '') {
+            form["file-output"].src = data.user.avatar
+        }
+        else{
+            form["file-output"].src = `${window.location.origin}${appContext}public/common/images/avatars/avatar-default.jpg`
+        }
+        form["file-output"].onload = function () {
+            URL.revokeObjectURL(form["file-output"].src)
+        }
+
         form["code"].value = data.code;
         form["fullName"].value = data.fullName;
         form["email"].value = data.email
@@ -187,6 +198,11 @@ $('#modal-add-edit-student').on('hidden.bs.modal', function (e) {
     document.forms['form-add-edit-student'].reset();
 })
 
+$('#modal-add-import-student').on('hidden.bs.modal', function (e) {
+    $('input').next('span').remove();
+    document.forms['form-upload-file'].reset();
+})
+
 
 // change password
 const changePassword = (appContext, userId) => {
@@ -232,4 +248,34 @@ const changePassword = (appContext, userId) => {
             successfulAlert("Đổi mật khẩu thành công", "Ok", null);
         }
     })
+}
+
+// add students from file
+const importStudentsFile = async (appContext) => {
+    document.getElementById("btn-import").onclick = () => {
+        $('input').next('span').remove();
+
+        showLoading()
+        if (file) {
+            var formData = new FormData();
+            formData.append("file", file)
+
+            return fetch(`${appContext}admin/api/students/file`, {
+                method: "POST", body: formData
+            }).then(response => {
+                $('#modal-add-import-student').hide();
+                if (!response.ok) {
+                    errorAlert("Đã có lỗi", "Import danh sách sinh viên không thành công. \nKiểm tra lại dữ liệu và thực hiện lại.", "Ok")
+                } else {
+                    successfulAlert("Import danh sách sinh viên thành công.", "Ok", () => location.reload());
+                }
+            }).finally(hideLoading)
+        } else {
+            $('input[name=file]').after('<span class="text-danger">Không được để trống</span>');
+
+            hideLoading();
+        }
+    }
+
+    $('#modal-add-import-student').modal()
 }

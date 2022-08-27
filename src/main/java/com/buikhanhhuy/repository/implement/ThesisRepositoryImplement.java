@@ -99,6 +99,18 @@ public class ThesisRepositoryImplement implements ThesisRepository {
             predicates.add(builder.equal(root.get("result").as(Integer.class), result));
         }
 
+        if(params.containsKey("lecturerReviewId") && params.get("lecturerReviewId") != null){
+            predicates.add(builder.equal(root.get("reviewLecturer"),
+                    Integer.parseInt(params.get("lecturerReviewId"))));
+        }
+
+        if(params.containsKey("lecturerGuideId") && params.get("lecturerGuideId") != null){
+            Join<Thesis, Lecturer> guide = root.join(Thesis_.lecturers);
+
+            predicates.add(builder.equal(guide.get("id").as(Integer.class),
+                    Integer.parseInt(params.get("lecturerGuideId"))));
+        }
+
         query.where(predicates.toArray(new Predicate[]{}));
         query.orderBy(builder.desc(root.get("id")));
 
@@ -150,6 +162,11 @@ public class ThesisRepositoryImplement implements ThesisRepository {
             int result = Integer.parseInt(params.get("result"));
 
             predicates.add(builder.equal(root.get("result").as(Integer.class), result));
+        }
+
+        if(params.containsKey("lecturerReviewId") && params.get("lecturerReviewId") != null){
+            predicates.add(builder.equal(root.get("reviewLecturer"),
+                    Integer.parseInt(params.get("lecturerReviewId"))));
         }
 
         query.where(predicates.toArray(new Predicate[]{}));

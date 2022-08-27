@@ -30,6 +30,16 @@ const showEditLectureModal = (appContext, lecturerId) => {
         $('#modal-add-edit-lecturer').modal()
 
         let form = document.forms['form-add-edit-lecturer']
+        if (data.user.avatar && data.user.avatar !== '') {
+            form["file-output"].src = data.user.avatar
+        }
+        else{
+            form["file-output"].src = `${window.location.origin}${appContext}public/common/images/avatars/avatar-default.jpg`
+        }
+        form["file-output"].onload = function () {
+            URL.revokeObjectURL(form["file-output"].src)
+        }
+
         form["code"].value = data.code;
         form["fullName"].value = data.fullName;
         form["email"].value = data.email
@@ -182,6 +192,12 @@ $('#modal-add-edit-lecturer').on('hidden.bs.modal', function (e) {
     document.forms['form-add-edit-lecturer'].reset();
 })
 
+$('#modal-add-import-lecturer').on('hidden.bs.modal', function (e) {
+    $('input').next('span').remove();
+    document.forms['form-upload-file'].reset();
+})
+
+
 // change password
 const changePassword = (appContext, userId) => {
     Swal.fire({
@@ -226,4 +242,35 @@ const changePassword = (appContext, userId) => {
             successfulAlert("Đổi mật khẩu thành công", "Ok", null);
         }
     })
+}
+
+// add students from file
+const importLecturersFile = async (appContext) => {
+    document.getElementById("btn-import").onclick = () => {
+        $('input').next('span').remove();
+        var file = document.forms['form-upload-file']['file'].files[0];
+
+        showLoading()
+        if (file) {
+            var formData = new FormData();
+            formData.append("file", file)
+
+            return fetch(`${appContext}admin/api/lecturers/file`, {
+                method: "POST", body: formData
+            }).then(response => {
+                $('#modal-add-import-lecturer').hide();
+                if (!response.ok) {
+                    errorAlert("Đã có lỗi", "Import danh sách giảng viên không thành công. \nKiểm tra lại dữ liệu và thực hiện lại.", "Ok")
+                } else {
+                    successfulAlert("Import danh sách giảng viên thành công.", "Ok", () => location.reload());
+                }
+            }).finally(hideLoading)
+        } else {
+            $('input[name=file]').after('<span class="text-danger">Không được để trống</span>');
+
+            hideLoading();
+        }
+    }
+
+    $('#modal-add-import-lecturer').modal()
 }

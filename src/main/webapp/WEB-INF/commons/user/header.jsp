@@ -1,11 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<c:set var="pagina" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
 <c:url value="/public/common/images/avatars/avatar-default.jpg" var="avatarDefault"/>
 <c:url var="appContext" value="/"/>
 <c:url var="logout" value="/logout"/>
 <c:url var="home" value="/"/>
+<c:url var="news" value="/news"/>
+<c:url var="chat" value="/chat"/>
 <c:set value="${pageContext.response.locale.language}" var="lang"/>
 
 <!-- Navbar -->
@@ -27,7 +30,7 @@
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Navbar brand -->
-            <a class="navbar-brand mt-2 mt-lg-0" href="${home}">
+            <a class="navbar-brand mt-2 mt-lg-0 " href="${home}">
                 <img width="280"
                      src="<c:url value="/public/common/images/logo/logo-text-blue.png"/>"
                      alt="OU logo"
@@ -36,12 +39,12 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="${home}">
+                    <a class="nav-link ${pagina.endsWith('/') ? 'active' : ''}" href="${home}">
                         <spring:message code="header.menu.home"/>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link ${pagina.indexOf('/news') > -1 ? 'active' : ''}" href="${news}">
                         <spring:message code="header.menu.news"/>
                     </a>
                 </li>
@@ -51,6 +54,12 @@
         <!-- Collapsible wrapper -->
         <!-- Right elements -->
         <div class="d-flex align-items-center">
+            <div class="pe-4">
+                <a href="${chat}" style="color: #4f4f4f;">
+                    <i class="fas fa-comment" style="font-size: 24px;"></i>
+                    <span class="badge bg-danger badge-dot" id="badge-notifi-active"></span>
+                </a>
+            </div>
             <!-- Notifications -->
             <div class="dropdown">
                 <a class="text-reset me-3 dropdown-toggle hidden-arrow"
@@ -76,7 +85,8 @@
                                         <h6 style="font-size: 18px;">${notificationUser.notification.title}</h6>
                                         <p class="text-muted mb-0">${notificationUser.notification.content}</p>
                                         <span class="mt-2 text-black-50" style="font-style: italic;">
-                                             (<span class="notification-created-date">${notificationUser.notification.createdDate}</span>)
+                                             (<span
+                                                class="notification-created-date">${notificationUser.notification.createdDate}</span>)
                                         </span>
                                     </div>
                                     <a href="javascript:;"
@@ -205,7 +215,7 @@
                             <label for="oldPassword" class="font-weight-bold mb-2">
                                 <spring:message code="layout.modal.oldPassword.label"/>
                                 <span
-                                    class="text-danger">(*)</span></label>
+                                        class="text-danger">(*)</span></label>
                             <input name="oldPassword" id="oldPassword" type="password"
                                    class="form-control form-control-lg">
                         </div>
@@ -213,7 +223,7 @@
                             <label for="newPassword" class="font-weight-bold mb-2">
                                 <spring:message code="layout.modal.newPassword.label"/>
                                 <span
-                                    class="text-danger">(*)</span></label>
+                                        class="text-danger">(*)</span></label>
                             <input name="newPassword" id="newPassword" type="password"
                                    class="form-control form-control-lg">
                         </div>

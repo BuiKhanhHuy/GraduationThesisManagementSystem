@@ -107,10 +107,10 @@ public class NewsRepositoryImplement implements NewsRepository {
     }
 
     @Override
-    public boolean addNews(News news) {
+    public boolean addNews(News news, int userId) {
         Session session = this.sessionFactoryBean.getObject().getCurrentSession();
         try {
-            news.setUser(session.get(User.class, 1));
+            news.setUser(session.get(User.class, userId));
             session.save(news);
             return true;
         } catch (Exception exception) {

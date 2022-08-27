@@ -113,8 +113,33 @@
         labels2.push('${stats[1]}')
         data2.push(${stats[2]})
         </c:forEach>
-
-        thesisScoreStatistics();
         thesisStatisticsByMajor('bar', labels2, data2)
+
+        let a = {categories: [], series: {}}
+        let keyArr = []
+        let flag = false
+        let idx = 0
+
+        <c:forEach var="stats" items="${thesisScoreStatistics}">
+        if (a.categories.indexOf('${stats[0]}') === -1) {
+            a.categories.push('${stats[0]}')
+        }
+
+        if ('${stats[1]}' in a.series) {
+            flag = true;
+        } else {
+            keyArr.push('${stats[1]}')
+            a.series['${stats[1]}'] = [${stats[2]}]
+        }
+
+        if (flag) {
+            a.series[keyArr[idx]].push('${stats[2]}' === '' ? null : parseInt('${stats[2]}'))
+
+            idx++;
+            if (idx > keyArr.length)
+                idx = 0;
+        }
+        </c:forEach>
+        thesisScoreStatistics(type = "spline", a);
     });
 </script>

@@ -168,8 +168,7 @@
                                                 <div style="font-family: sans-serif">
                                                     <div class="txtTinyMce-wrapper"
                                                          style="font-size: 12px; mso-line-height-alt: 18px; color: #555555; line-height: 1.5;  font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                        <p style="margin: 0; font-size: 14px; text-align: center;">He
-                                                            thong quan ly khoa luan tot nghiep</p>
+                                                        <p style="margin: 0; font-size: 14px; text-align: center;">Hệ thống quản lý khóa luận tốt nghiệp</p>
                                                         <p style="margin: 0; font-size: 14px; text-align: center;">
                                                             Trường Đại học Mở Thành phố Hồ Chí Minh</p>
                                                     </div>
@@ -209,11 +208,16 @@
                                                 <div style="font-family: sans-serif">
                                                     <div class="txtTinyMce-wrapper"
                                                          style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #0D0D0D; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                        <p style="margin: 0; font-size: 14px; text-align: center;">
-                                                            <br/>
-                                                            <span style="color:#000000;"><span
-                                                                        style="font-size:28px;">Thông báo kết quả </span><span
-                                                                        style="font-size:28px;">khóa luận tốt nghiệp </span></span>
+                                                        <p style="margin: 0; font-size: 14px; text-align: center;"><span
+                                                                    style="font-size:30px;"><strong><span style="">Xin chào <span
+                                                                                style="color:#1a00ff;">
+                                      <#if (thesis.reviewLecturer)??>
+                                          ${thesis.reviewLecturer.fullName}
+                                      </#if>
+                                    </span>,</span></strong></span><br/><span style="color:#000000;"><span
+                                                                        style="font-size:28px;">Đồng chí đã được nhà trường </span><span
+                                                                        style="font-size:28px;">phân công nhiệm vụ phản biện </span><span
+                                                                        style="font-size:28px;">khóa luận tốt nghiệp</span></span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -266,15 +270,11 @@
                                             <td class="pad"
                                                 style="padding-bottom:30px;padding-left:60px;padding-right:50px;padding-top:10px;">
                                                 <ul style="margin: 0; padding: 0; margin-left: 20px; list-style-type: revert; color: #000000; font-size: 14px; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; font-weight: 400; line-height: 200%; text-align: left; direction: ltr; letter-spacing: 0px;">
-                                                    <li style="margin-bottom: 0px;">Điểm khóa luận:
-                                                        <span style="color: #e40f0f; font-weight: bold; font-size: 16px;">${thesis.totalScore}</span>
-                                                    </li>
-                                                    <li style="margin-bottom: 0px;">Kết quả:
-                                                        <#if thesis.result == 2>
-                                                            <span style="color: red; font-weight: bold; font-size: 16px;">Không đạt</span>
-                                                        </#if>
-                                                        <#if thesis.result == 3>
-                                                            <span style="color: green; font-weight: bold; font-size: 16px;">Đạt</span>
+                                                    <li style="margin-bottom: 0px;">Giảng viên hướng dẫn:
+                                                        <#if (thesis.lecturers)??>
+                                                            <#list thesis.lecturers as lecturer>
+                                                                <strong> ${lecturer.fullName}</strong>,
+                                                            </#list>
                                                         </#if>
                                                     </li>
                                                     <li style="margin-bottom: 0px;">Sinh viên thực hiện:
@@ -282,6 +282,14 @@
                                                             <#list thesis.students as student>
                                                                 <strong> ${student.fullName}</strong>,
                                                             </#list>
+                                                        </#if>
+                                                    </li>
+                                                    <li style="margin-bottom: 0px;">Ngày bắt đầu:
+                                                        <strong>${thesis.startDate}</strong>
+                                                    </li>
+                                                    <li style="margin-bottom: 0px;">Ngày kết thúc:
+                                                        <#if (thesis.complateDate)??>
+                                                            <strong>${thesis.complateDate}</strong>
                                                         </#if>
                                                     </li>
                                                     <li style="margin-bottom: 0px;">Ngành:

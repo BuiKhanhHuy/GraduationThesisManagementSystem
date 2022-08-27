@@ -1,5 +1,6 @@
 package com.buikhanhhuy.service.implement;
 
+import com.buikhanhhuy.constants.SystemConstant;
 import com.buikhanhhuy.pojo.Manage;
 import com.buikhanhhuy.repository.ManageRepository;
 import com.buikhanhhuy.service.CloudinaryService;
@@ -40,10 +41,12 @@ public class ManageServiceImplement implements ManageService {
 
     @Override
     public boolean addManage(Manage manage, MultipartFile file) {
-        if(file != null){
-            String avatarStr = this.cloudinaryService.uploadAvatar(file);
-            manage.getUser().setAvatar(avatarStr);
+        String avatarStr = SystemConstant.AVATAR_DEFAULT_URL;
+        if (file != null) {
+            avatarStr = this.cloudinaryService.uploadAvatar(file);
         }
+
+        manage.getUser().setAvatar(avatarStr);
         return manageRepository.addManage(manage);
     }
 
@@ -54,7 +57,7 @@ public class ManageServiceImplement implements ManageService {
 
     @Override
     public boolean updateManage(int manageId, Manage manage, MultipartFile file) {
-        if(file != null){
+        if (file != null) {
             String avatarStr = this.cloudinaryService.uploadAvatar(file);
             manage.getUser().setAvatar(avatarStr);
         }

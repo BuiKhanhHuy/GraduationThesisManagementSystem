@@ -1,6 +1,8 @@
 package com.buikhanhhuy.service.implement;
 
+import com.buikhanhhuy.constants.SystemConstant;
 import com.buikhanhhuy.pojo.Lecturer;
+import com.buikhanhhuy.pojo.Student;
 import com.buikhanhhuy.repository.LecturerRepository;
 import com.buikhanhhuy.service.CloudinaryService;
 import com.buikhanhhuy.service.LecturerService;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -34,8 +37,8 @@ public class LecturerServiceImplement implements LecturerService {
     }
 
     @Override
-    public List<Object[]> getLecturerOptions() {
-        return this.lecturerRepository.getLecturerOptions();
+    public List<Object[]> getLecturerOptions(String isMinistry) {
+        return this.lecturerRepository.getLecturerOptions(isMinistry);
     }
 
     @Override
@@ -60,17 +63,33 @@ public class LecturerServiceImplement implements LecturerService {
 
     @Override
     public boolean addLecturer(Lecturer lecturer, MultipartFile file) {
-       if(file != null){
-           String avatarStr = this.cloudinaryService.uploadAvatar(file);
-           lecturer.getUser().setAvatar(avatarStr);
-       }
+        String avatarStr = SystemConstant.AVATAR_DEFAULT_URL;
 
+        if (file != null) {
+            avatarStr = this.cloudinaryService.uploadAvatar(file);
+        }
+
+        lecturer.getUser().setAvatar(avatarStr);
         return this.lecturerRepository.addLecturer(lecturer);
     }
 
     @Override
+    public boolean addLecturer(List<Lecturer> lecturers) throws IOException {
+        for (Lecturer lecturer : lecturers) {
+            if (lecturer.getUser().getAvatar() != null && !lecturer.getUser().getAvatar().isEmpty()) {
+                String avatarStr = this.cloudinaryService.uploadAvatar(lecturer.getUser().getAvatar());
+                lecturer.getUser().setAvatar(avatarStr);
+            }
+
+            if (!this.lecturerRepository.addLecturer(lecturer))
+                return false;
+        }
+        return true;
+    }
+
+    @Override
     public boolean updateLecturer(int lecturerId, Lecturer lecturer, MultipartFile file) {
-        if(file != null){
+        if (file != null) {
             String avatarStr = this.cloudinaryService.uploadAvatar(file);
             lecturer.getUser().setAvatar(avatarStr);
         }

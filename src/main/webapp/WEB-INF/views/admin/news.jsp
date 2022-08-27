@@ -169,6 +169,7 @@
                     </div>
                     <h6 class="mb-3 text-black-50 mt-2"> <spring:message code="news.modal.view.creator.label"/>: <span class="text-danger"
                                                                          id="data-user-username"></span></h6>
+                    <div class="text-black-50 font-italic" id="data-createdDate"></div>
                     <hr>
                     <div>
                         <h6> <spring:message code="news.modal.view.content.label"/>:</h6>

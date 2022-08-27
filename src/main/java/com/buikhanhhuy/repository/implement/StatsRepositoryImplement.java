@@ -31,7 +31,8 @@ public class StatsRepositoryImplement implements StatsRepository {
             Root<Major> majorRoot = query.from(Major.class);
             Join<Major, Thesis> thesisRoot = majorRoot.join(Major_.theses, JoinType.LEFT);
 
-            query.multiselect(majorRoot.get("id"), majorRoot.get("name"), builder.count(thesisRoot.get("id")));
+            query.multiselect(majorRoot.get("id"), majorRoot.get("name"),
+                    builder.count(thesisRoot.get("id")));
             query.groupBy(majorRoot.get("id"));
 
             if (schoolYearId != null) {

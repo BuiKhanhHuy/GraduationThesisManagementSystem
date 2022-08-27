@@ -48,7 +48,8 @@ public class ApiMajorController {
         HttpStatus status = null;
 
         if (result.hasErrors()) {
-            errorMessages = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+            errorMessages = result.getFieldErrors().stream()
+                    .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             status = HttpStatus.BAD_REQUEST;
         } else {
             if (this.majorService.addMajor(major)) status = HttpStatus.CREATED;

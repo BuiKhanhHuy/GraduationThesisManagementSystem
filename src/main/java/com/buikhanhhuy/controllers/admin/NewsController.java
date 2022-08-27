@@ -1,7 +1,6 @@
 package com.buikhanhhuy.controllers.admin;
 
 import com.buikhanhhuy.service.NewsService;
-import com.buikhanhhuy.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +15,6 @@ import java.util.Map;
 public class NewsController {
     @Autowired
     private NewsService newsService;
-    @Autowired
-    private RoleService roleService;
 
     @GetMapping(path = "/news")
     public String newsList(Model model, @RequestParam(required = false) Map<String, String> params) {

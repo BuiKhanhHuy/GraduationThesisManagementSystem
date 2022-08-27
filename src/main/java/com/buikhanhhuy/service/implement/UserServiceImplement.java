@@ -32,6 +32,11 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
+    public List<User> getUsersChat(Map<String, String> params) {
+        return this.userRepository.getUsersChat(params);
+    }
+
+    @Override
     public Set<Integer> getUsers(Map<String, String> params, List<Integer> usersId) {
         return this.userRepository.getUsers(params, usersId);
     }

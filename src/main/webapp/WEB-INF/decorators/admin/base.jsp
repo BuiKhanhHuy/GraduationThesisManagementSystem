@@ -4,6 +4,7 @@
 
 <tiles:importAttribute name="stylesheets"/>
 <tiles:importAttribute name="javascripts"/>
+<tiles:importAttribute name="javascriptsModule"/>
 
 <!DOCTYPE html>
 <html>
@@ -21,7 +22,7 @@
 
     <%--    pagination--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="<c:url value="/public/admin/src/plugins/pagination/jquery.twbsPagination.min.js"/> "></script>
+    <script src="<c:url value="/public/common/plugins/pagination/jquery.twbsPagination.min.js"/> "></script>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -103,9 +104,11 @@
 
 <script src="<c:url value="/public/admin/src/plugins/toast/jquery.toast.js"/> "></script>
 
+<c:forEach var="js" items="${javascriptsModule}">
+    <script type="module" src="<c:url value="${js}"/>"></script>
+</c:forEach>
 <c:forEach var="js" items="${javascripts}">
     <script src="<c:url value="${js}"/>"></script>
 </c:forEach>
-
 </body>
 </html>

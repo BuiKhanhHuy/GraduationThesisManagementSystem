@@ -30,7 +30,6 @@ public class EmailConfig {
         // Gmail SMTP configuration.
         mailSender.setHost(environment.getProperty("email.host"));
         mailSender.setPort(Integer.parseInt(Objects.requireNonNull(environment.getProperty("email.port"))));
-
         /*
          *  gmail id and password
          */
@@ -55,7 +54,7 @@ public class EmailConfig {
     public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration()
     {
         FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
-        bean.setDefaultEncoding("utf-8");
+        bean.setDefaultEncoding("UTF-8");
         bean.setTemplateLoaderPaths("classpath:/mailtemplate/");
         return bean;
     }

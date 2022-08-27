@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:url var="filterThesis" value=""/>
 <c:url var="home" value="/admin/"/>
@@ -61,7 +62,7 @@
                         <option value="${""}">
                             <spring:message code="thesis.table.search.major"/>
                         </option>
-                        <c:forEach var="majorOption" items="${majorOptionOptions}">
+                        <c:forEach var="majorOption" items="${majorOptions}">
                             <option value="${majorOption[0]}">${majorOption[1]}</option>
                         </c:forEach>
                     </select>
@@ -104,10 +105,12 @@
             </h4>
         </div>
         <div class="pull-right">
-            <button onclick="showAddThesisModal('<c:url value="/admin/api/theses"/>')"
-                    type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
-                <spring:message code="thesis.table.list.button.addThesis.label"/>
-            </button>
+            <sec:authorize access="hasAnyAuthority('ADMIN', 'MINISTRY')">
+                <button onclick="showAddThesisModal('<c:url value="/admin/api/theses"/>')"
+                        type="button" class="btn btn-success btn-md"><i class="micon icon-copy dw dw-add"></i>
+                    <spring:message code="thesis.table.list.button.addThesis.label"/>
+                </button>
+            </sec:authorize>
         </div>
     </div>
     <table class="table table-bordered">
@@ -201,8 +204,8 @@
                         </c:if>
                     </td>
                     <td>
-                        <fmt:formatNumber type = "number"
-                                          groupingUsed = "false" value = "${thesis.totalScore}" />
+                        <fmt:formatNumber type="number"
+                                          groupingUsed="false" value="${thesis.totalScore}"/>
                     </td>
                     <td class="text-center">
                         <c:if test="${thesis.result == 1}">
@@ -223,25 +226,28 @@
                     </td>
                     <td class="text-center">
                         <div class="btn-list">
-                            <button type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
+                            <button onclick="showViewThesisModal('<c:url value="/admin/api/theses/${thesis.id}"/>')"
+                                    type="button" class="btn btn-sm bg-info text-white" data-toggle="tooltip"
                                     data-placement="bottom"
                                     title=" <spring:message code="thesis.table.list.button.viewDetail"/>">
                                 <i class="icon-copy dw dw-eye"></i>
                             </button>
-                            <button onclick="showEditThesisModal('<c:url
-                                    value="/admin/api/theses/${thesis.id}"/>', ${thesis.id})"
-                                    type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title=" <spring:message code="thesis.table.list.button.edit"/>">
-                                <i class="icon-copy dw dw-edit1"></i>
-                            </button>
-                            <button onclick="deleteThesisItem('<c:url
-                                    value="/admin/api/theses/${thesis.id}"/>')"
-                                    type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title=" <spring:message code="thesis.table.list.button.delete"/>">
-                                <i class="icon-copy dw dw-delete-3"></i>
-                            </button>
+                            <sec:authorize access="hasAnyAuthority('ADMIN', 'MINISTRY')">
+                                <button onclick="showEditThesisModal('<c:url
+                                        value="/admin/api/theses/${thesis.id}"/>', ${thesis.id})"
+                                        type="button" class="btn btn-sm bg-warning text-white" data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title=" <spring:message code="thesis.table.list.button.edit"/>">
+                                    <i class="icon-copy dw dw-edit1"></i>
+                                </button>
+                                <button onclick="deleteThesisItem('<c:url
+                                        value="/admin/api/theses/${thesis.id}"/>')"
+                                        type="button" class="btn btn-sm bg-danger text-white" data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title=" <spring:message code="thesis.table.list.button.delete"/>">
+                                    <i class="icon-copy dw dw-delete-3"></i>
+                                </button>
+                            </sec:authorize>
                         </div>
                     </td>
                 </tr>
@@ -252,22 +258,24 @@
                 <td colspan="11" class="text-black-50 text-center">
                     <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png" alt="empty"/>
                     <p class="text-center">
-                       <spring:message code="thesis.table.list.data.empty"/>
+                        <spring:message code="thesis.table.list.data.empty"/>
                     </p>
                 </td>
             </tr>
         </c:if>
         </tbody>
     </table>
-    <div class="blog-pagination pagination-md mt-5 mb-2">
-        <div class="btn-toolbar justify-content-center">
-            <div class="btn-group">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination" id="pagination"></ul>
-                </nav>
+    <c:if test="${Math.ceil(totalPage / pageSize) > 1}">
+        <div class="blog-pagination pagination-md mt-5 mb-2">
+            <div class="btn-toolbar justify-content-center">
+                <div class="btn-group">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+                </div>
             </div>
         </div>
-    </div>
+    </c:if>
 </div>
 <!-- table End -->
 
@@ -403,6 +411,87 @@
     </div>
 </div>
 <!-- ADD and EDIT modal -->
+
+<%--VIEW modal--%>
+<div class="modal fade bs-example-modal-lg " id="modal-view-thesis" tabindex="-1" role="dialog"
+     aria-labelledby="myModalViewThesis" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalViewThesis">Chi tiết khóa luận</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body" id="body-content">
+                <div class="pd-20">
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.table.list.header.code"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-code"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.table.list.header.topic"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-topic"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.table.list.students"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-students"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.table.list.lecturers"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-lecturers"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.table.list.reviewLecturer"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-review-lecturer"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.table.list.header.startDate"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-start-date"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.table.list.header.complateDate"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-completed-date"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.modal.thesisStartDate"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-thesis-start-date"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.modal.thesisEndDate"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-thesis-end-date"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.modal.major"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-major"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.modal.schoolYear"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-school-year"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.modal.comment"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-comment"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.table.list.header.totalScores"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-total-score"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.table.list.header.result"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-result"></div>
+                    <h6 class="mb-10 text-danger">
+                        <spring:message code="thesis.table.list.reportFile"/>
+                    </h6>
+                    <div class="ml-1 mb-3" id="data-report-file"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%--VIEW modal--%>
 
 <script>
     let currentPage = ${page};

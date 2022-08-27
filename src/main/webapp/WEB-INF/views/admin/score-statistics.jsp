@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<c:url var="filterScoreStatistics" value="/admin/departments/"/>
+<c:url var="filterScoreStatistics" value="/admin/stats/score-statistics"/>
 <c:url var="home" value="/admin/"/>
 
 <div class="page-header">
@@ -73,28 +73,16 @@
     </div>
     <table class="table table-bordered">
         <thead>
-        <tr>
-            <th scope="col">
+        <tr id="stats-school-year-area">
+            <th scope="col" class="text-center">
                 <spring:message code="scoreStatistics.table.list.header.no"/>
             </th>
             <th scope="col">
                 <spring:message code="scoreStatistics.table.list.header.major"/>
             </th>
-            <th scope="col" class="text-center">
-                <spring:message code="scoreStatistics.table.list.header.quantity"/>
-            </th>
         </tr>
         </thead>
-        <tbody>
-        <c:if test="${scoreStatistics.size() > 0}">
-            <c:forEach var="stats" items="${scoreStatistics}">
-                <tr>
-                    <td>1</td>
-                    <td>${stats[1]}</td>
-                    <td>${stats[2]}</td>
-                </tr>
-            </c:forEach>
-        </c:if>
+        <tbody id="stats-score-area">
         <c:if test="${scoreStatistics.size() == 0}">
             <tr>
                 <td colspan="6" class="text-black-50 text-center">
@@ -111,7 +99,24 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+        <%--let a = {categories: [], series: {}}--%>
+        <%--<c:forEach var="stats" items="${scoreStatistics}">--%>
+        <%--if (a.categories.indexOf('${stats[0]}') === -1) {--%>
+        <%--    a.categories.push('${stats[0]}')--%>
+        <%--}--%>
+
+        <%--if ('${stats[1]}' in a.series) {--%>
+        <%--    a.series['${stats[1]}'].push(${stats[2]})--%>
+        <%--} else {--%>
+        <%--    a.series['${stats[1]}'] = [${stats[2]}]--%>
+        <%--}--%>
+        <%--</c:forEach>--%>
+
+
         let a = {categories: [], series: {}}
+        let keyArr = []
+        let flag = false
+        let idx = 0
 
         <c:forEach var="stats" items="${scoreStatistics}">
         if (a.categories.indexOf('${stats[0]}') === -1) {
@@ -119,12 +124,22 @@
         }
 
         if ('${stats[1]}' in a.series) {
-            a.series['${stats[1]}'].push(${stats[2]})
+            flag = true;
         } else {
+            keyArr.push('${stats[1]}')
             a.series['${stats[1]}'] = [${stats[2]}]
+        }
+
+        if (flag) {
+            a.series[keyArr[idx]].push('${stats[2]}' === '' ? null : parseInt('${stats[2]}'))
+
+            idx++;
+            if (idx > keyArr.length)
+                idx = 0;
         }
         </c:forEach>
 
         thesisScoreStatistics(type = "spline", a);
+        showStatsOnTable(a)
     });
 </script>
