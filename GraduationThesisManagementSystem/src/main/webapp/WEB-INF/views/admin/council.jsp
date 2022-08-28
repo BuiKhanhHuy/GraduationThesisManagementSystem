@@ -232,7 +232,7 @@
                                 <spring:message code="council.modal.schoolYear"/><span
                                     class="text-danger">(*)</span></label>
                             <div>
-                                <select class="custom-select form-control"
+                                <select class="custom-select2 form-control"
                                         name="schoolYear" id="schoolYear" style="width: 100%; ">
                                     <c:forEach var="schoolYearOption" items="${schoolYearOptions}">
                                         <option value="${schoolYearOption[0]}">${schoolYearOption[1]}</option>

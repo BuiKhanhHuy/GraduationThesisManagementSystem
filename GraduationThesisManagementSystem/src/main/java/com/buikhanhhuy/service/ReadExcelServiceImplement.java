@@ -89,7 +89,7 @@ public class ReadExcelServiceImplement implements ReadExcelService {
                             user.setPassword((String) ExcelFileUtils.getCellValue(cell));
                             break;
                         case COLUMN_STUDENT_INDEX_FULL_NAME:
-                            student.setFullName((String) ExcelFileUtils.getCellValue(cell));
+                            student.setFullName(Objects.toString(ExcelFileUtils.getCellValue(cell)));
                             break;
                         case COLUMN_STUDENT_INDEX_EMAIL:
                             student.setEmail((String) ExcelFileUtils.getCellValue(cell));

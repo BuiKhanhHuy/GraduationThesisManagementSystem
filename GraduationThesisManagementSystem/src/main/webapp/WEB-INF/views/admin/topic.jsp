@@ -163,7 +163,7 @@
 
 
 <!-- ADD and EDIT modal -->
-<div class="modal fade bs-example-modal-lg " id="modal-add-edit-topic" tabindex="-1" role="dialog"
+<div class="modal fade bs-example-modal-lg" id="modal-add-edit-topic" tabindex="-1" data-focus="false" role="dialog"
      aria-labelledby="myModalAddAndEditTopic" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -185,7 +185,7 @@
                                 <spring:message code="topic.modal.department.label"/><span
                                     class="text-danger">(*)</span></label>
                             <div>
-                                <select class="custom-select form-control"
+                                <select class="custom-select2 form-control"
                                         name="department" id="department" style="width: 100%;">
                                     <c:forEach var="departmentOption" items="${departmentOptions}">
                                         <option value="${departmentOption[0]}">${departmentOption[1]}</option>

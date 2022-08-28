@@ -33,7 +33,7 @@ const showViewMajorModal = (endpoint) => {
                 data[d].toString() === "" ? document.getElementById(`data-${d}`).innerText = 'Chưa cập nhật' : document.getElementById(`data-${d}`).innerText = data[d]
             }
         }
-        $('#modal-view-major').modal()
+        $('#modal-view-major').modal();
     })
 }
 

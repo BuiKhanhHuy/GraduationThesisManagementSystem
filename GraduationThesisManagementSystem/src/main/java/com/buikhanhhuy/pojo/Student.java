@@ -49,7 +49,7 @@ public class Student implements Serializable {
     @NotEmpty(message = "{student.add.email.notNullMessage}")
     @NotNull(message = "{student.add.email.notNullMessage}")
     @Size(max = 100, message = "{student.add.email.sizeMessage}")
-    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "{student.add.email.format}")
+//    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "{student.add.email.format}")
     @Column(name = "email")
     private String email;
     @Basic(optional = false)

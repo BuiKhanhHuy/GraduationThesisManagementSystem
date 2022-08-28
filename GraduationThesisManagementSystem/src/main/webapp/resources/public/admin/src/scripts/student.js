@@ -33,8 +33,7 @@ const showEditStudentModal = (appContext, studentId) => {
 
         if (data.user.avatar && data.user.avatar !== '') {
             form["file-output"].src = data.user.avatar
-        }
-        else{
+        } else {
             form["file-output"].src = `${window.location.origin}${appContext}public/common/images/avatars/avatar-default.jpg`
         }
         form["file-output"].onload = function () {
@@ -254,9 +253,11 @@ const changePassword = (appContext, userId) => {
 const importStudentsFile = async (appContext) => {
     document.getElementById("btn-import").onclick = () => {
         $('input').next('span').remove();
+        var file = document.forms['form-upload-file']['file'].files[0];
 
         showLoading()
         if (file) {
+            console.log("TRUE")
             var formData = new FormData();
             formData.append("file", file)
 

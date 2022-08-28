@@ -257,7 +257,7 @@
 <!-- table End -->
 
 <!-- ADD and EDIT modal -->
-<div class="modal fade bs-example-modal-lg " id="modal-add-edit-student" tabindex="-1" role="dialog"
+<div class="modal fade bs-example-modal-lg " id="modal-add-edit-student" tabindex="-1" data-focus="false" role="dialog"
      aria-labelledby="myModalAddAndEditStudent" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -318,7 +318,7 @@
                                 <spring:message code="student.modal.gender"/><span
                                     class="text-danger">(*)</span></label>
                             <div>
-                                <select class="custom-select form-control"
+                                <select class="custom-select2 form-control"
                                         name="gender" id="gender" style="width: 100%;">
                                     <option value="1">
                                         <spring:message code="student.table.list.data.option.gender.male"/>
@@ -349,7 +349,7 @@
                                 <spring:message code="student.modal.schoolYear"/><span
                                     class="text-danger">(*)</span></label>
                             <div>
-                                <select class="custom-select form-control"
+                                <select class="custom-select2 form-control"
                                         name="schoolYear" id="schoolYear" style="width: 100%;">
                                     <c:forEach var="schoolYearOption" items="${schoolYearOptions}">
                                         <option value="${schoolYearOption[0]}">${schoolYearOption[1]}</option>
@@ -362,7 +362,7 @@
                                 <spring:message code="student.modal.major"/><span
                                     class="text-danger">(*)</span></label>
                             <div>
-                                <select class="custom-select form-control"
+                                <select class="custom-select2 form-control"
                                         name="major" id="major" style="width: 100%;">
                                     <c:forEach var="majorOption" items="${majorOptions}">
                                         <option value="${majorOption[0]}">${majorOption[1]}</option>
@@ -431,7 +431,7 @@
                             <label class="font-weight-bold">
                                 <spring:message code="student.modal.import.file.label"/> <span class="text-danger">(*)</span>
                             </label>
-                            <input accept=".xlsx, .xls" name="file" id="file" type="file" class="form-control">
+                            <input accept=".xlsx, .xls" name="file" id="excelFile" type="file" class="form-control">
                         </div>
                     </div>
                 </form>

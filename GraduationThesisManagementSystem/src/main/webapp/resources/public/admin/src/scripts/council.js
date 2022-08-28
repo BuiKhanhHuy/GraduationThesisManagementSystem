@@ -48,7 +48,7 @@ const memberItem = (i) => {
                 </th>
                 <td>
                      <div>
-                        <select class="custom-select form-control"
+                        <select class="custom-select2 form-control"
                                 name="lecturer-${i}" id="lecturer-${i}" style="width: 100%; ">
                             ${lecturersHtml}
                         </select>

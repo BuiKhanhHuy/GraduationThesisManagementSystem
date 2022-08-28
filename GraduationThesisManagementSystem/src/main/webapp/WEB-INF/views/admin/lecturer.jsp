@@ -285,7 +285,7 @@
 <!-- table End -->
 
 <!-- ADD and EDIT modal -->
-<div class="modal fade bs-example-modal-lg " id="modal-add-edit-lecturer" tabindex="-1" role="dialog"
+<div class="modal fade bs-example-modal-lg" id="modal-add-edit-lecturer" tabindex="-1" data-focus="false" role="dialog"
      aria-labelledby="myModalAddAndEditLecturer" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -371,7 +371,7 @@
                                 <spring:message code="lecturer.modal.position"/>
                                 <span class="text-danger">(*)</span></label>
                             <div>
-                                <select class="custom-select form-control"
+                                <select class="custom-select2 form-control"
                                         name="position" id="position" style="width: 100%;">
                                     <c:forEach var="positionOption" items="${positionOptions}">
                                         <option value="${positionOption[0]}">${positionOption[1]}</option>
@@ -384,7 +384,7 @@
                                 <spring:message code="lecturer.modal.department"/>
                                 <span class="text-danger">(*)</span></label>
                             <div>
-                                <select class="custom-select form-control"
+                                <select class="custom-select2 form-control"
                                         name="department" id="department" style="width: 100%;">
                                     <c:forEach var="departmentOption" items="${departmentOptions}">
                                         <option value="${departmentOption[0]}">${departmentOption[1]}</option>
@@ -397,7 +397,7 @@
                                 <spring:message code="lecturer.modal.role"/>
                                 <span class="text-danger">(*)</span></label>
                             <div>
-                                <select class="custom-select form-control"
+                                <select class="custom-select2 form-control"
                                         name="role" id="role" style="width: 100%;">
                                     <c:forEach var="roleOption" items="${roleOptions}">
                                         <option value="${roleOption[0]}">${roleOption[1]}</option>
@@ -466,7 +466,7 @@
                             <label class="font-weight-bold">
                                 <spring:message code="lecturer.modal.import.file.label"/> <span class="text-danger">(*)</span>
                             </label>
-                            <input accept=".xlsx, .xls" name="file" id="file" type="file" class="form-control">
+                            <input accept=".xlsx, .xls" name="file" id="excelFile" type="file" class="form-control">
                         </div>
                     </div>
                 </form>

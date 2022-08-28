@@ -304,7 +304,7 @@
                                 <spring:message code="thesis.modal.topic"/><span
                                     class="text-danger">(*)</span></label>
                             <div>
-                                <select class="custom-select form-control w-100"
+                                <select class="custom-select2 form-control w-100"
                                         name="topic" id="topic" style="width: 100%; ">
                                     <c:forEach var="topicOption" items="${topicOptions}">
                                         <option value="${topicOption[0]}">${topicOption[1]}</option>
@@ -342,7 +342,7 @@
                                 <spring:message code="thesis.modal.major"/><span
                                     class="text-danger">(*)</span></label>
                             <div>
-                                <select class="custom-select form-control"
+                                <select class="custom-select2 form-control"
                                         name="major" id="major" style="width: 100%;">
                                     <c:forEach var="majorOption" items="${majorOptions}">
                                         <option value="${majorOption[0]}">${majorOption[1]}</option>
@@ -355,7 +355,7 @@
                                 <spring:message code="thesis.modal.schoolYear"/><span
                                     class="text-danger">(*)</span></label>
                             <div>
-                                <select class="custom-select form-control"
+                                <select class="custom-select2 form-control"
                                         name="schoolYear" id="schoolYear" style="width: 100%; ">
                                     <c:forEach var="schoolYearOption" items="${schoolYearOptions}">
                                         <option value="${schoolYearOption[0]}">${schoolYearOption[1]}</option>
@@ -384,7 +384,7 @@
                                 <spring:message code="thesis.modal.reviewLecturer"/><span
                                     class="text-danger">(*)</span></label>
                             <select name="reviewLecturer" id="reviewLecturer"
-                                    class="custom-select form-control" style="width: 100%;">
+                                    class="custom-select2 form-control" style="width: 100%;">
                             </select>
                             <span></span>
                         </div>

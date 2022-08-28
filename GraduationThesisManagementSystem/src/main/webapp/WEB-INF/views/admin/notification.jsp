@@ -136,7 +136,7 @@
 
 
 <!-- ADD and EDIT modal -->
-<div class="modal fade bs-example-modal-lg " id="modal-add-edit-notification" tabindex="-1" role="dialog"
+<div class="modal fade bs-example-modal-lg" id="modal-add-edit-notification" tabindex="-1" data-focus="false" role="dialog"
      aria-labelledby="myModalAddAndEditNotification" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -168,7 +168,7 @@
                             <div>
                                 <select onchange="objectChange('${endpointLoadUsers}')"
                                         name="role" id="role"
-                                        class="custom-select form-control" style="width: 100%;">
+                                        class="custom-select2 form-control" style="width: 100%;">
                                     <option value="">
                                         <spring:message code="notification.modal.object.allObjects.label"/>
                                     </option>
@@ -185,7 +185,7 @@
                             <div>
                                 <select onchange="schoolYearChange('${endpointLoadUsers}')"
                                         disabled id="schoolYear" name="schoolYear"
-                                        class="custom-select form-control" style="width: 100%;">
+                                        class="custom-select2 form-control" style="width: 100%;">
                                     <option value="">
                                         <spring:message code="notification.modal.students.allStudent.label"/>
                                     </option>
