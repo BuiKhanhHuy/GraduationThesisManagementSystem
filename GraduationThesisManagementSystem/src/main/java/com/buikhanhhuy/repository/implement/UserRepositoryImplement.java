@@ -72,12 +72,15 @@ public class UserRepositoryImplement implements UserRepository {
         Root<User> root = query.from(User.class);
         query.select(root);
 
-        if (params.containsKey("kw-username")){
+        if (params.containsKey("kw-username")) {
             query.where(builder.like(root.get("username").as(String.class),
                     String.format("%s%%", params.get("kw-username"))));
         }
 
-        return session.createQuery(query).getResultList();
+        Query q = session.createQuery(query);
+        q.setMaxResults(50);
+
+        return q.getResultList();
     }
 
     @Override
@@ -150,14 +153,18 @@ public class UserRepositoryImplement implements UserRepository {
 
     @Override
     public void changePassword(int userId, String newPassword) {
-        if (newPassword != null && !newPassword.isEmpty()) {
-            Session session = sessionFactoryBean.getObject().getCurrentSession();
+        try {
+            if (newPassword != null && !newPassword.isEmpty()) {
+                Session session = sessionFactoryBean.getObject().getCurrentSession();
 
-            User user = session.get(User.class, userId);
+                User user = session.get(User.class, userId);
 
-            user.setPassword(this.passwordEncoder.encode(newPassword));
+                user.setPassword(this.passwordEncoder.encode(newPassword));
 
-            session.update(user);
+                session.update(user);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

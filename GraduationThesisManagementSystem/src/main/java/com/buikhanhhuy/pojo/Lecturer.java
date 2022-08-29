@@ -60,7 +60,7 @@ public class Lecturer implements Serializable {
     @NotEmpty(message = "{lecturer.add.email.notNullMessage}")
     @NotNull(message = "{lecturer.add.email.notNullMessage}")
     @Size(max = 100, message = "{lecturer.add.email.sizeMessage}")
-    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",  message="{lecturer.add.email.format}")
+//    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",  message="{lecturer.add.email.format}")
     @Column(name = "email")
     private String email;
     @Basic(optional = false)

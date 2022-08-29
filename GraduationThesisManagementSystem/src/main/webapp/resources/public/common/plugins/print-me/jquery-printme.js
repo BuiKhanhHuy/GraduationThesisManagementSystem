@@ -36,9 +36,9 @@ jQuery.fn.printMe = function(options, callback){
 		for(i in settings.path){
 			w.document.write('<link rel="stylesheet" href="'+settings.path[i]+'">');
 		}
-		
 		// Close the head
 		w.document.write('</head><body>');
+
 
 		// Add a header when the title not is empty
 		if (settings.title != "")

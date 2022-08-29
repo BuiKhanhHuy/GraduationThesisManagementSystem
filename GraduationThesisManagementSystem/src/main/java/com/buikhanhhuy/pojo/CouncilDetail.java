@@ -62,7 +62,7 @@ public class CouncilDetail implements Serializable {
     @JoinColumn(name = "lecturer_id", referencedColumnName = "id")
     @NotNull(message = "{councilDetail.add.lecturer.notNullMessage}")
     @ManyToOne(optional = false)
-    @JsonIncludeProperties({"id", "fullName"})
+    @JsonIncludeProperties({"id", "code", "fullName"})
     private Lecturer lecturer;
 
     public CouncilDetail() {

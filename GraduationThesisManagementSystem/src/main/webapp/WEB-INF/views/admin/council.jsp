@@ -333,6 +333,7 @@
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
+                                            <th scope="col">Mã giảng viên</th>
                                             <th scope="col">Chức vụ</th>
                                             <th scope="col">Tên thành viên</th>
                                         </tr>

@@ -1,15 +1,19 @@
 {
-  "curly": true,
+  "curly": false,
   "eqeqeq": true,
   "immed": true,
   "latedef": true,
   "newcap": true,
   "noarg": true,
   "sub": true,
-  "undef": true,
-  "unused": true,
+  "undef": false,
+  "loopfunc": true,
+  "unused": false,
   "boss": true,
   "eqnull": true,
   "browser": true,
-  "jquery": true
+  "globals": {
+      "jQuery": true
+  },
+  "esversion": 8
 }

@@ -40,9 +40,9 @@ public class ApiUserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PatchMapping(path = "/users/{userId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(path = "/users/{userId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
-    public void changePassword(@PathVariable("userId") int userId, @RequestBody String newPassword) {
+    public void changePassword(@PathVariable("userId") Integer userId, @RequestBody String newPassword) {
         this.userService.changePassword(userId, newPassword);
     }
 

@@ -53,7 +53,12 @@ public class StatsRepositoryImplement implements StatsRepository {
 
         try {
             String sql1 = "SELECT sy.name, m.name, AVG(t.totalScore) FROM SchoolYear sy LEFT JOIN sy.theses t LEFT JOIN t.major m GROUP BY sy.id, m.id";
-            String sql2 = "SELECT sy.name, m.name, AVG(t.totalScore) FROM SchoolYear sy LEFT JOIN sy.theses t LEFT JOIN t.major m WHERE t.schoolYear.id=:schoolYearId GROUP BY sy.id, m.id";
+            String sql2 = "SELECT sy.name, m.name, AVG(t.totalScore) " +
+                    "FROM SchoolYear sy " +
+                    "LEFT JOIN sy.theses t " +
+                    "LEFT JOIN t.major m " +
+                    "WHERE t.schoolYear.id=:schoolYearId " +
+                    "GROUP BY sy.id, m.id";
             Query query;
 
             if (schoolYearId == null) {

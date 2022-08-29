@@ -262,7 +262,7 @@
         </c:if>
         <c:if test="${lecturers.size() == 0}">
             <tr>
-                <td colspan="7" class="text-black-50 text-center">
+                <td colspan="8" class="text-black-50 text-center">
                     <img width="75" src="https://cdn-icons-png.flaticon.com/512/7465/7465679.png"/>
                     <p class="text-center">
                         <spring:message code="lecturer.table.list.data.empty"/>

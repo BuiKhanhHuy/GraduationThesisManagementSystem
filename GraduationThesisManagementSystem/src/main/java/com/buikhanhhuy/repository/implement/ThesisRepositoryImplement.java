@@ -99,16 +99,14 @@ public class ThesisRepositoryImplement implements ThesisRepository {
             predicates.add(builder.equal(root.get("result").as(Integer.class), result));
         }
 
-        if(params.containsKey("lecturerReviewId") && params.get("lecturerReviewId") != null){
-            predicates.add(builder.equal(root.get("reviewLecturer"),
-                    Integer.parseInt(params.get("lecturerReviewId"))));
+        if (params.containsKey("lecturerReviewId") && params.get("lecturerReviewId") != null) {
+            predicates.add(builder.equal(root.get("reviewLecturer"), Integer.parseInt(params.get("lecturerReviewId"))));
         }
 
-        if(params.containsKey("lecturerGuideId") && params.get("lecturerGuideId") != null){
+        if (params.containsKey("lecturerGuideId") && params.get("lecturerGuideId") != null) {
             Join<Thesis, Lecturer> guide = root.join(Thesis_.lecturers);
 
-            predicates.add(builder.equal(guide.get("id").as(Integer.class),
-                    Integer.parseInt(params.get("lecturerGuideId"))));
+            predicates.add(builder.equal(guide.get("id").as(Integer.class), Integer.parseInt(params.get("lecturerGuideId"))));
         }
 
         query.where(predicates.toArray(new Predicate[]{}));
@@ -164,9 +162,8 @@ public class ThesisRepositoryImplement implements ThesisRepository {
             predicates.add(builder.equal(root.get("result").as(Integer.class), result));
         }
 
-        if(params.containsKey("lecturerReviewId") && params.get("lecturerReviewId") != null){
-            predicates.add(builder.equal(root.get("reviewLecturer"),
-                    Integer.parseInt(params.get("lecturerReviewId"))));
+        if (params.containsKey("lecturerReviewId") && params.get("lecturerReviewId") != null) {
+            predicates.add(builder.equal(root.get("reviewLecturer"), Integer.parseInt(params.get("lecturerReviewId"))));
         }
 
         query.where(predicates.toArray(new Predicate[]{}));
@@ -240,12 +237,7 @@ public class ThesisRepositoryImplement implements ThesisRepository {
         Session session = sessionFactoryBean.getObject().getCurrentSession();
 
         try {
-            String stringQuery = "SELECT SUM(scoD.scoreNum * scoC.weight) " +
-                    "FROM CouncilDetail cd LEFT JOIN cd.scores sco " +
-                    "LEFT JOIN sco.scoreDetails scoD " +
-                    "LEFT JOIN scoD.scoreColumn scoC " +
-                    "WHERE sco.thesis.id =: thesisID AND cd.council.id =: councilId " +
-                    "GROUP BY sco.councilDetail.id";
+            String stringQuery = "SELECT SUM(scoD.scoreNum * scoC.weight) " + "FROM CouncilDetail cd LEFT JOIN cd.scores sco " + "LEFT JOIN sco.scoreDetails scoD " + "LEFT JOIN scoD.scoreColumn scoC " + "WHERE sco.thesis.id =: thesisID AND cd.council.id =: councilId " + "GROUP BY sco.councilDetail.id";
 
             Query query = session.createQuery(stringQuery);
             query.setParameter("thesisID", thesisId);
@@ -274,7 +266,7 @@ public class ThesisRepositoryImplement implements ThesisRepository {
         try {
             Council council = session.get(Council.class, councilId);
             for (Thesis thesis : council.getTheses()) {
-                double scoreResult = this.scoreOfAThesisInCouncil(councilId, thesis.getId());
+                double scoreResult = (double) Math.round(this.scoreOfAThesisInCouncil(councilId, thesis.getId()) * 100) / 100;
 
                 thesis.setTotalScore(scoreResult);
                 thesis.setResult(Utils.checkThesisResult(scoreResult));

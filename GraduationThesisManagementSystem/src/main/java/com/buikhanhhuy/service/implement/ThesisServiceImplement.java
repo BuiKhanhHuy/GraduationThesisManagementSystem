@@ -38,9 +38,9 @@ public class ThesisServiceImplement implements ThesisService {
 
         toEmail = new String[]{modelThesis.getReviewLecturer().getEmail()};
 
-        this.emailService.sendMail("Thông báo giảng viên phản biện khóa luận tốt nghiệp",
-                toEmail, model,
-                SystemConstant.REVIEW_LECTURER_EMAIL_TEMPLATE);
+//        this.emailService.sendMail("Thông báo giảng viên phản biện khóa luận tốt nghiệp",
+//                toEmail, model,
+//                SystemConstant.REVIEW_LECTURER_EMAIL_TEMPLATE);
     }
 
     @Override
