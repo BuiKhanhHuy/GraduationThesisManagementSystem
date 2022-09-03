@@ -38,9 +38,9 @@ public class ThesisServiceImplement implements ThesisService {
 
         toEmail = new String[]{modelThesis.getReviewLecturer().getEmail()};
 
-//        this.emailService.sendMail("Thông báo giảng viên phản biện khóa luận tốt nghiệp",
-//                toEmail, model,
-//                SystemConstant.REVIEW_LECTURER_EMAIL_TEMPLATE);
+        this.emailService.sendMail("Thông báo giảng viên phản biện khóa luận tốt nghiệp",
+                toEmail, model,
+                SystemConstant.REVIEW_LECTURER_EMAIL_TEMPLATE);
     }
 
     @Override
@@ -99,14 +99,14 @@ public class ThesisServiceImplement implements ThesisService {
                 usersId.add(lecturer.getUser().getId());
             }
             notification.setTitle("Thông báo giảng viên hướng dẫn khóa luận");
-            notification.setContent("Đăng nhập vào hệ thống để xem thông tin chi tiết");
+            notification.setContent("Vào mục khóa luận hướng dẫn để xem chi tiết");
             this.notificationRepository.addNotification(notification, usersId);
 
             usersId = new HashSet<>();
             notification = new Notification();
             usersId.add(thesisResult.getReviewLecturer().getUser().getId());
             notification.setTitle("Thông báo giảng viên phản biện khóa luận tốt nghiệp");
-            notification.setContent("Đăng nhập vào hệ thống để xem thông tin chi tiết");
+            notification.setContent("Vào mục khóa luận phản biện để xem chi tiết");
             this.notificationRepository.addNotification(notification, usersId);
 
             this.sendReviewLectureThesisNotification(thesisResult);

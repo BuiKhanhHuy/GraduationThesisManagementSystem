@@ -21,7 +21,8 @@
                             </div>
                             <div class="col-12">
                                 <div class="position-relative">
-                                    <ul id="area-search-user" class="w-100 bg-primary position-absolute list-unstyled mb-0 rounded box-shadow shadow-lg"
+                                    <ul id="area-search-user"
+                                        class="w-100 bg-primary position-absolute list-unstyled mb-0 rounded box-shadow shadow-lg"
                                         style="z-index: 1; max-height: 400px; overflow: auto;">
                                     </ul>
                                 </div>
@@ -48,12 +49,14 @@
                     <form id="formSendMessage">
                         <div class="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
                             <img id="avatar-other-user" src=""
-                                 alt="avatar 3" style="width: 45px; height: 100%; margin-right: 5px; border-radius: 50%;">
+                                 alt="avatar 3"
+                                 style="width: 45px; height: 100%; margin-right: 5px; border-radius: 50%;">
                             <input type="text" class="form-control form-control-lg" placeholder="Type your message…"
                                    id="areaMessageText"/>
                             <a class="ms-1 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
                             <a class="ms-3 text-muted" href="#!"><i class="fas fa-smile"></i></a>
-                            <button type="submit" class="ms-3 border-0 bg-white text-primary" href="javascript:;"><i class="fas fa-paper-plane"></i>
+                            <button type="submit" class="ms-3 border-0 bg-white text-primary" href="javascript:;"><i
+                                    class="fas fa-paper-plane"></i>
                             </button>
                         </div>
                     </form>

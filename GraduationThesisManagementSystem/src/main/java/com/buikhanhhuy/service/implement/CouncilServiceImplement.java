@@ -76,7 +76,8 @@ public class CouncilServiceImplement implements CouncilService {
                 toEmail.add(student.getEmail());
             }
 
-//            this.emailService.sendMail("Thông báo kết quả khóa luận tốt nghiệp", toEmail.toArray(new String[]{}), model, SystemConstant.THESIS_RESULT_EMAIL_TEMPLATE);
+            this.emailService.sendMail("Thông báo kết quả khóa luận tốt nghiệp",
+                    toEmail.toArray(new String[]{}), model, SystemConstant.THESIS_RESULT_EMAIL_TEMPLATE);
         }
     }
 
