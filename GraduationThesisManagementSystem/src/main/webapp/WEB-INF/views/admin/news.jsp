@@ -74,7 +74,7 @@
             <th scope="col" class="text-center">
                 <spring:message code="news.table.list.header.newsCreator"/>
             </th>
-            <th scope="col" class="text-center">
+            <th scope="col" class="col-2 text-center">
                 <spring:message code="news.table.list.header.action"/>
             </th>
         </tr>
