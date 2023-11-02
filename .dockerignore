@@ -1,0 +1,10 @@
+.idea/
+*.iml
+*.iws
+target/
+.sonar/
+.sonarlint/
+.gitignore
+.git
+docker-compose.yaml
+Dockerfile

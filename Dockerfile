@@ -4,8 +4,7 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn package
 
-FROM openjdk:11-jre-slim
-WORKDIR /app
-COPY --from=build target/GraduationThesisManagementSystem.war ./app.war
+FROM tomcat:10-jdk11
+COPY --from=build /app/target/GraduationThesisManagementSystem.war /usr/local/tomcat/webapps
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+CMD ["catalina.sh", "run"]

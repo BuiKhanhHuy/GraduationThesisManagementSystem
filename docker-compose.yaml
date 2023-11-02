@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: graduation-thesis-management-system-db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=P@ssword
+    volumes:
+      - graduation-thesis-management-system-volume:/var/lib/mysql
+      - ./data/graduation_thesis_management_sys_db.sql:/docker-entrypoint-initdb.d/data.sql
+    ports:
+      - '3307:3306'
+    expose:
+      - 3306
+    networks:
+      - graduation-thesis-management-system-network
+  server:
+    image: graduation-thesis-management-system
+    container_name: graduation-thesis-management-system-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - HIBERNATE_DIALECT=org.hibernate.dialect.MySQLDialect
+      - HIBERNATE_SHOW_SQL=false
+      - HIBERNATE_CONNECTION_DRIVER_CLASS=com.mysql.cj.jdbc.Driver
+      - HIBERNATE_CONNECTION_ENGINE=mysql
+      - HIBERNATE_CONNECTION_HOST=db
+      - HIBERNATE_CONNECTION_PORT=3306
+      - HIBERNATE_CONNECTION_NAME=graduation_thesis_management_sys_db
+      - HIBERNATE_CONNECTION_USERNAME=root
+      - HIBERNATE_CONNECTION_PASSWORD=P@ssword
+      - EMAIL_HOST=smtp.gmail.com
+      - EMAIL_PORT=587
+      - EMAIL_HOST_USER=hethongquanlykhoaluan.hcmcou@gmail.com
+      - EMAIL_HOST_PASSWORD=rqjvcmkplivnprhj
+      - MAIL_SMTP_STARTTLS_ENABLE=true
+      - MAIL_SMTP_AUTH=true
+      - MAIL_TRANSPORT_PROTOCOL=smtp
+      - MAIL_DEBUG=true
+      - DEFAULT_FROM_EMAIL=hethongquanlykhoaluan.hcmcou@gmail.com
+    ports:
+      - "8081:8080"
+    networks:
+      - graduation-thesis-management-system-network
+    depends_on:
+      - db
+
+networks:
+  graduation-thesis-management-system-network:
+    name: graduation-thesis-management-system-network
+
+volumes:
+  graduation-thesis-management-system-volume:

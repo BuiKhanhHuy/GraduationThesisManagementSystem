@@ -1,0 +1,54 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: khuy2
+Build-Jdk: Oracle OpenJDK version 18.0.2
+Main-Class: com.buikhanhhuy.configs.SpringWebAppInit
+Class-Path: lib/org.eclipse.persistence.core-2.7.9.jar lib/org.eclipse.p
+ ersistence.asm-9.1.0.jar lib/org.eclipse.persistence.antlr-2.7.9.jar li
+ b/org.eclipse.persistence.jpa-2.7.9.jar lib/jakarta.persistence-2.2.3.j
+ ar lib/org.eclipse.persistence.jpa.jpql-2.7.9.jar lib/org.eclipse.persi
+ stence.moxy-2.7.9.jar lib/javax.persistence-2.2.1.jar lib/org.eclipse.p
+ ersistence.jpa.modelgen.processor-2.7.9.jar lib/javaee-web-api-7.0.jar 
+ lib/spring-webmvc-5.3.21.jar lib/spring-aop-5.3.21.jar lib/spring-beans
+ -5.3.21.jar lib/spring-expression-5.3.21.jar lib/spring-web-5.3.21.jar 
+ lib/jstl-1.2.jar lib/tiles-extras-3.0.8.jar lib/tiles-core-3.0.8.jar li
+ b/tiles-api-3.0.8.jar lib/commons-digester-2.0.jar lib/commons-beanutil
+ s-1.8.0.jar lib/jcl-over-slf4j-1.7.6.jar lib/tiles-request-servlet-wild
+ card-1.0.7.jar lib/tiles-request-servlet-1.0.7.jar lib/tiles-request-mu
+ stache-1.0.7.jar lib/tiles-request-api-1.0.7.jar lib/compiler-0.8.4.jar
+  lib/tiles-jsp-3.0.8.jar lib/tiles-servlet-3.0.8.jar lib/tiles-template
+ -3.0.8.jar lib/tiles-autotag-core-runtime-1.2.jar lib/tiles-request-jsp
+ -1.0.7.jar lib/tiles-freemarker-3.0.8.jar lib/tiles-request-freemarker-
+ 1.0.7.jar lib/tiles-velocity-3.0.8.jar lib/velocity-tools-2.0.jar lib/c
+ ommons-collections-3.2.jar lib/oro-2.0.8.jar lib/velocity-1.6.2.jar lib
+ /commons-lang-2.4.jar lib/tiles-request-velocity-1.0.7.jar lib/tiles-el
+ -3.0.8.jar lib/tiles-mvel-3.0.8.jar lib/mvel2-2.0.11.jar lib/tiles-ognl
+ -3.0.8.jar lib/ognl-2.7.3.jar lib/javassist-3.7.ga.jar lib/tiles-compat
+ -3.0.8.jar lib/guava-12.0.1.jar lib/jsr305-1.3.9.jar lib/slf4j-api-1.7.
+ 6.jar lib/hibernate-core-5.6.10.Final.jar lib/jboss-logging-3.4.3.Final
+ .jar lib/javax.persistence-api-2.2.jar lib/byte-buddy-1.12.9.jar lib/an
+ tlr-2.7.7.jar lib/jboss-transaction-api_1.2_spec-1.1.1.Final.jar lib/ja
+ ndex-2.4.2.Final.jar lib/classmate-1.5.1.jar lib/javax.activation-api-1
+ .2.0.jar lib/hibernate-commons-annotations-5.1.2.Final.jar lib/jaxb-api
+ -2.3.1.jar lib/jaxb-runtime-2.3.1.jar lib/txw2-2.3.1.jar lib/istack-com
+ mons-runtime-3.0.7.jar lib/stax-ex-1.8.jar lib/FastInfoset-1.2.15.jar l
+ ib/mysql-connector-java-8.0.29.jar lib/protobuf-java-3.19.4.jar lib/spr
+ ing-orm-5.3.21.jar lib/spring-jdbc-5.3.21.jar lib/spring-tx-5.3.21.jar 
+ lib/hibernate-validator-6.1.1.Final.jar lib/jakarta.validation-api-2.0.
+ 2.jar lib/jackson-databind-2.12.2.jar lib/jackson-annotations-2.12.2.ja
+ r lib/jackson-core-2.12.2.jar lib/cloudinary-http44-1.29.0.jar lib/clou
+ dinary-core-1.29.0.jar lib/commons-lang3-3.1.jar lib/httpclient-4.4.jar
+  lib/httpcore-4.4.jar lib/commons-logging-1.2.jar lib/httpmime-4.4.jar 
+ lib/cloudinary-taglib-1.29.0.jar lib/jsp-api-2.0.jar lib/servlet-api-2.
+ 4.jar lib/commons-fileupload-1.4.jar lib/commons-io-2.6.jar lib/spring-
+ context-5.3.21.jar lib/spring-core-5.3.21.jar lib/spring-jcl-5.3.21.jar
+  lib/spring-context-support-5.3.22.jar lib/javax.mail-api-1.5.5.jar lib
+ /mail-1.4.7.jar lib/activation-1.1.jar lib/freemarker-2.3.23.jar lib/sp
+ ring-security-web-5.2.1.RELEASE.jar lib/spring-security-core-5.2.1.RELE
+ ASE.jar lib/spring-security-config-5.2.1.RELEASE.jar lib/spring-securit
+ y-taglibs-5.5.1.jar lib/spring-security-acl-5.5.1.jar lib/poi-4.1.2.jar
+  lib/commons-codec-1.13.jar lib/commons-collections4-4.4.jar lib/common
+ s-math3-3.6.1.jar lib/SparseBitSet-1.2.jar lib/poi-ooxml-4.1.2.jar lib/
+ poi-ooxml-schemas-4.1.2.jar lib/xmlbeans-3.1.0.jar lib/commons-compress
+ -1.19.jar lib/curvesapi-1.06.jar
+
